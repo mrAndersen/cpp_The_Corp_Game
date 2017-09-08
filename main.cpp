@@ -1,22 +1,12 @@
-#include "config.h"
-#include <iostream>
-#include <SFML/Graphics.hpp>
-using namespace std;
+#include "src/World/World.h"
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
+    unsigned int screenWidth = 1700;
+    unsigned int screenHeight = 750;
 
-    /* Code adapted from the SFML 2 "Window" example */
+    World world(screenWidth, screenHeight);
 
-    cout << "Version " << myproject_VERSION_MAJOR << "." << myproject_VERSION_MINOR << endl;
-
-    sf::Window App(sf::VideoMode(800, 600), "myproject");
-
-    while (App.isOpen()) {
-        sf::Event Event;
-        while (App.pollEvent(Event)) {
-            if (Event.type == sf::Event::Closed)
-                App.close();
-        }
-        App.display();
-    }
+    world.width = 6000;
+    world.height = 1000;
+    world.start();
 }

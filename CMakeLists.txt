@@ -1,4 +1,8 @@
 cmake_minimum_required(VERSION 3.8)
+project(the_corp_game)
+
+set(SFML_ROOT "D:\\CppProjects\\SFML-2.4.2")
+include_directories("${PROJECT_SOURCE_DIR}/src")
 
 # Enable debug symbols by default
 # must be done before project() statement
@@ -7,11 +11,12 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 # (you can also set it on the command line: -D CMAKE_BUILD_TYPE=Release)
 
-project(myproject)
+project(the_corp_game)
 
 # Set version information in a config.h file
 set(the_corp_game_VERSION_MAJOR 1)
 set(the_corp_game_VERSION_MINOR 0)
+
 configure_file(
         "${PROJECT_SOURCE_DIR}/config.h.in"
         "${PROJECT_BINARY_DIR}/config.h"
@@ -19,8 +24,8 @@ configure_file(
 include_directories("${PROJECT_BINARY_DIR}")
 
 # Define sources and executable
-set(EXECUTABLE_NAME "myproject")
-add_executable(${EXECUTABLE_NAME} main.cpp)
+set(EXECUTABLE_NAME "corpgame")
+add_executable(${EXECUTABLE_NAME} main.cpp src/World/World.h src/Characters/BaseCharacter.h)
 
 
 # Detect and add SFML
@@ -28,7 +33,7 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 
 #Find any version 2.X of SFML
 #See the FindSFML.cmake file for additional details and instructions
-find_package(SFML 2 REQUIRED network audio graphics window system)
+find_package(SFML 2 REQUIRED graphics network audio window system)
 if(SFML_FOUND)
     include_directories(${SFML_INCLUDE_DIR})
     target_link_libraries(${EXECUTABLE_NAME} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
@@ -37,7 +42,6 @@ endif()
 
 # Install target
 install(TARGETS ${EXECUTABLE_NAME} DESTINATION bin)
-
 
 # CPack packaging
 include(InstallRequiredSystemLibraries)
