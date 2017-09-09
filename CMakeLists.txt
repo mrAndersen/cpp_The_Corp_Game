@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.8)
 project(the_corp_game)
 
-set(SFML_ROOT "D:\\CppProjects\\SFML-2.4.2")
+set(SFML_ROOT "${PROJECT_SOURCE_DIR}/vendor/mingw_sfml-2.4.2")
 include_directories("${PROJECT_SOURCE_DIR}/src")
 
 # Enable debug symbols by default
@@ -25,7 +25,7 @@ include_directories("${PROJECT_BINARY_DIR}")
 
 # Define sources and executable
 set(EXECUTABLE_NAME "corpgame")
-add_executable(${EXECUTABLE_NAME} main.cpp src/World/World.h src/Characters/BaseCharacter.h)
+add_executable(${EXECUTABLE_NAME} main.cpp src/Deubg/Debug.cpp src/Characters/BaseCharacter.cpp)
 
 
 # Detect and add SFML
