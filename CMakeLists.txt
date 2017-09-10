@@ -28,7 +28,7 @@ include_directories("${PROJECT_BINARY_DIR}")
 
 # Define sources and executable
 set(EXECUTABLE_NAME "corpgame")
-add_executable(${EXECUTABLE_NAME} main.cpp src/Deubg/Debug.cpp src/Characters/BaseCharacter.cpp src/Animation/CharacterAnimation.cpp)
+add_executable(${EXECUTABLE_NAME} WIN32 main.cpp src/Deubg/Debug.cpp src/Characters/BaseCharacter.cpp src/Animation/EntityAnimation.cpp src/System/Direction.h src/System/ViewHandler.cpp)
 
 
 # Detect and add SFML

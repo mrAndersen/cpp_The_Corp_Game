@@ -1,6 +1,8 @@
 #include <SFML/Graphics.hpp>
+#include <System/Direction.h>
 
-class CharacterAnimation {
+
+class EntityAnimation {
 protected:
     float x = 0;
     float y = 0;
@@ -10,6 +12,8 @@ protected:
 
     int totalFrames = 8;
     int currentFrame = 0;
+
+    Direction direction = Direction::Right;
 
     sf::Sprite sprite;
     sf::Texture texture;
@@ -21,11 +25,9 @@ protected:
     std::vector<sf::IntRect> frames;
 
     //milliseconds
-    float animationResolution = 62;
+    float animationResolution = 500;
     float totalAnimationFrameTimeMs = 0;
-
-    float movementResolution = 62;
-    float totalMovementFrameTimeMs = 0;
+    float frameTimeMs = 0;
 
     //pixels per second
     float speed = 120;
@@ -35,20 +37,42 @@ protected:
 
         sprite.setPosition(x, y);
         sprite.setTextureRect(frame);
-        sprite.setTextureRect(frames[currentFrame]);
+
+        if (direction == Direction::Left) {
+            sprite.scale(-1.f, 1.f);
+        }
+
+        if (direction == Direction::Right) {
+            sprite.scale(1.f, 1.f);
+        }
 
         w->draw(sprite);
     }
 
 public:
+    bool contains(float x, float y) {
+        return
+                x > this->x &&
+                x < x + this->width &&
+                y > this->y &&
+                y < y + this->height;
 
+    }
+
+    Direction getDirection() const {
+        return direction;
+    }
+
+    void setDirection(Direction direction) {
+        EntityAnimation::direction = direction;
+    }
 
     float getX() const {
         return x;
     }
 
     void setX(float x) {
-        CharacterAnimation::x = x;
+        EntityAnimation::x = x;
     }
 
     float getY() const {
@@ -56,7 +80,7 @@ public:
     }
 
     void setY(float y) {
-        CharacterAnimation::y = y;
+        EntityAnimation::y = y;
     }
 
     int getWidth() const {
@@ -64,7 +88,7 @@ public:
     }
 
     void setWidth(int width) {
-        CharacterAnimation::width = width;
+        EntityAnimation::width = width;
     }
 
     int getHeight() const {
@@ -72,7 +96,7 @@ public:
     }
 
     void setHeight(int height) {
-        CharacterAnimation::height = height;
+        EntityAnimation::height = height;
     }
 
     const sf::Texture &getTexture() const {
@@ -80,14 +104,12 @@ public:
     }
 
     void setTexture(const sf::Texture &texture) {
-        CharacterAnimation::texture = texture;
+        EntityAnimation::texture = texture;
     }
 
     void updateFrameTime() {
-        int frameTimeMs = clock.restart().asMilliseconds();
-
+        frameTimeMs = clock.restart().asMilliseconds();
         totalAnimationFrameTimeMs += frameTimeMs;
-        totalMovementFrameTimeMs += frameTimeMs;
     }
 
     bool isAnimationResolutionReached() {
@@ -99,26 +121,16 @@ public:
         }
     }
 
-    bool isMovementResolutionReached() {
-        if (totalMovementFrameTimeMs >= movementResolution) {
-            totalMovementFrameTimeMs = 0;
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-
     void createAnimationFrames() {
         sprite.setTexture(texture);
         sprite.setOrigin(width / 2, height / 2);
-//        sprite.scale(-1.f, 1.f);
 
         for (int i = 0; i < totalFrames; ++i) {
             sf::IntRect rect(i * width, 0, width, height);
             frames.push_back(rect);
         }
 
+        this->animationResolution = 1000 / frames.size();
         this->sprite.setTextureRect(frames[0]);
     }
 
@@ -127,8 +139,12 @@ public:
             this->currentFrame = (currentFrame == (totalFrames - 1)) ? 0 : currentFrame + 1;
         }
 
-        if (isMovementResolutionReached()) {
-            this->x += (this->movementResolution / 1000) * speed;
+        if (direction == Direction::Right) {
+            this->x += (frameTimeMs / 1000) * speed;
+        }
+
+        if (direction == Direction::Left) {
+            this->x -= (frameTimeMs / 1000) * speed;
         }
 
         this->renderCurrentFrame(w);

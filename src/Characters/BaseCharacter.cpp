@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
-#include <Animation/CharacterAnimation.cpp>
+#include <Animation/EntityAnimation.cpp>
 
-class BaseCharacter : public CharacterAnimation {
+class BaseCharacter : public EntityAnimation {
 public:
     BaseCharacter(int x, int y) {
         sf::Texture texture;
