@@ -4,6 +4,9 @@ project(the_corp_game)
 set(SFML_ROOT "${PROJECT_SOURCE_DIR}/vendor/mingw_sfml-2.4.2")
 include_directories("${PROJECT_SOURCE_DIR}/src")
 
+file(COPY "resources" DESTINATION "${CMAKE_BINARY_DIR}")
+file(COPY "vendor/mingw_sfml-2.4.2/bin/" DESTINATION "${CMAKE_BINARY_DIR}")
+
 # Enable debug symbols by default
 # must be done before project() statement
 if(NOT CMAKE_BUILD_TYPE)
@@ -25,7 +28,7 @@ include_directories("${PROJECT_BINARY_DIR}")
 
 # Define sources and executable
 set(EXECUTABLE_NAME "corpgame")
-add_executable(${EXECUTABLE_NAME} main.cpp src/Deubg/Debug.cpp src/Characters/BaseCharacter.cpp)
+add_executable(${EXECUTABLE_NAME} main.cpp src/Deubg/Debug.cpp src/Characters/BaseCharacter.cpp src/Animation/CharacterAnimation.cpp)
 
 
 # Detect and add SFML

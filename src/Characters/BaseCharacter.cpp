@@ -1,28 +1,20 @@
 #include <SFML/Graphics.hpp>
+#include <Animation/CharacterAnimation.cpp>
 
-class BaseCharacter {
+class BaseCharacter : public CharacterAnimation {
 public:
-    int x = 0;
-    int y = 0;
+    BaseCharacter(int x, int y) {
+        sf::Texture texture;
+        texture.loadFromFile("resources/braid.monster.png");
+        texture.setSmooth(true);
 
-    int width = 55;
-    int height = 85;
+        this->setWidth(128);
+        this->setHeight(125);
 
-    BaseCharacter(sf::RenderWindow &w, int y, int x) {
-        this->x = x;
-        this->y = y;
+        this->setX(x);
+        this->setY(y);
 
-        draw(w);
+        this->setTexture(texture);
+        this->createAnimationFrames();
     }
-
-    void draw(sf::RenderWindow &w) {
-        sf::RectangleShape rectangle(sf::Vector2f(width, height));
-
-        rectangle.setFillColor(sf::Color(55, 11, 255));
-        rectangle.setPosition(x, y);
-
-        w.draw(rectangle);
-    }
-
-    virtual ~BaseCharacter() = default;
 };
