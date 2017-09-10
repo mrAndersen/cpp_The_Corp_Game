@@ -8,8 +8,10 @@ public:
         texture.loadFromFile("resources/braid.monster.png");
         texture.setSmooth(true);
 
-        this->setWidth(128);
+        this->setWidth(128)
+
         this->setHeight(125);
+        this->setSpeed(128);
 
         this->setX(x);
         this->setY(y);

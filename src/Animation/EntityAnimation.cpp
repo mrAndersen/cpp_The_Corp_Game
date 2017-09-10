@@ -95,6 +95,14 @@ public:
         return height;
     }
 
+    float getSpeed() const {
+        return speed;
+    }
+
+    void setSpeed(float speed) {
+        EntityAnimation::speed = speed;
+    }
+
     void setHeight(int height) {
         EntityAnimation::height = height;
     }
