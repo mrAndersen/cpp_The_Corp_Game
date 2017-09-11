@@ -1,9 +1,11 @@
 #include <SFML/Graphics.hpp>
-#include <System/Direction.h>
-
+#include <System/Enum.h>
+#include <System/System.cpp>
 
 class EntityAnimation {
 protected:
+    std::string name = "";
+
     float x = 0;
     float y = 0;
 
@@ -32,21 +34,21 @@ protected:
     //pixels per second
     float speed = 120;
 
-    void renderCurrentFrame(sf::RenderWindow *w) {
+    void renderCurrentFrame() {
         auto frame = frames[currentFrame];
 
         sprite.setPosition(x, y);
         sprite.setTextureRect(frame);
 
         if (direction == Direction::Left) {
-            sprite.scale(-1.f, 1.f);
+            sprite.setScale(-1.f, 1.f);
         }
 
         if (direction == Direction::Right) {
-            sprite.scale(1.f, 1.f);
+            sprite.setScale(1.f, 1.f);
         }
 
-        w->draw(sprite);
+        System::window->draw(sprite);
     }
 
 public:
@@ -57,6 +59,14 @@ public:
                 y > this->y &&
                 y < y + this->height;
 
+    }
+
+    const std::string &getName() const {
+        return name;
+    }
+
+    void setName(const std::string &name) {
+        EntityAnimation::name = name;
     }
 
     Direction getDirection() const {
@@ -142,7 +152,7 @@ public:
         this->sprite.setTextureRect(frames[0]);
     }
 
-    void updateAnimation(sf::RenderWindow *w) {
+    void updateAnimation() {
         if (isAnimationResolutionReached()) {
             this->currentFrame = (currentFrame == (totalFrames - 1)) ? 0 : currentFrame + 1;
         }
@@ -155,7 +165,7 @@ public:
             this->x -= (frameTimeMs / 1000) * speed;
         }
 
-        this->renderCurrentFrame(w);
+        this->renderCurrentFrame();
         this->updateFrameTime();
     }
 };

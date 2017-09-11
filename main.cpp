@@ -1,53 +1,30 @@
 #include <cmath>
 #include <sstream>
-#include <Characters/BaseCharacter.cpp>
-#include <Deubg/Debug.cpp>
-#include <System/ViewHandler.cpp>
-#include <windef.h>
+#include "Characters/Clerk.cpp"
+#include "System/ViewHandler.h"
+#include "System/System.h"
 
 int main() {
-    auto *debug = new Debug();
-    auto *viewHandler = new ViewHandler();
+    //preload resources
+    ResourceLoader::loadTexturesFromFiles();
 
-    std::string title;
+    //load window and debug utilities
+    sf::RenderWindow *w = System::initWindow();
+    System::initDebug();
 
-    unsigned int screenWidth = 1820;
-    unsigned int screenHeight = 800;
-    float zoomFactor = 1;
+    //entities
+    std::vector<Clerk *> characters;
 
-    Direction viewDirectionMovement = Direction::None;
-
-    int framesPassed = 0;
-    sf::Color grey(236, 237, 227);
-
-    std::vector<BaseCharacter *> characters;
-
-    sf::ContextSettings settings;
-    settings.antialiasingLevel = 8;
-
-
-    sf::Clock systemClock;
-
-    auto *w = new sf::RenderWindow(sf::VideoMode(screenWidth, screenHeight), title, sf::Style::None | sf::Style::Close,
-                                   settings);
-
-    sf::View view(sf::FloatRect(0, 0, screenWidth, screenHeight));
-    view.setCenter(screenWidth / 2, screenHeight / 2);
-
-    w->setView(view);
-    w->setFramerateLimit(300);
-    w->clear(grey);
-
+    //frame loop
     while (w->isOpen()) {
-        w->clear(grey);
+        w->clear(System::grey);
 
-        debug->setCharactersOnScreenCount(characters.size());
-        debug->setFps((int) (framesPassed / systemClock.getElapsedTime().asSeconds()));
+        System::entitiesOnScreen = characters.size();
+        System::framesPassed++;
 
-        debug->refreshTitleStats(w);
-        debug->refreshDebugPanel(w);
+        System::refreshTitleStats();
+        System::refreshDebugPanel();
 
-        framesPassed++;
         sf::Event e{};
 
         while (w->pollEvent(e)) {
@@ -56,58 +33,44 @@ int main() {
             }
 
             if (e.type == sf::Event::MouseMoved) {
-                debug->setMouseX(e.mouseMove.x);
-                debug->setMouseY(e.mouseMove.y);
+                System::mouseX = e.mouseMove.x;
+                System::mouseY = e.mouseMove.y;
             }
 
             if (e.type == sf::Event::MouseButtonPressed) {
-                if (e.mouseButton.button == sf::Mouse::Button::Left) {
-                    auto *braid = new BaseCharacter(e.mouseButton.x, e.mouseButton.y);
-                    characters.push_back(braid);
-                }
+                if (
+                        e.mouseButton.button == sf::Mouse::Button::Left ||
+                        e.mouseButton.button == sf::Mouse::Button::Right
+                        ) {
+                    auto *clerk = new Clerk(e.mouseButton.x, e.mouseButton.y);
 
-                if (e.mouseButton.button == sf::Mouse::Button::Right) {
-
-                    for (auto it = characters.begin(); it != characters.end(); ++it) {
-                        if (it.operator*()->contains(e.mouseButton.x, e.mouseButton.y)) {
-                            characters.erase(it);
-                        }
+                    if (e.mouseButton.button == sf::Mouse::Button::Left) {
+                        clerk->setDirection(Direction::Left);
                     }
 
+                    if (e.mouseButton.button == sf::Mouse::Button::Right) {
+                        clerk->setDirection(Direction::Right);
+                    }
+
+                    characters.push_back(clerk);
                 }
             }
 
             if (e.type == sf::Event::KeyPressed) {
-                switch (e.key.code) {
-                    case sf::Keyboard::Left:
-                    case sf::Keyboard::A:
-                        viewDirectionMovement = Direction::Left;
-                        break;
-                    case sf::Keyboard::Right:
-                    case sf::Keyboard::D:
-                        viewDirectionMovement = Direction::Right;
-                        break;
-                    case sf::Keyboard::Up:
-                    case sf::Keyboard::W:
-                        viewDirectionMovement = Direction::Up;
-                        break;
-                    case sf::Keyboard::Down:
-                    case sf::Keyboard::S:
-                        viewDirectionMovement = Direction::Down;
-                        break;
-                }
+                ViewHandler::handleViewScrollKeyPress(e);
             }
 
             if (e.type == sf::Event::KeyReleased) {
-                viewDirectionMovement = Direction::None;
+                ViewHandler::viewDirectionMovement = Direction::None;
             }
         }
 
+        ViewHandler::handleViewScroll();
+
         for (auto character : characters) {
-            character->updateAnimation(w);
+            character->updateAnimation();
         }
 
-        viewHandler->handleViewScroll(w, view, viewDirectionMovement);
         w->display();
     }
 }
