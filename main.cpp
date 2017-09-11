@@ -1,8 +1,9 @@
+
 #include <cmath>
 #include <sstream>
 #include "Characters/Clerk.cpp"
-#include "System/ViewHandler.h"
-#include "System/System.h"
+#include "System/System.cpp"
+
 
 int main() {
     //preload resources

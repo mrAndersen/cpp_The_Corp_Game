@@ -1,6 +1,10 @@
+#ifndef CORP_GAME_ENTITY_ANIMATION
+#define CORP_GAME_ENTITY_ANIMATION
+
 #include <SFML/Graphics.hpp>
 #include <System/Enum.h>
 #include <System/System.cpp>
+
 
 class EntityAnimation {
 protected:
@@ -169,3 +173,5 @@ public:
         this->updateFrameTime();
     }
 };
+
+#endif

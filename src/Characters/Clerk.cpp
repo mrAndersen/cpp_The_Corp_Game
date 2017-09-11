@@ -1,3 +1,6 @@
+#ifndef CORP_GAME_CLERK
+#define CORP_GAME_CLERK
+
 #include <SFML/Graphics.hpp>
 #include <Animation/EntityAnimation.cpp>
 #include <System/ResourceLoader.cpp>
@@ -18,3 +21,5 @@ public:
         this->createAnimationFrames();
     }
 };
+
+#endif

@@ -1,7 +1,36 @@
-#include "System.h"
-#include "ViewHandler.h"
+#ifndef CORP_GAME_SYSTEM
+#define CORP_GAME_SYSTEM
+
+#include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Text.hpp>
+#include "System/ViewHandler.cpp"
 
 namespace System {
+    unsigned int screenWidth = 1820;
+    unsigned int screenHeight = 800;
+    std::string title = "New World";
+
+    //sys
+    sf::Clock systemClock;
+    sf::RenderWindow *window;
+    //sys
+
+    //utility
+    sf::Color grey(236, 237, 227);
+    //utility
+
+    //debug
+    std::map<std::string, sf::Text> debugPanelTextNodes;
+    sf::Font openSans;
+    int mouseX = 0;
+    int mouseY = 0;
+    int framesPassed = 0;
+    int entitiesOnScreen = 0;
+
+    int charactersOnScreenCount = 0;
+    int fps = 0;
+    //debug
 
     void refreshTitleStats() {
         window->setTitle("New world [" + std::to_string(fps) + " FPS]");
@@ -24,7 +53,6 @@ namespace System {
     }
 
     sf::RenderWindow *initWindow() {
-
         sf::ContextSettings settings;
         settings.antialiasingLevel = 8;
 
@@ -81,3 +109,5 @@ namespace System {
         debugPanelTextNodes["view_direction"] = t_view_direction;
     }
 }
+
+#endif

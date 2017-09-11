@@ -1,5 +1,5 @@
-#ifndef ENUM_H
-#define ENUM_H
+#ifndef CORP_GAME_ENUM
+#define CORP_GAME_ENUM
 
 enum Direction {
     None,
