@@ -1,10 +1,5 @@
-#ifndef CORP_GAME_SYSTEM
-#define CORP_GAME_SYSTEM
-
-#include <SFML/Graphics/Font.hpp>
-#include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/Graphics/Text.hpp>
-#include "System/ViewHandler.cpp"
+#include "../../includes/System/System.h"
+#include "../../includes/System/ViewHandler.h"
 
 namespace System {
     unsigned int screenWidth = 1820;
@@ -12,6 +7,7 @@ namespace System {
     std::string title = "New World";
 
     //sys
+    sf::Time systemTime;
     sf::Clock systemClock;
     sf::RenderWindow *window;
     //sys
@@ -27,8 +23,6 @@ namespace System {
     int mouseY = 0;
     int framesPassed = 0;
     int entitiesOnScreen = 0;
-
-    int charactersOnScreenCount = 0;
     int fps = 0;
     //debug
 
@@ -37,7 +31,7 @@ namespace System {
     }
 
     void refreshDebugPanel() {
-        fps = (int) (framesPassed / systemClock.getElapsedTime().asSeconds());
+        fps = (int) (framesPassed / systemTime.asSeconds());
 
         debugPanelTextNodes["fps"].setString("fps: " + std::to_string(fps));
         window->draw(debugPanelTextNodes["fps"]);
@@ -45,18 +39,16 @@ namespace System {
         debugPanelTextNodes["mouse"].setString("x:" + std::to_string(mouseX) + " y:" + std::to_string(mouseY));
         window->draw(debugPanelTextNodes["mouse"]);
 
-        debugPanelTextNodes["characters_count"].setString("characters: " + std::to_string(charactersOnScreenCount));
+        debugPanelTextNodes["characters_count"].setString("characters: " + std::to_string(entitiesOnScreen));
         window->draw(debugPanelTextNodes["characters_count"]);
 
         debugPanelTextNodes["view_direction"].setString("direction: " + std::to_string(ViewHandler::viewDirectionMovement));
         window->draw(debugPanelTextNodes["view_direction"]);
     }
 
-    sf::RenderWindow *initWindow() {
-        sf::ContextSettings settings;
-        settings.antialiasingLevel = 8;
-
-        auto *w = new sf::RenderWindow(sf::VideoMode(screenWidth, screenHeight), title, sf::Style::Close, settings);
+    void initWindow() {
+        systemTime = sf::Time::Zero;
+        window = new sf::RenderWindow(sf::VideoMode(screenWidth, screenHeight), title, sf::Style::Close);
 
         ViewHandler::view.reset(sf::FloatRect(0, 0, screenWidth, screenHeight));
         ViewHandler::view.setCenter(screenWidth / 2, screenHeight / 2);
@@ -64,13 +56,9 @@ namespace System {
         //full rect
         ViewHandler::view.setViewport(sf::FloatRect(0, 0, 1, 1));
 
-        w->setView(ViewHandler::view);
-        w->setFramerateLimit(300);
-        w->clear(grey);
-
-        window = w;
-
-        return window;
+        window->setView(ViewHandler::view);
+        window->setFramerateLimit(300);
+        window->clear(grey);
     }
 
     void initDebug() {
@@ -109,5 +97,3 @@ namespace System {
         debugPanelTextNodes["view_direction"] = t_view_direction;
     }
 }
-
-#endif

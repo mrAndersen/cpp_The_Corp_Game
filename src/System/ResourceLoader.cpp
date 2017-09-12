@@ -1,9 +1,6 @@
-#ifndef CORP_GAME_RESOURCE_LOADER
-#define CORP_GAME_RESOURCE_LOADER
-
 #include <SFML/Graphics/Texture.hpp>
-#include <map>
-#include "Enum.h"
+#include "../../includes/System/Enum.h"
+#include "../../includes/System/ResourceLoader.h"
 
 namespace ResourceLoader {
     std::map<int, sf::Texture> textureCollection;
@@ -26,5 +23,3 @@ namespace ResourceLoader {
         ResourceLoader::loadSingleTexture(Objects::CharacterClerk, "resources/braid.monster.png");
     }
 }
-
-#endif

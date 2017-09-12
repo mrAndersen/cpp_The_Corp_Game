@@ -1,24 +1,25 @@
-
 #include <cmath>
 #include <sstream>
-#include "Characters/Clerk.cpp"
-#include "System/System.cpp"
-
+#include <SFML/Window/Event.hpp>
+#include "includes/System/System.h"
+#include "includes/System/ResourceLoader.h"
+#include "includes/System/ViewHandler.h"
+#include "includes/Characters/Clerk.h"
 
 int main() {
     //preload resources
     ResourceLoader::loadTexturesFromFiles();
 
     //load window and debug utilities
-    sf::RenderWindow *w = System::initWindow();
+    System::initWindow();
     System::initDebug();
 
     //entities
     std::vector<Clerk *> characters;
 
     //frame loop
-    while (w->isOpen()) {
-        w->clear(System::grey);
+    while (System::window->isOpen()) {
+        System::window->clear(System::grey);
 
         System::entitiesOnScreen = characters.size();
         System::framesPassed++;
@@ -28,9 +29,9 @@ int main() {
 
         sf::Event e{};
 
-        while (w->pollEvent(e)) {
+        while (System::window->pollEvent(e)) {
             if (e.type == sf::Event::Closed) {
-                w->close();
+                System::window->close();
             }
 
             if (e.type == sf::Event::MouseMoved) {
@@ -72,7 +73,7 @@ int main() {
             character->updateAnimation();
         }
 
-        w->display();
+        System::window->display();
     }
 }
 

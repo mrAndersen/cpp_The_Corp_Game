@@ -1,177 +1,154 @@
-#ifndef CORP_GAME_ENTITY_ANIMATION
-#define CORP_GAME_ENTITY_ANIMATION
+#include "../../includes/System/Enum.h"
+#include "../../includes/EntityAnimation/EntityAnimation.h"
+#include "../../includes/System/System.h"
 
-#include <SFML/Graphics.hpp>
-#include <System/Enum.h>
-#include <System/System.cpp>
+void EntityAnimation::renderCurrentFrame() {
+    auto frame = frames[currentFrame];
 
+    sprite.setPosition(x, y);
+    sprite.setTextureRect(frame);
 
-class EntityAnimation {
-protected:
-    std::string name = "";
-
-    float x = 0;
-    float y = 0;
-
-    int width = 0;
-    int height = 0;
-
-    int totalFrames = 8;
-    int currentFrame = 0;
-
-    Direction direction = Direction::Right;
-
-    sf::Sprite sprite;
-    sf::Texture texture;
-
-    sf::Time timeSinceCreation;
-    sf::Clock clock;
-
-    //frame coordinates inside sprite
-    std::vector<sf::IntRect> frames;
-
-    //milliseconds
-    float animationResolution = 500;
-    float totalAnimationFrameTimeMs = 0;
-    float frameTimeMs = 0;
-
-    //pixels per second
-    float speed = 120;
-
-    void renderCurrentFrame() {
-        auto frame = frames[currentFrame];
-
-        sprite.setPosition(x, y);
-        sprite.setTextureRect(frame);
-
-        if (direction == Direction::Left) {
-            sprite.setScale(-1.f, 1.f);
-        }
-
-        if (direction == Direction::Right) {
-            sprite.setScale(1.f, 1.f);
-        }
-
-        System::window->draw(sprite);
+    if (direction == Direction::Left) {
+        sprite.setScale(-1.f, 1.f);
     }
 
-public:
-    bool contains(float x, float y) {
-        return
-                x > this->x &&
-                x < x + this->width &&
-                y > this->y &&
-                y < y + this->height;
-
+    if (direction == Direction::Right) {
+        sprite.setScale(1.f, 1.f);
     }
 
-    const std::string &getName() const {
-        return name;
+    System::window->draw(sprite);
+}
+
+bool EntityAnimation::contains(float x, float y) {
+    return
+            x > this->x &&
+            x < x + this->width &&
+            y > this->y &&
+            y < y + this->height;
+
+}
+
+void EntityAnimation::updateFrameTime() {
+    frameTimeMs = clock.restart().asMilliseconds();
+    totalAnimationFrameTimeMs += frameTimeMs;
+}
+
+bool EntityAnimation::isAnimationResolutionReached() {
+    if (totalAnimationFrameTimeMs >= animationResolution) {
+        totalAnimationFrameTimeMs = 0;
+        return true;
+    } else {
+        return false;
+    }
+}
+
+void EntityAnimation::createAnimationFrames() {
+    sprite.setTexture(texture);
+    sprite.setOrigin(width / 2, height / 2);
+
+    for (int i = 0; i < totalFrames; ++i) {
+        sf::IntRect rect(i * width, 0, width, height);
+        frames.push_back(rect);
     }
 
-    void setName(const std::string &name) {
-        EntityAnimation::name = name;
+    this->animationResolution = 1000 / frames.size();
+    this->sprite.setTextureRect(frames[0]);
+}
+
+void EntityAnimation::updateAnimation() {
+    if (isAnimationResolutionReached()) {
+        this->currentFrame = (currentFrame == (totalFrames - 1)) ? 0 : currentFrame + 1;
     }
 
-    Direction getDirection() const {
-        return direction;
+    if (direction == Direction::Right) {
+        this->x += (frameTimeMs / 1000) * speed;
     }
 
-    void setDirection(Direction direction) {
-        EntityAnimation::direction = direction;
+    if (direction == Direction::Left) {
+        this->x -= (frameTimeMs / 1000) * speed;
     }
 
-    float getX() const {
-        return x;
-    }
+    this->renderCurrentFrame();
+    this->updateFrameTime();
+}
 
-    void setX(float x) {
-        EntityAnimation::x = x;
-    }
+Direction EntityAnimation::getDirection() const {
+    return this->direction;
+}
 
-    float getY() const {
-        return y;
-    }
+void EntityAnimation::setDirection(Direction direction) {
+    this->direction = direction;
+}
 
-    void setY(float y) {
-        EntityAnimation::y = y;
-    }
+const std::string &EntityAnimation::getName() const {
+    return name;
+}
 
-    int getWidth() const {
-        return width;
-    }
+void EntityAnimation::setName(const std::string &name) {
+    EntityAnimation::name = name;
+}
 
-    void setWidth(int width) {
-        EntityAnimation::width = width;
-    }
+float EntityAnimation::getX() const {
+    return x;
+}
 
-    int getHeight() const {
-        return height;
-    }
+void EntityAnimation::setX(float x) {
+    EntityAnimation::x = x;
+}
 
-    float getSpeed() const {
-        return speed;
-    }
+float EntityAnimation::getY() const {
+    return y;
+}
 
-    void setSpeed(float speed) {
-        EntityAnimation::speed = speed;
-    }
+void EntityAnimation::setY(float y) {
+    EntityAnimation::y = y;
+}
 
-    void setHeight(int height) {
-        EntityAnimation::height = height;
-    }
+int EntityAnimation::getWidth() const {
+    return width;
+}
 
-    const sf::Texture &getTexture() const {
-        return texture;
-    }
+void EntityAnimation::setWidth(int width) {
+    EntityAnimation::width = width;
+}
 
-    void setTexture(const sf::Texture &texture) {
-        EntityAnimation::texture = texture;
-    }
+int EntityAnimation::getHeight() const {
+    return height;
+}
 
-    void updateFrameTime() {
-        frameTimeMs = clock.restart().asMilliseconds();
-        totalAnimationFrameTimeMs += frameTimeMs;
-    }
+void EntityAnimation::setHeight(int height) {
+    EntityAnimation::height = height;
+}
 
-    bool isAnimationResolutionReached() {
-        if (totalAnimationFrameTimeMs >= animationResolution) {
-            totalAnimationFrameTimeMs = 0;
-            return true;
-        } else {
-            return false;
-        }
-    }
+const sf::Sprite &EntityAnimation::getSprite() const {
+    return sprite;
+}
 
-    void createAnimationFrames() {
-        sprite.setTexture(texture);
-        sprite.setOrigin(width / 2, height / 2);
+void EntityAnimation::setSprite(const sf::Sprite &sprite) {
+    EntityAnimation::sprite = sprite;
+}
 
-        for (int i = 0; i < totalFrames; ++i) {
-            sf::IntRect rect(i * width, 0, width, height);
-            frames.push_back(rect);
-        }
+const sf::Texture &EntityAnimation::getTexture() const {
+    return texture;
+}
 
-        this->animationResolution = 1000 / frames.size();
-        this->sprite.setTextureRect(frames[0]);
-    }
+void EntityAnimation::setTexture(const sf::Texture &texture) {
+    EntityAnimation::texture = texture;
+}
 
-    void updateAnimation() {
-        if (isAnimationResolutionReached()) {
-            this->currentFrame = (currentFrame == (totalFrames - 1)) ? 0 : currentFrame + 1;
-        }
+float EntityAnimation::getAnimationResolution() const {
+    return animationResolution;
+}
 
-        if (direction == Direction::Right) {
-            this->x += (frameTimeMs / 1000) * speed;
-        }
+void EntityAnimation::setAnimationResolution(float animationResolution) {
+    EntityAnimation::animationResolution = animationResolution;
+}
 
-        if (direction == Direction::Left) {
-            this->x -= (frameTimeMs / 1000) * speed;
-        }
+float EntityAnimation::getSpeed() const {
+    return speed;
+}
 
-        this->renderCurrentFrame();
-        this->updateFrameTime();
-    }
-};
+void EntityAnimation::setSpeed(float speed) {
+    EntityAnimation::speed = speed;
+}
 
-#endif

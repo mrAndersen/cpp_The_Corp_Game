@@ -1,14 +1,12 @@
-#ifndef CORP_GAME_VIEW_HANDLER
-#define CORP_GAME_VIEW_HANDLER
-
 #include <SFML/Graphics/View.hpp>
-#include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Event.hpp>
-#include "Enum.h"
-#include "System/System.cpp"
+
+#include "../../includes/System/Enum.h"
+#include "../../includes/System/System.h"
+#include "../../includes/System/ViewHandler.h"
 
 namespace ViewHandler {
-    float zoomFactor = 1;
+    float zoomFactor = 1.f;
     Direction viewDirectionMovement = Direction::None;
     sf::View view;
 
@@ -106,5 +104,3 @@ namespace ViewHandler {
         }
     }
 }
-
-#endif
