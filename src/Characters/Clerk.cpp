@@ -6,8 +6,8 @@
 Clerk::Clerk(sf::Vector2f coordinates) {
     this->setName("clerk");
 
-    this->setWidth(128);
-    this->setHeight(125);
+    this->setWidth(Clerk::width);
+    this->setHeight(Clerk::height);
     this->setSpeed(100);
 
     this->setWorldCoordinates(coordinates);

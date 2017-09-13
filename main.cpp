@@ -40,20 +40,17 @@ int main() {
                         e.mouseButton.button == sf::Mouse::Button::Right
                         ) {
 
-//                    auto *clerk = new Clerk(sf::Vector2f(System::g_x, System::g_y));
-//
-//                    if (e.mouseButton.button == sf::Mouse::Button::Left) {
-//                        clerk->setDirection(Direction::Left);
-//                    }
-//
-//                    if (e.mouseButton.button == sf::Mouse::Button::Right) {
-//                        clerk->setDirection(Direction::Right);
-//                    }
+                    auto *clerk = new Clerk(sf::Vector2f(System::g_x, System::g_y));
 
-                    auto *clerk2 = new Clerk(sf::Vector2f(100, 20));
-                    clerk2->setDirection(Direction::None);
+                    if (e.mouseButton.button == sf::Mouse::Button::Left) {
+                        clerk->setDirection(Direction::Left);
+                    }
 
-                    characters.push_back(clerk2);
+                    if (e.mouseButton.button == sf::Mouse::Button::Right) {
+                        clerk->setDirection(Direction::Right);
+                    }
+
+                    characters.push_back(clerk);
                 }
             }
 

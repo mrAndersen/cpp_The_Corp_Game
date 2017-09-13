@@ -17,6 +17,19 @@ void EntityAnimation::renderCurrentFrame() {
     }
 
     System::window->draw(sprite);
+
+    if (System::animationDebug) {
+        sf::RectangleShape skeleton;
+
+        skeleton.setSize(sf::Vector2f(this->width, this->height));
+        skeleton.setFillColor(sf::Color::Transparent);
+        skeleton.setOutlineColor(System::red);
+        skeleton.setPosition(worldCoordinates.x - skeleton.getSize().x / 2,
+                             worldCoordinates.y - skeleton.getSize().y / 2);
+        skeleton.setOutlineThickness(2);
+
+        System::window->draw(skeleton);
+    }
 }
 
 void EntityAnimation::updateFrameTime() {

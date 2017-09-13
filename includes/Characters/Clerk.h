@@ -6,7 +6,10 @@
 
 class Clerk : public EntityAnimation {
 public:
-    Clerk(sf::Vector2f coordinates);
+    const static int width = 128;
+    const static int height = 125;
+
+    explicit Clerk(sf::Vector2f coordinates);
 };
 
 #endif //THE_CORP_GAME_CLERK_H

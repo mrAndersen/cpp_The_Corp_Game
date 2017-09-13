@@ -18,6 +18,7 @@ namespace System {
 
     //utility
     extern sf::Color grey;
+    extern sf::Color red;
     //utility
 
     //debug
@@ -28,6 +29,8 @@ namespace System {
     extern int framesPassed;
     extern int entitiesOnScreen;
     extern int fps;
+
+    extern bool animationDebug;
     //debug
 
     void refreshTitleStats();
