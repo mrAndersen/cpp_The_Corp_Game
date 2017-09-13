@@ -33,7 +33,8 @@ void Movable::renderCurrentFrame() {
         sf::Text debugString;
         debugString.setString(
                 "{" + std::to_string((int) worldCoordinates.x) + "," + std::to_string((int) worldCoordinates.y) + "}" +
-                "[" + std::to_string((int) health) + "]"
+                "[h=" + std::to_string((int) health) + "]" +
+                "[t=" + std::to_string((int) liveClock.getElapsedTime().asSeconds()) + "]"
         );
         debugString.setFillColor(sf::Color::Black);
         debugString.setPosition(worldCoordinates.x - skeleton.getSize().x / 2,
@@ -104,7 +105,9 @@ bool Movable::clicked(sf::Vector2f targetCoordinates) {
 }
 
 void Movable::updateLogic() {
-    health = 100 - (distancePassed / 100) * 100;
+    if (liveClock.getElapsedTime().asSeconds() > 4) {
+        health = 0;
+    }
 
     if (health <= 0) {
         EntityContainer::remove(this);

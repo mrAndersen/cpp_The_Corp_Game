@@ -29,8 +29,8 @@ protected:
     sf::Sprite sprite;
     sf::Texture texture;
 
-    sf::Time timeSinceCreation;
     sf::Clock clock;
+    sf::Clock liveClock;
 
     //frame coordinates inside sprite
     std::vector<sf::IntRect> frames = {};

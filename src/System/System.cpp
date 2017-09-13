@@ -87,6 +87,7 @@ namespace System {
 
     void initDebug() {
         openSans.loadFromFile("resources/fonts/open-sans.ttf");
+        const_cast<sf::Texture&>(openSans.getTexture(10)).setSmooth(false);
 
         createDebugString("fps", 1);
         createDebugString("g_coordinates", 2);
