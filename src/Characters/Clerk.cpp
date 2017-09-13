@@ -3,16 +3,15 @@
 #include "../../includes/Characters/Clerk.h"
 
 
-Clerk::Clerk(int x, int y) {
+Clerk::Clerk(sf::Vector2f coordinates) {
     this->setName("clerk");
 
     this->setWidth(128);
     this->setHeight(125);
     this->setSpeed(100);
 
-    this->setX(x);
-    this->setY(y);
+    this->setWorldCoordinates(coordinates);
 
-    this->setTexture(ResourceLoader::getSingleTexture(Objects ::CharacterClerk));
+    this->setTexture(ResourceLoader::getSingleTexture(Objects::CharacterClerk));
     this->createAnimationFrames();
 }

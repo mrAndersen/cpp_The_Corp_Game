@@ -12,7 +12,7 @@ namespace System {
 
     //sys
     extern sf::Time systemTime;
-    extern sf::Clock systemClock;
+    extern sf::Clock fpsClock;
     extern sf::RenderWindow *window;
     //sys
 
@@ -23,8 +23,8 @@ namespace System {
     //debug
     extern std::map<std::string, sf::Text> debugPanelTextNodes;
     extern sf::Font openSans;
-    extern int mouseX;
-    extern int mouseY;
+    extern float g_x;
+    extern float g_y;
     extern int framesPassed;
     extern int entitiesOnScreen;
     extern int fps;

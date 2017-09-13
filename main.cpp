@@ -34,27 +34,26 @@ int main() {
                 System::window->close();
             }
 
-            if (e.type == sf::Event::MouseMoved) {
-                System::mouseX = e.mouseMove.x;
-                System::mouseY = e.mouseMove.y;
-            }
-
             if (e.type == sf::Event::MouseButtonPressed) {
                 if (
                         e.mouseButton.button == sf::Mouse::Button::Left ||
                         e.mouseButton.button == sf::Mouse::Button::Right
                         ) {
-                    auto *clerk = new Clerk(e.mouseButton.x, e.mouseButton.y);
 
-                    if (e.mouseButton.button == sf::Mouse::Button::Left) {
-                        clerk->setDirection(Direction::Left);
-                    }
+//                    auto *clerk = new Clerk(sf::Vector2f(System::g_x, System::g_y));
+//
+//                    if (e.mouseButton.button == sf::Mouse::Button::Left) {
+//                        clerk->setDirection(Direction::Left);
+//                    }
+//
+//                    if (e.mouseButton.button == sf::Mouse::Button::Right) {
+//                        clerk->setDirection(Direction::Right);
+//                    }
 
-                    if (e.mouseButton.button == sf::Mouse::Button::Right) {
-                        clerk->setDirection(Direction::Right);
-                    }
+                    auto *clerk2 = new Clerk(sf::Vector2f(100, 20));
+                    clerk2->setDirection(Direction::None);
 
-                    characters.push_back(clerk);
+                    characters.push_back(clerk2);
                 }
             }
 

@@ -1,7 +1,6 @@
 #ifndef THE_CORP_GAME_ENTITYANIMATION_CPP_H
 #define THE_CORP_GAME_ENTITYANIMATION_CPP_H
 
-
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Time.hpp>
@@ -9,48 +8,10 @@
 #include "../System/Enum.h"
 
 class EntityAnimation {
-public:
-    const std::string &getName() const;
-
-    void setName(const std::string &name);
-
-    float getX() const;
-
-    void setX(float x);
-
-    float getY() const;
-
-    void setY(float y);
-
-    int getWidth() const;
-
-    void setWidth(int width);
-
-    int getHeight() const;
-
-    void setHeight(int height);
-
-    const sf::Sprite &getSprite() const;
-
-    void setSprite(const sf::Sprite &sprite);
-
-    const sf::Texture &getTexture() const;
-
-    void setTexture(const sf::Texture &texture);
-
-    float getAnimationResolution() const;
-
-    void setAnimationResolution(float animationResolution);
-
-    float getSpeed() const;
-
-    void setSpeed(float speed);
 
 protected:
     std::string name = "";
-
-    float x = 0;
-    float y = 0;
+    sf::Vector2f worldCoordinates;
 
     int width = 0;
     int height = 0;
@@ -80,7 +41,7 @@ protected:
     void renderCurrentFrame();
 
 public:
-    bool contains(float x, float y);
+    bool contains(sf::Vector2f targetCoordinates);
 
     void updateFrameTime();
 
@@ -90,9 +51,34 @@ public:
 
     void updateAnimation();
 
+public:
+    const std::string &getName() const;
+
+    void setName(const std::string &name);
+
+    const sf::Vector2f &getWorldCoordinates() const;
+
+    void setWorldCoordinates(const sf::Vector2f &worldCoordinates);
+
+    int getWidth() const;
+
+    void setWidth(int width);
+
+    int getHeight() const;
+
+    void setHeight(int height);
+
     Direction getDirection() const;
 
     void setDirection(Direction direction);
+
+    float getSpeed() const;
+
+    void setSpeed(float speed);
+
+    const sf::Texture &getTexture() const;
+
+    void setTexture(const sf::Texture &texture);
 };
 
 #endif //THE_CORP_GAME_ENTITYANIMATION_CPP_H

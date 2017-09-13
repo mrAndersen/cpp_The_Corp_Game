@@ -5,7 +5,7 @@
 void EntityAnimation::renderCurrentFrame() {
     auto frame = frames[currentFrame];
 
-    sprite.setPosition(x, y);
+    sprite.setPosition(worldCoordinates);
     sprite.setTextureRect(frame);
 
     if (direction == Direction::Left) {
@@ -17,15 +17,6 @@ void EntityAnimation::renderCurrentFrame() {
     }
 
     System::window->draw(sprite);
-}
-
-bool EntityAnimation::contains(float x, float y) {
-    return
-            x > this->x &&
-            x < x + this->width &&
-            y > this->y &&
-            y < y + this->height;
-
 }
 
 void EntityAnimation::updateFrameTime() {
@@ -61,23 +52,15 @@ void EntityAnimation::updateAnimation() {
     }
 
     if (direction == Direction::Right) {
-        this->x += (frameTimeMs / 1000) * speed;
+        this->worldCoordinates.x += (frameTimeMs / 1000) * speed;
     }
 
     if (direction == Direction::Left) {
-        this->x -= (frameTimeMs / 1000) * speed;
+        this->worldCoordinates.x -= (frameTimeMs / 1000) * speed;
     }
 
     this->renderCurrentFrame();
     this->updateFrameTime();
-}
-
-Direction EntityAnimation::getDirection() const {
-    return this->direction;
-}
-
-void EntityAnimation::setDirection(Direction direction) {
-    this->direction = direction;
 }
 
 const std::string &EntityAnimation::getName() const {
@@ -88,20 +71,13 @@ void EntityAnimation::setName(const std::string &name) {
     EntityAnimation::name = name;
 }
 
-float EntityAnimation::getX() const {
-    return x;
+const sf::Vector2f &EntityAnimation::getWorldCoordinates() const {
+    return worldCoordinates;
 }
 
-void EntityAnimation::setX(float x) {
-    EntityAnimation::x = x;
-}
-
-float EntityAnimation::getY() const {
-    return y;
-}
-
-void EntityAnimation::setY(float y) {
-    EntityAnimation::y = y;
+void EntityAnimation::setWorldCoordinates(const sf::Vector2f &worldCoordinates) {
+    EntityAnimation::worldCoordinates = worldCoordinates;
+    EntityAnimation::worldCoordinates.y = System::screenHeight - EntityAnimation::worldCoordinates.y;
 }
 
 int EntityAnimation::getWidth() const {
@@ -120,28 +96,12 @@ void EntityAnimation::setHeight(int height) {
     EntityAnimation::height = height;
 }
 
-const sf::Sprite &EntityAnimation::getSprite() const {
-    return sprite;
+Direction EntityAnimation::getDirection() const {
+    return direction;
 }
 
-void EntityAnimation::setSprite(const sf::Sprite &sprite) {
-    EntityAnimation::sprite = sprite;
-}
-
-const sf::Texture &EntityAnimation::getTexture() const {
-    return texture;
-}
-
-void EntityAnimation::setTexture(const sf::Texture &texture) {
-    EntityAnimation::texture = texture;
-}
-
-float EntityAnimation::getAnimationResolution() const {
-    return animationResolution;
-}
-
-void EntityAnimation::setAnimationResolution(float animationResolution) {
-    EntityAnimation::animationResolution = animationResolution;
+void EntityAnimation::setDirection(Direction direction) {
+    EntityAnimation::direction = direction;
 }
 
 float EntityAnimation::getSpeed() const {
@@ -152,3 +112,10 @@ void EntityAnimation::setSpeed(float speed) {
     EntityAnimation::speed = speed;
 }
 
+const sf::Texture &EntityAnimation::getTexture() const {
+    return texture;
+}
+
+void EntityAnimation::setTexture(const sf::Texture &texture) {
+    EntityAnimation::texture = texture;
+}

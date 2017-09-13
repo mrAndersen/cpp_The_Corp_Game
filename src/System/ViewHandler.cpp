@@ -8,13 +8,16 @@
 namespace ViewHandler {
     float zoomFactor = 1.f;
     Direction viewDirectionMovement = Direction::None;
+
     sf::View view;
+    sf::Clock viewClock;
 
     void handleViewScroll() {
-        int frameTimeMs = System::systemClock.restart().asMilliseconds();
-        int scrollSpeed = 2;
+        int scrollSpeed = 20;
 
-        if (frameTimeMs > 20) {
+        if(viewClock.getElapsedTime().asMilliseconds() > 20){
+            viewClock.restart();
+
             if (viewDirectionMovement == Direction::Left) {
                 view.move(-scrollSpeed, 0);
             }
@@ -46,9 +49,9 @@ namespace ViewHandler {
             if (viewDirectionMovement == Direction::DownRight) {
                 view.move(scrollSpeed, scrollSpeed);
             }
-        }
 
-        System::window->setView(view);
+            System::window->setView(view);
+        }
     }
 
     void handleViewScrollKeyPress(sf::Event e) {

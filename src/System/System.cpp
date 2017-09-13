@@ -1,3 +1,4 @@
+#include <SFML/Window/Mouse.hpp>
 #include "../../includes/System/System.h"
 #include "../../includes/System/ViewHandler.h"
 
@@ -7,8 +8,7 @@ namespace System {
     std::string title = "New World";
 
     //sys
-    sf::Time systemTime;
-    sf::Clock systemClock;
+    sf::Clock fpsClock;
     sf::RenderWindow *window;
     //sys
 
@@ -19,8 +19,8 @@ namespace System {
     //debug
     std::map<std::string, sf::Text> debugPanelTextNodes;
     sf::Font openSans;
-    int mouseX = 0;
-    int mouseY = 0;
+    float g_x = 0;
+    float g_y = 0;
     int framesPassed = 0;
     int entitiesOnScreen = 0;
     int fps = 0;
@@ -31,34 +31,43 @@ namespace System {
     }
 
     void refreshDebugPanel() {
-        fps = (int) (framesPassed / systemTime.asSeconds());
+        auto mousePosition = sf::Mouse::getPosition(*window);
+        int mouseX = mousePosition.x;
+        int mouseY = mousePosition.y;
+
+        auto coordMap = window->mapPixelToCoords(mousePosition);
+
+        g_x = coordMap.x;
+        g_y = System::screenHeight - coordMap.y;
+
+        fps = (int) (framesPassed / fpsClock.getElapsedTime().asSeconds());
+
+        debugPanelTextNodes["global_coordinates"].setString("g_x:" + std::to_string(g_x) + " g_y:" + std::to_string(g_y));
+        window->draw(debugPanelTextNodes["global_coordinates"]);
 
         debugPanelTextNodes["fps"].setString("fps: " + std::to_string(fps));
         window->draw(debugPanelTextNodes["fps"]);
 
-        debugPanelTextNodes["mouse"].setString("x:" + std::to_string(mouseX) + " y:" + std::to_string(mouseY));
+        debugPanelTextNodes["mouse"].setString("m_x:" + std::to_string(mouseX) + " m_y:" + std::to_string(mouseY));
         window->draw(debugPanelTextNodes["mouse"]);
 
-        debugPanelTextNodes["characters_count"].setString("characters: " + std::to_string(entitiesOnScreen));
-        window->draw(debugPanelTextNodes["characters_count"]);
+        debugPanelTextNodes["entity_count"].setString("e_count: " + std::to_string(entitiesOnScreen));
+        window->draw(debugPanelTextNodes["entity_count"]);
 
-        debugPanelTextNodes["view_direction"].setString("direction: " + std::to_string(ViewHandler::viewDirectionMovement));
+        debugPanelTextNodes["view_direction"].setString("v_direction: " + std::to_string(ViewHandler::viewDirectionMovement));
         window->draw(debugPanelTextNodes["view_direction"]);
     }
 
     void initWindow() {
-        systemTime = sf::Time::Zero;
         window = new sf::RenderWindow(sf::VideoMode(screenWidth, screenHeight), title, sf::Style::Close);
+        window->setFramerateLimit(300);
+        window->clear(grey);
 
+        ViewHandler::view = window->getDefaultView();
         ViewHandler::view.reset(sf::FloatRect(0, 0, screenWidth, screenHeight));
         ViewHandler::view.setCenter(screenWidth / 2, screenHeight / 2);
 
-        //full rect
-        ViewHandler::view.setViewport(sf::FloatRect(0, 0, 1, 1));
-
         window->setView(ViewHandler::view);
-        window->setFramerateLimit(300);
-        window->clear(grey);
     }
 
     void initDebug() {
@@ -80,13 +89,13 @@ namespace System {
         t_mouse.setCharacterSize(10);
         debugPanelTextNodes["mouse"] = t_mouse;
 
-        //Mouse Coordinates
-        sf::Text t_characters_count;
-        t_characters_count.setPosition(20, 60);
-        t_characters_count.setFillColor(sf::Color::Black);
-        t_characters_count.setFont(openSans);
-        t_characters_count.setCharacterSize(10);
-        debugPanelTextNodes["characters_count"] = t_characters_count;
+        //Entites count
+        sf::Text t_entity_count;
+        t_entity_count.setPosition(20, 60);
+        t_entity_count.setFillColor(sf::Color::Black);
+        t_entity_count.setFont(openSans);
+        t_entity_count.setCharacterSize(10);
+        debugPanelTextNodes["entity_count"] = t_entity_count;
 
         //View direction
         sf::Text t_view_direction;
@@ -95,5 +104,13 @@ namespace System {
         t_view_direction.setFont(openSans);
         t_view_direction.setCharacterSize(10);
         debugPanelTextNodes["view_direction"] = t_view_direction;
+
+        //Global coordinates
+        sf::Text t_global_coordinates;
+        t_global_coordinates.setPosition(20, 100);
+        t_global_coordinates.setFillColor(sf::Color::Black);
+        t_global_coordinates.setFont(openSans);
+        t_global_coordinates.setCharacterSize(10);
+        debugPanelTextNodes["global_coordinates"] = t_global_coordinates;
     }
 }

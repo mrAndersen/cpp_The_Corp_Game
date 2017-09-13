@@ -6,7 +6,7 @@
 
 class Clerk : public EntityAnimation {
 public:
-    Clerk(int x, int y);
+    Clerk(sf::Vector2f coordinates);
 };
 
 #endif //THE_CORP_GAME_CLERK_H
