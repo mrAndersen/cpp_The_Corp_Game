@@ -2,7 +2,7 @@
 #define THE_CORP_GAME_CLERK_H
 
 #include "../System/ResourceLoader.h"
-#include "../EntityAnimation/EntityAnimation.h"
+#include "../EntityAnimation/Movable.h"
 
 class Clerk : public EntityAnimation {
 public:

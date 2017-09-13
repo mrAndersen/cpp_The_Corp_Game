@@ -1,5 +1,5 @@
 #include "../../includes/System/Enum.h"
-#include "../../includes/EntityAnimation/EntityAnimation.h"
+#include "../../includes/EntityAnimation/Movable.h"
 #include "../../includes/System/System.h"
 
 void EntityAnimation::renderCurrentFrame() {
@@ -21,14 +21,24 @@ void EntityAnimation::renderCurrentFrame() {
     if (System::animationDebug) {
         sf::RectangleShape skeleton;
 
-        skeleton.setSize(sf::Vector2f(this->width, this->height));
+        skeleton.setSize(sf::Vector2f(width, height));
         skeleton.setFillColor(sf::Color::Transparent);
         skeleton.setOutlineColor(System::red);
         skeleton.setPosition(worldCoordinates.x - skeleton.getSize().x / 2,
                              worldCoordinates.y - skeleton.getSize().y / 2);
         skeleton.setOutlineThickness(2);
-
         System::window->draw(skeleton);
+
+        sf::Text debugString;
+        debugString.setString(
+                "{" + std::to_string((int)worldCoordinates.x) + "," + std::to_string((int)worldCoordinates.y) + "}" +
+                "[" + std::to_string((int)health) + "]"
+        );
+        debugString.setFillColor(sf::Color::Black);
+        debugString.setPosition(worldCoordinates.x - skeleton.getSize().x / 2, worldCoordinates.y - skeleton.getSize().y / 2 - 15);
+        debugString.setFont(System::openSans);
+        debugString.setCharacterSize(10);
+        System::window->draw(debugString);
     }
 }
 
@@ -55,25 +65,46 @@ void EntityAnimation::createAnimationFrames() {
         frames.push_back(rect);
     }
 
-    this->animationResolution = 1000 / frames.size();
-    this->sprite.setTextureRect(frames[0]);
+    animationResolution = 1000 / frames.size();
+    sprite.setTextureRect(frames[0]);
 }
+
+void EntityAnimation::update() {
+    updateAnimation();
+    updateLogic();
+}
+
 
 void EntityAnimation::updateAnimation() {
     if (isAnimationResolutionReached()) {
-        this->currentFrame = (currentFrame == (totalFrames - 1)) ? 0 : currentFrame + 1;
+        currentFrame = (currentFrame == (totalFrames - 1)) ? 0 : currentFrame + 1;
     }
 
+    float frameDistance = (frameTimeMs / 1000) * speed;
+
     if (direction == Direction::Right) {
-        this->worldCoordinates.x += (frameTimeMs / 1000) * speed;
+        worldCoordinates.x += frameDistance;
+        distancePassed += frameDistance;
     }
 
     if (direction == Direction::Left) {
-        this->worldCoordinates.x -= (frameTimeMs / 1000) * speed;
+        worldCoordinates.x -= (frameTimeMs / 1000) * speed;
+        distancePassed += frameDistance;
     }
 
-    this->renderCurrentFrame();
-    this->updateFrameTime();
+    renderCurrentFrame();
+    updateFrameTime();
+}
+
+bool EntityAnimation::clicked(sf::Vector2f targetCoordinates) {
+
+    return false;
+}
+
+void EntityAnimation::updateLogic() {
+    health = 100 - (distancePassed / 300) * 100;
+
+
 }
 
 const std::string &EntityAnimation::getName() const {
@@ -89,8 +120,7 @@ const sf::Vector2f &EntityAnimation::getWorldCoordinates() const {
 }
 
 void EntityAnimation::setWorldCoordinates(const sf::Vector2f &worldCoordinates) {
-    EntityAnimation::worldCoordinates = worldCoordinates;
-    EntityAnimation::worldCoordinates.y = System::screenHeight - EntityAnimation::worldCoordinates.y;
+    EntityAnimation::worldCoordinates = System::convertToGLCoordinates(worldCoordinates);
 }
 
 int EntityAnimation::getWidth() const {
@@ -132,3 +162,6 @@ const sf::Texture &EntityAnimation::getTexture() const {
 void EntityAnimation::setTexture(const sf::Texture &texture) {
     EntityAnimation::texture = texture;
 }
+
+
+

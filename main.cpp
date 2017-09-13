@@ -66,7 +66,7 @@ int main() {
         ViewHandler::handleViewScroll();
 
         for (auto character : characters) {
-            character->updateAnimation();
+            character->update();
         }
 
         System::window->display();

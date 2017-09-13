@@ -10,12 +10,17 @@
 class EntityAnimation {
 
 protected:
+    //parameters
     std::string name = "";
     sf::Vector2f worldCoordinates;
 
     int width = 0;
     int height = 0;
 
+    float health = 100;
+    float distancePassed = 0;
+
+    //animation properties
     int totalFrames = 8;
     int currentFrame = 0;
 
@@ -28,7 +33,7 @@ protected:
     sf::Clock clock;
 
     //frame coordinates inside sprite
-    std::vector<sf::IntRect> frames;
+    std::vector<sf::IntRect> frames = {};
 
     //milliseconds
     float animationResolution = 500;
@@ -36,12 +41,12 @@ protected:
     float frameTimeMs = 0;
 
     //pixels per second
-    float speed = 120;
+    float speed = 0;
 
     void renderCurrentFrame();
 
 public:
-    bool contains(sf::Vector2f targetCoordinates);
+    bool clicked(sf::Vector2f targetCoordinates);
 
     void updateFrameTime();
 
@@ -49,7 +54,11 @@ public:
 
     void createAnimationFrames();
 
+    void update();
+
     void updateAnimation();
+
+    void updateLogic();
 
 public:
     const std::string &getName() const;

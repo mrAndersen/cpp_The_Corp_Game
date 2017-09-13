@@ -29,7 +29,6 @@ namespace System {
     extern int framesPassed;
     extern int entitiesOnScreen;
     extern int fps;
-
     extern bool animationDebug;
     //debug
 
@@ -40,6 +39,12 @@ namespace System {
     void initWindow();
 
     void initDebug();
+
+    sf::Text createDebugString(const std::string &alias, int index);
+
+    sf::Vector2f convertToGLCoordinates(sf::Vector2f worldCoordinates);
+
+    sf::Vector2f convertToGLCoordinates(float x, float y);
 }
 
 #endif //THE_CORP_GAME_SYSTEM_H
