@@ -1,4 +1,4 @@
-#include "../../includes/EntityAnimation/Movable.h"
+#include "../../includes/Animation/Movable.h"
 #include "../../includes/System/ResourceLoader.h"
 #include "../../includes/Characters/Clerk.h"
 

@@ -28,7 +28,7 @@ include_directories("${PROJECT_BINARY_DIR}")
 
 # Define sources and executable
 set(EXECUTABLE_NAME "corpgame")
-add_executable(${EXECUTABLE_NAME} WIN32 main.cpp src/Characters/Clerk.cpp src/Animation/Movable.cpp includes/System/Enum.h src/System/ResourceLoader.cpp src/System/ViewHandler.cpp src/System/System.cpp includes/System/ResourceLoader.h includes/System/System.h includes/System/ViewHandler.h includes/Characters/Clerk.h includes/EntityAnimation/Movable.h)
+add_executable(${EXECUTABLE_NAME} WIN32 main.cpp includes/System/EntityContainer.h src/System/EntityContainer.cpp src/Characters/Clerk.cpp src/Animation/Movable.cpp includes/System/Enum.h src/System/ResourceLoader.cpp src/System/ViewHandler.cpp src/System/System.cpp includes/System/ResourceLoader.h includes/System/System.h includes/System/ViewHandler.h includes/Characters/Clerk.h includes/Animation/Movable.h)
 
 
 # Detect and add SFML

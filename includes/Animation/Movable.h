@@ -7,7 +7,7 @@
 #include <SFML/System/Clock.hpp>
 #include "../System/Enum.h"
 
-class EntityAnimation {
+class Movable {
 
 protected:
     //parameters

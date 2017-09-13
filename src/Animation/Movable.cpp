@@ -1,8 +1,9 @@
 #include "../../includes/System/Enum.h"
-#include "../../includes/EntityAnimation/Movable.h"
+#include "../../includes/Animation/Movable.h"
 #include "../../includes/System/System.h"
+#include "../../includes/System/EntityContainer.h"
 
-void EntityAnimation::renderCurrentFrame() {
+void Movable::renderCurrentFrame() {
     auto frame = frames[currentFrame];
 
     sprite.setPosition(worldCoordinates);
@@ -31,23 +32,24 @@ void EntityAnimation::renderCurrentFrame() {
 
         sf::Text debugString;
         debugString.setString(
-                "{" + std::to_string((int)worldCoordinates.x) + "," + std::to_string((int)worldCoordinates.y) + "}" +
-                "[" + std::to_string((int)health) + "]"
+                "{" + std::to_string((int) worldCoordinates.x) + "," + std::to_string((int) worldCoordinates.y) + "}" +
+                "[" + std::to_string((int) health) + "]"
         );
         debugString.setFillColor(sf::Color::Black);
-        debugString.setPosition(worldCoordinates.x - skeleton.getSize().x / 2, worldCoordinates.y - skeleton.getSize().y / 2 - 15);
+        debugString.setPosition(worldCoordinates.x - skeleton.getSize().x / 2,
+                                worldCoordinates.y - skeleton.getSize().y / 2 - 15);
         debugString.setFont(System::openSans);
         debugString.setCharacterSize(10);
         System::window->draw(debugString);
     }
 }
 
-void EntityAnimation::updateFrameTime() {
+void Movable::updateFrameTime() {
     frameTimeMs = clock.restart().asMilliseconds();
     totalAnimationFrameTimeMs += frameTimeMs;
 }
 
-bool EntityAnimation::isAnimationResolutionReached() {
+bool Movable::isAnimationResolutionReached() {
     if (totalAnimationFrameTimeMs >= animationResolution) {
         totalAnimationFrameTimeMs = 0;
         return true;
@@ -56,7 +58,7 @@ bool EntityAnimation::isAnimationResolutionReached() {
     }
 }
 
-void EntityAnimation::createAnimationFrames() {
+void Movable::createAnimationFrames() {
     sprite.setTexture(texture);
     sprite.setOrigin(width / 2, height / 2);
 
@@ -69,13 +71,13 @@ void EntityAnimation::createAnimationFrames() {
     sprite.setTextureRect(frames[0]);
 }
 
-void EntityAnimation::update() {
+void Movable::update() {
     updateAnimation();
     updateLogic();
 }
 
 
-void EntityAnimation::updateAnimation() {
+void Movable::updateAnimation() {
     if (isAnimationResolutionReached()) {
         currentFrame = (currentFrame == (totalFrames - 1)) ? 0 : currentFrame + 1;
     }
@@ -96,71 +98,73 @@ void EntityAnimation::updateAnimation() {
     updateFrameTime();
 }
 
-bool EntityAnimation::clicked(sf::Vector2f targetCoordinates) {
+bool Movable::clicked(sf::Vector2f targetCoordinates) {
 
     return false;
 }
 
-void EntityAnimation::updateLogic() {
-    health = 100 - (distancePassed / 300) * 100;
+void Movable::updateLogic() {
+    health = 100 - (distancePassed / 100) * 100;
 
-
+    if (health <= 0) {
+        EntityContainer::remove(this);
+    }
 }
 
-const std::string &EntityAnimation::getName() const {
+const std::string &Movable::getName() const {
     return name;
 }
 
-void EntityAnimation::setName(const std::string &name) {
-    EntityAnimation::name = name;
+void Movable::setName(const std::string &name) {
+    Movable::name = name;
 }
 
-const sf::Vector2f &EntityAnimation::getWorldCoordinates() const {
+const sf::Vector2f &Movable::getWorldCoordinates() const {
     return worldCoordinates;
 }
 
-void EntityAnimation::setWorldCoordinates(const sf::Vector2f &worldCoordinates) {
-    EntityAnimation::worldCoordinates = System::convertToGLCoordinates(worldCoordinates);
+void Movable::setWorldCoordinates(const sf::Vector2f &worldCoordinates) {
+    Movable::worldCoordinates = System::convertToGLCoordinates(worldCoordinates);
 }
 
-int EntityAnimation::getWidth() const {
+int Movable::getWidth() const {
     return width;
 }
 
-void EntityAnimation::setWidth(int width) {
-    EntityAnimation::width = width;
+void Movable::setWidth(int width) {
+    Movable::width = width;
 }
 
-int EntityAnimation::getHeight() const {
+int Movable::getHeight() const {
     return height;
 }
 
-void EntityAnimation::setHeight(int height) {
-    EntityAnimation::height = height;
+void Movable::setHeight(int height) {
+    Movable::height = height;
 }
 
-Direction EntityAnimation::getDirection() const {
+Direction Movable::getDirection() const {
     return direction;
 }
 
-void EntityAnimation::setDirection(Direction direction) {
-    EntityAnimation::direction = direction;
+void Movable::setDirection(Direction direction) {
+    Movable::direction = direction;
 }
 
-float EntityAnimation::getSpeed() const {
+float Movable::getSpeed() const {
     return speed;
 }
 
-void EntityAnimation::setSpeed(float speed) {
-    EntityAnimation::speed = speed;
+void Movable::setSpeed(float speed) {
+    Movable::speed = speed;
 }
 
-const sf::Texture &EntityAnimation::getTexture() const {
+const sf::Texture &Movable::getTexture() const {
     return texture;
 }
 
-void EntityAnimation::setTexture(const sf::Texture &texture) {
-    EntityAnimation::texture = texture;
+void Movable::setTexture(const sf::Texture &texture) {
+    Movable::texture = texture;
 }
 
 

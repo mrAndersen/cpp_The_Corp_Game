@@ -4,6 +4,7 @@
 #include "includes/System/System.h"
 #include "includes/System/ResourceLoader.h"
 #include "includes/System/ViewHandler.h"
+#include "includes/System/EntityContainer.h"
 #include "includes/Characters/Clerk.h"
 
 int main() {
@@ -14,14 +15,11 @@ int main() {
     System::initWindow();
     System::initDebug();
 
-    //entities
-    std::vector<Clerk *> characters;
-
     //frame loop
     while (System::window->isOpen()) {
         System::window->clear(System::grey);
 
-        System::entitiesOnScreen = characters.size();
+        System::entitiesOnScreen = EntityContainer::size();
         System::framesPassed++;
 
         System::refreshTitleStats();
@@ -50,7 +48,7 @@ int main() {
                         clerk->setDirection(Direction::Right);
                     }
 
-                    characters.push_back(clerk);
+                    EntityContainer::add(clerk);
                 }
             }
 
@@ -65,8 +63,8 @@ int main() {
 
         ViewHandler::handleViewScroll();
 
-        for (auto character : characters) {
-            character->update();
+        for (auto movable : EntityContainer::getAll()) {
+            movable->update();
         }
 
         System::window->display();
