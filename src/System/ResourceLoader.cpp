@@ -20,6 +20,6 @@ namespace ResourceLoader {
     }
 
     void loadTexturesFromFiles() {
-        ResourceLoader::loadSingleTexture(Objects::CharacterClerk, "resources/braid.monster.png");
+        ResourceLoader::loadSingleTexture(Objects::CharacterClerk, "resources/128px.png");
     }
 }

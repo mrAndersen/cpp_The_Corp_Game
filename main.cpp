@@ -15,11 +15,13 @@ int main() {
     System::initWindow();
     System::initDebug();
 
+    EntityContainer::initGround();
+
     //frame loop
     while (System::window->isOpen()) {
         System::window->clear(System::grey);
 
-        System::entitiesOnScreen = EntityContainer::size();
+        System::entitiesOnScreen = EntityContainer::movableSize() + EntityContainer::staticSize();
         System::framesPassed++;
 
         System::refreshTitleStats();
@@ -41,14 +43,14 @@ int main() {
                     auto *clerk = new Clerk(sf::Vector2f(System::g_x, System::g_y));
 
                     if (e.mouseButton.button == sf::Mouse::Button::Left) {
-                        clerk->setDirection(Direction::Left);
+                        clerk->setDirection(Direction::Down);
                     }
 
                     if (e.mouseButton.button == sf::Mouse::Button::Right) {
                         clerk->setDirection(Direction::Right);
                     }
 
-                    EntityContainer::add(clerk);
+                    EntityContainer::addMovable(clerk);
                 }
             }
 
@@ -63,7 +65,11 @@ int main() {
 
         ViewHandler::handleViewScroll();
 
-        for (auto movable : EntityContainer::getAll()) {
+        for (auto static_ : EntityContainer::getStaticItems()) {
+            static_->update();
+        }
+
+        for (auto movable : EntityContainer::getMovableItems()) {
             movable->update();
         }
 

@@ -4,17 +4,26 @@
 #include "../System/ResourceLoader.h"
 #include "../Animation/Movable.h"
 #include "../Characters/Clerk.h"
+#include "../Animation/Static.h"
 
 namespace EntityContainer {
-    extern std::vector<Movable *> items;
+    extern std::vector<Movable *> m_items;
+    extern std::vector<Static *> s_items;
 
-    std::vector<Movable *> getAll();
+    std::vector<Movable *> getMovableItems();
+    std::vector<Static *> getStaticItems();
 
-    void add(Movable *item);
+    void addMovable(Movable *item);
+    void addStatic(Static *item);
 
-    void remove(Movable *item);
+    void removeMovable(Movable *item);
+    void removeStatic(Static *item);
 
-    int size();
+    int movableSize();
+    int staticSize();
+
+
+    void initGround();
 }
 
 

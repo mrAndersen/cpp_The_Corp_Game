@@ -9,6 +9,7 @@ namespace System {
     extern unsigned int screenWidth;
     extern unsigned int screenHeight;
     extern std::string title;
+    extern float groundLevel;
 
     //sys
     extern sf::Time systemTime;
@@ -19,6 +20,7 @@ namespace System {
     //utility
     extern sf::Color grey;
     extern sf::Color red;
+    extern sf::Color green;
     //utility
 
     //debug

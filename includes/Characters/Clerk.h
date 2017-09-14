@@ -7,7 +7,7 @@
 class Clerk : public Movable {
 public:
     const static int width = 128;
-    const static int height = 125;
+    const static int height = 120;
 
     explicit Clerk(sf::Vector2f coordinates);
 };

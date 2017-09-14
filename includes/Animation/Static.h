@@ -1,13 +1,12 @@
-#ifndef THE_CORP_GAME_ENTITYANIMATION_CPP_H
-#define THE_CORP_GAME_ENTITYANIMATION_CPP_H
+#ifndef THE_CORP_GAME_STATIC_H
+#define THE_CORP_GAME_STATIC_H
 
+#include <SFML/System.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
-#include <SFML/Graphics.hpp>
-#include <SFML/System/Time.hpp>
-#include <SFML/System/Clock.hpp>
-#include "../System/Enum.h"
+#include <SFML/Graphics/RectangleShape.hpp>
 
-class Movable {
+class Static {
 
 protected:
     //parameters
@@ -17,18 +16,13 @@ protected:
     int width = 0;
     int height = 0;
 
-    float health = 100;
-    float distancePassed = 0;
-
     //animation properties
     int totalFrames = 8;
     int currentFrame = 0;
-    float scale = 1.f;
-
-    Direction direction = Direction::Right;
 
     sf::Sprite sprite;
     sf::Texture texture;
+    sf::RectangleShape rect;
 
     sf::Clock clock;
     sf::Clock liveClock;
@@ -40,10 +34,6 @@ protected:
     float animationResolution = 500;
     float totalAnimationFrameTimeMs = 0;
     float frameTimeMs = 0;
-
-    //pixels per second
-    float speed = 0;
-    float fallAcceleration = 98.32 * 2.f;
 
     void renderCurrentFrame();
 
@@ -63,21 +53,13 @@ public:
     void updateLogic();
 
 public:
-    int getTotalFrames() const;
+    const sf::Vector2f &getWorldCoordinates() const;
 
-    void setTotalFrames(int totalFrames);
-
-    float getScale() const;
-
-    void setScale(float scale);
+    void setWorldCoordinates(const sf::Vector2f &worldCoordinates);
 
     const std::string &getName() const;
 
     void setName(const std::string &name);
-
-    const sf::Vector2f &getWorldCoordinates() const;
-
-    void setWorldCoordinates(const sf::Vector2f &worldCoordinates);
 
     int getWidth() const;
 
@@ -87,17 +69,13 @@ public:
 
     void setHeight(int height);
 
-    Direction getDirection() const;
+    const sf::Sprite &getSprite() const;
 
-    void setDirection(Direction direction);
-
-    float getSpeed() const;
-
-    void setSpeed(float speed);
+    void setSprite(const sf::Sprite &sprite);
 
     const sf::Texture &getTexture() const;
 
     void setTexture(const sf::Texture &texture);
 };
 
-#endif //THE_CORP_GAME_ENTITYANIMATION_CPP_H
+#endif //THE_CORP_GAME_STATIC_H
