@@ -76,7 +76,7 @@ namespace System {
 //        screenHeight = (unsigned int) w_Desktop.bottom;
 
         window = new sf::RenderWindow(sf::VideoMode(screenWidth, screenHeight), title, sf::Style::Close);
-        window->setFramerateLimit(300);
+        window->setFramerateLimit(420);
         window->clear(grey);
 
         ViewHandler::view = window->getDefaultView();

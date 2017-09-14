@@ -28,7 +28,7 @@ protected:
     Direction direction = Direction::Right;
 
     sf::Sprite sprite;
-    sf::Texture texture;
+    sf::Texture* texture;
 
     sf::Clock clock;
     sf::Clock liveClock;
@@ -95,9 +95,9 @@ public:
 
     void setSpeed(float speed);
 
-    const sf::Texture &getTexture() const;
+    sf::Texture *getTexture() const;
 
-    void setTexture(const sf::Texture &texture);
+    void setTexture(sf::Texture *texture);
 };
 
 #endif //THE_CORP_GAME_ENTITYANIMATION_CPP_H

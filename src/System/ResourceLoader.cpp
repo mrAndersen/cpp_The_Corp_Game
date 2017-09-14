@@ -12,13 +12,13 @@ namespace ResourceLoader {
         ResourceLoader::textureCollection[object] = texture;
     }
 
-    sf::Texture getSingleTexture(Objects object) {
+    sf::Texture* getSingleTexture(Objects object) {
         if (!ResourceLoader::textureCollection.count(object)) {
             throw std::invalid_argument("Unable to load texture");
         }
 
         sf::Texture* texture = textureCollection[object];
-        return *ResourceLoader::textureCollection[object];
+        return texture;
     }
 
     void loadTexturesFromFiles() {

@@ -1,11 +1,10 @@
 cmake_minimum_required(VERSION 3.8)
-project(the_corp_game)
+
 
 set(SFML_ROOT "${PROJECT_SOURCE_DIR}/vendor/mingw_sfml-2.4.2")
 include_directories("${PROJECT_SOURCE_DIR}/src")
 
 file(COPY "resources" DESTINATION "${CMAKE_BINARY_DIR}")
-file(COPY "vendor/mingw_sfml-2.4.2/bin/" DESTINATION "${CMAKE_BINARY_DIR}")
 
 # Enable debug symbols by default
 # must be done before project() statement
@@ -15,6 +14,7 @@ endif()
 # (you can also set it on the command line: -D CMAKE_BUILD_TYPE=Release)
 
 project(the_corp_game)
+
 
 # Set version information in a config.h file
 set(the_corp_game_VERSION_MAJOR 1)
@@ -30,23 +30,25 @@ include_directories("${PROJECT_BINARY_DIR}")
 set(EXECUTABLE_NAME "corpgame")
 add_executable(${EXECUTABLE_NAME} main.cpp includes/System/EntityContainer.h src/System/EntityContainer.cpp src/Characters/Clerk.cpp src/Animation/Movable.cpp includes/System/Enum.h src/System/ResourceLoader.cpp src/System/ViewHandler.cpp src/System/System.cpp includes/System/ResourceLoader.h includes/System/System.h includes/System/ViewHandler.h includes/Characters/Clerk.h includes/Animation/Movable.h includes/Animation/Static.h src/Animation/Static.cpp includes/Objects/Ground.h src/Objects/Ground.cpp)
 
-
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 
 #Find any version 2.X of SFML
 #See the FindSFML.cmake file for additional details and instructions
+set(SFML_STATIC_LIBRARIES TRUE)
 find_package(SFML 2 REQUIRED graphics network audio window system)
 if(SFML_FOUND)
     FIND_LIBRARY (PSAPI Psapi)
 
     include_directories(${SFML_INCLUDE_DIR})
-    target_link_libraries(${EXECUTABLE_NAME} ${PSAPI} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
+    target_link_libraries(${EXECUTABLE_NAME} ${PSAPI} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES} -static-libgcc -static-libstdc++ )
+#    target_link_libraries(${EXECUTABLE_NAME} PUBLIC )
 endif()
 
 
 # Install target
 install(TARGETS ${EXECUTABLE_NAME} DESTINATION bin)
+
 
 # CPack packaging
 include(InstallRequiredSystemLibraries)

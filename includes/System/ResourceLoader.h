@@ -10,7 +10,7 @@ namespace ResourceLoader {
 
     void loadSingleTexture(Objects gameTexture, const std::string &filePath);
 
-    sf::Texture getSingleTexture(Objects gameTexture);
+    sf::Texture* getSingleTexture(Objects gameTexture);
 
     void loadTexturesFromFiles();
 }

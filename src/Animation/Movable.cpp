@@ -62,7 +62,7 @@ bool Movable::isAnimationResolutionReached() {
 }
 
 void Movable::createAnimationFrames() {
-    sprite.setTexture(texture);
+    sprite.setTexture(*texture);
     sprite.setOrigin(width / 2, height / 2);
 
     for (int i = 0; i < totalFrames; ++i) {
@@ -183,14 +183,6 @@ void Movable::setSpeed(float speed) {
     Movable::speed = speed;
 }
 
-const sf::Texture &Movable::getTexture() const {
-    return texture;
-}
-
-void Movable::setTexture(const sf::Texture &texture) {
-    Movable::texture = texture;
-}
-
 float Movable::getScale() const {
     return scale;
 }
@@ -207,5 +199,10 @@ void Movable::setTotalFrames(int totalFrames) {
     Movable::totalFrames = totalFrames;
 }
 
+sf::Texture *Movable::getTexture() const {
+    return texture;
+}
 
-
+void Movable::setTexture(sf::Texture *texture) {
+    Movable::texture = texture;
+}

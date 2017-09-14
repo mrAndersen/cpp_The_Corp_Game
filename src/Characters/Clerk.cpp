@@ -9,7 +9,7 @@ Clerk::Clerk(sf::Vector2f coordinates) {
     this->setWidth(Clerk::width);
     this->setHeight(Clerk::height);
     this->setTotalFrames(24);
-    this->setSpeed(300);
+    this->setSpeed(120);
 
     this->setWorldCoordinates(coordinates);
 

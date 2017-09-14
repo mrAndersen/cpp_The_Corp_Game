@@ -72,11 +72,11 @@ int main() {
             static_->update();
         }
 
+
         for (auto movable : EntityContainer::getMovableItems()) {
             movable->update();
         }
 
-        std::cout << sizeof(EntityContainer::getStaticItems()) << "\r";
 
         System::window->display();
     }
