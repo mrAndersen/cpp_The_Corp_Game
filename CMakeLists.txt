@@ -1,20 +1,17 @@
 cmake_minimum_required(VERSION 3.8)
 
-
-set(SFML_ROOT "${PROJECT_SOURCE_DIR}/vendor/mingw_sfml-2.4.2")
-include_directories("${PROJECT_SOURCE_DIR}/src")
-
-file(COPY "resources" DESTINATION "${CMAKE_BINARY_DIR}")
-
 # Enable debug symbols by default
 # must be done before project() statement
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug CACHE STRING "Choose the type of build (Debug or Release)" FORCE)
 endif()
-# (you can also set it on the command line: -D CMAKE_BUILD_TYPE=Release)
 
 project(the_corp_game)
 
+set(SFML_ROOT "${PROJECT_SOURCE_DIR}/vendor/mingw_sfml-2.4.2")
+include_directories("${PROJECT_SOURCE_DIR}/src")
+
+file(COPY "resources" DESTINATION "${CMAKE_BINARY_DIR}")
 
 # Set version information in a config.h file
 set(the_corp_game_VERSION_MAJOR 1)
@@ -48,7 +45,6 @@ endif()
 
 # Install target
 install(TARGETS ${EXECUTABLE_NAME} DESTINATION bin)
-
 
 # CPack packaging
 include(InstallRequiredSystemLibraries)
