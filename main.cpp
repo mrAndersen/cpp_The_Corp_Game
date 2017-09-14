@@ -6,6 +6,7 @@
 #include "includes/System/ViewHandler.h"
 #include "includes/System/EntityContainer.h"
 #include "includes/Characters/Clerk.h"
+#include <iostream>
 
 int main() {
     //preload resources
@@ -15,7 +16,7 @@ int main() {
     System::initWindow();
     System::initDebug();
 
-    EntityContainer::initGround();
+//    EntityContainer::initGround();
 
     //frame loop
     while (System::window->isOpen()) {
@@ -40,17 +41,19 @@ int main() {
                         e.mouseButton.button == sf::Mouse::Button::Right
                         ) {
 
-                    auto *clerk = new Clerk(sf::Vector2f(System::g_x, System::g_y));
+                    for (int i = 0; i < 50 ; ++i) {
+                        auto *clerk = new Clerk(sf::Vector2f(System::g_x, System::g_y));
 
-                    if (e.mouseButton.button == sf::Mouse::Button::Left) {
-                        clerk->setDirection(Direction::Down);
+                        if (e.mouseButton.button == sf::Mouse::Button::Left) {
+                            clerk->setDirection(Direction::Left);
+                        }
+
+                        if (e.mouseButton.button == sf::Mouse::Button::Right) {
+                            clerk->setDirection(Direction::Right);
+                        }
+
+                        EntityContainer::addMovable(clerk);
                     }
-
-                    if (e.mouseButton.button == sf::Mouse::Button::Right) {
-                        clerk->setDirection(Direction::Right);
-                    }
-
-                    EntityContainer::addMovable(clerk);
                 }
             }
 
@@ -72,6 +75,8 @@ int main() {
         for (auto movable : EntityContainer::getMovableItems()) {
             movable->update();
         }
+
+        std::cout << sizeof(EntityContainer::getStaticItems()) << "\r";
 
         System::window->display();
     }

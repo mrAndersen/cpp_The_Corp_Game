@@ -6,7 +6,7 @@
 #include "Enum.h"
 
 namespace ResourceLoader {
-    extern std::map<int, sf::Texture> textureCollection;
+    extern std::map<int, sf::Texture*> textureCollection;
 
     void loadSingleTexture(Objects gameTexture, const std::string &filePath);
 

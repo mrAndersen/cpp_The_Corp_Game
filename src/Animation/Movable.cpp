@@ -123,7 +123,7 @@ void Movable::updateLogic() {
 
     if ((worldCoordinates.y - height / 2 <= System::groundLevel) && speed < 350) {
         direction = Direction::Right;
-        speed = 100;
+        speed = 300;
     }
 
     if (worldCoordinates.y - height / 2 <= System::groundLevel && speed > 350) {

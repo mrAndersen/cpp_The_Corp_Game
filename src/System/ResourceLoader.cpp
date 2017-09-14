@@ -3,20 +3,22 @@
 #include "../../includes/System/ResourceLoader.h"
 
 namespace ResourceLoader {
-    std::map<int, sf::Texture> textureCollection;
+    std::map<int, sf::Texture*> textureCollection;
 
-    void loadSingleTexture(Objects gameTexture, const std::string &filePath) {
-        sf::Texture texture;
-        texture.loadFromFile(filePath);
-        ResourceLoader::textureCollection[gameTexture] = texture;
+    void loadSingleTexture(Objects object, const std::string &filePath) {
+        auto *texture = new sf::Texture;
+
+        texture->loadFromFile(filePath);
+        ResourceLoader::textureCollection[object] = texture;
     }
 
-    sf::Texture getSingleTexture(Objects gameTexture) {
-        if (!ResourceLoader::textureCollection.count(gameTexture)) {
+    sf::Texture getSingleTexture(Objects object) {
+        if (!ResourceLoader::textureCollection.count(object)) {
             throw std::invalid_argument("Unable to load texture");
         }
 
-        return ResourceLoader::textureCollection[gameTexture];
+        sf::Texture* texture = textureCollection[object];
+        return *ResourceLoader::textureCollection[object];
     }
 
     void loadTexturesFromFiles() {

@@ -58,7 +58,9 @@ namespace System {
         debugPanelTextNodes["entity_count"].setString("entities: " + std::to_string(entitiesOnScreen));
         debugPanelTextNodes["v_direction"].setString(
                 "v_direction: " + std::to_string(ViewHandler::viewDirectionMovement));
-        debugPanelTextNodes["mem"].setString("mem:" + std::to_string((int) mem / 1024 / 1024) + "mb");
+        debugPanelTextNodes["mem"].setString(
+                "mem:" + std::to_string((int) mem / 1024 / 1024) + "mb"
+        );
 
         std::map<std::string, sf::Text>::iterator it;
         for (it = debugPanelTextNodes.begin(); it != debugPanelTextNodes.end(); it++) {
@@ -74,7 +76,7 @@ namespace System {
 //        screenHeight = (unsigned int) w_Desktop.bottom;
 
         window = new sf::RenderWindow(sf::VideoMode(screenWidth, screenHeight), title, sf::Style::Close);
-        window->setFramerateLimit(500);
+        window->setFramerateLimit(300);
         window->clear(grey);
 
         ViewHandler::view = window->getDefaultView();
