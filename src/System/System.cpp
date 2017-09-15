@@ -79,11 +79,11 @@ namespace System {
         window->setFramerateLimit(420);
         window->clear(grey);
 
-        ViewHandler::view = window->getDefaultView();
-        ViewHandler::view.reset(sf::FloatRect(0, 0, screenWidth, screenHeight));
-        ViewHandler::view.setCenter(screenWidth / 2, screenHeight / 2);
+        ViewHandler::view = new sf::View();
+        ViewHandler::view->reset(sf::FloatRect(0, 0, screenWidth, screenHeight));
+        ViewHandler::view->setCenter(screenWidth / 2, screenHeight / 2);
 
-        window->setView(ViewHandler::view);
+        window->setView(*ViewHandler::view);
     }
 
     sf::Text createDebugString(const std::string &alias, int index) {

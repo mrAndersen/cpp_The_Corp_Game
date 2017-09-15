@@ -9,7 +9,7 @@ namespace ViewHandler {
     float zoomFactor = 1.f;
     Direction viewDirectionMovement = Direction::None;
 
-    sf::View view;
+    sf::View* view;
     sf::Clock viewClock;
 
     void handleViewScroll() {
@@ -19,38 +19,38 @@ namespace ViewHandler {
             viewClock.restart();
 
             if (viewDirectionMovement == Direction::Left) {
-                view.move(-scrollSpeed, 0);
+                view->move(-scrollSpeed, 0);
             }
 
             if (viewDirectionMovement == Direction::Right) {
-                view.move(scrollSpeed, 0);
+                view->move(scrollSpeed, 0);
             }
 
             if (viewDirectionMovement == Direction::Up) {
-                view.move(0, -scrollSpeed);
+                view->move(0, -scrollSpeed);
             }
 
             if (viewDirectionMovement == Direction::Down) {
-                view.move(0, scrollSpeed);
+                view->move(0, scrollSpeed);
             }
 
             if (viewDirectionMovement == Direction::UpLeft) {
-                view.move(-scrollSpeed, -scrollSpeed);
+                view->move(-scrollSpeed, -scrollSpeed);
             }
 
             if (viewDirectionMovement == Direction::UpRight) {
-                view.move(scrollSpeed, -scrollSpeed);
+                view->move(scrollSpeed, -scrollSpeed);
             }
 
             if (viewDirectionMovement == Direction::DownLeft) {
-                view.move(-scrollSpeed, scrollSpeed);
+                view->move(-scrollSpeed, scrollSpeed);
             }
 
             if (viewDirectionMovement == Direction::DownRight) {
-                view.move(scrollSpeed, scrollSpeed);
+                view->move(scrollSpeed, scrollSpeed);
             }
 
-            System::window->setView(view);
+            System::window->setView(*view);
         }
     }
 

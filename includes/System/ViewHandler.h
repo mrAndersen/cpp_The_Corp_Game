@@ -6,7 +6,7 @@
 namespace ViewHandler {
     extern float zoomFactor;
     extern Direction viewDirectionMovement;
-    extern sf::View view;
+    extern sf::View* view;
     extern sf::Clock viewClock;
 
     void handleViewScroll();

@@ -41,7 +41,7 @@ int main() {
                         e.mouseButton.button == sf::Mouse::Button::Right
                         ) {
 
-                    for (int i = 0; i < 50 ; ++i) {
+                    for (int i = 0; i < 100 ; ++i) {
                         auto *clerk = new Clerk(sf::Vector2f(System::g_x, System::g_y));
 
                         if (e.mouseButton.button == sf::Mouse::Button::Left) {
