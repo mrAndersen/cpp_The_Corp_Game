@@ -46,7 +46,6 @@ protected:
     float fallAcceleration = 98.32 * 2.f;
 
     void renderCurrentFrame();
-
 public:
     bool clicked(sf::Vector2f targetCoordinates);
 

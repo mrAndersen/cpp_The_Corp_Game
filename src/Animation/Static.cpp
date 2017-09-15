@@ -92,7 +92,7 @@ void Static::renderCurrentFrame() {
         debugString.setFillColor(sf::Color::Black);
         debugString.setOrigin(width / 2, height / 2);
         debugString.setPosition(System::convertToGLCoordinates(worldCoordinates.x, worldCoordinates.y + 12));
-        debugString.setFont(System::openSans);
+        debugString.setFont(*System::openSans);
         debugString.setCharacterSize(8);
 
         System::window->draw(debugString);

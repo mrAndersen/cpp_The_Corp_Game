@@ -68,9 +68,9 @@ int main() {
 
         ViewHandler::handleViewScroll();
 
-        for (auto static_ : EntityContainer::getStaticItems()) {
-            static_->update();
-        }
+//        for (auto static_ : EntityContainer::getStaticItems()) {
+//            static_->update();
+//        }
 
 
         for (auto movable : EntityContainer::getMovableItems()) {

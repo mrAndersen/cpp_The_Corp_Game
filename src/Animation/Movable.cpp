@@ -21,29 +21,29 @@ void Movable::renderCurrentFrame() {
     System::window->draw(sprite);
 
     if (System::animationDebug) {
-        sf::RectangleShape skeleton;
+//        sf::RectangleShape skeleton;
+//
+//        skeleton.setSize(sf::Vector2f(width, height));
+//        skeleton.setFillColor(sf::Color::Transparent);
+//        skeleton.setOutlineColor(System::red);
+//        skeleton.setOrigin(width / 2, height / 2);
+//        skeleton.setPosition(System::convertToGLCoordinates(worldCoordinates.x, worldCoordinates.y));
+//        skeleton.setOutlineThickness(2);
+//        System::window->draw(skeleton);
 
-        skeleton.setSize(sf::Vector2f(width, height));
-        skeleton.setFillColor(sf::Color::Transparent);
-        skeleton.setOutlineColor(System::red);
-        skeleton.setOrigin(width / 2, height / 2);
-        skeleton.setPosition(System::convertToGLCoordinates(worldCoordinates.x, worldCoordinates.y));
-        skeleton.setOutlineThickness(2);
-        System::window->draw(skeleton);
-
-        sf::Text debugString;
-        debugString.setString(
-                "{" + std::to_string((int) worldCoordinates.x) + "," + std::to_string((int) worldCoordinates.y) + "}" +
-                "[h=" + std::to_string((int) health) + "]" +
-                "[t=" + std::to_string((int) liveClock.getElapsedTime().asSeconds()) + "]" +
-                "[v=" + std::to_string((int) speed) + "]"
-        );
-        debugString.setOrigin(width / 2, height / 2);
-        debugString.setFillColor(sf::Color::Black);
-        debugString.setPosition(System::convertToGLCoordinates(worldCoordinates.x, worldCoordinates.y + 15));
-        debugString.setFont(System::openSans);
-        debugString.setCharacterSize(10);
-        System::window->draw(debugString);
+//        sf::Text debugString;
+//        debugString.setString(
+//                "{" + std::to_string((int) worldCoordinates.x) + "," + std::to_string((int) worldCoordinates.y) + "}" +
+//                "[h=" + std::to_string((int) health) + "]" +
+//                "[t=" + std::to_string((int) liveClock.getElapsedTime().asSeconds()) + "]" +
+//                "[v=" + std::to_string((int) speed) + "]"
+//        );
+//        debugString.setOrigin(width / 2, height / 2);
+//        debugString.setFillColor(sf::Color::Black);
+//        debugString.setPosition(System::convertToGLCoordinates(worldCoordinates.x, worldCoordinates.y + 15));
+//        debugString.setFont(*System::openSans);
+//        debugString.setCharacterSize(10);
+//        System::window->draw(debugString);
     }
 }
 
@@ -80,11 +80,20 @@ void Movable::update() {
 }
 
 void Movable::updateAnimation() {
-
     if (isAnimationResolutionReached()) {
         currentFrame = (currentFrame == (totalFrames - 1)) ? 0 : currentFrame + 1;
     }
 
+    renderCurrentFrame();
+    updateFrameTime();
+}
+
+bool Movable::clicked(sf::Vector2f targetCoordinates) {
+
+    return false;
+}
+
+void Movable::updateLogic() {
     float frameDistance = (frameTimeMs / 1000) * speed;
 
     if (direction == Direction::Right) {
@@ -106,29 +115,18 @@ void Movable::updateAnimation() {
         speed = speed + fallAcceleration * (frameTimeMs / 1000);
     }
 
-
-    renderCurrentFrame();
-    updateFrameTime();
-}
-
-bool Movable::clicked(sf::Vector2f targetCoordinates) {
-
-    return false;
-}
-
-void Movable::updateLogic() {
 //    if (liveClock.getElapsedTime().asSeconds() > 10) {
 //        health = 0;
 //    }
 
-    if ((worldCoordinates.y - height / 2 <= System::groundLevel) && speed < 350) {
-        direction = Direction::Right;
-        speed = 300;
-    }
-
-    if (worldCoordinates.y - height / 2 <= System::groundLevel && speed > 350) {
-        health = 0;
-    }
+//    if ((worldCoordinates.y - height / 2 <= System::groundLevel) && speed < 350) {
+//        direction = Direction::Right;
+//        speed = 300;
+//    }
+//
+//    if (worldCoordinates.y - height / 2 <= System::groundLevel && speed > 350) {
+//        health = 0;
+//    }
 
     if (health <= 0) {
         EntityContainer::removeMovable(this);

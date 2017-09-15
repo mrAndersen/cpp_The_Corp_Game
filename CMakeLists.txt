@@ -25,7 +25,7 @@ include_directories("${PROJECT_BINARY_DIR}")
 
 # Define sources and executable
 set(EXECUTABLE_NAME "corpgame")
-add_executable(${EXECUTABLE_NAME} main.cpp includes/System/EntityContainer.h src/System/EntityContainer.cpp src/Characters/Clerk.cpp src/Animation/Movable.cpp includes/System/Enum.h src/System/ResourceLoader.cpp src/System/ViewHandler.cpp src/System/System.cpp includes/System/ResourceLoader.h includes/System/System.h includes/System/ViewHandler.h includes/Characters/Clerk.h includes/Animation/Movable.h includes/Animation/Static.h src/Animation/Static.cpp includes/Objects/Ground.h src/Objects/Ground.cpp)
+add_executable(${EXECUTABLE_NAME} WIN32 main.cpp includes/System/EntityContainer.h src/System/EntityContainer.cpp src/Characters/Clerk.cpp src/Animation/Movable.cpp includes/System/Enum.h src/System/ResourceLoader.cpp src/System/ViewHandler.cpp src/System/System.cpp includes/System/ResourceLoader.h includes/System/System.h includes/System/ViewHandler.h includes/Characters/Clerk.h includes/Animation/Movable.h includes/Animation/Static.h src/Animation/Static.cpp includes/Objects/Ground.h src/Objects/Ground.cpp)
 
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})

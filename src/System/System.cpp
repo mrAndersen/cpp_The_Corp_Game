@@ -24,7 +24,7 @@ namespace System {
 
     //debug
     std::map<std::string, sf::Text> debugPanelTextNodes;
-    sf::Font openSans;
+    sf::Font* openSans;
     float g_x = 0;
     float g_y = 0;
     int framesPassed = 0;
@@ -90,7 +90,7 @@ namespace System {
         sf::Text label;
         label.setPosition(convertToGLCoordinates(sf::Vector2f(12, System::screenHeight - index * 12)));
         label.setFillColor(sf::Color::Black);
-        label.setFont(openSans);
+        label.setFont(*openSans);
         label.setCharacterSize(10);
 
         debugPanelTextNodes[alias] = label;
@@ -107,8 +107,9 @@ namespace System {
     }
 
     void initDebug() {
-        openSans.loadFromFile("resources/fonts/open-sans.ttf");
-        const_cast<sf::Texture &>(openSans.getTexture(10)).setSmooth(false);
+        openSans = new sf::Font();
+        openSans->loadFromFile("resources/fonts/open-sans.ttf");
+        const_cast<sf::Texture &>(openSans->getTexture(10)).setSmooth(false);
 
         createDebugString("fps", 1);
         createDebugString("mem", 2);

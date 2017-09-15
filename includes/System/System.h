@@ -25,7 +25,7 @@ namespace System {
 
     //debug
     extern std::map<std::string, sf::Text> debugPanelTextNodes;
-    extern sf::Font openSans;
+    extern sf::Font* openSans;
     extern float g_x;
     extern float g_y;
     extern int framesPassed;

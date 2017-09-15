@@ -13,7 +13,7 @@ namespace ViewHandler {
     sf::Clock viewClock;
 
     void handleViewScroll() {
-        int scrollSpeed = 20;
+        int scrollSpeed = 60;
 
         if(viewClock.getElapsedTime().asMilliseconds() > 20){
             viewClock.restart();
