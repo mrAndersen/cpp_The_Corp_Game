@@ -4,18 +4,24 @@
 #include "../../includes/System/Enum.h"
 #include "../../includes/System/System.h"
 #include "../../includes/System/ViewHandler.h"
+#include <iostream>
 
 namespace ViewHandler {
     float zoomFactor = 1.f;
     Direction viewDirectionMovement = Direction::None;
 
-    sf::View* view;
+    sf::View *view;
     sf::Clock viewClock;
 
-    void handleViewScroll() {
-        int scrollSpeed = 60;
+    float top = 0;
+    float right = 0;
+    float bottom = 0;
+    float left = 0;
 
-        if(viewClock.getElapsedTime().asMilliseconds() > 20){
+    void handleViewScroll() {
+        int scrollSpeed = 30;
+
+        if (viewClock.getElapsedTime().asMilliseconds() > 20) {
             viewClock.restart();
 
             if (viewDirectionMovement == Direction::Left) {
@@ -31,7 +37,9 @@ namespace ViewHandler {
             }
 
             if (viewDirectionMovement == Direction::Down) {
-                view->move(0, scrollSpeed);
+                if (bottom > System::groundLevel) {
+                    view->move(0, scrollSpeed);
+                }
             }
 
             if (viewDirectionMovement == Direction::UpLeft) {
@@ -43,12 +51,27 @@ namespace ViewHandler {
             }
 
             if (viewDirectionMovement == Direction::DownLeft) {
-                view->move(-scrollSpeed, scrollSpeed);
+                if (bottom > System::groundLevel) {
+                    view->move(-scrollSpeed, scrollSpeed);
+                } else {
+                    view->move(-scrollSpeed, 0);
+                }
             }
 
             if (viewDirectionMovement == Direction::DownRight) {
-                view->move(scrollSpeed, scrollSpeed);
+                if (bottom > System::groundLevel) {
+                    view->move(scrollSpeed, scrollSpeed);
+                } else {
+                    view->move(scrollSpeed, 0);
+                }
             }
+
+            auto center = System::convertFromGLCoordinates(ViewHandler::view->getCenter());
+
+            left = center.x - System::screenWidth / 2;
+            right = center.x + System::screenWidth / 2;
+            top = center.y + System::screenHeight / 2;
+            bottom = center.y - System::screenHeight / 2;
 
             System::window->setView(*view);
         }

@@ -9,6 +9,11 @@ namespace ViewHandler {
     extern sf::View* view;
     extern sf::Clock viewClock;
 
+    extern float top;
+    extern float right;
+    extern float bottom;
+    extern float left;
+
     void handleViewScroll();
 
     void handleViewScrollKeyPress(sf::Event e);

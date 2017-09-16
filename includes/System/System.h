@@ -25,7 +25,7 @@ namespace System {
 
     //debug
     extern std::map<std::string, sf::Text> debugPanelTextNodes;
-    extern sf::Font* openSans;
+    extern sf::Font *openSans;
     extern float g_x;
     extern float g_y;
     extern int framesPassed;
@@ -46,7 +46,11 @@ namespace System {
 
     sf::Vector2f convertToGLCoordinates(sf::Vector2f worldCoordinates);
 
+    sf::Vector2f convertFromGLCoordinates(sf::Vector2f glCoordinates);
+
     sf::Vector2f convertToGLCoordinates(float x, float y);
+
+    sf::Vector2f convertFromGLCoordinates(float x, float y);
 }
 
 #endif //THE_CORP_GAME_SYSTEM_H

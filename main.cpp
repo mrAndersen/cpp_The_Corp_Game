@@ -6,7 +6,6 @@
 #include "includes/System/ViewHandler.h"
 #include "includes/System/EntityContainer.h"
 #include "includes/Characters/Clerk.h"
-#include <iostream>
 
 int main() {
     //preload resources
@@ -16,13 +15,13 @@ int main() {
     System::initWindow();
     System::initDebug();
 
-//    EntityContainer::initGround();
+    EntityContainer::initGround();
 
     //frame loop
     while (System::window->isOpen()) {
         System::window->clear(System::grey);
 
-        System::entitiesOnScreen = EntityContainer::movableSize() + EntityContainer::staticSize();
+        System::entitiesOnScreen = EntityContainer::size();
         System::framesPassed++;
 
         System::refreshTitleStats();
@@ -52,7 +51,7 @@ int main() {
                             clerk->setDirection(Direction::Right);
                         }
 
-                        EntityContainer::addMovable(clerk);
+                        EntityContainer::add(clerk);
                     }
                 }
             }
@@ -68,15 +67,9 @@ int main() {
 
         ViewHandler::handleViewScroll();
 
-//        for (auto static_ : EntityContainer::getStaticItems()) {
-//            static_->update();
-//        }
-
-
-        for (auto movable : EntityContainer::getMovableItems()) {
-            movable->update();
+        for (auto entity : EntityContainer::getItems()) {
+            entity->update();
         }
-
 
         System::window->display();
     }

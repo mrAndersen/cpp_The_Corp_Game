@@ -9,7 +9,7 @@ namespace System {
     unsigned int screenWidth = 1820;
     unsigned int screenHeight = 800;
     std::string title = "New World";
-    float groundLevel = 60;
+    float groundLevel = 0;
 
     //sys
     sf::Clock fpsClock;
@@ -24,13 +24,13 @@ namespace System {
 
     //debug
     std::map<std::string, sf::Text> debugPanelTextNodes;
-    sf::Font* openSans;
+    sf::Font *openSans;
     float g_x = 0;
     float g_y = 0;
     int framesPassed = 0;
     int entitiesOnScreen = 0;
     int fps = 0;
-    bool animationDebug = true;
+    bool animationDebug = false;
     //debug
 
     void refreshTitleStats() {
@@ -62,9 +62,23 @@ namespace System {
                 "mem:" + std::to_string((int) mem / 1024 / 1024) + "mb"
         );
 
+
+        debugPanelTextNodes["v_boundaries"].setString(
+                "v_boundaries: "
+                        "{t=" + std::to_string((int)ViewHandler::top) + ","
+                        "b=" + std::to_string((int)ViewHandler::bottom) + ","
+                        "l=" + std::to_string((int)ViewHandler::left) + ","
+                        "r=" + std::to_string((int)ViewHandler::right) + "}"
+        );
+
         std::map<std::string, sf::Text>::iterator it;
+        int i = 1;
+
         for (it = debugPanelTextNodes.begin(); it != debugPanelTextNodes.end(); it++) {
+            it->second.setPosition(convertToGLCoordinates(sf::Vector2f(ViewHandler::left + 12, ViewHandler::top - i * 12)));
             window->draw(it->second);
+
+            i++;
         }
     }
 
@@ -88,22 +102,13 @@ namespace System {
 
     sf::Text createDebugString(const std::string &alias, int index) {
         sf::Text label;
-        label.setPosition(convertToGLCoordinates(sf::Vector2f(12, System::screenHeight - index * 12)));
+        label.setPosition(convertToGLCoordinates(sf::Vector2f(ViewHandler::left + 12, ViewHandler::top - index * 12)));
         label.setFillColor(sf::Color::Black);
         label.setFont(*openSans);
         label.setCharacterSize(10);
 
         debugPanelTextNodes[alias] = label;
         return label;
-    }
-
-    sf::Vector2f convertToGLCoordinates(sf::Vector2f worldCoordinates) {
-        worldCoordinates.y = System::screenHeight - worldCoordinates.y;
-        return worldCoordinates;
-    }
-
-    sf::Vector2f convertToGLCoordinates(float x, float y) {
-        return {x, System::screenHeight - y};
     }
 
     void initDebug() {
@@ -117,5 +122,24 @@ namespace System {
         createDebugString("mouse", 4);
         createDebugString("entity_count", 5);
         createDebugString("v_direction", 6);
+        createDebugString("v_boundaries", 7);
+    }
+
+    sf::Vector2f convertToGLCoordinates(sf::Vector2f worldCoordinates) {
+        worldCoordinates.y = System::screenHeight - worldCoordinates.y;
+        return worldCoordinates;
+    }
+
+    sf::Vector2f convertToGLCoordinates(float x, float y) {
+        return {x, System::screenHeight - y};
+    }
+
+    sf::Vector2f convertFromGLCoordinates(sf::Vector2f glCoordinates) {
+        glCoordinates.y = System::screenHeight - glCoordinates.y;
+        return glCoordinates;
+    }
+
+    sf::Vector2f convertFromGLCoordinates(float x, float y) {
+        return {x, y - System::screenHeight};
     }
 }

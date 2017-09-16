@@ -8,9 +8,9 @@
 namespace ResourceLoader {
     extern std::map<int, sf::Texture*> textureCollection;
 
-    void loadSingleTexture(Objects gameTexture, const std::string &filePath);
+    void loadSingleTexture(Entities target, const std::string &filePath);
 
-    sf::Texture* getSingleTexture(Objects gameTexture);
+    sf::Texture* getSingleTexture(Entities target);
 
     void loadTexturesFromFiles();
 }

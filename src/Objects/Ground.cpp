@@ -1,5 +1,6 @@
 #include <SFML/System.hpp>
 #include "../../includes/Objects/Ground.h"
+#include "../../includes/System/ResourceLoader.h"
 
 Ground::Ground(sf::Vector2f coordinates) {
     this->setName("ground");
@@ -9,6 +10,7 @@ Ground::Ground(sf::Vector2f coordinates) {
 
     this->setWorldCoordinates(coordinates);
 
-//    this->setTexture(ResourceLoader::getSingleTexture(Objects::CharacterClerk));
+    this->setTotalFrames(1);
+    this->setTexture(ResourceLoader::getSingleTexture(Entities::StaticGround));
     this->createAnimationFrames();
 }

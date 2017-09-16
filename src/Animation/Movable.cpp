@@ -3,6 +3,7 @@
 #include "../../includes/Animation/Movable.h"
 #include "../../includes/System/System.h"
 #include "../../includes/System/EntityContainer.h"
+#include "../../includes/Animation/Entity.h"
 
 void Movable::renderCurrentFrame() {
     auto frame = frames[currentFrame];
@@ -21,76 +22,18 @@ void Movable::renderCurrentFrame() {
     System::window->draw(sprite);
 
     if (System::animationDebug) {
-//        sf::RectangleShape skeleton;
+        skeleton.setPosition(System::convertToGLCoordinates(worldCoordinates.x, worldCoordinates.y));
+        System::window->draw(skeleton);
 //
-//        skeleton.setSize(sf::Vector2f(width, height));
-//        skeleton.setFillColor(sf::Color::Transparent);
-//        skeleton.setOutlineColor(System::red);
-//        skeleton.setOrigin(width / 2, height / 2);
-//        skeleton.setPosition(System::convertToGLCoordinates(worldCoordinates.x, worldCoordinates.y));
-//        skeleton.setOutlineThickness(2);
-//        System::window->draw(skeleton);
-
-//        sf::Text debugString;
-//        debugString.setString(
-//                "{" + std::to_string((int) worldCoordinates.x) + "," + std::to_string((int) worldCoordinates.y) + "}" +
-//                "[h=" + std::to_string((int) health) + "]" +
-//                "[t=" + std::to_string((int) liveClock.getElapsedTime().asSeconds()) + "]" +
-//                "[v=" + std::to_string((int) speed) + "]"
-//        );
-//        debugString.setOrigin(width / 2, height / 2);
-//        debugString.setFillColor(sf::Color::Black);
-//        debugString.setPosition(System::convertToGLCoordinates(worldCoordinates.x, worldCoordinates.y + 15));
-//        debugString.setFont(*System::openSans);
-//        debugString.setCharacterSize(10);
-//        System::window->draw(debugString);
+        debugString.setString(
+                "{" + std::to_string((int) worldCoordinates.x) + "," + std::to_string((int) worldCoordinates.y) + "}" +
+                "[h=" + std::to_string((int) health) + "]" +
+                "[t=" + std::to_string((int) liveClock.getElapsedTime().asSeconds()) + "]" +
+                "[v=" + std::to_string((int) speed) + "]"
+        );
+        debugString.setPosition(System::convertToGLCoordinates(worldCoordinates.x, worldCoordinates.y + 15));
+        System::window->draw(debugString);
     }
-}
-
-void Movable::updateFrameTime() {
-    frameTimeMs = clock.restart().asMilliseconds();
-    totalAnimationFrameTimeMs += frameTimeMs;
-}
-
-bool Movable::isAnimationResolutionReached() {
-    if (totalAnimationFrameTimeMs >= animationResolution) {
-        totalAnimationFrameTimeMs = 0;
-        return true;
-    } else {
-        return false;
-    }
-}
-
-void Movable::createAnimationFrames() {
-    sprite.setTexture(*texture);
-    sprite.setOrigin(width / 2, height / 2);
-
-    for (int i = 0; i < totalFrames; ++i) {
-        sf::IntRect rect(i * width, 0, width, height);
-        frames.push_back(rect);
-    }
-
-    animationResolution = 1000 / frames.size();
-    sprite.setTextureRect(frames[0]);
-}
-
-void Movable::update() {
-    updateAnimation();
-    updateLogic();
-}
-
-void Movable::updateAnimation() {
-    if (isAnimationResolutionReached()) {
-        currentFrame = (currentFrame == (totalFrames - 1)) ? 0 : currentFrame + 1;
-    }
-
-    renderCurrentFrame();
-    updateFrameTime();
-}
-
-bool Movable::clicked(sf::Vector2f targetCoordinates) {
-
-    return false;
 }
 
 void Movable::updateLogic() {
@@ -115,7 +58,7 @@ void Movable::updateLogic() {
         speed = speed + fallAcceleration * (frameTimeMs / 1000);
     }
 
-//    if (liveClock.getElapsedTime().asSeconds() > 10) {
+//    if (liveClock.getElapsedTime().asSeconds() > 4) {
 //        health = 0;
 //    }
 
@@ -129,40 +72,8 @@ void Movable::updateLogic() {
 //    }
 
     if (health <= 0) {
-        EntityContainer::removeMovable(this);
+        EntityContainer::remove(this);
     }
-}
-
-const std::string &Movable::getName() const {
-    return name;
-}
-
-void Movable::setName(const std::string &name) {
-    Movable::name = name;
-}
-
-const sf::Vector2f &Movable::getWorldCoordinates() const {
-    return worldCoordinates;
-}
-
-void Movable::setWorldCoordinates(const sf::Vector2f &worldCoordinates) {
-    Movable::worldCoordinates = worldCoordinates;
-}
-
-int Movable::getWidth() const {
-    return width;
-}
-
-void Movable::setWidth(int width) {
-    Movable::width = width;
-}
-
-int Movable::getHeight() const {
-    return height;
-}
-
-void Movable::setHeight(int height) {
-    Movable::height = height;
 }
 
 Direction Movable::getDirection() const {
@@ -181,26 +92,10 @@ void Movable::setSpeed(float speed) {
     Movable::speed = speed;
 }
 
-float Movable::getScale() const {
-    return scale;
+float Movable::getFallAcceleration() const {
+    return fallAcceleration;
 }
 
-void Movable::setScale(float scale) {
-    Movable::scale = scale;
-}
-
-int Movable::getTotalFrames() const {
-    return totalFrames;
-}
-
-void Movable::setTotalFrames(int totalFrames) {
-    Movable::totalFrames = totalFrames;
-}
-
-sf::Texture *Movable::getTexture() const {
-    return texture;
-}
-
-void Movable::setTexture(sf::Texture *texture) {
-    Movable::texture = texture;
+void Movable::setFallAcceleration(float fallAcceleration) {
+    Movable::fallAcceleration = fallAcceleration;
 }

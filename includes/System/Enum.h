@@ -14,13 +14,12 @@ enum Direction {
     DownLeft
 };
 
-enum Objects {
+enum Entities {
+    //Ground
+            StaticGround = 11,
+
     //Clerks
-    CharacterClerk = 21,
-    CharacterSeniorClerk = 22,
-    CharacterLeadClerk = 23,
-    CharacterVicePresident = 24,
-    CharacterPresident = 25
+            MovableClerk = 21,
 };
 
 #endif

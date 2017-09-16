@@ -1,91 +1,32 @@
-#ifndef THE_CORP_GAME_ENTITYANIMATION_CPP_H
-#define THE_CORP_GAME_ENTITYANIMATION_CPP_H
+#ifndef THE_CORP_GAME_MOVABLE_H
+#define THE_CORP_GAME_MOVABLE_H
 
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Clock.hpp>
 #include "../System/Enum.h"
+#include "Entity.h"
 
-class Movable {
+class Movable : public Entity {
 
 protected:
-    //parameters
-    std::string name = "";
-    sf::Vector2f worldCoordinates;
-
-    int width = 0;
-    int height = 0;
-
-    float health = 100;
     float distancePassed = 0;
-
-    //animation properties
-    int totalFrames = 8;
-    int currentFrame = 0;
-    float scale = 1.f;
-
     Direction direction = Direction::Right;
 
-    sf::Sprite sprite;
-    sf::Texture* texture;
-
-    sf::Clock clock;
-    sf::Clock liveClock;
-
-    //frame coordinates inside sprite
-    std::vector<sf::IntRect> frames = {};
-
-    //milliseconds
-    float animationResolution = 500;
-    float totalAnimationFrameTimeMs = 0;
-    float frameTimeMs = 0;
+    //debug
+    sf::RectangleShape skeleton;
+    sf::Text debugString;
 
     //pixels per second
     float speed = 0;
-    float fallAcceleration = 98.32 * 2.f;
-
-    void renderCurrentFrame();
-public:
-    bool clicked(sf::Vector2f targetCoordinates);
-
-    void updateFrameTime();
-
-    bool isAnimationResolutionReached();
-
-    void createAnimationFrames();
-
-    void update();
-
-    void updateAnimation();
+    float fallAcceleration = static_cast<float>(98.32 * 2.f);
 
     void updateLogic();
 
+    void renderCurrentFrame();
+
 public:
-    int getTotalFrames() const;
-
-    void setTotalFrames(int totalFrames);
-
-    float getScale() const;
-
-    void setScale(float scale);
-
-    const std::string &getName() const;
-
-    void setName(const std::string &name);
-
-    const sf::Vector2f &getWorldCoordinates() const;
-
-    void setWorldCoordinates(const sf::Vector2f &worldCoordinates);
-
-    int getWidth() const;
-
-    void setWidth(int width);
-
-    int getHeight() const;
-
-    void setHeight(int height);
-
     Direction getDirection() const;
 
     void setDirection(Direction direction);
@@ -94,9 +35,9 @@ public:
 
     void setSpeed(float speed);
 
-    sf::Texture *getTexture() const;
+    float getFallAcceleration() const;
 
-    void setTexture(sf::Texture *texture);
+    void setFallAcceleration(float fallAcceleration);
 };
 
 #endif //THE_CORP_GAME_ENTITYANIMATION_CPP_H

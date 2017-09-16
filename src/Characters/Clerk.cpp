@@ -13,6 +13,6 @@ Clerk::Clerk(sf::Vector2f coordinates) {
 
     this->setWorldCoordinates(coordinates);
 
-    this->setTexture(ResourceLoader::getSingleTexture(Objects::CharacterClerk));
+    this->setTexture(ResourceLoader::getSingleTexture(Entities::MovableClerk));
     this->createAnimationFrames();
 }
