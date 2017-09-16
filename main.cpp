@@ -40,16 +40,16 @@ int main() {
                         e.mouseButton.button == sf::Mouse::Button::Right
                         ) {
 
-                    for (int i = 0; i < 100 ; ++i) {
+                    for (int i = 0; i < 1 ; ++i) {
                         auto *clerk = new Clerk(sf::Vector2f(System::g_x, System::g_y));
 
                         if (e.mouseButton.button == sf::Mouse::Button::Left) {
-                            clerk->setDirection(Direction::Left);
+                            clerk->setDirection(Direction::Down);
                         }
 
-                        if (e.mouseButton.button == sf::Mouse::Button::Right) {
-                            clerk->setDirection(Direction::Right);
-                        }
+//                        if (e.mouseButton.button == sf::Mouse::Button::Right) {
+//                            clerk->setDirection(Direction::Right);
+//                        }
 
                         EntityContainer::add(clerk);
                     }

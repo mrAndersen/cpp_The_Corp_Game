@@ -4,6 +4,15 @@
 #include "../../includes/System/System.h"
 #include "../../includes/System/EntityContainer.h"
 #include "../../includes/Animation/Entity.h"
+#include "../../includes/Objects/Ground.h"
+
+
+Movable::Movable() {
+    debugString.setFont(*System::openSans);
+    debugString.setFillColor(sf::Color::Black);
+    debugString.setCharacterSize(10);
+}
+
 
 void Movable::renderCurrentFrame() {
     auto frame = frames[currentFrame];
@@ -13,25 +22,33 @@ void Movable::renderCurrentFrame() {
 
     if (direction == Direction::Left) {
         sprite.setScale(-1.f, 1.f);
+        sprite.setRotation(0);
     }
 
     if (direction == Direction::Right) {
         sprite.setScale(1.f, 1.f);
+        sprite.setRotation(0);
+    }
+
+    if (direction == Direction::Down) {
+        sprite.setRotation(45);
     }
 
     System::window->draw(sprite);
 
     if (System::animationDebug) {
-        skeleton.setPosition(System::convertToGLCoordinates(worldCoordinates.x, worldCoordinates.y));
-        System::window->draw(skeleton);
+//        skeleton.setPosition(System::convertToGLCoordinates(worldCoordinates.x, worldCoordinates.y));
+//        System::window->draw(skeleton);
 //
+        debugString.setFont(*System::openSans);
         debugString.setString(
                 "{" + std::to_string((int) worldCoordinates.x) + "," + std::to_string((int) worldCoordinates.y) + "}" +
                 "[h=" + std::to_string((int) health) + "]" +
                 "[t=" + std::to_string((int) liveClock.getElapsedTime().asSeconds()) + "]" +
                 "[v=" + std::to_string((int) speed) + "]"
+                "[h=" + std::to_string((int) health) + "]"
         );
-        debugString.setPosition(System::convertToGLCoordinates(worldCoordinates.x, worldCoordinates.y + 15));
+        debugString.setPosition(System::convertToGLCoordinates(worldCoordinates.x - width / 2, worldCoordinates.y + height / 2 + 15));
         System::window->draw(debugString);
     }
 }
@@ -58,22 +75,23 @@ void Movable::updateLogic() {
         speed = speed + fallAcceleration * (frameTimeMs / 1000);
     }
 
-//    if (liveClock.getElapsedTime().asSeconds() > 4) {
-//        health = 0;
-//    }
+    if (worldCoordinates.y - height / 2 <= System::groundLevel + Ground::height) {
+        direction = Direction::Right;
+        speed = 300;
+    }
 
-//    if ((worldCoordinates.y - height / 2 <= System::groundLevel) && speed < 350) {
-//        direction = Direction::Right;
-//        speed = 300;
-//    }
-//
-//    if (worldCoordinates.y - height / 2 <= System::groundLevel && speed > 350) {
-//        health = 0;
-//    }
+    if (hasReachedWorldEdges()) {
+        health = 0;
+    }
 
     if (health <= 0) {
         EntityContainer::remove(this);
     }
+}
+
+bool Movable::hasReachedWorldEdges() {
+    return !((worldCoordinates.x + width / 2) <= System::worldWidth / 2 &&
+            (worldCoordinates.x - width / 2) >= -System::worldWidth / 2);
 }
 
 Direction Movable::getDirection() const {
@@ -99,3 +117,6 @@ float Movable::getFallAcceleration() const {
 void Movable::setFallAcceleration(float fallAcceleration) {
     Movable::fallAcceleration = fallAcceleration;
 }
+
+
+

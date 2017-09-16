@@ -10,6 +10,7 @@ namespace System {
     unsigned int screenHeight = 800;
     std::string title = "New World";
     float groundLevel = 0;
+    float worldWidth = 10000;
 
     //sys
     sf::Clock fpsClock;

@@ -22,11 +22,15 @@ protected:
     float speed = 0;
     float fallAcceleration = static_cast<float>(98.32 * 2.f);
 
+    bool hasReachedWorldEdges();
+
     void updateLogic();
 
     void renderCurrentFrame();
 
 public:
+    Movable();
+
     Direction getDirection() const;
 
     void setDirection(Direction direction);

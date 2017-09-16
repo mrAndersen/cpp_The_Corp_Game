@@ -10,6 +10,7 @@ namespace System {
     extern unsigned int screenHeight;
     extern std::string title;
     extern float groundLevel;
+    extern float worldWidth;
 
     //sys
     extern sf::Time systemTime;
