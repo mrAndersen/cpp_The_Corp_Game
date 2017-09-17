@@ -5,14 +5,14 @@
 namespace ResourceLoader {
     std::map<int, sf::Texture*> textureCollection;
 
-    void loadSingleTexture(Entities target, const std::string &filePath) {
+    void loadTexture(Entities target, const std::string &filePath) {
         auto *texture = new sf::Texture;
 
         texture->loadFromFile(filePath);
         ResourceLoader::textureCollection[target] = texture;
     }
 
-    sf::Texture* getSingleTexture(Entities target) {
+    sf::Texture* getTexture(Entities target) {
         if (!ResourceLoader::textureCollection.count(target)) {
             throw std::invalid_argument("Unable to load texture");
         }
@@ -22,7 +22,12 @@ namespace ResourceLoader {
     }
 
     void loadTexturesFromFiles() {
-        ResourceLoader::loadSingleTexture(Entities::MovableClerk, "resources/128px.png");
-        ResourceLoader::loadSingleTexture(Entities::StaticGround, "resources/ground.png");
+        ResourceLoader::loadTexture(Entities::E_MovableClerk, "resources/128px.png");
+        ResourceLoader::loadTexture(Entities::E_StaticGround, "resources/ground.png");
+
+        ResourceLoader::loadTexture(Entities::E_ButtonAddClerk, "resources/control.panel/button.add.clerk.png");
+        ResourceLoader::loadTexture(Entities::E_ButtonAddOffice, "resources/control.panel/button.add.office.png");
+
+        ResourceLoader::loadTexture(Entities::E_OfficeClerk, "resources/office/office.clerk.png");
     }
 }

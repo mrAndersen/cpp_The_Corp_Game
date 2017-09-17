@@ -10,18 +10,19 @@ protected:
     //parameters
     std::string name = "";
     float health = 100;
+
     sf::Vector2f worldCoordinates;
     int width = 0;
     int height = 0;
 
     //animation properties
     std::vector<sf::IntRect> frames = {};
-
     int totalFrames = 8;
     int currentFrame = 0;
     float scale = 1.f;
     sf::Sprite sprite;
     sf::Texture* texture;
+    int drawOrder = 1;
 
     sf::Clock frameClock;
     sf::Clock liveClock;
@@ -30,6 +31,9 @@ protected:
     float animationResolution = 500;
     float totalAnimationFrameTimeMs = 0;
     float frameTimeMs = 0;
+
+    //property map
+    std::map<std::string, int> properties;
 
 public:
     void createAnimationFrames();
@@ -44,11 +48,26 @@ public:
 
     virtual void renderCurrentFrame();
 
-    bool clicked(sf::Vector2f targetCoordinates);
+    bool mouseIn();
+
+    bool leftClicked();
+
+    bool rightClicked();
+
+    bool leftClickedOutside();
+
+    bool rightClickedOutside();
+
+    void setTransparent();
+
+    void removeTransparency();
 
     virtual void updateLogic();
-
 public:
+    int getDrawOrder() const;
+
+    void setDrawOrder(int drawOrder);
+
     const std::string &getName() const;
 
     void setName(const std::string &name);
@@ -85,7 +104,7 @@ public:
 
     void setScale(float scale);
 
-    const sf::Sprite &getSprite() const;
+    sf::Sprite &getSprite();
 
     void setSprite(const sf::Sprite &sprite);
 

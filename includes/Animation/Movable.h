@@ -20,7 +20,7 @@ protected:
 
     //pixels per second
     float speed = 0;
-    float fallAcceleration = static_cast<float>(98.32 * 2.f);
+    float fallAcceleration = 9832;
 
     bool hasReachedWorldEdges();
 

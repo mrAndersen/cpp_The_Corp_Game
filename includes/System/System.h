@@ -11,6 +11,7 @@ namespace System {
     extern std::string title;
     extern float groundLevel;
     extern float worldWidth;
+    extern int gridSize;
 
     //sys
     extern sf::Time systemTime;
@@ -27,8 +28,10 @@ namespace System {
     //debug
     extern std::map<std::string, sf::Text> debugPanelTextNodes;
     extern sf::Font *openSans;
+
     extern float g_x;
     extern float g_y;
+
     extern int framesPassed;
     extern int entitiesOnScreen;
     extern int fps;
@@ -52,6 +55,8 @@ namespace System {
     sf::Vector2f convertToGLCoordinates(float x, float y);
 
     sf::Vector2f convertFromGLCoordinates(float x, float y);
+
+    sf::Vector2f getGlobalMouse();
 }
 
 #endif //THE_CORP_GAME_SYSTEM_H

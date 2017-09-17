@@ -16,10 +16,17 @@ enum Direction {
 
 enum Entities {
     //Ground
-            StaticGround = 11,
+    E_StaticGround = 11,
 
     //Clerks
-            MovableClerk = 21,
+    E_MovableClerk = 21,
+
+    //Controls
+    E_ButtonAddClerk = 31,
+    E_ButtonAddOffice = 32,
+
+    //Office
+    E_OfficeClerk = 41,
 };
 
 #endif

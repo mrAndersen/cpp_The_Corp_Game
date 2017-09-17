@@ -52,11 +52,37 @@ void Entity::renderCurrentFrame() {
     System::window->draw(sprite);
 }
 
-bool Entity::clicked(sf::Vector2f targetCoordinates) {
-
-    return false;
+bool Entity::mouseIn() {
+    return System::g_x >= worldCoordinates.x - width / 2 &&
+        System::g_x <= worldCoordinates.x + width / 2 &&
+        System::g_y >= worldCoordinates.y - height / 2 &&
+        System::g_y <= worldCoordinates.y + height / 2;
 }
 
+
+bool Entity::leftClicked() {
+    return sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && mouseIn();
+}
+
+bool Entity::rightClicked() {
+    return sf::Mouse::isButtonPressed(sf::Mouse::Button::Right) && mouseIn();
+}
+
+bool Entity::leftClickedOutside() {
+    return sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && !mouseIn();
+}
+
+bool Entity::rightClickedOutside() {
+    return sf::Mouse::isButtonPressed(sf::Mouse::Button::Right) && !mouseIn();
+}
+
+void Entity::setTransparent() {
+    sprite.setColor(sf::Color(255, 255, 255, 96));
+}
+
+void Entity::removeTransparency() {
+    sprite.setColor(sf::Color(255, 255, 255, 255));
+}
 
 void Entity::updateLogic() {
 }
@@ -133,7 +159,7 @@ void Entity::setScale(float scale) {
     Entity::scale = scale;
 }
 
-const sf::Sprite &Entity::getSprite() const {
+sf::Sprite &Entity::getSprite() {
     return sprite;
 }
 
@@ -179,4 +205,12 @@ float Entity::getFrameTimeMs() const {
 
 void Entity::setFrameTimeMs(float frameTimeMs) {
     Entity::frameTimeMs = frameTimeMs;
+}
+
+int Entity::getDrawOrder() const {
+    return drawOrder;
+}
+
+void Entity::setDrawOrder(int drawOrder) {
+    Entity::drawOrder = drawOrder;
 }

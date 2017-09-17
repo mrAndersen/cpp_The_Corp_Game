@@ -79,6 +79,10 @@ namespace ViewHandler {
 
     void handleViewScrollKeyPress(sf::Event e) {
 
+        if (e.type == sf::Event::KeyReleased) {
+            viewDirectionMovement = Direction::None;
+        }
+
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
             viewDirectionMovement = Direction::Left;
         }

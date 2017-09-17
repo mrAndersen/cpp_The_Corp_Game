@@ -54,7 +54,14 @@ add_executable(
 
         includes/Objects/Ground.h
         src/Objects/Ground.cpp
-)
+        includes/System/ControlPanel.h
+        src/System/ControlPanel.cpp
+
+        includes/Objects/ControlButtonAddClerk.h
+        src/Objects/ControlButtonAddClerk.cpp
+
+        includes/Objects/ControlButtonAddOffice.h
+        src/Objects/ControlButtonAddOffice.cpp includes/Office/OfficeClerk.h src/Office/OfficeClerk.cpp)
 
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})

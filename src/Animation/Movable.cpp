@@ -3,7 +3,6 @@
 #include "../../includes/Animation/Movable.h"
 #include "../../includes/System/System.h"
 #include "../../includes/System/EntityContainer.h"
-#include "../../includes/Animation/Entity.h"
 #include "../../includes/Objects/Ground.h"
 
 
@@ -31,7 +30,7 @@ void Movable::renderCurrentFrame() {
     }
 
     if (direction == Direction::Down) {
-        sprite.setRotation(45);
+
     }
 
     System::window->draw(sprite);
@@ -54,32 +53,6 @@ void Movable::renderCurrentFrame() {
 }
 
 void Movable::updateLogic() {
-    float frameDistance = (frameTimeMs / 1000) * speed;
-
-    if (direction == Direction::Right) {
-
-        worldCoordinates.x += frameDistance;
-        distancePassed += frameDistance;
-    }
-
-    if (direction == Direction::Left) {
-
-        worldCoordinates.x -= (frameTimeMs / 1000) * speed;
-        distancePassed += frameDistance;
-    }
-
-    if (direction == Direction::Down) {
-        //falling
-
-        worldCoordinates.y = worldCoordinates.y - frameDistance;
-        speed = speed + fallAcceleration * (frameTimeMs / 1000);
-    }
-
-    if (worldCoordinates.y - height / 2 <= System::groundLevel + Ground::height) {
-        direction = Direction::Right;
-        speed = 300;
-    }
-
     if (hasReachedWorldEdges()) {
         health = 0;
     }

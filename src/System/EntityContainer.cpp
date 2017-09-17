@@ -13,6 +13,10 @@ namespace EntityContainer {
 
     void add(Entity *item) {
         items.push_back(item);
+
+        std::sort(items.begin(), items.end(), [](Entity *a, Entity *b) -> bool {
+            return a->getDrawOrder() < b->getDrawOrder();
+        });
     }
 
     void remove(Entity *item) {
@@ -35,7 +39,6 @@ namespace EntityContainer {
         for (int i = (int) -System::worldWidth / 2; (int) i < System::worldWidth / 2; ++i) {
             if ((i % Ground::width) == 0) {
                 auto *ground = new Ground(sf::Vector2f(i, System::groundLevel + Ground::height / 2));
-                EntityContainer::add(ground);
             }
         }
     }

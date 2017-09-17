@@ -1,18 +1,40 @@
 #include "../../includes/Animation/Movable.h"
 #include "../../includes/System/ResourceLoader.h"
 #include "../../includes/Characters/Clerk.h"
-
+#include "../../includes/System/EntityContainer.h"
+#include "../../includes/Objects/Ground.h"
+#include "../../includes/System/System.h"
 
 Clerk::Clerk(sf::Vector2f coordinates) {
-    this->setName("clerk");
+    setName("clerk");
 
-    this->setWidth(Clerk::width);
-    this->setHeight(Clerk::height);
-    this->setTotalFrames(24);
-    this->setSpeed(300);
+    setWidth(Clerk::width);
+    setHeight(Clerk::height);
+    setTotalFrames(24);
+    setSpeed(300);
 
-    this->setWorldCoordinates(coordinates);
+    setWorldCoordinates(coordinates);
 
-    this->setTexture(ResourceLoader::getSingleTexture(Entities::MovableClerk));
-    this->createAnimationFrames();
+    setTexture(ResourceLoader::getTexture(Entities::E_MovableClerk));
+    createAnimationFrames();
+    setDrawOrder(100);
+
+    EntityContainer::add(this);
+}
+
+void Clerk::updateLogic() {
+    float frameDistance = (frameTimeMs / 1000) * speed;
+
+    if (direction == Direction::Down) {
+        //falling
+        worldCoordinates.y = worldCoordinates.y - frameDistance;
+        speed = speed + fallAcceleration * (frameTimeMs / 1000);
+    }
+
+    if (worldCoordinates.y - height / 2 <= System::groundLevel + Ground::height) {
+        direction = Direction::Right;
+        speed = 300;
+    }
+
+    Movable::updateLogic();
 }

@@ -1,16 +1,19 @@
 #include <SFML/System.hpp>
 #include "../../includes/Objects/Ground.h"
 #include "../../includes/System/ResourceLoader.h"
+#include "../../includes/System/EntityContainer.h"
 
 Ground::Ground(sf::Vector2f coordinates) {
-    this->setName("ground");
+    setName("ground");
 
-    this->setWidth(Ground::width);
-    this->setHeight(Ground::height);
+    setWidth(Ground::width);
+    setHeight(Ground::height);
 
-    this->setWorldCoordinates(coordinates);
+    setWorldCoordinates(coordinates);
 
-    this->setTotalFrames(1);
-    this->setTexture(ResourceLoader::getSingleTexture(Entities::StaticGround));
-    this->createAnimationFrames();
+    setTotalFrames(1);
+    setTexture(ResourceLoader::getTexture(Entities::E_StaticGround));
+    createAnimationFrames();
+
+    EntityContainer::add(this);
 }

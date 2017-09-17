@@ -11,6 +11,7 @@ namespace System {
     std::string title = "New World";
     float groundLevel = 0;
     float worldWidth = 10000;
+    int gridSize = 100;
 
     //sys
     sf::Clock fpsClock;
@@ -35,7 +36,7 @@ namespace System {
     //debug
 
     void refreshTitleStats() {
-        window->setTitle("New world [" + std::to_string(fps) + " FPS]");
+        window->setTitle("Incorporated ~ [" + std::to_string(fps) + " FPS]");
     }
 
     void refreshDebugPanel() {
@@ -142,5 +143,9 @@ namespace System {
 
     sf::Vector2f convertFromGLCoordinates(float x, float y) {
         return {x, y - System::screenHeight};
+    }
+
+    sf::Vector2f getGlobalMouse() {
+        return sf::Vector2f(System::g_x, System::g_y);
     }
 }

@@ -6,6 +6,7 @@
 #include "includes/System/ViewHandler.h"
 #include "includes/System/EntityContainer.h"
 #include "includes/Characters/Clerk.h"
+#include "includes/System/ControlPanel.h"
 
 int main() {
     //preload resources
@@ -15,7 +16,9 @@ int main() {
     System::initWindow();
     System::initDebug();
 
+
     EntityContainer::initGround();
+    ControlPanel::initControlPanel();
 
     //frame loop
     while (System::window->isOpen()) {
@@ -34,38 +37,13 @@ int main() {
                 System::window->close();
             }
 
-            if (e.type == sf::Event::MouseButtonPressed) {
-                if (
-                        e.mouseButton.button == sf::Mouse::Button::Left ||
-                        e.mouseButton.button == sf::Mouse::Button::Right
-                        ) {
-
-                    for (int i = 0; i < 1 ; ++i) {
-                        auto *clerk = new Clerk(sf::Vector2f(System::g_x, System::g_y));
-
-                        if (e.mouseButton.button == sf::Mouse::Button::Left) {
-                            clerk->setDirection(Direction::Down);
-                        }
-
-//                        if (e.mouseButton.button == sf::Mouse::Button::Right) {
-//                            clerk->setDirection(Direction::Right);
-//                        }
-
-                        EntityContainer::add(clerk);
-                    }
-                }
-            }
-
-            if (e.type == sf::Event::KeyPressed) {
+            if (e.type == sf::Event::KeyPressed || e.type == sf::Event::KeyReleased) {
                 ViewHandler::handleViewScrollKeyPress(e);
-            }
-
-            if (e.type == sf::Event::KeyReleased) {
-                ViewHandler::viewDirectionMovement = Direction::None;
             }
         }
 
         ViewHandler::handleViewScroll();
+        ControlPanel::refreshControlPanel();
 
         for (auto entity : EntityContainer::getItems()) {
             entity->update();

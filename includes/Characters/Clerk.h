@@ -10,6 +10,8 @@ public:
     const static int height = 120;
 
     explicit Clerk(sf::Vector2f coordinates);
+
+    void updateLogic();
 };
 
 #endif //THE_CORP_GAME_CLERK_H
