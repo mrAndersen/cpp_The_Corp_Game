@@ -5,7 +5,7 @@
 
 class OfficeClerk: public Entity {
 public:
-    const static int width = 250;
+    const static int width = 300;
     const static int height = 100;
 
     explicit OfficeClerk(sf::Vector2f coordinates);
