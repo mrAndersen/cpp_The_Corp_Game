@@ -20,7 +20,7 @@ namespace System {
 
     //utility
     sf::Color grey(236, 237, 227);
-    sf::Color red(248, 215, 227, 255);
+    sf::Color red(248, 215, 227);
     sf::Color green(92, 184, 92);
     //utility
 
@@ -32,7 +32,7 @@ namespace System {
     int framesPassed = 0;
     int entitiesOnScreen = 0;
     int fps = 0;
-    bool animationDebug = false;
+    bool animationDebug = true;
     //debug
 
     void refreshTitleStats() {

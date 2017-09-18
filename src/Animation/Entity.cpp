@@ -1,6 +1,7 @@
 #include "../../includes/Animation/Entity.h"
 #include "../../includes/System/System.h"
 #include "../../includes/System/Enum.h"
+#include "../../includes/System/EntityContainer.h"
 
 std::string Entity::serialize() {
     std::map<int, std::string> parameters;
@@ -36,6 +37,17 @@ void Entity::createAnimationFrames() {
 
     animationResolution = 1000 / frames.size();
     sprite.setTextureRect(frames[0]);
+
+    if (System::animationDebug) {
+        quad.setPrimitiveType(sf::LinesStrip);
+        quad.append(sf::Vertex(System::convertToGLCoordinates(worldCoordinates.x - width / 2, worldCoordinates.y + height / 2), System::red));
+        quad.append(sf::Vertex(System::convertToGLCoordinates(worldCoordinates.x + width / 2, worldCoordinates.y + height / 2), System::red));
+        quad.append(sf::Vertex(System::convertToGLCoordinates(worldCoordinates.x + width / 2, worldCoordinates.y - height / 2), System::red));
+        quad.append(sf::Vertex(System::convertToGLCoordinates(worldCoordinates.x - width / 2, worldCoordinates.y - height / 2), System::red));
+        quad.append(sf::Vertex(System::convertToGLCoordinates(worldCoordinates.x - width / 2, worldCoordinates.y + height / 2), System::red));
+
+        EntityContainer::verticies.push_back(quad);
+    }
 }
 
 void Entity::updateFrameTime() {
@@ -53,8 +65,9 @@ bool Entity::isAnimationResolutionReached() {
 }
 
 void Entity::update() {
-    updateAnimation();
+
     updateLogic();
+    updateAnimation();
 }
 
 void Entity::updateAnimation() {
@@ -73,6 +86,14 @@ void Entity::renderCurrentFrame() {
     sprite.setTextureRect(frame);
 
     System::window->draw(sprite);
+
+    if(System::animationDebug){
+        quad[0].position = System::convertToGLCoordinates(worldCoordinates.x - width / 2, worldCoordinates.y + height / 2);
+        quad[1].position = System::convertToGLCoordinates(worldCoordinates.x + width / 2, worldCoordinates.y + height / 2);
+        quad[2].position = System::convertToGLCoordinates(worldCoordinates.x + width / 2, worldCoordinates.y - height / 2);
+        quad[3].position = System::convertToGLCoordinates(worldCoordinates.x - width / 2, worldCoordinates.y - height / 2);
+        quad[4].position = System::convertToGLCoordinates(worldCoordinates.x - width / 2, worldCoordinates.y + height / 2);
+    }
 }
 
 bool Entity::mouseIn() {

@@ -5,8 +5,8 @@
 
 class Ground : public Entity {
 public:
-    const static int width = 579;
-    const static int height = 100;
+    const static int width = 289;
+    const static int height = 50;
 
     explicit Ground(sf::Vector2f coordinates);
 };

@@ -35,6 +35,9 @@ protected:
     //property map
     std::map<std::string, int> properties;
 
+    //debug
+    sf::VertexArray quad;
+
 public:
     void createAnimationFrames();
 

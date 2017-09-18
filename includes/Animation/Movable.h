@@ -14,10 +14,6 @@ protected:
     float distancePassed = 0;
     Direction direction = Direction::Right;
 
-    //debug
-    sf::RectangleShape skeleton;
-    sf::Text debugString;
-
     //pixels per second
     float speed = 0;
     float fallAcceleration = 9832;
@@ -28,8 +24,6 @@ protected:
 
     void renderCurrentFrame();
 public:
-    Movable();
-
     Direction getDirection() const;
 
     void setDirection(Direction direction);

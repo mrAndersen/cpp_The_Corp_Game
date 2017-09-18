@@ -8,7 +8,7 @@ public:
     const static int width = 142;
     const static int height = 47;
 
-    Clerk *attachedClerk;
+    Clerk *attachedClerk = nullptr;
 
     explicit ControlButtonAddClerk();
 

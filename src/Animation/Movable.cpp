@@ -5,14 +5,6 @@
 #include "../../includes/System/EntityContainer.h"
 #include "../../includes/Objects/Ground.h"
 
-
-Movable::Movable() {
-    debugString.setFont(*System::openSans);
-    debugString.setFillColor(sf::Color::Black);
-    debugString.setCharacterSize(10);
-}
-
-
 void Movable::renderCurrentFrame() {
     auto frame = frames[currentFrame];
 
@@ -29,28 +21,7 @@ void Movable::renderCurrentFrame() {
         sprite.setRotation(0);
     }
 
-    if (direction == Direction::Down) {
-
-    }
-
     System::window->draw(sprite);
-
-    if (System::animationDebug) {
-//        skeleton.setPosition(System::convertToGLCoordinates(worldCoordinates.x, worldCoordinates.y));
-//        System::window->draw(skeleton);
-//
-        debugString.setFont(*System::openSans);
-        debugString.setString(
-                "{" + std::to_string((int) worldCoordinates.x) + "," + std::to_string((int) worldCoordinates.y) + "}" +
-                "[h=" + std::to_string((int) health) + "]" +
-                "[t=" + std::to_string((int) liveClock.getElapsedTime().asSeconds()) + "]" +
-                "[v=" + std::to_string((int) speed) + "]"
-                        "[h=" + std::to_string((int) health) + "]"
-        );
-        debugString.setPosition(
-                System::convertToGLCoordinates(worldCoordinates.x - width / 2, worldCoordinates.y + height / 2 + 15));
-        System::window->draw(debugString);
-    }
 }
 
 void Movable::updateLogic() {
