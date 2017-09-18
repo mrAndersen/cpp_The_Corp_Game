@@ -39,22 +39,9 @@ void ControlButtonAddOffice::updateLogic() {
     if (attachedOffice) {
         auto global = System::getGlobalMouse();
 
-        int moduloX = (int) global.x % System::gridSize;
-        int moduloY = (int) global.y % System::gridSize;
+        float normalizedX = global.x - ((int) global.x % System::gridSize) + System::gridSize / 2;
+        float normalizedY = global.y - ((int) global.y % System::gridSize) + System::gridSize / 2;
 
-        if (moduloX != 0) {
-            attachedOffice->setWorldCoordinates(sf::Vector2f(
-                    global.x + moduloX,
-                    global.y
-            ));
-        }
-
-        if (moduloY != 0) {
-            attachedOffice->setWorldCoordinates(sf::Vector2f(
-                    global.x,
-                    global.y + moduloY
-            ));
-        }
-
+        attachedOffice->setWorldCoordinates(sf::Vector2f(normalizedX, normalizedY));
     }
 }

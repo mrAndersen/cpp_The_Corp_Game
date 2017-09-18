@@ -8,6 +8,8 @@
 namespace EntityContainer {
     extern std::vector<Entity *> items;
 
+    extern std::vector<sf::VertexArray> verticies;
+
     std::vector<Entity *> getItems();
 
     void add(Entity *item);
@@ -17,6 +19,10 @@ namespace EntityContainer {
     int size();
 
     void initGround();
+
+    void initGrid();
+
+    void refreshVertices();
 }
 
 

@@ -16,8 +16,9 @@ int main() {
     System::initWindow();
     System::initDebug();
 
-
     EntityContainer::initGround();
+    EntityContainer::initGrid();
+
     ControlPanel::initControlPanel();
 
     //frame loop
@@ -44,6 +45,8 @@ int main() {
 
         ViewHandler::handleViewScroll();
         ControlPanel::refreshControlPanel();
+
+        EntityContainer::refreshVertices();
 
         for (auto entity : EntityContainer::getItems()) {
             entity->update();

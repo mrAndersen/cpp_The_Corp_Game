@@ -74,7 +74,7 @@ if(SFML_FOUND)
     FIND_LIBRARY (PSAPI Psapi)
 
     include_directories(${SFML_INCLUDE_DIR})
-    target_link_libraries(${EXECUTABLE_NAME} ${PSAPI} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES} -static-libgcc -static-libstdc++ )
+    target_link_libraries(${EXECUTABLE_NAME} ${PSAPI} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES} -static-libgcc -static-libstdc++)
 #    target_link_libraries(${EXECUTABLE_NAME} PUBLIC )
 endif()
 
