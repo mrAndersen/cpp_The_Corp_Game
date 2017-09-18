@@ -20,7 +20,7 @@ namespace System {
 
     //utility
     sf::Color grey(236, 237, 227);
-    sf::Color red(248, 215, 227);
+    sf::Color red(248, 215, 227, 255);
     sf::Color green(92, 184, 92);
     //utility
 
@@ -67,17 +67,20 @@ namespace System {
 
         debugPanelTextNodes["v_boundaries"].setString(
                 "v_boundaries: "
-                        "{t=" + std::to_string((int)ViewHandler::top) + ","
-                        "b=" + std::to_string((int)ViewHandler::bottom) + ","
-                        "l=" + std::to_string((int)ViewHandler::left) + ","
-                        "r=" + std::to_string((int)ViewHandler::right) + "}"
+                        "{t=" + std::to_string((int) ViewHandler::top) + ","
+                        "b=" + std::to_string((int) ViewHandler::bottom) + ","
+                        "l=" + std::to_string((int) ViewHandler::left) + ","
+                        "r=" + std::to_string((int) ViewHandler::right) + "}"
         );
+
+        debugPanelTextNodes["v_zoom"].setString("v_zoom: " + std::to_string(ViewHandler::zoom));
 
         std::map<std::string, sf::Text>::iterator it;
         int i = 1;
 
         for (it = debugPanelTextNodes.begin(); it != debugPanelTextNodes.end(); it++) {
-            it->second.setPosition(convertToGLCoordinates(sf::Vector2f(ViewHandler::left + 12, ViewHandler::top - i * 12)));
+            it->second.setPosition(
+                    convertToGLCoordinates(sf::Vector2f(ViewHandler::left + 12, ViewHandler::top - i * 12)));
             window->draw(it->second);
 
             i++;
@@ -85,13 +88,17 @@ namespace System {
     }
 
     void initWindow() {
-//        RECT w_Desktop;
-//        GetWindowRect(GetDesktopWindow(), &w_Desktop);
-//
-//        screenWidth = (unsigned int) w_Desktop.right;
-//        screenHeight = (unsigned int) w_Desktop.bottom;
+        auto mode = sf::Style::Close;
 
-        window = new sf::RenderWindow(sf::VideoMode(screenWidth, screenHeight), title, sf::Style::Close);
+        if (mode == sf::Style::Fullscreen) {
+            RECT w_Desktop;
+            GetWindowRect(GetDesktopWindow(), &w_Desktop);
+
+            screenWidth = (unsigned int) w_Desktop.right;
+            screenHeight = (unsigned int) w_Desktop.bottom;
+        }
+
+        window = new sf::RenderWindow(sf::VideoMode(screenWidth, screenHeight), title, mode);
         window->setFramerateLimit(420);
         window->clear(grey);
 
@@ -125,6 +132,7 @@ namespace System {
         createDebugString("entity_count", 5);
         createDebugString("v_direction", 6);
         createDebugString("v_boundaries", 7);
+        createDebugString("v_zoom", 8);
     }
 
     sf::Vector2f convertToGLCoordinates(sf::Vector2f worldCoordinates) {

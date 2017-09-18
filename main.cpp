@@ -1,14 +1,16 @@
-#include <cmath>
+
 #include <sstream>
 #include <SFML/Window/Event.hpp>
 #include "includes/System/System.h"
 #include "includes/System/ResourceLoader.h"
 #include "includes/System/ViewHandler.h"
 #include "includes/System/EntityContainer.h"
-#include "includes/Characters/Clerk.h"
 #include "includes/System/ControlPanel.h"
+#include "includes/System/SaveManager.h"
 
 int main() {
+    auto *saveManager = new SaveManager();
+
     //preload resources
     ResourceLoader::loadTexturesFromFiles();
 
@@ -40,6 +42,17 @@ int main() {
 
             if (e.type == sf::Event::KeyPressed || e.type == sf::Event::KeyReleased) {
                 ViewHandler::handleViewScrollKeyPress(e);
+                saveManager->handleSaveEvent();
+            }
+
+            if (e.type == sf::Event::MouseWheelScrolled) {
+//                ViewHandler::handleViewZoomKeyPress(e);
+            }
+
+            if (e.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
+                for (int i = 0; i <= 50; i++) {
+                    auto *clerk = new Clerk(System::window->getDefaultView().getCenter());
+                }
             }
         }
 

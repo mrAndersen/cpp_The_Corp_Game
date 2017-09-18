@@ -2,6 +2,29 @@
 #include "../../includes/System/System.h"
 #include "../../includes/System/Enum.h"
 
+std::string Entity::serialize() {
+    std::map<int, std::string> parameters;
+    std::string serialized;
+
+    parameters[1] = std::to_string(E_Entity);
+    parameters[2] = name;
+    parameters[3] = std::to_string(health);
+    parameters[4] = std::to_string(worldCoordinates.x) + "." + std::to_string(worldCoordinates.y);
+    parameters[5] = std::to_string(width);
+    parameters[6] = std::to_string(height);
+    parameters[7] = std::to_string(totalFrames);
+    parameters[8] = std::to_string(currentFrame);
+    parameters[9] = std::to_string(drawOrder);
+    parameters[10] = std::to_string(liveClock.getElapsedTime().asMicroseconds());
+    parameters[11] = std::to_string(animationResolution);
+
+    for (const auto &node:parameters) {
+        serialized += std::to_string(node.first) + ":" + node.second + "|";
+    }
+
+    return serialized;
+}
+
 void Entity::createAnimationFrames() {
     sprite.setTexture(*texture);
     sprite.setOrigin(width / 2, height / 2);
@@ -54,9 +77,9 @@ void Entity::renderCurrentFrame() {
 
 bool Entity::mouseIn() {
     return System::g_x >= worldCoordinates.x - width / 2 &&
-        System::g_x <= worldCoordinates.x + width / 2 &&
-        System::g_y >= worldCoordinates.y - height / 2 &&
-        System::g_y <= worldCoordinates.y + height / 2;
+           System::g_x <= worldCoordinates.x + width / 2 &&
+           System::g_y >= worldCoordinates.y - height / 2 &&
+           System::g_y <= worldCoordinates.y + height / 2;
 }
 
 
@@ -82,6 +105,10 @@ void Entity::setTransparent() {
 
 void Entity::removeTransparency() {
     sprite.setColor(sf::Color(255, 255, 255, 255));
+}
+
+void Entity::setInvalid() {
+    sprite.setColor(sf::Color(255, 0, 0, 255));
 }
 
 void Entity::updateLogic() {

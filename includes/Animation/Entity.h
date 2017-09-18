@@ -127,6 +127,10 @@ public:
     float getFrameTimeMs() const;
 
     void setFrameTimeMs(float frameTimeMs);
+
+    void setInvalid();
+
+    std::string serialize();
 };
 
 

@@ -15,6 +15,7 @@ enum Direction {
 };
 
 enum Entities {
+    E_Entity = 0,
     //Ground
     E_StaticGround = 11,
 

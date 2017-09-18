@@ -8,6 +8,8 @@ Ground::Ground(sf::Vector2f coordinates) {
 
     setWidth(Ground::width);
     setHeight(Ground::height);
+    sprite.setScale(0.5f, 0.5f);
+
 
     setWorldCoordinates(coordinates);
 

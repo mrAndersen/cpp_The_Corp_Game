@@ -3,6 +3,9 @@
 #include "../../includes/Objects/Ground.h"
 #include "../../includes/System/System.h"
 #include "../../includes/Animation/Entity.h"
+#include "../../includes/Office/OfficeClerk.h"
+#include "../../includes/Objects/ControlButtonAddClerk.h"
+#include "../../includes/Objects/ControlButtonAddOffice.h"
 
 namespace EntityContainer {
     std::vector<Entity *> items = {};
@@ -11,6 +14,22 @@ namespace EntityContainer {
 
     std::vector<Entity *> getItems() {
         return items;
+    }
+
+    std::vector<Entity *> getSaveable() {
+        std::vector<Entity *> buffer;
+
+        for (auto entity:items) {
+            if (
+                    !dynamic_cast<Ground *>(entity) &&
+                    !dynamic_cast<ControlButtonAddClerk *>(entity) &&
+                    !dynamic_cast<ControlButtonAddOffice *>(entity)
+                    ) {
+                buffer.push_back(entity);
+            }
+        }
+
+        return buffer;
     }
 
     void add(Entity *item) {
@@ -78,5 +97,7 @@ namespace EntityContainer {
             System::window->draw(v_array);
         }
     }
+
+
 }
 

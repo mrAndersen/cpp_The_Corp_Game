@@ -45,9 +45,10 @@ void Movable::renderCurrentFrame() {
                 "[h=" + std::to_string((int) health) + "]" +
                 "[t=" + std::to_string((int) liveClock.getElapsedTime().asSeconds()) + "]" +
                 "[v=" + std::to_string((int) speed) + "]"
-                "[h=" + std::to_string((int) health) + "]"
+                        "[h=" + std::to_string((int) health) + "]"
         );
-        debugString.setPosition(System::convertToGLCoordinates(worldCoordinates.x - width / 2, worldCoordinates.y + height / 2 + 15));
+        debugString.setPosition(
+                System::convertToGLCoordinates(worldCoordinates.x - width / 2, worldCoordinates.y + height / 2 + 15));
         System::window->draw(debugString);
     }
 }
@@ -64,7 +65,11 @@ void Movable::updateLogic() {
 
 bool Movable::hasReachedWorldEdges() {
     return !((worldCoordinates.x + width / 2) <= System::worldWidth / 2 &&
-            (worldCoordinates.x - width / 2) >= -System::worldWidth / 2);
+             (worldCoordinates.x - width / 2) >= -System::worldWidth / 2);
+}
+
+bool Movable::isBelowGround() {
+    return worldCoordinates.y - height / 2 <= System::groundLevel + Ground::height;
 }
 
 Direction Movable::getDirection() const {
@@ -89,6 +94,10 @@ float Movable::getFallAcceleration() const {
 
 void Movable::setFallAcceleration(float fallAcceleration) {
     Movable::fallAcceleration = fallAcceleration;
+}
+
+std::string Movable::serialize() {
+    return Entity::serialize();
 }
 
 

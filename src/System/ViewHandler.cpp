@@ -7,7 +7,6 @@
 #include <iostream>
 
 namespace ViewHandler {
-    float zoomFactor = 1.f;
     Direction viewDirectionMovement = Direction::None;
 
     sf::View *view;
@@ -17,6 +16,7 @@ namespace ViewHandler {
     float right = 0;
     float bottom = 0;
     float left = 0;
+    float zoom = 1;
 
     void handleViewScroll() {
         int scrollSpeed = 30;
@@ -73,8 +73,25 @@ namespace ViewHandler {
             top = center.y + System::screenHeight / 2;
             bottom = center.y - System::screenHeight / 2;
 
+            left = left * zoom;
+            right = right * zoom;
+            top = top * zoom;
+            bottom = bottom * zoom;
+
             System::window->setView(*view);
         }
+    }
+
+    void handleViewZoomKeyPress(sf::Event e) {
+        float delta = e.mouseWheelScroll.delta;
+
+        if (delta > 0) {
+            zoom = zoom - 0.1f;
+        } else {
+            zoom = zoom + 0.1f;
+        }
+
+        view->setSize(System::screenWidth * zoom, System::screenHeight * zoom);
     }
 
     void handleViewScrollKeyPress(sf::Event e) {

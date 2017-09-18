@@ -25,7 +25,7 @@ void ControlButtonAddClerk::updateLogic() {
 
     if (leftClicked() && !attachedClerk) {
         attachedClerk = new Clerk(sf::Vector2f(System::g_x, System::g_y));
-        attachedClerk->setTransparent();
+
     }
 
     if (rightClickedOutside() && attachedClerk) {
@@ -33,7 +33,8 @@ void ControlButtonAddClerk::updateLogic() {
         attachedClerk = nullptr;
     }
 
-    if (leftClickedOutside() && attachedClerk) {
+    //spawn
+    if (leftClickedOutside() && attachedClerk && !attachedClerk->isBelowGround()) {
         attachedClerk->removeTransparency();
         attachedClerk->setDirection(Direction::Down);
         attachedClerk = nullptr;
@@ -41,5 +42,11 @@ void ControlButtonAddClerk::updateLogic() {
 
     if (attachedClerk) {
         attachedClerk->setWorldCoordinates(System::getGlobalMouse());
+
+        if (attachedClerk->isBelowGround()) {
+            attachedClerk->setInvalid();
+        } else {
+            attachedClerk->setTransparent();
+        }
     }
 }

@@ -27,7 +27,6 @@ protected:
     void updateLogic();
 
     void renderCurrentFrame();
-
 public:
     Movable();
 
@@ -42,6 +41,10 @@ public:
     float getFallAcceleration() const;
 
     void setFallAcceleration(float fallAcceleration);
+
+    bool isBelowGround();
+
+    std::string serialize();
 };
 
 #endif //THE_CORP_GAME_ENTITYANIMATION_CPP_H
