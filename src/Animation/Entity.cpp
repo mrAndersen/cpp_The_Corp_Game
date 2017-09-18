@@ -65,7 +65,6 @@ bool Entity::isAnimationResolutionReached() {
 }
 
 void Entity::update() {
-
     updateLogic();
     updateAnimation();
 }
