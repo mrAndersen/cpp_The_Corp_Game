@@ -88,7 +88,7 @@ namespace System {
     }
 
     void initWindow() {
-        auto mode = sf::Style::Close;
+        auto mode = sf::Style::Fullscreen;
 
         if (mode == sf::Style::Fullscreen) {
             RECT w_Desktop;
