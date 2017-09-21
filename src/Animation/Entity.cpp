@@ -26,30 +26,6 @@ std::string Entity::serialize() {
     return serialized;
 }
 
-void Entity::createAnimationFrames() {
-    sprite.setTexture(*texture);
-    sprite.setOrigin(width / 2, height / 2);
-
-    for (int i = 0; i < totalFrames; ++i) {
-        sf::IntRect rect(i * width, 0, width, height);
-        frames.push_back(rect);
-    }
-
-    animationResolution = 1000 / frames.size();
-    sprite.setTextureRect(frames[0]);
-
-    if (System::animationDebug) {
-        quad.setPrimitiveType(sf::LinesStrip);
-        quad.append(sf::Vertex(System::convertToGLCoordinates(worldCoordinates.x - width / 2, worldCoordinates.y + height / 2), System::red));
-        quad.append(sf::Vertex(System::convertToGLCoordinates(worldCoordinates.x + width / 2, worldCoordinates.y + height / 2), System::red));
-        quad.append(sf::Vertex(System::convertToGLCoordinates(worldCoordinates.x + width / 2, worldCoordinates.y - height / 2), System::red));
-        quad.append(sf::Vertex(System::convertToGLCoordinates(worldCoordinates.x - width / 2, worldCoordinates.y - height / 2), System::red));
-        quad.append(sf::Vertex(System::convertToGLCoordinates(worldCoordinates.x - width / 2, worldCoordinates.y + height / 2), System::red));
-
-        EntityContainer::verticies.push_back(quad);
-    }
-}
-
 void Entity::updateFrameTime() {
     frameTimeMs = frameClock.restart().asMilliseconds();
     totalAnimationFrameTimeMs += frameTimeMs;
@@ -86,12 +62,17 @@ void Entity::renderCurrentFrame() {
 
     System::window->draw(sprite);
 
-    if(System::animationDebug){
-        quad[0].position = System::convertToGLCoordinates(worldCoordinates.x - width / 2, worldCoordinates.y + height / 2);
-        quad[1].position = System::convertToGLCoordinates(worldCoordinates.x + width / 2, worldCoordinates.y + height / 2);
-        quad[2].position = System::convertToGLCoordinates(worldCoordinates.x + width / 2, worldCoordinates.y - height / 2);
-        quad[3].position = System::convertToGLCoordinates(worldCoordinates.x - width / 2, worldCoordinates.y - height / 2);
-        quad[4].position = System::convertToGLCoordinates(worldCoordinates.x - width / 2, worldCoordinates.y + height / 2);
+    if (System::animationDebug) {
+        quad[0].position = System::convertToGLCoordinates(worldCoordinates.x - width / 2,
+                                                          worldCoordinates.y + height / 2);
+        quad[1].position = System::convertToGLCoordinates(worldCoordinates.x + width / 2,
+                                                          worldCoordinates.y + height / 2);
+        quad[2].position = System::convertToGLCoordinates(worldCoordinates.x + width / 2,
+                                                          worldCoordinates.y - height / 2);
+        quad[3].position = System::convertToGLCoordinates(worldCoordinates.x - width / 2,
+                                                          worldCoordinates.y - height / 2);
+        quad[4].position = System::convertToGLCoordinates(worldCoordinates.x - width / 2,
+                                                          worldCoordinates.y + height / 2);
     }
 }
 
@@ -260,4 +241,54 @@ int Entity::getDrawOrder() const {
 
 void Entity::setDrawOrder(int drawOrder) {
     Entity::drawOrder = drawOrder;
+}
+
+void Entity::createAnimationFrames() {
+    if (!textureHeight) {
+        textureHeight = height;
+    }
+
+    if (!textureWidth) {
+        textureWidth = width;
+    }
+
+    sprite.setTexture(*texture);
+    sprite.setOrigin(width / 2, height / 2);
+
+    for (int i = 0; i < totalFrames; ++i) {
+        sf::IntRect rect(i * textureWidth, 0, textureWidth, textureHeight);
+        frames.push_back(rect);
+    }
+
+    animationResolution = 1000 / frames.size();
+    sprite.setTextureRect(frames[0]);
+
+    if (System::animationDebug) {
+        quad.setPrimitiveType(sf::LinesStrip);
+        quad.resize(5);
+
+        quad[0] = sf::Vertex(System::convertToGLCoordinates(worldCoordinates.x - width / 2, worldCoordinates.y + height / 2), System::red);
+        quad[1] = sf::Vertex(System::convertToGLCoordinates(worldCoordinates.x + width / 2, worldCoordinates.y + height / 2), System::red);
+        quad[2] = sf::Vertex(System::convertToGLCoordinates(worldCoordinates.x + width / 2, worldCoordinates.y - height / 2), System::red);
+        quad[3] = sf::Vertex(System::convertToGLCoordinates(worldCoordinates.x - width / 2, worldCoordinates.y - height / 2), System::red);
+        quad[4] = sf::Vertex(System::convertToGLCoordinates(worldCoordinates.x - width / 2, worldCoordinates.y + height / 2), System::red);
+
+        EntityContainer::verticies.push_back(quad);
+    }
+}
+
+int Entity::getTextureWidth() const {
+    return textureWidth;
+}
+
+void Entity::setTextureWidth(int textureWidth) {
+    Entity::textureWidth = textureWidth;
+}
+
+int Entity::getTextureHeight() const {
+    return textureHeight;
+}
+
+void Entity::setTextureHeight(int textureHeight) {
+    Entity::textureHeight = textureHeight;
 }

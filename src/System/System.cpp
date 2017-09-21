@@ -6,8 +6,8 @@
 #include "../../includes/System/ViewHandler.h"
 
 namespace System {
-    unsigned int screenWidth = 1820;
-    unsigned int screenHeight = 800;
+    unsigned int screenWidth = 1700;
+    unsigned int screenHeight = 650;
     std::string title = "New World";
     float groundLevel = 0;
     float worldWidth = 10000;
@@ -88,7 +88,7 @@ namespace System {
     }
 
     void initWindow() {
-        auto mode = sf::Style::Fullscreen;
+        auto mode = sf::Style::Close;
 
         if (mode == sf::Style::Fullscreen) {
             RECT w_Desktop;

@@ -12,8 +12,8 @@ OfficeClerk::OfficeClerk(sf::Vector2f coordinates) {
 
     setTotalFrames(1);
     setTexture(ResourceLoader::getTexture(Entities::E_OfficeClerk));
-    createAnimationFrames();
     setDrawOrder(98);
+    createAnimationFrames();
 
     EntityContainer::add(this);
 }

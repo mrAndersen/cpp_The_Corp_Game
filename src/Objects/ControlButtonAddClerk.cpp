@@ -25,7 +25,6 @@ void ControlButtonAddClerk::updateLogic() {
 
     if (leftClicked() && !attachedClerk) {
         attachedClerk = new Clerk(sf::Vector2f(System::g_x, System::g_y));
-
     }
 
     if (rightClickedOutside() && attachedClerk) {

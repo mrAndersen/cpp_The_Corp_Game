@@ -71,5 +71,9 @@ std::string Movable::serialize() {
     return Entity::serialize();
 }
 
+Movable::Movable() : Entity() {
+
+}
+
 
 

@@ -15,6 +15,9 @@ protected:
     int width = 0;
     int height = 0;
 
+    int textureWidth = 0;
+    int textureHeight = 0;
+
     //animation properties
     std::vector<sf::IntRect> frames = {};
     int totalFrames = 8;
@@ -39,8 +42,6 @@ protected:
     sf::VertexArray quad;
 
 public:
-    void createAnimationFrames();
-
     void updateFrameTime();
 
     bool isAnimationResolutionReached();
@@ -66,7 +67,7 @@ public:
     void removeTransparency();
 
     virtual void updateLogic();
-public:
+
     int getDrawOrder() const;
 
     void setDrawOrder(int drawOrder);
@@ -133,8 +134,17 @@ public:
 
     void setInvalid();
 
-    std::string serialize();
-};
+    virtual std::string serialize();
 
+    int getTextureWidth() const;
+
+    void setTextureWidth(int textureWidth);
+
+    int getTextureHeight() const;
+
+    void setTextureHeight(int textureHeight);
+
+    void createAnimationFrames();
+};
 
 #endif //THE_CORP_GAME_ENTITY_H

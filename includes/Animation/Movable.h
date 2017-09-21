@@ -24,6 +24,8 @@ protected:
 
     void renderCurrentFrame();
 public:
+    Movable();
+
     Direction getDirection() const;
 
     void setDirection(Direction direction);

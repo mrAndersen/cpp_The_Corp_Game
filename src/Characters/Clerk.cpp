@@ -16,8 +16,8 @@ Clerk::Clerk(sf::Vector2f coordinates) {
     setWorldCoordinates(coordinates);
 
     setTexture(ResourceLoader::getTexture(Entities::E_MovableClerk));
-    createAnimationFrames();
     setDrawOrder(100);
+    createAnimationFrames();
 
     EntityContainer::add(this);
 }
