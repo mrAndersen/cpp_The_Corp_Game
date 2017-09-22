@@ -15,6 +15,11 @@ protected:
     int width = 0;
     int height = 0;
 
+    float top = 0;
+    float bottom = 0;
+    float left = 0;
+    float right = 0;
+
     int textureWidth = 0;
     int textureHeight = 0;
 
@@ -42,11 +47,35 @@ protected:
     sf::VertexArray quad;
 
 public:
+    float getTop() const;
+
+    void setTop(float top);
+
+    float getBottom() const;
+
+    void setBottom(float bottom);
+
+    float getLeft() const;
+
+    void setLeft(float left);
+
+    float getRight() const;
+
+    void setRight(float right);
+
+    std::vector<std::string> getTypeTree();
+
+    bool hasType(const std::string &typeName);
+
     void updateFrameTime();
 
     bool isAnimationResolutionReached();
 
     void update();
+
+    bool isBelowGround();
+
+    bool isOnTheGround();
 
     void updateAnimation();
 

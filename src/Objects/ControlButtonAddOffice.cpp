@@ -21,6 +21,11 @@ ControlButtonAddOffice::ControlButtonAddOffice() {
 }
 
 void ControlButtonAddOffice::updateLogic() {
+    bool spawnCondition = attachedOffice &&
+                          !attachedOffice->isBelowGround() &&
+                          attachedOffice->hasNeighborOffice();
+
+
     if (leftClicked() && !attachedOffice) {
         attachedOffice = new OfficeClerk(sf::Vector2f(System::g_x, System::g_y));
         attachedOffice->setTransparent();
@@ -31,7 +36,8 @@ void ControlButtonAddOffice::updateLogic() {
         attachedOffice = nullptr;
     }
 
-    if (leftClickedOutside() && attachedOffice) {
+    //spawn
+    if (leftClickedOutside() && spawnCondition) {
         attachedOffice->removeTransparency();
         attachedOffice = nullptr;
     }
@@ -43,5 +49,11 @@ void ControlButtonAddOffice::updateLogic() {
         float normalizedY = global.y - ((int) global.y % System::gridSize) + System::gridSize / 2;
 
         attachedOffice->setWorldCoordinates(sf::Vector2f(normalizedX, normalizedY));
+
+        if (!spawnCondition) {
+            attachedOffice->setInvalid();
+        } else {
+            attachedOffice->setTransparent();
+        }
     }
 }

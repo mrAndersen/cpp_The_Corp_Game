@@ -32,6 +32,18 @@ namespace EntityContainer {
         return buffer;
     }
 
+    std::vector<Entity *> getOffices() {
+        std::vector<Entity *> buffer;
+
+        for (auto entity:items) {
+            if (dynamic_cast<Office *>(entity)) {
+                buffer.push_back(entity);
+            }
+        }
+
+        return buffer;
+    }
+
     void add(Entity *item) {
         items.push_back(item);
 
@@ -72,8 +84,8 @@ namespace EntityContainer {
 
                 sf::VertexArray lines;
                 lines.setPrimitiveType(sf::Lines);
-                lines.append(sf::Vertex(System::convertToGLCoordinates(i, 5000), transparentBlack));
-                lines.append(sf::Vertex(System::convertToGLCoordinates(i, System::groundLevel), transparentBlack));
+                lines.append(sf::Vertex(System::cToGl(i, 5000), transparentBlack));
+                lines.append(sf::Vertex(System::cToGl(i, System::groundLevel), transparentBlack));
 
                 verticies.push_back(lines);
             }
@@ -84,8 +96,8 @@ namespace EntityContainer {
             if ((j % System::gridSize) == 0) {
                 sf::VertexArray lines;
                 lines.setPrimitiveType(sf::Lines);
-                lines.append(sf::Vertex(System::convertToGLCoordinates(-System::worldWidth / 2, j), transparentBlack));
-                lines.append(sf::Vertex(System::convertToGLCoordinates(System::worldWidth / 2, j), transparentBlack));
+                lines.append(sf::Vertex(System::cToGl(-System::worldWidth / 2, j), transparentBlack));
+                lines.append(sf::Vertex(System::cToGl(System::worldWidth / 2, j), transparentBlack));
 
                 verticies.push_back(lines);
             }

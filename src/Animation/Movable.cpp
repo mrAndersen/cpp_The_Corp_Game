@@ -8,7 +8,7 @@
 void Movable::renderCurrentFrame() {
     auto frame = frames[currentFrame];
 
-    sprite.setPosition(System::convertToGLCoordinates(worldCoordinates));
+    sprite.setPosition(System::cToGl(worldCoordinates));
     sprite.setTextureRect(frame);
 
     if (direction == Direction::Left) {
@@ -37,10 +37,6 @@ void Movable::updateLogic() {
 bool Movable::hasReachedWorldEdges() {
     return !((worldCoordinates.x + width / 2) <= System::worldWidth / 2 &&
              (worldCoordinates.x - width / 2) >= -System::worldWidth / 2);
-}
-
-bool Movable::isBelowGround() {
-    return worldCoordinates.y - height / 2 <= System::groundLevel + Ground::height;
 }
 
 Direction Movable::getDirection() const {

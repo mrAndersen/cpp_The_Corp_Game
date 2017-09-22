@@ -14,6 +14,8 @@ namespace EntityContainer {
 
     std::vector<Entity *> getSaveable();
 
+    std::vector<Entity *> getOffices();
+
     void add(Entity *item);
 
     void remove(Entity *item);

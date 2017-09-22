@@ -1,7 +1,9 @@
+#include <sstream>
 #include "../../includes/Animation/Entity.h"
 #include "../../includes/System/System.h"
 #include "../../includes/System/Enum.h"
 #include "../../includes/System/EntityContainer.h"
+#include "../../includes/Objects/Ground.h"
 
 std::string Entity::serialize() {
     std::map<int, std::string> parameters;
@@ -55,25 +57,17 @@ void Entity::updateAnimation() {
 }
 
 void Entity::renderCurrentFrame() {
+    top = worldCoordinates.y + height / 2;
+    bottom = worldCoordinates.y - height / 2;
+    left = worldCoordinates.x - width / 2;
+    right = worldCoordinates.x + width / 2;
+
     auto frame = frames[currentFrame];
 
-    sprite.setPosition(System::convertToGLCoordinates(worldCoordinates));
+    sprite.setPosition(System::cToGl(worldCoordinates));
     sprite.setTextureRect(frame);
 
     System::window->draw(sprite);
-
-    if (System::animationDebug) {
-        quad[0].position = System::convertToGLCoordinates(worldCoordinates.x - width / 2,
-                                                          worldCoordinates.y + height / 2);
-        quad[1].position = System::convertToGLCoordinates(worldCoordinates.x + width / 2,
-                                                          worldCoordinates.y + height / 2);
-        quad[2].position = System::convertToGLCoordinates(worldCoordinates.x + width / 2,
-                                                          worldCoordinates.y - height / 2);
-        quad[3].position = System::convertToGLCoordinates(worldCoordinates.x - width / 2,
-                                                          worldCoordinates.y - height / 2);
-        quad[4].position = System::convertToGLCoordinates(worldCoordinates.x - width / 2,
-                                                          worldCoordinates.y + height / 2);
-    }
 }
 
 bool Entity::mouseIn() {
@@ -137,6 +131,14 @@ const sf::Vector2f &Entity::getWorldCoordinates() const {
 
 void Entity::setWorldCoordinates(const sf::Vector2f &worldCoordinates) {
     Entity::worldCoordinates = worldCoordinates;
+}
+
+bool Entity::isBelowGround() {
+    return bottom < System::groundLevel + Ground::height;
+}
+
+bool Entity::isOnTheGround() {
+    return bottom == System::groundLevel + Ground::height;
 }
 
 int Entity::getWidth() const {
@@ -262,19 +264,6 @@ void Entity::createAnimationFrames() {
 
     animationResolution = 1000 / frames.size();
     sprite.setTextureRect(frames[0]);
-
-    if (System::animationDebug) {
-        quad.setPrimitiveType(sf::LinesStrip);
-        quad.resize(5);
-
-        quad[0] = sf::Vertex(System::convertToGLCoordinates(worldCoordinates.x - width / 2, worldCoordinates.y + height / 2), System::red);
-        quad[1] = sf::Vertex(System::convertToGLCoordinates(worldCoordinates.x + width / 2, worldCoordinates.y + height / 2), System::red);
-        quad[2] = sf::Vertex(System::convertToGLCoordinates(worldCoordinates.x + width / 2, worldCoordinates.y - height / 2), System::red);
-        quad[3] = sf::Vertex(System::convertToGLCoordinates(worldCoordinates.x - width / 2, worldCoordinates.y - height / 2), System::red);
-        quad[4] = sf::Vertex(System::convertToGLCoordinates(worldCoordinates.x - width / 2, worldCoordinates.y + height / 2), System::red);
-
-        EntityContainer::verticies.push_back(quad);
-    }
 }
 
 int Entity::getTextureWidth() const {
@@ -291,4 +280,59 @@ int Entity::getTextureHeight() const {
 
 void Entity::setTextureHeight(int textureHeight) {
     Entity::textureHeight = textureHeight;
+}
+
+std::vector<std::string> Entity::getTypeTree() {
+    std::vector<std::string> result;
+    std::istringstream iss(name);
+
+    for (std::string token; std::getline(iss, token, '.');) {
+        result.push_back(std::move(token));
+    }
+
+    return result;
+}
+
+bool Entity::hasType(const std::string &typeName) {
+    auto types = getTypeTree();
+
+    for (const auto &type:types) {
+        if (type == typeName) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+float Entity::getTop() const {
+    return top;
+}
+
+void Entity::setTop(float top) {
+    Entity::top = top;
+}
+
+float Entity::getBottom() const {
+    return bottom;
+}
+
+void Entity::setBottom(float bottom) {
+    Entity::bottom = bottom;
+}
+
+float Entity::getLeft() const {
+    return left;
+}
+
+void Entity::setLeft(float left) {
+    Entity::left = left;
+}
+
+float Entity::getRight() const {
+    return right;
+}
+
+void Entity::setRight(float right) {
+    Entity::right = right;
 }

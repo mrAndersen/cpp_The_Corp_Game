@@ -9,7 +9,7 @@ public:
     const static int width = 142;
     const static int height = 47;
 
-    OfficeClerk *attachedOffice;
+    Office *attachedOffice = nullptr;
 
     explicit ControlButtonAddOffice();
 

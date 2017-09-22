@@ -38,8 +38,6 @@ public:
 
     void setFallAcceleration(float fallAcceleration);
 
-    bool isBelowGround();
-
     std::string serialize();
 };
 
