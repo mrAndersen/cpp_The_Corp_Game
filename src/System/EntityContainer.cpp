@@ -32,12 +32,12 @@ namespace EntityContainer {
         return buffer;
     }
 
-    std::vector<Entity *> getOffices() {
-        std::vector<Entity *> buffer;
+    std::vector<Office *> getOffices() {
+        std::vector<Office *> buffer;
 
-        for (auto entity:items) {
-            if (dynamic_cast<Office *>(entity)) {
-                buffer.push_back(entity);
+        for (Entity* entity:items) {
+            if (auto d = dynamic_cast<Office *>(entity)) {
+                buffer.push_back(d);
             }
         }
 

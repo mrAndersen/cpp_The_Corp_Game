@@ -23,7 +23,7 @@ ControlButtonAddOffice::ControlButtonAddOffice() {
 void ControlButtonAddOffice::updateLogic() {
     bool spawnCondition = attachedOffice &&
                           !attachedOffice->isBelowGround() &&
-                          attachedOffice->hasNeighborOffice();
+                          (!attachedOffice->getNeighborOffices().empty() || attachedOffice->isOnTheGround());
 
 
     if (leftClicked() && !attachedOffice) {

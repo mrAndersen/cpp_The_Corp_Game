@@ -5,8 +5,15 @@
 
 class Office : public Entity {
 public:
+    int floor = 1;
 
-    bool hasNeighborOffice();
+    std::vector<Office *> getNeighborOffices();
+
+    void updateLogic();
+
+    int getFloor() const;
+
+    void setFloor(int floor);
 };
 
 #endif //THE_CORP_GAME_OFFICE_H

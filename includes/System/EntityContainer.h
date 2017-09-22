@@ -4,6 +4,7 @@
 #include "../System/ResourceLoader.h"
 #include "../Animation/Movable.h"
 #include "../Characters/Clerk.h"
+#include "../Office/Office.h"
 
 namespace EntityContainer {
     extern std::vector<Entity *> items;
@@ -14,7 +15,7 @@ namespace EntityContainer {
 
     std::vector<Entity *> getSaveable();
 
-    std::vector<Entity *> getOffices();
+    std::vector<Office *> getOffices();
 
     void add(Entity *item);
 

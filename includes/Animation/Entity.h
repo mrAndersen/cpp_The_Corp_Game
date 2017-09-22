@@ -20,6 +20,8 @@ protected:
     float left = 0;
     float right = 0;
 
+    sf::FloatRect rect;
+
     int textureWidth = 0;
     int textureHeight = 0;
 
@@ -45,8 +47,13 @@ protected:
 
     //debug
     sf::VertexArray quad;
+    sf::Text info;
 
 public:
+    const sf::FloatRect &getRect() const;
+
+    void setRect(const sf::FloatRect &rect);
+
     float getTop() const;
 
     void setTop(float top);

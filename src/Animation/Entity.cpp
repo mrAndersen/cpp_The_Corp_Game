@@ -52,6 +52,18 @@ void Entity::updateAnimation() {
         currentFrame = (currentFrame == (totalFrames - 1)) ? 0 : currentFrame + 1;
     }
 
+    if (System::animationDebug) {
+        info.setPosition(System::cToGl(worldCoordinates.x + width / 2, worldCoordinates.y + height / 2));
+        info.setString(
+                "pos: {" + std::to_string(worldCoordinates.x) + "," + std::to_string(worldCoordinates.y) + "}\n" +
+                "left: " + std::to_string(left) + "\n" +
+                "right: " + std::to_string(right) + "\n" +
+                "top: " + std::to_string(top) + "\n" +
+                "bottom: " + std::to_string(bottom) + "\n"
+        );
+        System::window->draw(info);
+    }
+
     renderCurrentFrame();
     updateFrameTime();
 }
@@ -61,6 +73,11 @@ void Entity::renderCurrentFrame() {
     bottom = worldCoordinates.y - height / 2;
     left = worldCoordinates.x - width / 2;
     right = worldCoordinates.x + width / 2;
+
+    rect.height = height;
+    rect.width = width;
+    rect.left = left;
+    rect.top = top;
 
     auto frame = frames[currentFrame];
 
@@ -246,6 +263,10 @@ void Entity::setDrawOrder(int drawOrder) {
 }
 
 void Entity::createAnimationFrames() {
+    info.setFont(*System::openSans);
+    info.setCharacterSize(10);
+    info.setFillColor(sf::Color::Black);
+
     if (!textureHeight) {
         textureHeight = height;
     }
@@ -335,4 +356,12 @@ float Entity::getRight() const {
 
 void Entity::setRight(float right) {
     Entity::right = right;
+}
+
+const sf::FloatRect &Entity::getRect() const {
+    return rect;
+}
+
+void Entity::setRect(const sf::FloatRect &rect) {
+    Entity::rect = rect;
 }
