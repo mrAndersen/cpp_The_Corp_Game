@@ -66,7 +66,7 @@ namespace ViewHandler {
                 }
             }
 
-            auto center = System::convertFromGLCoordinates(ViewHandler::view->getCenter());
+            auto center = System::cFromGl(ViewHandler::view->getCenter());
 
             left = center.x - System::screenWidth / 2;
             right = center.x + System::screenWidth / 2;

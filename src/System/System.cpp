@@ -80,7 +80,7 @@ namespace System {
 
         for (it = debugPanelTextNodes.begin(); it != debugPanelTextNodes.end(); it++) {
             it->second.setPosition(
-                    convertToGLCoordinates(sf::Vector2f(ViewHandler::left + 12, ViewHandler::top - i * 12)));
+                    cToGl(sf::Vector2f(ViewHandler::left + 12, ViewHandler::top - i * 12)));
             window->draw(it->second);
 
             i++;
@@ -111,7 +111,7 @@ namespace System {
 
     sf::Text createDebugString(const std::string &alias, int index) {
         sf::Text label;
-        label.setPosition(convertToGLCoordinates(sf::Vector2f(ViewHandler::left + 12, ViewHandler::top - index * 12)));
+        label.setPosition(cToGl(sf::Vector2f(ViewHandler::left + 12, ViewHandler::top - index * 12)));
         label.setFillColor(sf::Color::Black);
         label.setFont(*openSans);
         label.setCharacterSize(10);
@@ -135,25 +135,25 @@ namespace System {
         createDebugString("v_zoom", 8);
     }
 
-    sf::Vector2f convertToGLCoordinates(sf::Vector2f worldCoordinates) {
+    sf::Vector2f cToGl(sf::Vector2f worldCoordinates) {
         worldCoordinates.y = System::screenHeight - worldCoordinates.y;
         return worldCoordinates;
     }
 
-    sf::Vector2f convertToGLCoordinates(float x, float y) {
+    sf::Vector2f cToGl(float x, float y) {
         return {x, System::screenHeight - y};
     }
 
-    sf::Vector2f convertFromGLCoordinates(sf::Vector2f glCoordinates) {
+    sf::Vector2f cFromGl(sf::Vector2f glCoordinates) {
         glCoordinates.y = System::screenHeight - glCoordinates.y;
         return glCoordinates;
     }
 
-    sf::Vector2f convertFromGLCoordinates(float x, float y) {
+    sf::Vector2f cFromGl(float x, float y) {
         return {x, y - System::screenHeight};
     }
 
     sf::Vector2f getGlobalMouse() {
-        return sf::Vector2f(System::g_x, System::g_y);
+        return {System::g_x, System::g_y};
     }
 }

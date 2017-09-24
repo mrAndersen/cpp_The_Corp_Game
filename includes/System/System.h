@@ -48,13 +48,13 @@ namespace System {
 
     sf::Text createDebugString(const std::string &alias, int index);
 
-    sf::Vector2f convertToGLCoordinates(sf::Vector2f worldCoordinates);
+    sf::Vector2f cToGl(sf::Vector2f worldCoordinates);
 
-    sf::Vector2f convertFromGLCoordinates(sf::Vector2f glCoordinates);
+    sf::Vector2f cFromGl(sf::Vector2f glCoordinates);
 
-    sf::Vector2f convertToGLCoordinates(float x, float y);
+    sf::Vector2f cToGl(float x, float y);
 
-    sf::Vector2f convertFromGLCoordinates(float x, float y);
+    sf::Vector2f cFromGl(float x, float y);
 
     sf::Vector2f getGlobalMouse();
 }
