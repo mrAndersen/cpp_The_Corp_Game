@@ -11,6 +11,8 @@ public:
 
     void updateLogic();
 
+    void renderDebugInfo();
+
     int getFloor() const;
 
     void setFloor(int floor);

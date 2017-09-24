@@ -12,12 +12,12 @@ std::vector<Office *> Office::getNeighborOffices() {
     for (auto target:offices) {
         if (target != this) {
             if ((int) target->getRight() == (int) this->left &&
-                target->getWorldCoordinates().y == this->worldCoordinates.y && floor == target->getFloor() == 1) {
+                target->getWorldCoordinates().y == this->worldCoordinates.y && target->getFloor() == 1) {
                 result.push_back(target);
             }
 
             if ((int) target->getLeft() == (int) this->right &&
-                target->getWorldCoordinates().y == this->worldCoordinates.y && floor == target->getFloor() == 1) {
+                target->getWorldCoordinates().y == this->worldCoordinates.y && target->getFloor() == 1) {
                 result.push_back(target);
             }
 
@@ -49,4 +49,19 @@ int Office::getFloor() const {
 
 void Office::setFloor(int floor) {
     Office::floor = floor;
+}
+
+void Office::renderDebugInfo() {
+    if (System::animationDebug) {
+        info.setPosition(System::cToGl(worldCoordinates.x + width / 2, worldCoordinates.y + height / 2));
+        info.setString(
+                "pos: {" + std::to_string(worldCoordinates.x) + "," + std::to_string(worldCoordinates.y) + "}\n" +
+                "left: " + std::to_string(left) + "\n" +
+                "right: " + std::to_string(right) + "\n" +
+                "top: " + std::to_string(top) + "\n" +
+                "bottom: " + std::to_string(bottom) + "\n"
+                "floor: " + std::to_string(floor) + "\n"
+        );
+        System::window->draw(info);
+    }
 }

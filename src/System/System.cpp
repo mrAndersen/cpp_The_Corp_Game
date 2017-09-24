@@ -1,5 +1,5 @@
 #include <SFML/Window/Mouse.hpp>
-#include <winuser.h>
+//#include <winuser.h>
 #include <afxres.h>
 #include <psapi.h>
 #include "../../includes/System/System.h"

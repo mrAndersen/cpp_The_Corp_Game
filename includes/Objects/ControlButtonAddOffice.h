@@ -3,6 +3,7 @@
 
 #include "../Animation/Entity.h"
 #include "../Office/OfficeClerk.h"
+#include "../Office/Office.h"
 
 class ControlButtonAddOffice : public Entity {
 public:

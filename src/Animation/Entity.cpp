@@ -52,18 +52,8 @@ void Entity::updateAnimation() {
         currentFrame = (currentFrame == (totalFrames - 1)) ? 0 : currentFrame + 1;
     }
 
-    if (System::animationDebug) {
-        info.setPosition(System::cToGl(worldCoordinates.x + width / 2, worldCoordinates.y + height / 2));
-        info.setString(
-                "pos: {" + std::to_string(worldCoordinates.x) + "," + std::to_string(worldCoordinates.y) + "}\n" +
-                "left: " + std::to_string(left) + "\n" +
-                "right: " + std::to_string(right) + "\n" +
-                "top: " + std::to_string(top) + "\n" +
-                "bottom: " + std::to_string(bottom) + "\n"
-        );
-        System::window->draw(info);
-    }
 
+    renderDebugInfo();
     renderCurrentFrame();
     updateFrameTime();
 }
@@ -364,4 +354,18 @@ const sf::FloatRect &Entity::getRect() const {
 
 void Entity::setRect(const sf::FloatRect &rect) {
     Entity::rect = rect;
+}
+
+void Entity::renderDebugInfo() {
+    if (System::animationDebug) {
+        info.setPosition(System::cToGl(worldCoordinates.x + width / 2, worldCoordinates.y + height / 2));
+        info.setString(
+                "pos: {" + std::to_string(worldCoordinates.x) + "," + std::to_string(worldCoordinates.y) + "}\n" +
+                "left: " + std::to_string(left) + "\n" +
+                "right: " + std::to_string(right) + "\n" +
+                "top: " + std::to_string(top) + "\n" +
+                "bottom: " + std::to_string(bottom) + "\n"
+        );
+        System::window->draw(info);
+    }
 }

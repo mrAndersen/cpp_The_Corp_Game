@@ -19,7 +19,7 @@ OfficeClerk::OfficeClerk(sf::Vector2f coordinates) {
 }
 
 void OfficeClerk::updateLogic() {
-
+    Office::updateLogic();
 }
 
 std::string OfficeClerk::serialize() {

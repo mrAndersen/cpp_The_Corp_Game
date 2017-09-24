@@ -181,6 +181,8 @@ public:
     void setTextureHeight(int textureHeight);
 
     void createAnimationFrames();
+
+    virtual void renderDebugInfo();
 };
 
 #endif //THE_CORP_GAME_ENTITY_H
