@@ -1,4 +1,3 @@
-
 #include <sstream>
 #include <SFML/Window/Event.hpp>
 #include "includes/System/System.h"
