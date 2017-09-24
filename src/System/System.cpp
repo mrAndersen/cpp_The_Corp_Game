@@ -7,7 +7,7 @@
 
 namespace System {
     unsigned int screenWidth = 1700;
-    unsigned int screenHeight = 650;
+    unsigned int screenHeight = 800;
     std::string title = "New World";
     float groundLevel = 0;
     float worldWidth = 10000;

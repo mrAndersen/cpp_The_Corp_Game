@@ -6,10 +6,6 @@
 #include "../../includes/Objects/Ground.h"
 
 void Movable::renderCurrentFrame() {
-    auto frame = frames[currentFrame];
-
-    sprite.setPosition(System::cToGl(worldCoordinates));
-    sprite.setTextureRect(frame);
 
     if (direction == Direction::Left) {
         sprite.setScale(-1.f, 1.f);
@@ -21,7 +17,7 @@ void Movable::renderCurrentFrame() {
         sprite.setRotation(0);
     }
 
-    System::window->draw(sprite);
+    Entity::renderCurrentFrame();
 }
 
 void Movable::updateLogic() {
