@@ -28,6 +28,7 @@ namespace System {
 
     //player
     extern float cash;
+    extern bool spawningUnit;
 
     //player
 

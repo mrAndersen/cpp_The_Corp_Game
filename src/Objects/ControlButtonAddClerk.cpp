@@ -26,12 +26,15 @@ void ControlButtonAddClerk::updateLogic() {
                           System::cash >= attachedClerk->getCost() &&
                           !attachedClerk->isBelowGround();
 
-    if (leftClicked() && !attachedClerk) {
+    if (leftClicked() && !attachedClerk && !System::spawningUnit) {
         attachedClerk = new Clerk(sf::Vector2f(System::g_x, System::g_y));
     }
 
     if (rightClickedOutside() && attachedClerk) {
         EntityContainer::remove(attachedClerk);
+
+
+        System::spawningUnit = false;
         attachedClerk = nullptr;
     }
 
@@ -41,10 +44,13 @@ void ControlButtonAddClerk::updateLogic() {
         attachedClerk->setDirection(Direction::Down);
         attachedClerk->spawn();
 
+
+        System::spawningUnit = false;
         attachedClerk = nullptr;
     }
 
     if (attachedClerk) {
+        System::spawningUnit = true;
         attachedClerk->setWorldCoordinates(System::getGlobalMouse());
 
         if (!spawnCondition) {

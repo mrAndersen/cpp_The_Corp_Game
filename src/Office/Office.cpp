@@ -85,7 +85,7 @@ void Office::spawn() {
 }
 
 bool Office::hasFreeWorkPlaces() {
-    return workers.size() < 4;
+    return workers.size() < 3;
 }
 
 

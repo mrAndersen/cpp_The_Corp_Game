@@ -27,6 +27,7 @@ namespace System {
 
     //player
     float cash = 5000;
+    bool spawningUnit = false;
 
     //player
 

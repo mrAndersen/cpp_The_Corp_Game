@@ -3,6 +3,7 @@
 #include "../../includes/System/EntityContainer.h"
 #include "../../includes/System/ViewHandler.h"
 #include "../../includes/System/System.h"
+#include "../../includes/Office/OfficeClerk.h"
 
 ControlButtonAddOffice::ControlButtonAddOffice() {
     setName("button.add.office");
@@ -27,7 +28,6 @@ void ControlButtonAddOffice::updateLogic() {
                           !attachedOffice->intersectsWith() &&
                           (!attachedOffice->getNeighborOffices().empty() || attachedOffice->isOnTheGround());
 
-
     if (leftClicked() && !attachedOffice) {
         attachedOffice = new OfficeClerk(sf::Vector2f(System::g_x, System::g_y));
         attachedOffice->setTransparent();
@@ -35,6 +35,9 @@ void ControlButtonAddOffice::updateLogic() {
 
     if (rightClickedOutside() && attachedOffice) {
         EntityContainer::remove(attachedOffice);
+
+
+        System::spawningUnit = false;
         attachedOffice = nullptr;
     }
 
@@ -43,10 +46,13 @@ void ControlButtonAddOffice::updateLogic() {
         attachedOffice->setNormal();
         attachedOffice->spawn();
 
+
+        System::spawningUnit = false;
         attachedOffice = nullptr;
     }
 
     if (attachedOffice) {
+        System::spawningUnit = true;
         auto global = System::getGlobalMouse();
 
         float normalizedX = global.x - ((int) global.x % System::gridSize) + System::gridSize / 2;

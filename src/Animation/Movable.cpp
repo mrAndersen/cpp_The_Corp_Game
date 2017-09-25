@@ -3,7 +3,6 @@
 #include "../../includes/Animation/Movable.h"
 #include "../../includes/System/System.h"
 #include "../../includes/System/EntityContainer.h"
-#include "../../includes/Objects/Ground.h"
 
 void Movable::renderCurrentFrame() {
 
@@ -79,17 +78,17 @@ void Movable::spawn() {
     System::cash -= this->cost;
 }
 
-//Office *Movable::searchWorkPlace() {
-//    if (!this->currentWorkPlace) {
-//        for (auto office:EntityContainer::getOffices()) {
-//            if (office->hasFreeWorkPlaces()) {
-//                return office;
-//            }
-//        }
-//    } else {
-//        return currentWorkPlace;
-//    }
-//}
+Office *Movable::searchWorkPlace() {
+    if (!this->currentWorkPlace) {
+        for (auto office:EntityContainer::getOffices()) {
+            if (office->hasFreeWorkPlaces()) {
+                return office;
+            }
+        }
+    } else {
+        return currentWorkPlace;
+    }
+}
 
 
 

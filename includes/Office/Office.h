@@ -2,8 +2,6 @@
 #define THE_CORP_GAME_OFFICE_H
 
 #include "../Animation/Entity.h"
-#include "../Animation/Movable.h"
-#include "../Office/Office.h"
 
 class Office : public Entity {
 public:
@@ -17,7 +15,7 @@ public:
 
     std::vector<Office *> getNeighborOffices();
 
-    std::vector<Movable *> workers;
+    std::vector<Entity *> workers;
 
     void updateLogic();
 

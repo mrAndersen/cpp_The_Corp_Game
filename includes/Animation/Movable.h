@@ -1,13 +1,13 @@
 #ifndef THE_CORP_GAME_MOVABLE_H
 #define THE_CORP_GAME_MOVABLE_H
 
+#include "Entity.h"
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Clock.hpp>
 #include "../System/Enum.h"
 #include "../Office/Office.h"
-#include "Entity.h"
 
 
 class Movable : public Entity {
@@ -20,7 +20,7 @@ protected:
     float speed = 0;
     float fallAcceleration = 980;
 
-//    Office *currentWorkPlace;
+    Office *currentWorkPlace;
 
     //attr
     float cost = 0;
@@ -52,7 +52,7 @@ public:
 
     void setFallAcceleration(float fallAcceleration);
 
-//    Office *searchWorkPlace();
+    Office *searchWorkPlace();
 
     std::string serialize();
 };
