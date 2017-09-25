@@ -6,7 +6,9 @@
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Clock.hpp>
 #include "../System/Enum.h"
+#include "../Office/Office.h"
 #include "Entity.h"
+
 
 class Movable : public Entity {
 
@@ -16,17 +18,29 @@ protected:
 
     //pixels per second
     float speed = 0;
-    float fallAcceleration = 9832;
+    float fallAcceleration = 980;
+
+//    Office *currentWorkPlace;
+
+    //attr
+    float cost = 0;
 
     bool hasReachedWorldEdges();
 
     void updateLogic();
 
     void renderCurrentFrame();
+
 public:
     Movable();
 
     Direction getDirection() const;
+
+    void spawn();
+
+    float getCost() const;
+
+    void setCost(float cost);
 
     void setDirection(Direction direction);
 
@@ -37,6 +51,8 @@ public:
     float getFallAcceleration() const;
 
     void setFallAcceleration(float fallAcceleration);
+
+//    Office *searchWorkPlace();
 
     std::string serialize();
 };

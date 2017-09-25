@@ -67,5 +67,29 @@ Movable::Movable() : Entity() {
 
 }
 
+float Movable::getCost() const {
+    return cost;
+}
+
+void Movable::setCost(float cost) {
+    Movable::cost = cost;
+}
+
+void Movable::spawn() {
+    System::cash -= this->cost;
+}
+
+//Office *Movable::searchWorkPlace() {
+//    if (!this->currentWorkPlace) {
+//        for (auto office:EntityContainer::getOffices()) {
+//            if (office->hasFreeWorkPlaces()) {
+//                return office;
+//            }
+//        }
+//    } else {
+//        return currentWorkPlace;
+//    }
+//}
+
 
 

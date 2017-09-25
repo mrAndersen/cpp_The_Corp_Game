@@ -3,11 +3,13 @@
 
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics.hpp>
+#include "../System/Enum.h"
 
 class Entity {
 
 protected:
     //parameters
+    int id;
     std::string name = "";
     float health = 100;
 
@@ -20,7 +22,9 @@ protected:
     float left = 0;
     float right = 0;
 
-    sf::FloatRect rect;
+    States state = S_None;
+
+    sf::IntRect rect;
 
     int textureWidth = 0;
     int textureHeight = 0;
@@ -31,7 +35,7 @@ protected:
     int currentFrame = 0;
     float scale = 1.f;
     sf::Sprite sprite;
-    sf::Texture* texture;
+    std::map<int, sf::Texture*> textures;
     int drawOrder = 1;
 
     sf::Clock frameClock;
@@ -50,9 +54,9 @@ protected:
     sf::Text info;
 
 public:
-    const sf::FloatRect &getRect() const;
+    const sf::IntRect &getRect() const;
 
-    void setRect(const sf::FloatRect &rect);
+    void setRect(const sf::IntRect &rect);
 
     float getTop() const;
 
@@ -100,7 +104,7 @@ public:
 
     void setTransparent();
 
-    void removeTransparency();
+    void setNormal();
 
     virtual void updateLogic();
 
@@ -148,9 +152,9 @@ public:
 
     void setSprite(const sf::Sprite &sprite);
 
-    sf::Texture *getTexture() const;
+    sf::Texture *getTexture(States state = S_None);
 
-    void setTexture(sf::Texture *texture);
+    void setTexture(sf::Texture *texture, States state = S_None);
 
     const sf::Clock &getLiveClock() const;
 
@@ -183,6 +187,8 @@ public:
     void createAnimationFrames();
 
     virtual void renderDebugInfo();
+
+    Entity();
 };
 
 #endif //THE_CORP_GAME_ENTITY_H

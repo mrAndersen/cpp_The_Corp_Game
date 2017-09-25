@@ -12,10 +12,11 @@ Clerk::Clerk(sf::Vector2f coordinates) {
     setHeight(Clerk::height);
     setTotalFrames(24);
     setSpeed(300);
+    setCost(500);
 
     setWorldCoordinates(coordinates);
 
-    setTexture(ResourceLoader::getTexture(Entities::E_MovableClerk));
+    setTexture(ResourceLoader::getTexture(Entities::E_Clerk));
     setDrawOrder(100);
     createAnimationFrames();
 

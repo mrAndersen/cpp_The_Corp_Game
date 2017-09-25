@@ -22,7 +22,9 @@ ControlButtonAddOffice::ControlButtonAddOffice() {
 
 void ControlButtonAddOffice::updateLogic() {
     bool spawnCondition = attachedOffice &&
+                          System::cash >= attachedOffice->getCost() &&
                           !attachedOffice->isBelowGround() &&
+                          !attachedOffice->intersectsWith() &&
                           (!attachedOffice->getNeighborOffices().empty() || attachedOffice->isOnTheGround());
 
 
@@ -38,7 +40,9 @@ void ControlButtonAddOffice::updateLogic() {
 
     //spawn
     if (leftClickedOutside() && spawnCondition) {
-        attachedOffice->removeTransparency();
+        attachedOffice->setNormal();
+        attachedOffice->spawn();
+
         attachedOffice = nullptr;
     }
 

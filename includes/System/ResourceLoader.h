@@ -6,11 +6,11 @@
 #include "Enum.h"
 
 namespace ResourceLoader {
-    extern std::map<int, sf::Texture*> textureCollection;
+    extern std::map<int, std::map<int, sf::Texture*>> textureCollection;
 
-    void loadTexture(Entities target, const std::string &filePath);
+    void loadTexture(Entities target, const std::string &filePath, States states = S_None);
 
-    sf::Texture* getTexture(Entities target);
+    sf::Texture* getTexture(Entities target, States states = S_None);
 
     void loadTexturesFromFiles();
 }

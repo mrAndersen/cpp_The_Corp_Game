@@ -7,6 +7,7 @@ OfficeClerk::OfficeClerk(sf::Vector2f coordinates) {
 
     setWidth(OfficeClerk::width);
     setHeight(OfficeClerk::height);
+    setCost(2500);
 
     setWorldCoordinates(coordinates);
 

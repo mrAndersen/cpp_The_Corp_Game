@@ -1,8 +1,5 @@
 #include "../../includes/Office/OfficeClerk.h"
-#include "../../includes/System/ResourceLoader.h"
 #include "../../includes/System/EntityContainer.h"
-#include "../../includes/Office/Office.h"
-#include "../../includes/Objects/Ground.h"
 #include "../../includes/System/System.h"
 
 std::vector<Office *> Office::getNeighborOffices() {
@@ -28,13 +25,22 @@ std::vector<Office *> Office::getNeighborOffices() {
         }
     }
 
-//    if (result.size() >= 2) {
-//        std::sort(result.begin(), result.end());
-//        result.erase(std::unique(result.begin(), result.end()));
-//    }
-
-
     return result;
+}
+
+bool Office::intersectsWith() {
+    std::vector<Office *> result;
+    std::vector<Office *> offices = EntityContainer::getOffices();
+
+    for (auto target:offices) {
+        if (target != this) {
+            if (this->rect.intersects(target->getRect())) {
+                return true;
+            }
+        }
+    }
+
+    return false;
 }
 
 void Office::updateLogic() {
@@ -60,8 +66,26 @@ void Office::renderDebugInfo() {
                 "right: " + std::to_string(right) + "\n" +
                 "top: " + std::to_string(top) + "\n" +
                 "bottom: " + std::to_string(bottom) + "\n"
-                "floor: " + std::to_string(floor) + "\n"
+                        "floor: " + std::to_string(floor) + "\n"
         );
         System::window->draw(info);
     }
 }
+
+float Office::getCost() const {
+    return cost;
+}
+
+void Office::setCost(float cost) {
+    Office::cost = cost;
+}
+
+void Office::spawn() {
+    System::cash -= this->cost;
+}
+
+bool Office::hasFreeWorkPlaces() {
+    return workers.size() < 4;
+}
+
+

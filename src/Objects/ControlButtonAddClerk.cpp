@@ -22,6 +22,9 @@ ControlButtonAddClerk::ControlButtonAddClerk() {
 }
 
 void ControlButtonAddClerk::updateLogic() {
+    bool spawnCondition = attachedClerk &&
+                          System::cash >= attachedClerk->getCost() &&
+                          !attachedClerk->isBelowGround();
 
     if (leftClicked() && !attachedClerk) {
         attachedClerk = new Clerk(sf::Vector2f(System::g_x, System::g_y));
@@ -33,16 +36,18 @@ void ControlButtonAddClerk::updateLogic() {
     }
 
     //spawn
-    if (leftClickedOutside() && attachedClerk && !attachedClerk->isBelowGround()) {
-        attachedClerk->removeTransparency();
+    if (leftClickedOutside() && spawnCondition) {
+        attachedClerk->setNormal();
         attachedClerk->setDirection(Direction::Down);
+        attachedClerk->spawn();
+
         attachedClerk = nullptr;
     }
 
     if (attachedClerk) {
         attachedClerk->setWorldCoordinates(System::getGlobalMouse());
 
-        if (attachedClerk->isBelowGround()) {
+        if (!spawnCondition) {
             attachedClerk->setInvalid();
         } else {
             attachedClerk->setTransparent();

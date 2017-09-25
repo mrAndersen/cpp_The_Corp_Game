@@ -12,6 +12,7 @@ namespace System {
     extern float groundLevel;
     extern float worldWidth;
     extern int gridSize;
+    extern int entitySequence;
 
     //sys
     extern sf::Time systemTime;
@@ -24,6 +25,12 @@ namespace System {
     extern sf::Color red;
     extern sf::Color green;
     //utility
+
+    //player
+    extern float cash;
+
+    //player
+
 
     //debug
     extern std::map<std::string, sf::Text> debugPanelTextNodes;

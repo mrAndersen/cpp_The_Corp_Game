@@ -52,7 +52,6 @@ void Entity::updateAnimation() {
         currentFrame = (currentFrame == (totalFrames - 1)) ? 0 : currentFrame + 1;
     }
 
-
     renderDebugInfo();
     renderCurrentFrame();
     updateFrameTime();
@@ -66,8 +65,8 @@ void Entity::renderCurrentFrame() {
 
     rect.height = height;
     rect.width = width;
-    rect.left = left;
-    rect.top = top;
+    rect.left = (int) left;
+    rect.top = (int) top;
 
     auto frame = frames[currentFrame];
 
@@ -105,7 +104,7 @@ void Entity::setTransparent() {
     sprite.setColor(sf::Color(255, 255, 255, 96));
 }
 
-void Entity::removeTransparency() {
+void Entity::setNormal() {
     sprite.setColor(sf::Color(255, 255, 255, 255));
 }
 
@@ -204,14 +203,6 @@ void Entity::setSprite(const sf::Sprite &sprite) {
     Entity::sprite = sprite;
 }
 
-sf::Texture *Entity::getTexture() const {
-    return texture;
-}
-
-void Entity::setTexture(sf::Texture *texture) {
-    Entity::texture = texture;
-}
-
 const sf::Clock &Entity::getLiveClock() const {
     return liveClock;
 }
@@ -265,7 +256,7 @@ void Entity::createAnimationFrames() {
         textureWidth = width;
     }
 
-    sprite.setTexture(*texture);
+    sprite.setTexture(*textures[state]);
     sprite.setOrigin(width / 2, height / 2);
 
     for (int i = 0; i < totalFrames; ++i) {
@@ -348,18 +339,11 @@ void Entity::setRight(float right) {
     Entity::right = right;
 }
 
-const sf::FloatRect &Entity::getRect() const {
-    return rect;
-}
-
-void Entity::setRect(const sf::FloatRect &rect) {
-    Entity::rect = rect;
-}
-
 void Entity::renderDebugInfo() {
     if (System::animationDebug) {
         info.setPosition(System::cToGl(worldCoordinates.x + width / 2, worldCoordinates.y + height / 2));
         info.setString(
+                "id: " + std::to_string(id) + "\n" +
                 "pos: {" + std::to_string(worldCoordinates.x) + "," + std::to_string(worldCoordinates.y) + "}\n" +
                 "left: " + std::to_string(left) + "\n" +
                 "right: " + std::to_string(right) + "\n" +
@@ -368,4 +352,29 @@ void Entity::renderDebugInfo() {
         );
         System::window->draw(info);
     }
+}
+
+const sf::IntRect &Entity::getRect() const {
+    return rect;
+}
+
+void Entity::setRect(const sf::IntRect &rect) {
+    Entity::rect = rect;
+}
+
+sf::Texture *Entity::getTexture(States state) {
+    if (!textures.count(state)) {
+        throw std::invalid_argument("Unable to get texture for state");
+    }
+
+    return textures[state];
+}
+
+void Entity::setTexture(sf::Texture *texture, States state) {
+    textures[state] = texture;
+}
+
+Entity::Entity() {
+    System::entitySequence++;
+    id = System::entitySequence;
 }

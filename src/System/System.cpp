@@ -12,6 +12,7 @@ namespace System {
     float groundLevel = 0;
     float worldWidth = 10000;
     int gridSize = 100;
+    int entitySequence = 1;
 
     //sys
     sf::Clock fpsClock;
@@ -24,6 +25,11 @@ namespace System {
     sf::Color green(92, 184, 92);
     //utility
 
+    //player
+    float cash = 5000;
+
+    //player
+
     //debug
     std::map<std::string, sf::Text> debugPanelTextNodes;
     sf::Font *openSans;
@@ -32,7 +38,7 @@ namespace System {
     int framesPassed = 0;
     int entitiesOnScreen = 0;
     int fps = 0;
-    bool animationDebug = true;
+    bool animationDebug = false;
     //debug
 
     void refreshTitleStats() {
@@ -74,6 +80,7 @@ namespace System {
         );
 
         debugPanelTextNodes["v_zoom"].setString("v_zoom: " + std::to_string(ViewHandler::zoom));
+        debugPanelTextNodes["p_cash"].setString("p_cash: " + std::to_string(System::cash));
 
         std::map<std::string, sf::Text>::iterator it;
         int i = 1;
@@ -133,6 +140,7 @@ namespace System {
         createDebugString("v_direction", 6);
         createDebugString("v_boundaries", 7);
         createDebugString("v_zoom", 8);
+        createDebugString("p_cash", 9);
     }
 
     sf::Vector2f cToGl(sf::Vector2f worldCoordinates) {
