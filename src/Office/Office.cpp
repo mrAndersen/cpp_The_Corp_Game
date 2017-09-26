@@ -61,12 +61,14 @@ void Office::renderDebugInfo() {
     if (System::animationDebug) {
         info.setPosition(System::cToGl(worldCoordinates.x + width / 2, worldCoordinates.y + height / 2));
         info.setString(
-                "pos: {" + std::to_string(worldCoordinates.x) + "," + std::to_string(worldCoordinates.y) + "}\n" +
-                "left: " + std::to_string(left) + "\n" +
-                "right: " + std::to_string(right) + "\n" +
-                "top: " + std::to_string(top) + "\n" +
-                "bottom: " + std::to_string(bottom) + "\n"
+                "id: " + std::to_string(id) + "\n" +
+                "pos: {" + std::to_string((int)worldCoordinates.x) + "," + std::to_string((int)worldCoordinates.y) + "}\n" +
+                "left: " + std::to_string((int)left) + "," +
+                "right: " + std::to_string((int)right) + "," +
+                "top: " + std::to_string((int)top) + "," +
+                "bottom: " + std::to_string((int)bottom) + "\n"
                         "floor: " + std::to_string(floor) + "\n"
+                        "workers: " + std::to_string(workers.size()) + "\n"
         );
         System::window->draw(info);
     }
@@ -82,10 +84,19 @@ void Office::setCost(float cost) {
 
 void Office::spawn() {
     System::cash -= this->cost;
+
+    spawned = true;
 }
 
 bool Office::hasFreeWorkPlaces() {
     return workers.size() < 3;
 }
 
+std::vector<Entity *> &Office::getWorkers() {
+    return workers;
+}
+
+bool Office::isSpawned() const {
+    return spawned;
+}
 

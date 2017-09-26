@@ -8,6 +8,7 @@
 #include <SFML/System/Clock.hpp>
 #include "../System/Enum.h"
 #include "../Office/Office.h"
+#include "../Utls/GameTime.h"
 
 
 class Movable : public Entity {
@@ -20,10 +21,17 @@ protected:
     float speed = 0;
     float fallAcceleration = 980;
 
-    Office *currentWorkPlace;
+    Office *currentWorkPlace = nullptr;
+    sf::Clock workPlaceSearchResolution;
+
+    //relevant to game time
+    int smokePeriodMinutes = 5;
+    GameTime smokeStarted;
 
     //attr
     float cost = 0;
+
+    bool spawned = false;
 
     bool hasReachedWorldEdges();
 
@@ -32,6 +40,8 @@ protected:
     void renderCurrentFrame();
 
 public:
+    bool isSpawned() const;
+
     Movable();
 
     Direction getDirection() const;
@@ -52,9 +62,13 @@ public:
 
     void setFallAcceleration(float fallAcceleration);
 
-    Office *searchWorkPlace();
+    void searchWorkPlace();
 
     std::string serialize();
+
+    void renderDebugInfo();
+
+    void updateAnimation() override;
 };
 
 #endif //THE_CORP_GAME_ENTITYANIMATION_CPP_H

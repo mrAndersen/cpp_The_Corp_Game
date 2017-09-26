@@ -24,13 +24,14 @@ int main() {
 
     //frame loop
     while (System::window->isOpen()) {
-        System::window->clear(System::grey);
+        System::window->clear(System::c_background);
 
         System::entitiesOnScreen = EntityContainer::size();
         System::framesPassed++;
 
         System::refreshTitleStats();
         System::refreshDebugPanel();
+        System::refreshDayTime();
 
         sf::Event e{};
 

@@ -53,6 +53,7 @@ void Entity::updateAnimation() {
     }
 
     renderDebugInfo();
+    renderErrorText();
     renderCurrentFrame();
     updateFrameTime();
 }
@@ -141,6 +142,10 @@ void Entity::setWorldCoordinates(const sf::Vector2f &worldCoordinates) {
 
 bool Entity::isBelowGround() {
     return bottom < System::groundLevel + Ground::height;
+}
+
+bool Entity::isAboveGround(){
+    return bottom > System::groundLevel + Ground::height;
 }
 
 bool Entity::isOnTheGround() {
@@ -248,6 +253,10 @@ void Entity::createAnimationFrames() {
     info.setCharacterSize(10);
     info.setFillColor(sf::Color::Black);
 
+    errorString.setFont(*System::openSans);
+    errorString.setCharacterSize(14);
+    errorString.setFillColor(System::c_red);
+
     if (!textureHeight) {
         textureHeight = height;
     }
@@ -339,6 +348,12 @@ void Entity::setRight(float right) {
     Entity::right = right;
 }
 
+void Entity::renderErrorText() {
+    if (errorString.getString() != "") {
+        errorString.setPosition(System::cToGl(worldCoordinates.x - width / 2, worldCoordinates.y + height / 2 + 16));
+    }
+}
+
 void Entity::renderDebugInfo() {
     if (System::animationDebug) {
         info.setPosition(System::cToGl(worldCoordinates.x + width / 2, worldCoordinates.y + height / 2));
@@ -378,3 +393,21 @@ Entity::Entity() {
     System::entitySequence++;
     id = System::entitySequence;
 }
+
+States Entity::getState() const {
+    return state;
+}
+
+void Entity::setState(States state) {
+    Entity::state = state;
+}
+
+int Entity::getId() const {
+    return id;
+}
+
+void Entity::setId(int id) {
+    Entity::id = id;
+}
+
+

@@ -52,8 +52,17 @@ protected:
     //debug
     sf::VertexArray quad;
     sf::Text info;
+    sf::Text errorString;
 
 public:
+    int getId() const;
+
+    void setId(int id);
+
+    States getState() const;
+
+    void setState(States state);
+
     const sf::IntRect &getRect() const;
 
     void setRect(const sf::IntRect &rect);
@@ -86,9 +95,11 @@ public:
 
     bool isBelowGround();
 
+    bool isAboveGround();
+
     bool isOnTheGround();
 
-    void updateAnimation();
+    virtual void updateAnimation();
 
     virtual void renderCurrentFrame();
 
@@ -187,6 +198,8 @@ public:
     void createAnimationFrames();
 
     virtual void renderDebugInfo();
+
+    virtual void renderErrorText();
 
     Entity();
 };

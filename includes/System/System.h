@@ -4,6 +4,7 @@
 #include <SFML/System/Clock.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Text.hpp>
+#include "../Utls/GameTime.h"
 
 namespace System {
     extern unsigned int screenWidth;
@@ -21,15 +22,21 @@ namespace System {
     //sys
 
     //utility
-    extern sf::Color grey;
-    extern sf::Color red;
-    extern sf::Color green;
+    extern sf::Color c_background;
+
+    extern sf::Color c_grey;
+    extern sf::Color c_red;
+    extern sf::Color c_green;
     //utility
 
     //player
     extern float cash;
     extern bool spawningUnit;
 
+    extern sf::Clock dayClock;
+    extern GameTime gameTime;
+    extern int startWorkHour;
+    extern int endWorkHour;
     //player
 
 
@@ -47,6 +54,8 @@ namespace System {
     //debug
 
     void refreshTitleStats();
+
+    void refreshDayTime();
 
     void refreshDebugPanel();
 

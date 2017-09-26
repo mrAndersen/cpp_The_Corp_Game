@@ -23,6 +23,10 @@ enum States {
     S_WaitForElevator = 5,
     S_RideInElevator = 6,
     S_Work = 7,
+    S_Falling = 8,
+    S_GoToOffice = 9,
+    S_GoFromOffice = 10,
+    S_GoSmoke = 11
 };
 
 enum Entities {

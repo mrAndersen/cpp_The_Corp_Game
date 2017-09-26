@@ -4,6 +4,7 @@
 #include <psapi.h>
 #include "../../includes/System/System.h"
 #include "../../includes/System/ViewHandler.h"
+#include "../../includes/Utls/GameTime.h"
 
 namespace System {
     unsigned int screenWidth = 1700;
@@ -20,15 +21,22 @@ namespace System {
     //sys
 
     //utility
-    sf::Color grey(236, 237, 227);
-    sf::Color red(248, 215, 227);
-    sf::Color green(92, 184, 92);
+    sf::Color c_background(255, 255, 255);
+
+    sf::Color c_grey(236, 237, 227);
+    sf::Color c_red(248, 215, 227);
+    sf::Color c_green(92, 184, 92);
     //utility
 
     //player
-    float cash = 5000;
+    float cash = 50000;
     bool spawningUnit = false;
 
+    sf::Clock dayClock;
+    GameTime gameTime(12, 0);
+
+    int startWorkHour = 9;
+    int endWorkHour = 18;
     //player
 
     //debug
@@ -39,11 +47,21 @@ namespace System {
     int framesPassed = 0;
     int entitiesOnScreen = 0;
     int fps = 0;
-    bool animationDebug = false;
+    bool animationDebug = true;
     //debug
 
     void refreshTitleStats() {
         window->setTitle("Incorporated ~ [" + std::to_string(fps) + " FPS]");
+    }
+
+    void refreshDayTime() {
+        float factor = 1024 / 1;
+
+        if (dayClock.getElapsedTime().asMilliseconds() >= factor) {
+            dayClock.restart();
+
+            gameTime = gameTime + 1;
+        }
     }
 
     void refreshDebugPanel() {
@@ -82,6 +100,7 @@ namespace System {
 
         debugPanelTextNodes["v_zoom"].setString("v_zoom: " + std::to_string(ViewHandler::zoom));
         debugPanelTextNodes["p_cash"].setString("p_cash: " + std::to_string(System::cash));
+        debugPanelTextNodes["p_time"].setString("p_time:" + gameTime.get());
 
         std::map<std::string, sf::Text>::iterator it;
         int i = 1;
@@ -108,7 +127,7 @@ namespace System {
 
         window = new sf::RenderWindow(sf::VideoMode(screenWidth, screenHeight), title, mode);
         window->setFramerateLimit(420);
-        window->clear(grey);
+        window->clear(c_background);
 
         ViewHandler::view = new sf::View();
         ViewHandler::view->reset(sf::FloatRect(0, 0, screenWidth, screenHeight));
@@ -142,6 +161,7 @@ namespace System {
         createDebugString("v_boundaries", 7);
         createDebugString("v_zoom", 8);
         createDebugString("p_cash", 9);
+        createDebugString("p_time", 10);
     }
 
     sf::Vector2f cToGl(sf::Vector2f worldCoordinates) {

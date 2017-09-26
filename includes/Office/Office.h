@@ -4,18 +4,24 @@
 #include "../Animation/Entity.h"
 
 class Office : public Entity {
-public:
+protected:
     int floor = 1;
 
     float cost = 0;
+
+    bool spawned = false;
+
+    std::vector<Entity *> workers;
+public:
+    std::vector<Office *> getNeighborOffices();
 
     float getCost() const;
 
     void setCost(float cost);
 
-    std::vector<Office *> getNeighborOffices();
+    bool isSpawned() const;
 
-    std::vector<Entity *> workers;
+    std::vector<Entity *> &getWorkers();
 
     void updateLogic();
 

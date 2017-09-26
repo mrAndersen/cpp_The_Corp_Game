@@ -71,7 +71,7 @@ add_executable(
 
         includes/Office/Office.h
         src/Office/Office.cpp
-)
+        src/System/GameTime.cpp includes/Utls/GameTime.h)
 
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})

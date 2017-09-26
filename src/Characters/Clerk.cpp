@@ -24,18 +24,12 @@ Clerk::Clerk(sf::Vector2f coordinates) {
 }
 
 void Clerk::updateLogic() {
-    float frameDistance = (frameTimeMs / 1000) * speed;
 
-    if (direction == Direction::Down) {
-        //falling
-        worldCoordinates.y = worldCoordinates.y - frameDistance;
-        speed = speed + fallAcceleration * (frameTimeMs / 1000);
-    }
 
-    if (worldCoordinates.y - height / 2 <= System::groundLevel + Ground::height) {
-        direction = Direction::Right;
-        speed = 300;
-    }
+
+
+
+
 
     Movable::updateLogic();
 }
