@@ -31,8 +31,9 @@ void Movable::renderDebugInfo() {
                 "right: " + std::to_string((int) right) + "," +
                 "top: " + std::to_string((int) top) + "," +
                 "bottom: " + std::to_string((int) bottom) + "\n" +
-                "office: " + std::to_string(currentWorkPlace ? currentWorkPlace->getId() : 0) + "\n"
-                        "state: " + std::to_string(state) + "\n"
+                "office: " + std::to_string(currentWorkPlace ? currentWorkPlace->getId() : 0) + "\n" +
+                "state: " + std::to_string(state) + "\n" +
+                "floor: " + std::to_string(floor) + "\n"
         );
         System::window->draw(info);
     }
@@ -41,7 +42,7 @@ void Movable::renderDebugInfo() {
 void Movable::updateAnimation() {
     float frameDistance = (frameTimeMs / 1000) * speed;
 
-    if (direction == Direction::Down) {
+    if (direction == Direction::Down && state == S_Falling) {
         worldCoordinates.y -= frameDistance;
         speed = speed + fallAcceleration * (frameTimeMs / 1000);
     }
@@ -54,32 +55,63 @@ void Movable::updateAnimation() {
         worldCoordinates.x -= frameDistance;
     }
 
-    if (isOnTheGround() || isBelowGround()) {
-        direction = Direction::None;
-        state = S_Smoke;
-        smokeStarted = System::gameTime;
-    }
-
     Entity::updateAnimation();
 }
 
 void Movable::updateLogic() {
 
-    //Stop smoking
+    //update floor
+    floor = ((int) worldCoordinates.y - ((int) worldCoordinates.y % System::gridSize)) / System::gridSize;
+
+    //no work place
+    if (!currentWorkPlace && isOnTheGround()) {
+        errorString.setString("No office");
+        state = S_None;
+    }
+
+    if (currentWorkPlace) {
+        errorString.setString("");
+    }
+
+    //falling
+    if (!isOnTheGround() && isAboveGround() && direction == Direction::Down) {
+        state = S_Falling;
+    }
+
+    //stop falling
+    if (isOnTheGround() && state == S_Falling) {
+        direction = Direction::None;
+        state = S_GoToOffice;
+    }
+
+    //stop smoking
     if (state == S_Smoke && System::gameTime.diffMinutes(smokeStarted) >= smokePeriodMinutes) {
         state = S_GoToOffice;
     }
 
-
+    //go to office
     if (state == S_GoToOffice && currentWorkPlace) {
 
+        if (isInWorkPlace()) {
+            state = S_Work;
+        }
+
+        if (currentWorkPlace->getFloor() == this->floor) {
+            //office is on the same floor
+
+            if (currentWorkPlace->getWorldCoordinates().x < this->worldCoordinates.x) {
+                direction = Direction::Left;
+            } else {
+                direction = Direction::Right;
+            }
+        } else {
+            state = S_GoToElevator;
+        }
     }
 
-    if (state == S_GoToOffice && !currentWorkPlace) {
-        direction = Direction::None;
-        errorString.setString("No office");
-    }
+    if (state == S_GoToElevator) {
 
+    }
 
     if (
             currentWorkPlace &&
@@ -91,10 +123,12 @@ void Movable::updateLogic() {
     }
 
     //search workplace every 500ms
-    if (workPlaceSearchResolution.getElapsedTime().asMilliseconds() >= 500) {
+    if (isOnTheGround() && !currentWorkPlace && workPlaceSearchResolution.getElapsedTime().asMilliseconds() >= 500) {
         searchWorkPlace();
     }
 
+
+    //world boundaries
     if (hasReachedWorldEdges()) {
         health = 0;
     }
@@ -173,6 +207,22 @@ void Movable::searchWorkPlace() {
 
 bool Movable::isSpawned() const {
     return spawned;
+}
+
+int Movable::getFloor() const {
+    return floor;
+}
+
+void Movable::setFloor(int floor) {
+    Movable::floor = floor;
+}
+
+bool Movable::isInWorkPlace() {
+    int delta = 2;
+
+    return
+            currentWorkPlace->getFloor() == this->floor &&
+            worldCoordinates.x == currentWorkPlace->getWorldCoordinates().x;
 }
 
 

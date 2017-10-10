@@ -1,3 +1,4 @@
+#include <cmath>
 #include "../../includes/Office/OfficeClerk.h"
 #include "../../includes/System/EntityContainer.h"
 #include "../../includes/System/System.h"
@@ -44,7 +45,8 @@ bool Office::intersectsWith() {
 }
 
 void Office::updateLogic() {
-    floor = (int) ((worldCoordinates.y - height / 2) / 100);
+    //update floor
+    floor = ((int) worldCoordinates.y - ((int) worldCoordinates.y % System::gridSize)) / System::gridSize;
 
     Entity::updateLogic();
 }

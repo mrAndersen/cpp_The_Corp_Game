@@ -144,12 +144,16 @@ bool Entity::isBelowGround() {
     return bottom < System::groundLevel + Ground::height;
 }
 
-bool Entity::isAboveGround(){
+bool Entity::isAboveGround() {
     return bottom > System::groundLevel + Ground::height;
 }
 
 bool Entity::isOnTheGround() {
-    return bottom == System::groundLevel + Ground::height;
+    int delta = 2;
+
+    return
+            bottom - delta < System::groundLevel + Ground::height ||
+            bottom + delta < System::groundLevel + Ground::height;
 }
 
 int Entity::getWidth() const {
@@ -349,8 +353,9 @@ void Entity::setRight(float right) {
 }
 
 void Entity::renderErrorText() {
-    if (errorString.getString() != "") {
+    if (!errorString.getString().isEmpty()) {
         errorString.setPosition(System::cToGl(worldCoordinates.x - width / 2, worldCoordinates.y + height / 2 + 16));
+        System::window->draw(errorString);
     }
 }
 

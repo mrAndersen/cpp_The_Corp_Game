@@ -33,6 +33,14 @@ protected:
 
     bool spawned = false;
 
+    int floor = 1;
+public:
+    int getFloor() const;
+
+    void setFloor(int floor);
+
+protected:
+
     bool hasReachedWorldEdges();
 
     void updateLogic();
@@ -63,6 +71,8 @@ public:
     void setFallAcceleration(float fallAcceleration);
 
     void searchWorkPlace();
+
+    bool isInWorkPlace();
 
     std::string serialize();
 

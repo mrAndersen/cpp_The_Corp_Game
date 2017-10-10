@@ -24,7 +24,7 @@ namespace System {
     sf::Color c_background(255, 255, 255);
 
     sf::Color c_grey(236, 237, 227);
-    sf::Color c_red(248, 215, 227);
+    sf::Color c_red(186, 24, 24);
     sf::Color c_green(92, 184, 92);
     //utility
 
@@ -115,7 +115,7 @@ namespace System {
     }
 
     void initWindow() {
-        auto mode = sf::Style::Close;
+        auto mode = sf::Style::Fullscreen;
 
         if (mode == sf::Style::Fullscreen) {
             RECT w_Desktop;
