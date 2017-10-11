@@ -16,10 +16,12 @@ namespace System {
 
     //sys
     sf::Clock fpsClock;
+    sf::Clock frameClock;
     sf::Clock timeSinceStart;
     sf::RenderWindow *window;
     int frameTimeMcs;
     sf::Uint32 screenMode = sf::Style::Default;
+    float timeFactor = 5;
     //sys
 
     //utility
@@ -53,9 +55,9 @@ namespace System {
     //debug
 
     void refreshDayTime() {
-        float factor = 1024 / 1;
+        auto localTimeFactor = 1000 / timeFactor;
 
-        if (dayClock.getElapsedTime().asMilliseconds() >= factor) {
+        if (dayClock.getElapsedTime().asMilliseconds() >= localTimeFactor) {
             dayClock.restart();
 
             gameTime = gameTime + 1;
@@ -65,10 +67,15 @@ namespace System {
     void refreshSystem() {
         window->setTitle("Incorporated ~ [" + std::to_string(fps) + " FPS]");
 
-        frameTimeMcs = fpsClock.restart().asMicroseconds();
+        frameTimeMcs = frameClock.restart().asMicroseconds();
         framesPassed++;
 
-        fps = (int) (framesPassed / timeSinceStart.getElapsedTime().asSeconds());
+        if (fpsClock.getElapsedTime().asSeconds() >= 1) {
+            fps = framesPassed;
+
+            framesPassed = 0;
+            fpsClock.restart();
+        }
     }
 
     void refreshDebugPanel() {

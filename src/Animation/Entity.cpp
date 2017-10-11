@@ -35,8 +35,9 @@ void Entity::update() {
 
 void Entity::updateAnimation() {
 
-    if(frameClock.getElapsedTime().asMicroseconds() >= animationResolution){
+    if(frameClock.getElapsedTime().asMicroseconds() >= animationResolution / System::timeFactor){
         currentFrame = (currentFrame == (totalFrames - 1)) ? 0 : currentFrame + 1;
+
         frameClock.restart();
     }
 

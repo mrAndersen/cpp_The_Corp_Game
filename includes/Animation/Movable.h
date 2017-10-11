@@ -18,7 +18,8 @@ protected:
     Direction direction = Direction::Right;
 
     //pixels per second
-    float speed = 0;
+    float defaultSpeed = 300;
+    float currentSpeed = 0;
     float fallAcceleration = 980;
 
     Office *currentWorkPlace = nullptr;
@@ -62,10 +63,6 @@ public:
 
     void setDirection(Direction direction);
 
-    float getSpeed() const;
-
-    void setSpeed(float speed);
-
     float getFallAcceleration() const;
 
     void setFallAcceleration(float fallAcceleration);
@@ -79,6 +76,14 @@ public:
     void renderDebugInfo();
 
     void updateAnimation() override;
+
+    float getCurrentSpeed() const;
+
+    void setCurrentSpeed(float currentSpeed);
+
+    float getDefaultSpeed() const;
+
+    void setDefaultSpeed(float defaultSpeed);
 };
 
 #endif //THE_CORP_GAME_ENTITYANIMATION_CPP_H

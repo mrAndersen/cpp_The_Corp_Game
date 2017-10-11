@@ -89,7 +89,9 @@ int main() {
         EntityContainer::refreshVertices();
 
         for (auto entity : EntityContainer::getItems()) {
-            entity->update();
+            if (entity) {
+                entity->update();
+            }
         }
 
         System::window->display();

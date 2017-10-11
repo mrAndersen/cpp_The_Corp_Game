@@ -42,11 +42,11 @@ void Movable::renderDebugInfo() {
 
 void Movable::updateAnimation() {
     float frameTimeSeconds = (float) System::frameTimeMcs / 1000000;
-    float frameDistance = frameTimeSeconds * speed;
+    float frameDistance = frameTimeSeconds * currentSpeed;
 
     if (direction == Direction::Down && state == S_Falling) {
         worldCoordinates.y -= frameDistance;
-        speed = speed + fallAcceleration * frameTimeSeconds;
+        currentSpeed = currentSpeed + fallAcceleration * frameTimeSeconds;
     }
 
     if (direction == Direction::Right) {
@@ -61,17 +61,21 @@ void Movable::updateAnimation() {
 }
 
 void Movable::updateLogic() {
+    //update speed
+    currentSpeed = defaultSpeed * System::timeFactor;
 
     //update floor
     floor = ((int) worldCoordinates.y - ((int) worldCoordinates.y % System::gridSize)) / System::gridSize;
+
+//    if(isOnTheGround()){
+//        EntityContainer::remove(this);
+//    }
 
     //no work place
     if (!currentWorkPlace && isOnTheGround()) {
         errorString.setString("No office");
         state = S_None;
-    }
-
-    if (currentWorkPlace) {
+    }else{
         errorString.setString("");
     }
 
@@ -91,23 +95,27 @@ void Movable::updateLogic() {
         state = S_GoToOffice;
     }
 
+    if(state == S_Work){
+        direction = Direction::None;
+    }
+
     //go to office
     if (state == S_GoToOffice && currentWorkPlace) {
 
         if (isInWorkPlace()) {
             state = S_Work;
-        }
-
-        if (currentWorkPlace->getFloor() == this->floor) {
-            //office is on the same floor
-
-            if (currentWorkPlace->getWorldCoordinates().x < this->worldCoordinates.x) {
-                direction = Direction::Left;
-            } else {
-                direction = Direction::Right;
-            }
         } else {
-            state = S_GoToElevator;
+            if (currentWorkPlace->getFloor() == this->floor) {
+                //office is on the same floor
+
+                if (currentWorkPlace->getWorldCoordinates().x < this->worldCoordinates.x) {
+                    direction = Direction::Left;
+                } else {
+                    direction = Direction::Right;
+                }
+            } else {
+                state = S_GoToElevator;
+            }
         }
     }
 
@@ -115,13 +123,15 @@ void Movable::updateLogic() {
 
     }
 
+    //not working - but should
     if (
             currentWorkPlace &&
-            (state != S_GoToOffice && state != S_GoSmoke && state != S_Smoke) &&
-            System::gameTime.isWorkTime()
-            ) {
+            System::gameTime.isWorkTime() &&
+            state != S_Work
+            )
+    {
         state = S_GoToOffice;
-        speed = 300;
+        currentSpeed = defaultSpeed * System::timeFactor;
     }
 
     //search workplace every 500ms
@@ -153,12 +163,12 @@ void Movable::setDirection(Direction direction) {
     Movable::direction = direction;
 }
 
-float Movable::getSpeed() const {
-    return speed;
+float Movable::getCurrentSpeed() const {
+    return currentSpeed;
 }
 
-void Movable::setSpeed(float speed) {
-    Movable::speed = speed;
+void Movable::setCurrentSpeed(float currentSpeed) {
+    Movable::currentSpeed = currentSpeed;
 }
 
 float Movable::getFallAcceleration() const {
@@ -175,6 +185,14 @@ std::string Movable::serialize() {
 
 Movable::Movable() : Entity() {
 
+}
+
+float Movable::getDefaultSpeed() const {
+    return defaultSpeed;
+}
+
+void Movable::setDefaultSpeed(float defaultSpeed) {
+    Movable::defaultSpeed = defaultSpeed;
 }
 
 float Movable::getCost() const {
@@ -220,11 +238,14 @@ void Movable::setFloor(int floor) {
 }
 
 bool Movable::isInWorkPlace() {
-    int delta = 2;
+//    std::cout << (int) worldCoordinates.x << "," << (int) currentWorkPlace->getWorldCoordinates().x << "|" << floor
+//              << ","
+//              << currentWorkPlace->getFloor() << "\r";
+
 
     return
-            currentWorkPlace->getFloor() == this->floor &&
-            worldCoordinates.x == currentWorkPlace->getWorldCoordinates().x;
+            floor == currentWorkPlace->getFloor() &&
+            (int) worldCoordinates.x == (int) currentWorkPlace->getWorldCoordinates().x;
 }
 
 

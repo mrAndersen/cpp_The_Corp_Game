@@ -19,10 +19,12 @@ namespace System {
 
     //sys
     extern sf::Clock fpsClock;
+    extern sf::Clock frameClock;
     extern sf::Clock timeSinceStart;
     extern sf::RenderWindow *window;
     extern int frameTimeMcs;
     extern sf::Uint32 screenMode;
+    extern float timeFactor;
     //sys
 
     //utility
