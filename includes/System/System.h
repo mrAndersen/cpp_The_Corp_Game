@@ -1,6 +1,8 @@
 #ifndef THE_CORP_GAME_SYSTEM_H
 #define THE_CORP_GAME_SYSTEM_H
 
+#include <afxres.h>
+#include <psapi.h>
 #include <SFML/System/Clock.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Text.hpp>
@@ -16,9 +18,11 @@ namespace System {
     extern int entitySequence;
 
     //sys
-    extern sf::Time systemTime;
     extern sf::Clock fpsClock;
+    extern sf::Clock timeSinceStart;
     extern sf::RenderWindow *window;
+    extern int frameTimeMcs;
+    extern sf::Uint32 screenMode;
     //sys
 
     //utility
@@ -53,11 +57,13 @@ namespace System {
     extern bool animationDebug;
     //debug
 
-    void refreshTitleStats();
+    RECT getScreenBoundaries();
 
     void refreshDayTime();
 
     void refreshDebugPanel();
+
+    void refreshSystem();
 
     void initWindow();
 

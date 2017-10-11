@@ -23,14 +23,13 @@ int main() {
     ControlPanel::initControlPanel();
 
     //frame loop
-    while (System::window->isOpen()) {
+    while (System::window && System::window->isOpen()) {
         System::window->clear(System::c_background);
 
         System::entitiesOnScreen = EntityContainer::size();
-        System::framesPassed++;
 
-        System::refreshTitleStats();
         System::refreshDebugPanel();
+        System::refreshSystem();
         System::refreshDayTime();
 
         sf::Event e{};
@@ -38,6 +37,13 @@ int main() {
         while (System::window->pollEvent(e)) {
             if (e.type == sf::Event::Closed) {
                 System::window->close();
+            }
+
+            if (e.type == sf::Event::Resized) {
+                System::screenWidth = System::window->getSize().x;
+                System::screenHeight = System::window->getSize().y;
+
+                System::initWindow();
             }
 
             if (e.type == sf::Event::KeyPressed || e.type == sf::Event::KeyReleased) {
@@ -52,6 +58,27 @@ int main() {
             if (e.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
                 for (int i = 0; i <= 50; i++) {
                     auto *clerk = new Clerk(System::window->getDefaultView().getCenter());
+                }
+            }
+
+            if (e.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::LAlt) &&
+                sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
+                auto boundaries = System::getScreenBoundaries();
+
+                switch (System::screenMode) {
+                    case sf::Style::Default:
+                        System::screenMode = sf::Style::Fullscreen;
+                        System::initWindow();
+                        break;
+                    case sf::Style::Fullscreen:
+                        System::screenMode = sf::Style::Default;
+
+                        System::screenWidth = (unsigned int) boundaries.right * 8 / 10;
+                        System::screenHeight = (unsigned int) boundaries.bottom * 4 / 5;
+
+                        System::initWindow();
+                    default:
+                        break;
                 }
             }
         }

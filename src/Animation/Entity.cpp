@@ -28,34 +28,21 @@ std::string Entity::serialize() {
     return serialized;
 }
 
-void Entity::updateFrameTime() {
-    frameTimeMs = frameClock.restart().asMilliseconds();
-    totalAnimationFrameTimeMs += frameTimeMs;
-}
-
-bool Entity::isAnimationResolutionReached() {
-    if (totalAnimationFrameTimeMs >= animationResolution) {
-        totalAnimationFrameTimeMs = 0;
-        return true;
-    } else {
-        return false;
-    }
-}
-
 void Entity::update() {
     updateLogic();
     updateAnimation();
 }
 
 void Entity::updateAnimation() {
-    if (isAnimationResolutionReached()) {
+
+    if(frameClock.getElapsedTime().asMicroseconds() >= animationResolution){
         currentFrame = (currentFrame == (totalFrames - 1)) ? 0 : currentFrame + 1;
+        frameClock.restart();
     }
 
     renderDebugInfo();
     renderErrorText();
     renderCurrentFrame();
-    updateFrameTime();
 }
 
 void Entity::renderCurrentFrame() {
@@ -228,22 +215,6 @@ void Entity::setAnimationResolution(float animationResolution) {
     Entity::animationResolution = animationResolution;
 }
 
-float Entity::getTotalAnimationFrameTimeMs() const {
-    return totalAnimationFrameTimeMs;
-}
-
-void Entity::setTotalAnimationFrameTimeMs(float totalAnimationFrameTimeMs) {
-    Entity::totalAnimationFrameTimeMs = totalAnimationFrameTimeMs;
-}
-
-float Entity::getFrameTimeMs() const {
-    return frameTimeMs;
-}
-
-void Entity::setFrameTimeMs(float frameTimeMs) {
-    Entity::frameTimeMs = frameTimeMs;
-}
-
 int Entity::getDrawOrder() const {
     return drawOrder;
 }
@@ -277,7 +248,7 @@ void Entity::createAnimationFrames() {
         frames.push_back(rect);
     }
 
-    animationResolution = 1000 / frames.size();
+    animationResolution = 1000000 / frames.size();
     sprite.setTextureRect(frames[0]);
 }
 

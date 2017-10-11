@@ -1,4 +1,5 @@
 #include <cmath>
+#include <iostream>
 #include "../../includes/System/Enum.h"
 #include "../../includes/Animation/Movable.h"
 #include "../../includes/System/System.h"
@@ -40,11 +41,12 @@ void Movable::renderDebugInfo() {
 }
 
 void Movable::updateAnimation() {
-    float frameDistance = (frameTimeMs / 1000) * speed;
+    float frameTimeSeconds = (float) System::frameTimeMcs / 1000000;
+    float frameDistance = frameTimeSeconds * speed;
 
     if (direction == Direction::Down && state == S_Falling) {
         worldCoordinates.y -= frameDistance;
-        speed = speed + fallAcceleration * (frameTimeMs / 1000);
+        speed = speed + fallAcceleration * frameTimeSeconds;
     }
 
     if (direction == Direction::Right) {

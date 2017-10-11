@@ -41,10 +41,8 @@ protected:
     sf::Clock frameClock;
     sf::Clock liveClock;
 
-    //milliseconds
-    float animationResolution = 500;
-    float totalAnimationFrameTimeMs = 0;
-    float frameTimeMs = 0;
+    //microseconds default
+    float animationResolution = 500000;
 
     //property map
     std::map<std::string, int> properties;
@@ -86,10 +84,6 @@ public:
     std::vector<std::string> getTypeTree();
 
     bool hasType(const std::string &typeName);
-
-    void updateFrameTime();
-
-    bool isAnimationResolutionReached();
 
     void update();
 
@@ -174,14 +168,6 @@ public:
     float getAnimationResolution() const;
 
     void setAnimationResolution(float animationResolution);
-
-    float getTotalAnimationFrameTimeMs() const;
-
-    void setTotalAnimationFrameTimeMs(float totalAnimationFrameTimeMs);
-
-    float getFrameTimeMs() const;
-
-    void setFrameTimeMs(float frameTimeMs);
 
     void setInvalid();
 

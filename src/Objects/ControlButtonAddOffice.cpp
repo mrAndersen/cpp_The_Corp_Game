@@ -36,7 +36,6 @@ void ControlButtonAddOffice::updateLogic() {
     if (rightClickedOutside() && attachedOffice) {
         EntityContainer::remove(attachedOffice);
 
-
         System::spawningUnit = false;
         attachedOffice = nullptr;
     }
@@ -45,7 +44,6 @@ void ControlButtonAddOffice::updateLogic() {
     if (leftClickedOutside() && spawnCondition) {
         attachedOffice->setNormal();
         attachedOffice->spawn();
-
 
         System::spawningUnit = false;
         attachedOffice = nullptr;

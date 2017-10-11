@@ -1,5 +1,4 @@
 #include <SFML/Window/Mouse.hpp>
-//#include <winuser.h>
 #include <afxres.h>
 #include <psapi.h>
 #include "../../includes/System/System.h"
@@ -17,7 +16,10 @@ namespace System {
 
     //sys
     sf::Clock fpsClock;
+    sf::Clock timeSinceStart;
     sf::RenderWindow *window;
+    int frameTimeMcs;
+    sf::Uint32 screenMode = sf::Style::Default;
     //sys
 
     //utility
@@ -50,10 +52,6 @@ namespace System {
     bool animationDebug = true;
     //debug
 
-    void refreshTitleStats() {
-        window->setTitle("Incorporated ~ [" + std::to_string(fps) + " FPS]");
-    }
-
     void refreshDayTime() {
         float factor = 1024 / 1;
 
@@ -62,6 +60,15 @@ namespace System {
 
             gameTime = gameTime + 1;
         }
+    }
+
+    void refreshSystem() {
+        window->setTitle("Incorporated ~ [" + std::to_string(fps) + " FPS]");
+
+        frameTimeMcs = fpsClock.restart().asMicroseconds();
+        framesPassed++;
+
+        fps = (int) (framesPassed / timeSinceStart.getElapsedTime().asSeconds());
     }
 
     void refreshDebugPanel() {
@@ -74,8 +81,6 @@ namespace System {
 
         g_x = coordMap.x;
         g_y = System::screenHeight - coordMap.y;
-
-        fps = (int) (framesPassed / fpsClock.getElapsedTime().asSeconds());
 
         debugPanelTextNodes["g_coordinates"].setString(
                 "global: {" + std::to_string((int) g_x) + "," + std::to_string((int) g_y) + "}");
@@ -115,18 +120,23 @@ namespace System {
     }
 
     void initWindow() {
-        auto mode = sf::Style::Fullscreen;
 
-        if (mode == sf::Style::Fullscreen) {
-            RECT w_Desktop;
-            GetWindowRect(GetDesktopWindow(), &w_Desktop);
+        if (window) {
+            delete window;
+            window = nullptr;
 
-            screenWidth = (unsigned int) w_Desktop.right;
-            screenHeight = (unsigned int) w_Desktop.bottom;
+            delete ViewHandler::view;
+            ViewHandler::view = nullptr;
         }
 
-        window = new sf::RenderWindow(sf::VideoMode(screenWidth, screenHeight), title, mode);
-        window->setFramerateLimit(420);
+        if (screenMode == sf::Style::Fullscreen) {
+            auto boundaries = getScreenBoundaries();
+
+            screenWidth = (unsigned int) boundaries.right;
+            screenHeight = (unsigned int) boundaries.bottom;
+        }
+
+        window = new sf::RenderWindow(sf::VideoMode(screenWidth, screenHeight), title, screenMode);
         window->clear(c_background);
 
         ViewHandler::view = new sf::View();
@@ -184,5 +194,12 @@ namespace System {
 
     sf::Vector2f getGlobalMouse() {
         return {System::g_x, System::g_y};
+    }
+
+    RECT getScreenBoundaries() {
+        RECT w_Desktop{};
+        GetWindowRect(GetDesktopWindow(), &w_Desktop);
+
+        return w_Desktop;
     }
 }

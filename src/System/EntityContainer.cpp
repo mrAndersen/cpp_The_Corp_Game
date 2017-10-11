@@ -71,7 +71,7 @@ namespace EntityContainer {
     void initGround() {
         for (int i = (int) -System::worldWidth / 2; (int) i < System::worldWidth / 2; ++i) {
             if ((i % Ground::width) == 0) {
-                auto *ground = new Ground(sf::Vector2f(i, System::groundLevel + Ground::height / 2));
+                new Ground(sf::Vector2f(i, System::groundLevel + Ground::height / 2));
             }
         }
     }
