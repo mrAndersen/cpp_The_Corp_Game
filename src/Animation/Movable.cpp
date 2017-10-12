@@ -81,7 +81,7 @@ void Movable::updateLogic() {
     }
 
     //end of work day
-    if (isInWorkPlace() && !System::gameTime.isWorkTime() && state == S_Working) {
+    if (!System::gameTime.isWorkTime()) {
         state = S_GoHome;
     }
 

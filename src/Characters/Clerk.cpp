@@ -36,18 +36,24 @@ void Clerk::updateLogic() {
         hourEarningHint.setString("+" + System::to_string_with_precision(hourEarning) + "$");
 
         //earning every hour
-        if (System::gameTime.getMinute() == 0 && !earningProcessed) {
+        if (System::gameTime.isEarningHour() && !earningProcessed) {
             System::cash = System::cash + hourEarning;
             earningProcessed = true;
         }
 
         //earning hint
-        if (System::gameTime.getMinute() <= 35 && System::gameTime.getMinute() >= 0) {
+        if (
+                System::gameTime.getHour() >= System::startWorkHour + 1 &&
+                System::gameTime.getHour() <= System::endWorkHour &&
+                System::gameTime.getMinute() <= 35 &&
+                System::gameTime.getMinute() >= 0
+                )
+        {
             if (hourEarningHintClock.getElapsedTime().asMilliseconds() * System::timeFactor >= 1000) {
+
                 auto position = System::cFromGl(hourEarningHint.getPosition());
                 position.x = worldCoordinates.x + width / 4;
                 position.y = worldCoordinates.y + height / 2 + 24 + System::gameTime.getMinute() * 2;
-
 
                 hourEarningHint.setPosition(System::cToGl(position));
                 System::window->draw(hourEarningHint);
@@ -60,8 +66,7 @@ void Clerk::updateLogic() {
         }
 
         //salary every day
-        if (System::gameTime.getHour() == System::endWorkHour && System::gameTime.getMinute() == 0 &&
-            !salaryProcessed) {
+        if (System::gameTime.getHour() == System::endWorkHour && System::gameTime.getMinute() == 0 && !salaryProcessed) {
             System::cash = System::cash - dailySalary;
             salaryProcessed = true;
         }
@@ -71,7 +76,6 @@ void Clerk::updateLogic() {
             salaryProcessed = false;
         }
     }
-
 
     Movable::updateLogic();
 }
