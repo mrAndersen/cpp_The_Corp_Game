@@ -22,10 +22,10 @@ enum States {
     S_Smoke = 4,
     S_WaitForElevator = 5,
     S_RideInElevator = 6,
-    S_Work = 7,
+    S_Working = 7,
     S_Falling = 8,
     S_GoToOffice = 9,
-    S_GoFromOffice = 10,
+    S_GoHome = 10,
     S_GoSmoke = 11,
     S_GoToElevator = 12
 };
@@ -35,7 +35,7 @@ enum Entities {
     //Ground
     E_StaticGround = 11,
 
-    //Clerks
+    //Characters
     E_Clerk = 21,
 
     //Controls

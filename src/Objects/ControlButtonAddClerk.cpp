@@ -55,6 +55,10 @@ void ControlButtonAddClerk::updateLogic() {
 
         if (!spawnCondition) {
             attachedClerk->setInvalid();
+
+            if (System::cash < attachedClerk->getCost()) {
+                attachedClerk->getErrorString().setString("Not enough cash");
+            }
         } else {
             attachedClerk->setTransparent();
         }

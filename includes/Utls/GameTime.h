@@ -12,7 +12,13 @@ protected:
 public:
     std::string get();
 
+    int getHour() const;
+
+    int getMinute() const;
+
     bool isWorkTime();
+
+    bool isRestTime();
 
     int diffMinutes(const GameTime &target);
 

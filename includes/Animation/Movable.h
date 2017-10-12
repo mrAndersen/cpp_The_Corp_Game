@@ -19,7 +19,7 @@ protected:
 
     //pixels per second
     float defaultSpeed = 300;
-    float currentSpeed = 0;
+    float currentSpeed = 300;
     float fallAcceleration = 980;
 
     Office *currentWorkPlace = nullptr;
@@ -35,10 +35,6 @@ protected:
     bool spawned = false;
 
     int floor = 1;
-public:
-    int getFloor() const;
-
-    void setFloor(int floor);
 
 protected:
 
@@ -49,6 +45,10 @@ protected:
     void renderCurrentFrame();
 
 public:
+    int getFloor() const;
+
+    void setFloor(int floor);
+
     bool isSpawned() const;
 
     Movable();

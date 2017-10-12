@@ -35,7 +35,7 @@ void Entity::update() {
 
 void Entity::updateAnimation() {
 
-    if(frameClock.getElapsedTime().asMicroseconds() >= animationResolution / System::timeFactor){
+    if (frameClock.getElapsedTime().asMicroseconds() >= animationResolution / System::timeFactor) {
         currentFrame = (currentFrame == (totalFrames - 1)) ? 0 : currentFrame + 1;
 
         frameClock.restart();
@@ -90,6 +90,7 @@ bool Entity::rightClickedOutside() {
 }
 
 void Entity::setTransparent() {
+    valid = true;
     sprite.setColor(sf::Color(255, 255, 255, 96));
 }
 
@@ -98,6 +99,7 @@ void Entity::setNormal() {
 }
 
 void Entity::setInvalid() {
+    valid = false;
     sprite.setColor(sf::Color(255, 0, 0, 255));
 }
 
@@ -225,12 +227,12 @@ void Entity::setDrawOrder(int drawOrder) {
 }
 
 void Entity::createAnimationFrames() {
-    info.setFont(*System::openSans);
-    info.setCharacterSize(10);
-    info.setFillColor(sf::Color::Black);
+    debugInfo.setFont(*System::debugFont);
+    debugInfo.setCharacterSize(10);
+    debugInfo.setFillColor(sf::Color::Black);
 
-    errorString.setFont(*System::openSans);
-    errorString.setCharacterSize(14);
+    errorString.setFont(*System::gameFont);
+    errorString.setCharacterSize(16);
     errorString.setFillColor(System::c_red);
 
     if (!textureHeight) {
@@ -251,6 +253,14 @@ void Entity::createAnimationFrames() {
 
     animationResolution = 1000000 / frames.size();
     sprite.setTextureRect(frames[0]);
+}
+
+sf::Text &Entity::getErrorString() {
+    return errorString;
+}
+
+void Entity::setErrorString(sf::Text &errorString) {
+    Entity::errorString = errorString;
 }
 
 int Entity::getTextureWidth() const {
@@ -325,16 +335,16 @@ void Entity::setRight(float right) {
 }
 
 void Entity::renderErrorText() {
-    if (!errorString.getString().isEmpty()) {
-        errorString.setPosition(System::cToGl(worldCoordinates.x - width / 2, worldCoordinates.y + height / 2 + 16));
+    if (valid == false) {
+        errorString.setPosition(System::cToGl(worldCoordinates.x - width / 2, worldCoordinates.y + height / 2 + 20));
         System::window->draw(errorString);
     }
 }
 
 void Entity::renderDebugInfo() {
     if (System::animationDebug) {
-        info.setPosition(System::cToGl(worldCoordinates.x + width / 2, worldCoordinates.y + height / 2));
-        info.setString(
+        debugInfo.setPosition(System::cToGl(worldCoordinates.x + width / 2, worldCoordinates.y + height / 2));
+        debugInfo.setString(
                 "id: " + std::to_string(id) + "\n" +
                 "pos: {" + std::to_string(worldCoordinates.x) + "," + std::to_string(worldCoordinates.y) + "}\n" +
                 "left: " + std::to_string(left) + "\n" +
@@ -342,7 +352,7 @@ void Entity::renderDebugInfo() {
                 "top: " + std::to_string(top) + "\n" +
                 "bottom: " + std::to_string(bottom) + "\n"
         );
-        System::window->draw(info);
+        System::window->draw(debugInfo);
     }
 }
 
@@ -385,6 +395,10 @@ int Entity::getId() const {
 
 void Entity::setId(int id) {
     Entity::id = id;
+}
+
+bool Entity::isValid() const {
+    return valid;
 }
 
 

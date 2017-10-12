@@ -60,6 +60,10 @@ void ControlButtonAddOffice::updateLogic() {
 
         if (!spawnCondition) {
             attachedOffice->setInvalid();
+
+            if (System::cash < attachedOffice->getCost()) {
+                attachedOffice->getErrorString().setString("Not enough cash");
+            }
         } else {
             attachedOffice->setTransparent();
         }

@@ -61,8 +61,8 @@ void Office::setFloor(int floor) {
 
 void Office::renderDebugInfo() {
     if (System::animationDebug) {
-        info.setPosition(System::cToGl(worldCoordinates.x + width / 2, worldCoordinates.y + height / 2));
-        info.setString(
+        debugInfo.setPosition(System::cToGl(worldCoordinates.x + width / 2, worldCoordinates.y + height / 2));
+        debugInfo.setString(
                 "id: " + std::to_string(id) + "\n" +
                 "pos: {" + std::to_string((int)worldCoordinates.x) + "," + std::to_string((int)worldCoordinates.y) + "}\n" +
                 "left: " + std::to_string((int)left) + "," +
@@ -72,7 +72,7 @@ void Office::renderDebugInfo() {
                         "floor: " + std::to_string(floor) + "\n"
                         "workers: " + std::to_string(workers.size()) + "\n"
         );
-        System::window->draw(info);
+        System::window->draw(debugInfo);
     }
 }
 

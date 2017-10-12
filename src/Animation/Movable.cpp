@@ -23,8 +23,8 @@ void Movable::renderCurrentFrame() {
 
 void Movable::renderDebugInfo() {
     if (System::animationDebug) {
-        info.setPosition(System::cToGl(worldCoordinates.x + width / 2, worldCoordinates.y + height / 2));
-        info.setString(
+        debugInfo.setPosition(System::cToGl(worldCoordinates.x + width / 2, worldCoordinates.y + height / 2));
+        debugInfo.setString(
                 "id: " + std::to_string(id) + "\n" +
                 "pos: {" + std::to_string((int) worldCoordinates.x) + "," + std::to_string((int) worldCoordinates.y) +
                 "}\n" +
@@ -34,15 +34,16 @@ void Movable::renderDebugInfo() {
                 "bottom: " + std::to_string((int) bottom) + "\n" +
                 "office: " + std::to_string(currentWorkPlace ? currentWorkPlace->getId() : 0) + "\n" +
                 "state: " + std::to_string(state) + "\n" +
-                "floor: " + std::to_string(floor) + "\n"
+                "floor: " + std::to_string(floor) + "\n" +
+                "speed: " + std::to_string((int) currentSpeed) + "p/s\n"
         );
-        System::window->draw(info);
+        System::window->draw(debugInfo);
     }
 }
 
 void Movable::updateAnimation() {
     float frameTimeSeconds = (float) System::frameTimeMcs / 1000000;
-    float frameDistance = frameTimeSeconds * currentSpeed;
+    float frameDistance = frameTimeSeconds * currentSpeed * System::timeFactor;
 
     if (direction == Direction::Down && state == S_Falling) {
         worldCoordinates.y -= frameDistance;
@@ -61,8 +62,6 @@ void Movable::updateAnimation() {
 }
 
 void Movable::updateLogic() {
-    //update speed
-    currentSpeed = defaultSpeed * System::timeFactor;
 
     //update floor
     floor = ((int) worldCoordinates.y - ((int) worldCoordinates.y % System::gridSize)) / System::gridSize;
@@ -73,10 +72,17 @@ void Movable::updateLogic() {
 
     //no work place
     if (!currentWorkPlace && isOnTheGround()) {
-        errorString.setString("No office");
+        valid = false;
+
+        errorString.setString("No free work places");
         state = S_None;
     }else{
-        errorString.setString("");
+        valid = true;
+    }
+
+    //end of work day
+    if (isInWorkPlace() && !System::gameTime.isWorkTime() && state == S_Working) {
+        state = S_GoHome;
     }
 
     //falling
@@ -95,7 +101,7 @@ void Movable::updateLogic() {
         state = S_GoToOffice;
     }
 
-    if(state == S_Work){
+    if (state == S_Working) {
         direction = Direction::None;
     }
 
@@ -103,7 +109,7 @@ void Movable::updateLogic() {
     if (state == S_GoToOffice && currentWorkPlace) {
 
         if (isInWorkPlace()) {
-            state = S_Work;
+            state = S_Working;
         } else {
             if (currentWorkPlace->getFloor() == this->floor) {
                 //office is on the same floor
@@ -127,18 +133,16 @@ void Movable::updateLogic() {
     if (
             currentWorkPlace &&
             System::gameTime.isWorkTime() &&
-            state != S_Work
-            )
-    {
+            state != S_Working
+            ) {
         state = S_GoToOffice;
         currentSpeed = defaultSpeed * System::timeFactor;
     }
 
     //search workplace every 500ms
-    if (isOnTheGround() && !currentWorkPlace && workPlaceSearchResolution.getElapsedTime().asMilliseconds() >= 500) {
+    if (!currentWorkPlace && isOnTheGround() && workPlaceSearchResolution.getElapsedTime().asMilliseconds() >= 500) {
         searchWorkPlace();
     }
-
 
     //world boundaries
     if (hasReachedWorldEdges()) {
@@ -238,12 +242,8 @@ void Movable::setFloor(int floor) {
 }
 
 bool Movable::isInWorkPlace() {
-//    std::cout << (int) worldCoordinates.x << "," << (int) currentWorkPlace->getWorldCoordinates().x << "|" << floor
-//              << ","
-//              << currentWorkPlace->getFloor() << "\r";
-
-
     return
+            currentWorkPlace &&
             floor == currentWorkPlace->getFloor() &&
             (int) worldCoordinates.x == (int) currentWorkPlace->getWorldCoordinates().x;
 }

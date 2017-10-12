@@ -48,7 +48,8 @@ namespace System {
 
     //debug
     extern std::map<std::string, sf::Text> debugPanelTextNodes;
-    extern sf::Font *openSans;
+    extern sf::Font *debugFont;
+    extern sf::Font *gameFont;
 
     extern float g_x;
     extern float g_y;
@@ -70,6 +71,8 @@ namespace System {
     void initWindow();
 
     void initDebug();
+
+    std::string to_string_with_precision(const float value, const int n = 2);
 
     sf::Text createDebugString(const std::string &alias, int index);
 

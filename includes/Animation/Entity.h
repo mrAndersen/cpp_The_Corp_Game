@@ -12,6 +12,7 @@ protected:
     int id;
     std::string name = "";
     float health = 100;
+    bool valid = true;
 
     sf::Vector2f worldCoordinates;
     int width = 0;
@@ -49,10 +50,12 @@ protected:
 
     //debug
     sf::VertexArray quad;
-    sf::Text info;
+    sf::Text debugInfo;
     sf::Text errorString;
 
 public:
+    bool isValid() const;
+
     int getId() const;
 
     void setId(int id);
@@ -188,6 +191,10 @@ public:
     virtual void renderErrorText();
 
     Entity();
+
+    sf::Text &getErrorString();
+
+    void setErrorString(sf::Text &errorString);
 };
 
 #endif //THE_CORP_GAME_ENTITY_H

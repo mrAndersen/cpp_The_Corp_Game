@@ -9,6 +9,14 @@ public:
     const static int width = 128;
     const static int height = 120;
 
+    float hourEarning = 10.f;
+    bool earningProcessed = false;
+
+    float dailySalary = 64.f;
+    bool salaryProcessed = false;
+
+    sf::Clock hourEarningHintClock;
+
     explicit Clerk(sf::Vector2f coordinates);
 
     void updateLogic();

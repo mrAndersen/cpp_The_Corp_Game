@@ -55,10 +55,32 @@ int main() {
 //                ViewHandler::handleViewZoomKeyPress(e);
             }
 
-            if (e.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
                 for (int i = 0; i <= 50; i++) {
                     auto *clerk = new Clerk(System::window->getDefaultView().getCenter());
                 }
+            }
+
+            if (
+                    System::timeFactor < 10 &&
+                    sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) &&
+                    sf::Keyboard::isKeyPressed(sf::Keyboard::Add)) {
+                System::timeFactor++;
+            } else {
+//                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Add) && System::animationDebug) {
+//                    System::cash += 1000;
+//                }
+            }
+
+            if (
+                    System::timeFactor > 0 &&
+                    sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) &&
+                    sf::Keyboard::isKeyPressed(sf::Keyboard::Subtract)) {
+                System::timeFactor--;
+            } else {
+//                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Subtract) && System::animationDebug) {
+//                    System::cash -= 1000;
+//                }
             }
 
             if (e.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::LAlt) &&

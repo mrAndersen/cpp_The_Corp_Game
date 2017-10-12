@@ -35,7 +35,7 @@ GameTime operator+(const GameTime &a, int minutes) {
 }
 
 bool GameTime::isWorkTime() {
-    return hour >= System::startWorkHour && hour <= System::endWorkHour;
+    return hour >= System::startWorkHour && hour < System::endWorkHour;
 }
 
 GameTime::GameTime() {
@@ -50,4 +50,10 @@ int GameTime::diffMinutes(const GameTime &target) {
     return abs(m - m2);
 }
 
+int GameTime::getHour() const {
+    return hour;
+}
 
+int GameTime::getMinute() const {
+    return minute;
+}

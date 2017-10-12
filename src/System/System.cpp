@@ -1,6 +1,8 @@
 #include <SFML/Window/Mouse.hpp>
 #include <afxres.h>
 #include <psapi.h>
+#include <sstream>
+#include <iomanip>
 #include "../../includes/System/System.h"
 #include "../../includes/System/ViewHandler.h"
 #include "../../includes/Utls/GameTime.h"
@@ -11,17 +13,21 @@ namespace System {
     std::string title = "New World";
     float groundLevel = 0;
     float worldWidth = 10000;
-    int gridSize = 100;
+    int gridSize = 50;
     int entitySequence = 1;
 
     //sys
     sf::Clock fpsClock;
     sf::Clock frameClock;
     sf::Clock timeSinceStart;
+
+    sf::Font *debugFont;
+    sf::Font *gameFont;
+
     sf::RenderWindow *window;
     int frameTimeMcs;
     sf::Uint32 screenMode = sf::Style::Default;
-    float timeFactor = 5;
+    float timeFactor = 1;
     //sys
 
     //utility
@@ -37,7 +43,7 @@ namespace System {
     bool spawningUnit = false;
 
     sf::Clock dayClock;
-    GameTime gameTime(12, 0);
+    GameTime gameTime(7, 0);
 
     int startWorkHour = 9;
     int endWorkHour = 18;
@@ -45,7 +51,6 @@ namespace System {
 
     //debug
     std::map<std::string, sf::Text> debugPanelTextNodes;
-    sf::Font *openSans;
     float g_x = 0;
     float g_y = 0;
     int framesPassed = 0;
@@ -57,7 +62,7 @@ namespace System {
     void refreshDayTime() {
         auto localTimeFactor = 1000 / timeFactor;
 
-        if (dayClock.getElapsedTime().asMilliseconds() >= localTimeFactor) {
+        if (dayClock.getElapsedTime().asMilliseconds() >= localTimeFactor / 10) {
             dayClock.restart();
 
             gameTime = gameTime + 1;
@@ -111,8 +116,9 @@ namespace System {
         );
 
         debugPanelTextNodes["v_zoom"].setString("v_zoom: " + std::to_string(ViewHandler::zoom));
-        debugPanelTextNodes["p_cash"].setString("p_cash: " + std::to_string(System::cash));
+        debugPanelTextNodes["p_cash"].setString("p_cash: " + std::to_string((int) System::cash));
         debugPanelTextNodes["p_time"].setString("p_time:" + gameTime.get());
+        debugPanelTextNodes["p_time_factor"].setString("p_time_factor:" + std::to_string(timeFactor));
 
         std::map<std::string, sf::Text>::iterator it;
         int i = 1;
@@ -157,7 +163,7 @@ namespace System {
         sf::Text label;
         label.setPosition(cToGl(sf::Vector2f(ViewHandler::left + 12, ViewHandler::top - index * 12)));
         label.setFillColor(sf::Color::Black);
-        label.setFont(*openSans);
+        label.setFont(*debugFont);
         label.setCharacterSize(10);
 
         debugPanelTextNodes[alias] = label;
@@ -165,9 +171,11 @@ namespace System {
     }
 
     void initDebug() {
-        openSans = new sf::Font();
-        openSans->loadFromFile("resources/fonts/open-sans.ttf");
-        const_cast<sf::Texture &>(openSans->getTexture(10)).setSmooth(false);
+        debugFont = new sf::Font();
+        gameFont = new sf::Font();
+
+        debugFont->loadFromFile("resources/fonts/OpenSans-Light.ttf");
+        gameFont->loadFromFile("resources/fonts/Teko-Regular.ttf");
 
         createDebugString("fps", 1);
         createDebugString("mem", 2);
@@ -179,6 +187,7 @@ namespace System {
         createDebugString("v_zoom", 8);
         createDebugString("p_cash", 9);
         createDebugString("p_time", 10);
+        createDebugString("p_time_factor", 11);
     }
 
     sf::Vector2f cToGl(sf::Vector2f worldCoordinates) {
@@ -209,4 +218,11 @@ namespace System {
 
         return w_Desktop;
     }
+
+    std::string to_string_with_precision(const float value, const int n) {
+        std::ostringstream out;
+        out << std::setprecision(n) << value;
+        return out.str();
+    }
 }
+
