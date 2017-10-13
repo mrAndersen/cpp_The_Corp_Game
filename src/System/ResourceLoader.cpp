@@ -26,7 +26,7 @@ namespace ResourceLoader {
     }
 
     void loadTexturesFromFiles() {
-        ResourceLoader::loadTexture(Entities::E_Clerk, "resources/characters/clerk/white.level_1.png");
+        ResourceLoader::loadTexture(Entities::E_Clerk, "resources/characters/clerk/white.level_1.png", S_None);
 
 
         ResourceLoader::loadTexture(Entities::E_StaticGround, "resources/ground.png");
