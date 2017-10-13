@@ -12,6 +12,7 @@ int main() {
 
     //preload resources
     ResourceLoader::loadTexturesFromFiles();
+    ResourceLoader::loadFonts();
 
     //load window and debug utilities
     System::initWindow();

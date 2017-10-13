@@ -18,8 +18,8 @@ protected:
     Direction direction = Direction::Right;
 
     //pixels per second
-    float defaultSpeed = 300;
-    float currentSpeed = 300;
+    float defaultSpeed = 130;
+    float currentSpeed = 130;
     float fallAcceleration = 980;
 
     Office *currentWorkPlace = nullptr;

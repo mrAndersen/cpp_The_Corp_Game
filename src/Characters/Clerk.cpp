@@ -14,7 +14,7 @@ Clerk::Clerk(sf::Vector2f coordinates) {
     setWidth(Clerk::width);
     setHeight(Clerk::height);
     setTotalFrames(24);
-    setDefaultSpeed(100);
+    setDefaultSpeed(130);
     setCost(500);
 
     setWorldCoordinates(coordinates);

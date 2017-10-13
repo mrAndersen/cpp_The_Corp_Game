@@ -13,6 +13,8 @@ namespace ResourceLoader {
     sf::Texture* getTexture(Entities target, States states = S_None);
 
     void loadTexturesFromFiles();
+
+    void loadFonts();
 }
 
 #endif //THE_CORP_GAME_RESOURCELOADER_H

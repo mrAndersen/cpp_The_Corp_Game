@@ -32,7 +32,7 @@ namespace System {
     //sys
 
     //utility
-    sf::Color c_background(255, 255, 255);
+    sf::Color c_background(244, 246, 249);
     sf::Color c_grey(236, 237, 227);
     sf::Color c_red(186, 24, 24);
     sf::Color c_green(92, 184, 92);
@@ -61,7 +61,7 @@ namespace System {
     int framesPassed = 0;
     int entitiesOnScreen = 0;
     int fps = 0;
-    bool debug = true;
+    bool debug = false;
     //debug
 
     void refreshDayTime() {
@@ -93,6 +93,9 @@ namespace System {
     }
 
     void refreshSystem() {
+        auto mousePosition = sf::Mouse::getPosition(*window);
+        auto coordMap = window->mapPixelToCoords(mousePosition);
+
         window->setTitle("Incorporated ~ [" + std::to_string(fps) + " FPS]");
 
         frameTimeMcs = frameClock.restart().asMicroseconds();
@@ -104,6 +107,9 @@ namespace System {
             framesPassed = 0;
             fpsClock.restart();
         }
+
+        g_x = coordMap.x;
+        g_y = System::screenHeight - coordMap.y;
     }
 
     void refreshDebugPanel() {
@@ -196,12 +202,6 @@ namespace System {
     }
 
     void initDebug() {
-        debugFont = new sf::Font();
-        gameFont = new sf::Font();
-
-        debugFont->loadFromFile("resources/fonts/OpenSans-Light.ttf");
-        gameFont->loadFromFile("resources/fonts/Teko-Regular.ttf");
-
         createDebugString("fps");
         createDebugString("mem");
         createDebugString("g_coordinates");

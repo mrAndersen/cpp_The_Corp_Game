@@ -77,29 +77,31 @@ namespace EntityContainer {
     }
 
     void initGrid() {
-        sf::Color transparentBlack(0, 0, 0, 25);
+        if(System::debug){
+            sf::Color transparentBlack(0, 0, 0, 25);
 
-        for (int i = (int) -System::worldWidth / 2; i < System::worldWidth / 2; i++) {
-            if ((i % System::gridSize) == 0) {
+            for (int i = (int) -System::worldWidth / 2; i < System::worldWidth / 2; i++) {
+                if ((i % System::gridSize) == 0) {
 
-                sf::VertexArray lines;
-                lines.setPrimitiveType(sf::Lines);
-                lines.append(sf::Vertex(System::cToGl(i, 5000), transparentBlack));
-                lines.append(sf::Vertex(System::cToGl(i, System::groundLevel), transparentBlack));
+                    sf::VertexArray lines;
+                    lines.setPrimitiveType(sf::Lines);
+                    lines.append(sf::Vertex(System::cToGl(i, 5000), transparentBlack));
+                    lines.append(sf::Vertex(System::cToGl(i, System::groundLevel), transparentBlack));
 
-                verticies.push_back(lines);
+                    verticies.push_back(lines);
+                }
+
             }
 
-        }
+            for (int j = 8000; j > System::groundLevel; j--) {
+                if ((j % System::gridSize) == 0) {
+                    sf::VertexArray lines;
+                    lines.setPrimitiveType(sf::Lines);
+                    lines.append(sf::Vertex(System::cToGl(-System::worldWidth / 2, j), transparentBlack));
+                    lines.append(sf::Vertex(System::cToGl(System::worldWidth / 2, j), transparentBlack));
 
-        for (int j = 8000; j > System::groundLevel; j--) {
-            if ((j % System::gridSize) == 0) {
-                sf::VertexArray lines;
-                lines.setPrimitiveType(sf::Lines);
-                lines.append(sf::Vertex(System::cToGl(-System::worldWidth / 2, j), transparentBlack));
-                lines.append(sf::Vertex(System::cToGl(System::worldWidth / 2, j), transparentBlack));
-
-                verticies.push_back(lines);
+                    verticies.push_back(lines);
+                }
             }
         }
     }
