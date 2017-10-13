@@ -12,7 +12,7 @@ public:
 
     explicit ControlButtonAddClerk();
 
-    void updateLogic();
+    void updateLogic() override;
 };
 
 #endif //THE_CORP_GAME_CONTROLBUTTONADDCLERK_H

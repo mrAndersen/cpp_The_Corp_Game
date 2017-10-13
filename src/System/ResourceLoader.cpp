@@ -6,6 +6,10 @@ namespace ResourceLoader {
     std::map<int, std::map<int, sf::Texture*>> textureCollection;
 
     void loadTexture(Entities target, const std::string &filePath, States state) {
+
+
+
+
         auto *texture = new sf::Texture;
 
         texture->loadFromFile(filePath);
@@ -22,7 +26,9 @@ namespace ResourceLoader {
     }
 
     void loadTexturesFromFiles() {
-        ResourceLoader::loadTexture(Entities::E_Clerk, "resources/128px.png");
+        ResourceLoader::loadTexture(Entities::E_Clerk, "resources/characters/clerk/white.level_1.png");
+
+
         ResourceLoader::loadTexture(Entities::E_StaticGround, "resources/ground.png");
 
         ResourceLoader::loadTexture(Entities::E_ButtonAddClerk, "resources/control.panel/button.add.clerk.png");

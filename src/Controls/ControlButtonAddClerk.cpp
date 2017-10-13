@@ -1,9 +1,10 @@
 #include <SFML/System.hpp>
 #include <climits>
-#include "../../includes/Objects/ControlButtonAddClerk.h"
+#include "../../includes/Controls/ControlButtonAddClerk.h"
 #include "../../includes/System/EntityContainer.h"
 #include "../../includes/System/ViewHandler.h"
 #include "../../includes/System/System.h"
+#include "../../includes/Text/TextEntity.h"
 
 ControlButtonAddClerk::ControlButtonAddClerk() {
     setName("button.add.clerk");
@@ -44,6 +45,13 @@ void ControlButtonAddClerk::updateLogic() {
         attachedClerk->setDirection(Direction::Down);
         attachedClerk->spawn();
 
+        auto *spent = new TextEntity(System::c_red, 30);
+        auto position = attachedClerk->getWorldCoordinates();
+        position.y += attachedClerk->getHeight() / 2;
+
+        spent->setLiveTimeSeconds(4);
+        spent->setWorldCoordinates(position);
+        spent->setString("-" + System::f_to_string(attachedClerk->getCost()) + "$");
 
         System::spawningUnit = false;
         attachedClerk = nullptr;

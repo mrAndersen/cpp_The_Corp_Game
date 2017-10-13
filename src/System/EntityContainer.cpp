@@ -4,8 +4,8 @@
 #include "../../includes/System/System.h"
 #include "../../includes/Animation/Entity.h"
 #include "../../includes/Office/OfficeClerk.h"
-#include "../../includes/Objects/ControlButtonAddClerk.h"
-#include "../../includes/Objects/ControlButtonAddOffice.h"
+#include "../../includes/Controls/ControlButtonAddClerk.h"
+#include "../../includes/Controls/ControlButtonAddOffice.h"
 
 namespace EntityContainer {
     std::vector<Entity *> items = {};
@@ -35,7 +35,7 @@ namespace EntityContainer {
     std::vector<Office *> getOffices() {
         std::vector<Office *> buffer;
 
-        for (Entity* entity:items) {
+        for (Entity *entity:items) {
             if (auto d = dynamic_cast<Office *>(entity)) {
                 buffer.push_back(d);
             }
@@ -107,6 +107,12 @@ namespace EntityContainer {
     void refreshVertices() {
         for (const auto &v_array:verticies) {
             System::window->draw(v_array);
+        }
+    }
+
+    void refreshEntities() {
+        for (auto entity:items) {
+            entity->update();
         }
     }
 

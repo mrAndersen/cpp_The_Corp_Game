@@ -8,8 +8,8 @@
 #include "../../includes/Utls/GameTime.h"
 
 namespace System {
-    unsigned int screenWidth = 1700;
-    unsigned int screenHeight = 800;
+    unsigned int screenWidth = 1850;
+    unsigned int screenHeight = 900;
     std::string title = "New World";
     float groundLevel = 0;
     float worldWidth = 10000;
@@ -43,7 +43,7 @@ namespace System {
     bool spawningUnit = false;
 
     sf::Clock dayClock;
-    GameTime gameTime(7, 0);
+    GameTime gameTime(12, 0);
 
     int startWorkHour = 9;
     int endWorkHour = 18;
@@ -125,7 +125,7 @@ namespace System {
 
         for (it = debugPanelTextNodes.begin(); it != debugPanelTextNodes.end(); it++) {
             it->second.setPosition(
-                    cToGl(sf::Vector2f(ViewHandler::left + 12, ViewHandler::top - i * 12)));
+                    cToGl(sf::Vector2f(ViewHandler::left + 12, ViewHandler::top - 200 - i * 12)));
             window->draw(it->second);
 
             i++;
@@ -159,9 +159,8 @@ namespace System {
         window->setView(*ViewHandler::view);
     }
 
-    sf::Text createDebugString(const std::string &alias, int index) {
+    sf::Text createDebugString(const std::string &alias) {
         sf::Text label;
-        label.setPosition(cToGl(sf::Vector2f(ViewHandler::left + 12, ViewHandler::top - index * 12)));
         label.setFillColor(sf::Color::Black);
         label.setFont(*debugFont);
         label.setCharacterSize(10);
@@ -177,17 +176,17 @@ namespace System {
         debugFont->loadFromFile("resources/fonts/OpenSans-Light.ttf");
         gameFont->loadFromFile("resources/fonts/Teko-Regular.ttf");
 
-        createDebugString("fps", 1);
-        createDebugString("mem", 2);
-        createDebugString("g_coordinates", 3);
-        createDebugString("mouse", 4);
-        createDebugString("entity_count", 5);
-        createDebugString("v_direction", 6);
-        createDebugString("v_boundaries", 7);
-        createDebugString("v_zoom", 8);
-        createDebugString("p_cash", 9);
-        createDebugString("p_time", 10);
-        createDebugString("p_time_factor", 11);
+        createDebugString("fps");
+        createDebugString("mem");
+        createDebugString("g_coordinates");
+        createDebugString("mouse");
+        createDebugString("entity_count");
+        createDebugString("v_direction");
+        createDebugString("v_boundaries");
+        createDebugString("v_zoom");
+        createDebugString("p_cash");
+        createDebugString("p_time");
+        createDebugString("p_time_factor");
     }
 
     sf::Vector2f cToGl(sf::Vector2f worldCoordinates) {
@@ -219,9 +218,11 @@ namespace System {
         return w_Desktop;
     }
 
-    std::string to_string_with_precision(const float value, const int n) {
+    std::string f_to_string(const float value, const int n) {
         std::ostringstream out;
-        out << std::setprecision(n) << value;
+        out.imbue(std::locale(""));
+
+        out << std::setprecision(n) << std::fixed << value;
         return out.str();
     }
 }

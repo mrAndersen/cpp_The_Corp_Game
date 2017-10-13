@@ -1,9 +1,10 @@
 #include <climits>
-#include "../../includes/Objects/ControlButtonAddOffice.h"
+#include "../../includes/Controls/ControlButtonAddOffice.h"
 #include "../../includes/System/EntityContainer.h"
 #include "../../includes/System/ViewHandler.h"
 #include "../../includes/System/System.h"
 #include "../../includes/Office/OfficeClerk.h"
+#include "../../includes/Text/TextEntity.h"
 
 ControlButtonAddOffice::ControlButtonAddOffice() {
     setName("button.add.office");
@@ -44,6 +45,14 @@ void ControlButtonAddOffice::updateLogic() {
     if (leftClickedOutside() && spawnCondition) {
         attachedOffice->setNormal();
         attachedOffice->spawn();
+
+        auto *spent = new TextEntity(System::c_red, 30);
+        auto position = attachedOffice->getWorldCoordinates();
+        position.y += attachedOffice->getHeight() / 2;
+
+        spent->setLiveTimeSeconds(4);
+        spent->setWorldCoordinates(position);
+        spent->setString("-" + System::f_to_string(attachedOffice->getCost()) + "$");
 
         System::spawningUnit = false;
         attachedOffice = nullptr;

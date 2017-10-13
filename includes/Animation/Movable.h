@@ -40,9 +40,9 @@ protected:
 
     bool hasReachedWorldEdges();
 
-    void updateLogic();
+    void updateLogic() override;
 
-    void renderCurrentFrame();
+    void renderCurrentFrame() override;
 
 public:
     int getFloor() const;
@@ -71,9 +71,9 @@ public:
 
     bool isInWorkPlace();
 
-    std::string serialize();
+    std::string serialize() override;
 
-    void renderDebugInfo();
+    void renderDebugInfo() override;
 
     void updateAnimation() override;
 

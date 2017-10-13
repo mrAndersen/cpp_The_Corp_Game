@@ -28,6 +28,8 @@ namespace EntityContainer {
     void initGrid();
 
     void refreshVertices();
+
+    void refreshEntities();
 }
 
 

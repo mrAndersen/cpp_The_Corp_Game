@@ -6,8 +6,8 @@
 
 class Clerk : public Movable {
 public:
-    const static int width = 128;
-    const static int height = 120;
+    const static int width = 74;
+    const static int height = 135;
 
     float hourEarning = 10.f;
     bool earningProcessed = false;
@@ -15,11 +15,9 @@ public:
     float dailySalary = 64.f;
     bool salaryProcessed = false;
 
-    sf::Clock hourEarningHintClock;
-
     explicit Clerk(sf::Vector2f coordinates);
 
-    void updateLogic();
+    void updateLogic() override;
 };
 
 #endif //THE_CORP_GAME_CLERK_H

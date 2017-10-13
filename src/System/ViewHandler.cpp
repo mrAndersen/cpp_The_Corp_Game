@@ -19,7 +19,7 @@ namespace ViewHandler {
     float zoom = 1;
 
     void handleViewScroll() {
-        int scrollSpeed = 30;
+        int scrollSpeed = 50;
 
         if (viewClock.getElapsedTime().asMilliseconds() > 20) {
             viewClock.restart();

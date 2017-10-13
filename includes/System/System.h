@@ -72,9 +72,9 @@ namespace System {
 
     void initDebug();
 
-    std::string to_string_with_precision(const float value, const int n = 2);
+    std::string f_to_string(const float value, const int n = 2);
 
-    sf::Text createDebugString(const std::string &alias, int index);
+    sf::Text createDebugString(const std::string &alias);
 
     sf::Vector2f cToGl(sf::Vector2f worldCoordinates);
 

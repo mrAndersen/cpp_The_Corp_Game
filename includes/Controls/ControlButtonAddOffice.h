@@ -13,6 +13,6 @@ public:
 
     explicit ControlButtonAddOffice();
 
-    void updateLogic();
+    void updateLogic() override;
 };
 #endif //THE_CORP_GAME_CONTROLBUTTONADDOFFICE_H

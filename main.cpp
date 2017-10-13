@@ -66,10 +66,6 @@ int main() {
                     sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) &&
                     sf::Keyboard::isKeyPressed(sf::Keyboard::Add)) {
                 System::timeFactor++;
-            } else {
-//                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Add) && System::animationDebug) {
-//                    System::cash += 1000;
-//                }
             }
 
             if (
@@ -77,10 +73,6 @@ int main() {
                     sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) &&
                     sf::Keyboard::isKeyPressed(sf::Keyboard::Subtract)) {
                 System::timeFactor--;
-            } else {
-//                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Subtract) && System::animationDebug) {
-//                    System::cash -= 1000;
-//                }
             }
 
             if (e.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::LAlt) &&
@@ -109,12 +101,7 @@ int main() {
         ControlPanel::refreshControlPanel();
 
         EntityContainer::refreshVertices();
-
-        for (auto entity : EntityContainer::getItems()) {
-            if (entity) {
-                entity->update();
-            }
-        }
+        EntityContainer::refreshEntities();
 
         System::window->display();
     }

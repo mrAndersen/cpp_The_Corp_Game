@@ -88,7 +88,7 @@ public:
 
     bool hasType(const std::string &typeName);
 
-    void update();
+    virtual void update();
 
     bool isBelowGround();
 
