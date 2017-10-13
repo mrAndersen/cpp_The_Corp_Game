@@ -61,7 +61,7 @@ namespace System {
     int framesPassed = 0;
     int entitiesOnScreen = 0;
     int fps = 0;
-    bool debug = false;
+    bool debug = true;
     //debug
 
     void refreshDayTime() {
