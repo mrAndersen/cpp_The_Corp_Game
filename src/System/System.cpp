@@ -6,6 +6,7 @@
 #include "../../includes/System/System.h"
 #include "../../includes/System/ViewHandler.h"
 #include "../../includes/Utls/GameTime.h"
+#include "../../includes/Text/TextEntity.h"
 
 namespace System {
     unsigned int screenWidth = 1850;
@@ -32,7 +33,6 @@ namespace System {
 
     //utility
     sf::Color c_background(255, 255, 255);
-
     sf::Color c_grey(236, 237, 227);
     sf::Color c_red(186, 24, 24);
     sf::Color c_green(92, 184, 92);
@@ -42,8 +42,13 @@ namespace System {
     float cash = 50000;
     bool spawningUnit = false;
 
-    sf::Clock dayClock;
-    GameTime gameTime(12, 0);
+    bool dayEndProcessed = false;
+    bool dayStartProcessed = false;
+
+    float salaryTotal = 0;
+
+    sf::Clock dayClock = {};
+    GameTime gameTime(10, 0);
 
     int startWorkHour = 9;
     int endWorkHour = 18;
@@ -56,7 +61,7 @@ namespace System {
     int framesPassed = 0;
     int entitiesOnScreen = 0;
     int fps = 0;
-    bool animationDebug = true;
+    bool debug = true;
     //debug
 
     void refreshDayTime() {
@@ -66,6 +71,24 @@ namespace System {
             dayClock.restart();
 
             gameTime = gameTime + 1;
+        }
+
+        if (gameTime.isDayEndHour() && !dayEndProcessed) {
+
+            auto *salarySpent = new TextEntity(System::c_red, 40);
+            salarySpent->setString("Salaries: -" + System::f_to_string(salaryTotal) + "$");
+            salarySpent->setWorldCoordinates({ViewHandler::left + 12, ViewHandler::top - 100});
+            salarySpent->setDirection(Direction::Down);
+            salarySpent->setLiveTimeSeconds(3);
+
+
+            dayEndProcessed = true;
+            dayStartProcessed = false;
+        }
+
+        if(gameTime.isDayStartHour() && !dayStartProcessed){
+            dayStartProcessed = true;
+            dayEndProcessed = false;
         }
     }
 
@@ -84,51 +107,53 @@ namespace System {
     }
 
     void refreshDebugPanel() {
-        auto mousePosition = sf::Mouse::getPosition(*window);
-        auto coordMap = window->mapPixelToCoords(mousePosition);
+        if(debug){
+            auto mousePosition = sf::Mouse::getPosition(*window);
+            auto coordMap = window->mapPixelToCoords(mousePosition);
 
-        PROCESS_MEMORY_COUNTERS pmc = {};
-        GetProcessMemoryInfo(GetCurrentProcess(), &pmc, sizeof(pmc));
-        SIZE_T mem = pmc.WorkingSetSize;
+            PROCESS_MEMORY_COUNTERS pmc = {};
+            GetProcessMemoryInfo(GetCurrentProcess(), &pmc, sizeof(pmc));
+            SIZE_T mem = pmc.WorkingSetSize;
 
-        g_x = coordMap.x;
-        g_y = System::screenHeight - coordMap.y;
+            g_x = coordMap.x;
+            g_y = System::screenHeight - coordMap.y;
 
-        debugPanelTextNodes["g_coordinates"].setString(
-                "global: {" + std::to_string((int) g_x) + "," + std::to_string((int) g_y) + "}");
-        debugPanelTextNodes["fps"].setString("fps: " + std::to_string(fps));
-        debugPanelTextNodes["mouse"].setString(
-                "mouse: {" + std::to_string(mousePosition.x) + "," + std::to_string(mousePosition.y) + "}");
-        debugPanelTextNodes["entity_count"].setString("entities: " + std::to_string(entitiesOnScreen));
-        debugPanelTextNodes["v_direction"].setString(
-                "v_direction: " + std::to_string(ViewHandler::viewDirectionMovement));
-        debugPanelTextNodes["mem"].setString(
-                "mem:" + std::to_string((int) mem / 1024 / 1024) + "mb"
-        );
+            debugPanelTextNodes["g_coordinates"].setString(
+                    "global: {" + std::to_string((int) g_x) + "," + std::to_string((int) g_y) + "}");
+            debugPanelTextNodes["fps"].setString("fps: " + std::to_string(fps));
+            debugPanelTextNodes["mouse"].setString(
+                    "mouse: {" + std::to_string(mousePosition.x) + "," + std::to_string(mousePosition.y) + "}");
+            debugPanelTextNodes["entity_count"].setString("entities: " + std::to_string(entitiesOnScreen));
+            debugPanelTextNodes["v_direction"].setString(
+                    "v_direction: " + std::to_string(ViewHandler::viewDirectionMovement));
+            debugPanelTextNodes["mem"].setString(
+                    "mem:" + std::to_string((int) mem / 1024 / 1024) + "mb"
+            );
 
 
-        debugPanelTextNodes["v_boundaries"].setString(
-                "v_boundaries: "
-                        "{t=" + std::to_string((int) ViewHandler::top) + ","
-                        "b=" + std::to_string((int) ViewHandler::bottom) + ","
-                        "l=" + std::to_string((int) ViewHandler::left) + ","
-                        "r=" + std::to_string((int) ViewHandler::right) + "}"
-        );
+            debugPanelTextNodes["v_boundaries"].setString(
+                    "v_boundaries: "
+                            "{t=" + std::to_string((int) ViewHandler::top) + ","
+                            "b=" + std::to_string((int) ViewHandler::bottom) + ","
+                            "l=" + std::to_string((int) ViewHandler::left) + ","
+                            "r=" + std::to_string((int) ViewHandler::right) + "}"
+            );
 
-        debugPanelTextNodes["v_zoom"].setString("v_zoom: " + std::to_string(ViewHandler::zoom));
-        debugPanelTextNodes["p_cash"].setString("p_cash: " + std::to_string((int) System::cash));
-        debugPanelTextNodes["p_time"].setString("p_time:" + gameTime.get());
-        debugPanelTextNodes["p_time_factor"].setString("p_time_factor:" + std::to_string(timeFactor));
+            debugPanelTextNodes["v_zoom"].setString("v_zoom: " + std::to_string(ViewHandler::zoom));
+            debugPanelTextNodes["p_cash"].setString("p_cash: " + std::to_string((int) System::cash));
+            debugPanelTextNodes["p_time"].setString("p_time:" + gameTime.get());
+            debugPanelTextNodes["p_time_factor"].setString("p_time_factor:" + std::to_string(timeFactor));
 
-        std::map<std::string, sf::Text>::iterator it;
-        int i = 1;
+            std::map<std::string, sf::Text>::iterator it;
+            int i = 1;
 
-        for (it = debugPanelTextNodes.begin(); it != debugPanelTextNodes.end(); it++) {
-            it->second.setPosition(
-                    cToGl(sf::Vector2f(ViewHandler::left + 12, ViewHandler::top - 200 - i * 12)));
-            window->draw(it->second);
+            for (it = debugPanelTextNodes.begin(); it != debugPanelTextNodes.end(); it++) {
+                it->second.setPosition(
+                        cToGl(sf::Vector2f(ViewHandler::left + 12, ViewHandler::top - 200 - i * 12)));
+                window->draw(it->second);
 
-            i++;
+                i++;
+            }
         }
     }
 
@@ -151,6 +176,7 @@ namespace System {
 
         window = new sf::RenderWindow(sf::VideoMode(screenWidth, screenHeight), title, screenMode);
         window->clear(c_background);
+        window->setFramerateLimit(1000);
 
         ViewHandler::view = new sf::View();
         ViewHandler::view->reset(sf::FloatRect(0, 0, screenWidth, screenHeight));

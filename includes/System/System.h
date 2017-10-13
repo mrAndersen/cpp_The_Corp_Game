@@ -29,7 +29,6 @@ namespace System {
 
     //utility
     extern sf::Color c_background;
-
     extern sf::Color c_grey;
     extern sf::Color c_red;
     extern sf::Color c_green;
@@ -38,6 +37,9 @@ namespace System {
     //player
     extern float cash;
     extern bool spawningUnit;
+    extern bool dayEndProcessed;
+    extern bool dayStartProcessed;
+    extern float salaryTotal;
 
     extern sf::Clock dayClock;
     extern GameTime gameTime;
@@ -57,7 +59,7 @@ namespace System {
     extern int framesPassed;
     extern int entitiesOnScreen;
     extern int fps;
-    extern bool animationDebug;
+    extern bool debug;
     //debug
 
     RECT getScreenBoundaries();

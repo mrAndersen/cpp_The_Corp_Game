@@ -36,8 +36,6 @@ protected:
 
     int floor = 1;
 
-protected:
-
     bool hasReachedWorldEdges();
 
     void updateLogic() override;

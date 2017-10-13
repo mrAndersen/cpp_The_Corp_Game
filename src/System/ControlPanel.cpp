@@ -5,6 +5,7 @@
 #include "../../includes/Controls/ControlButtonAddOffice.h"
 #include "../../includes/Text/TextEntity.h"
 #include "../../includes/Controls/ControlCashIndicator.h"
+#include "../../includes/Controls/ControlTimeIndicator.h"
 
 namespace ControlPanel {
     std::map<std::string, Entity *> controls;
@@ -14,11 +15,13 @@ namespace ControlPanel {
         auto *b_add_office = new ControlButtonAddOffice();
 
         auto *c_cash_indicator = new ControlCashIndicator(sf::Color::Black, 50);
+        auto *c_time_indicator = new ControlTimeIndicator(sf::Color::Black, 20);
 
 
         controls[b_add_clerk->getName()] = b_add_clerk;
         controls[b_add_office->getName()] = b_add_office;
         controls[c_cash_indicator->getName()] = c_cash_indicator;
+        controls[c_time_indicator->getName()] = c_time_indicator;
     }
 
     void refreshControlPanel() {

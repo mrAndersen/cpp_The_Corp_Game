@@ -1,4 +1,4 @@
-#include <math.h>
+#include <cmath>
 #include <iostream>
 #include "../../includes/Animation/Movable.h"
 #include "../../includes/System/ResourceLoader.h"
@@ -23,6 +23,7 @@ Clerk::Clerk(sf::Vector2f coordinates) {
     setDrawOrder(100);
     createAnimationFrames();
 
+    System::salaryTotal += dailySalary;
     EntityContainer::add(this);
 }
 

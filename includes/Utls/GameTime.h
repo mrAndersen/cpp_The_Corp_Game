@@ -20,6 +20,10 @@ public:
 
     bool isEarningHour();
 
+    bool isDayEndHour();
+
+    bool isDayStartHour();
+
     int diffMinutes(const GameTime &target);
 
     friend GameTime operator+(const GameTime &a, const GameTime &b);

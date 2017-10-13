@@ -60,7 +60,7 @@ void Office::setFloor(int floor) {
 }
 
 void Office::renderDebugInfo() {
-    if (System::animationDebug) {
+    if (System::debug) {
         debugInfo.setPosition(System::cToGl(worldCoordinates.x + width / 2, worldCoordinates.y + height / 2));
         debugInfo.setString(
                 "id: " + std::to_string(id) + "\n" +
