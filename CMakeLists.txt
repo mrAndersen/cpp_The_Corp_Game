@@ -26,7 +26,10 @@ include_directories("${PROJECT_BINARY_DIR}")
 # Define sources and executable
 set(EXECUTABLE_NAME "corpgame")
 add_executable(
-        ${EXECUTABLE_NAME} main.cpp
+        ${EXECUTABLE_NAME}
+
+        main.cpp
+#        main.rc
 
         includes/System/EntityContainer.h
         src/System/EntityContainer.cpp

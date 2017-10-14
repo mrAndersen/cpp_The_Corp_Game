@@ -8,7 +8,7 @@ if not os.path.exists(releaseDirectory):
     os.makedirs(releaseDirectory)
 
 shutil.copytree("./debug/resources", releaseDirectory + "/resources")
-shutil.copyfile("./debug/corpgame.exe", releaseDirectory + "/game.exe")
+shutil.copyfile("./debug/corpgame.exe", releaseDirectory + "/incorporated.exe")
 
 shutil.make_archive(releaseDirectory, 'zip', releaseDirectory)
 shutil.rmtree(releaseDirectory)

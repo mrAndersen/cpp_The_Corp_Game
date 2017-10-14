@@ -25,11 +25,19 @@ namespace ViewHandler {
             viewClock.restart();
 
             if (viewDirectionMovement == Direction::Left) {
-                view->move(-scrollSpeed, 0);
+                if (ViewHandler::left <= (int) -System::worldWidth / 2) {
+                    return;
+                } else {
+                    view->move(-scrollSpeed, 0);
+                }
             }
 
             if (viewDirectionMovement == Direction::Right) {
-                view->move(scrollSpeed, 0);
+                if (ViewHandler::right >= (int) System::worldWidth / 2) {
+                    return;
+                } else {
+                    view->move(scrollSpeed, 0);
+                }
             }
 
             if (viewDirectionMovement == Direction::Up) {
@@ -43,26 +51,43 @@ namespace ViewHandler {
             }
 
             if (viewDirectionMovement == Direction::UpLeft) {
-                view->move(-scrollSpeed, -scrollSpeed);
+                if (ViewHandler::left <= (int) -System::worldWidth / 2) {
+                    view->move(0, -scrollSpeed);
+                } else {
+                    view->move(-scrollSpeed, -scrollSpeed);
+                }
+
             }
 
             if (viewDirectionMovement == Direction::UpRight) {
-                view->move(scrollSpeed, -scrollSpeed);
+                if (ViewHandler::right >= (int) System::worldWidth / 2) {
+                    view->move(0, -scrollSpeed);
+                } else {
+                    view->move(scrollSpeed, -scrollSpeed);
+                }
             }
 
             if (viewDirectionMovement == Direction::DownLeft) {
-                if (bottom > System::groundLevel) {
-                    view->move(-scrollSpeed, scrollSpeed);
+                if (ViewHandler::left <= (int) -System::worldWidth / 2) {
+                    view->move(0, -scrollSpeed);
                 } else {
-                    view->move(-scrollSpeed, 0);
+                    if (bottom > System::groundLevel) {
+                        view->move(-scrollSpeed, scrollSpeed);
+                    } else {
+                        view->move(-scrollSpeed, 0);
+                    }
                 }
             }
 
             if (viewDirectionMovement == Direction::DownRight) {
-                if (bottom > System::groundLevel) {
-                    view->move(scrollSpeed, scrollSpeed);
+                if (ViewHandler::right >= (int) System::worldWidth / 2) {
+                    view->move(0, -scrollSpeed);
                 } else {
-                    view->move(scrollSpeed, 0);
+                    if (bottom > System::groundLevel) {
+                        view->move(scrollSpeed, scrollSpeed);
+                    } else {
+                        view->move(scrollSpeed, 0);
+                    }
                 }
             }
 

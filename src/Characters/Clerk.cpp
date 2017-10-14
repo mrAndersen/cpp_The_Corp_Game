@@ -16,8 +16,8 @@ Clerk::Clerk(sf::Vector2f coordinates) {
     setTotalFrames(24);
     setDefaultSpeed(130);
     setCost(500);
-
     setWorldCoordinates(coordinates);
+    setSelectable(true);
 
     setTexture(ResourceLoader::getTexture(Entities::E_Clerk));
     setDrawOrder(100);

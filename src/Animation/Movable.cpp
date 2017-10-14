@@ -35,7 +35,8 @@ void Movable::renderDebugInfo() {
                 "office: " + std::to_string(currentWorkPlace ? currentWorkPlace->getId() : 0) + "\n" +
                 "state: " + std::to_string(state) + "\n" +
                 "floor: " + std::to_string(floor) + "\n" +
-                "speed: " + std::to_string((int) currentSpeed) + "p/s\n"
+                "speed: " + std::to_string((int) currentSpeed) + "p/s\n" +
+                "selected: " + std::to_string((int) selected) + "\n"
         );
         System::window->draw(debugInfo);
     }
@@ -76,13 +77,17 @@ void Movable::updateLogic() {
 
         errorString.setString("No free work places");
         state = S_None;
-    }else{
+    } else {
         valid = true;
     }
 
     //end of work day
     if (!System::gameTime.isWorkTime()) {
         state = S_GoHome;
+    }
+
+    if (state == S_GoHome) {
+
     }
 
     //falling
@@ -144,14 +149,7 @@ void Movable::updateLogic() {
         searchWorkPlace();
     }
 
-    //world boundaries
-    if (hasReachedWorldEdges()) {
-        health = 0;
-    }
-
-    if (health <= 0) {
-        EntityContainer::remove(this);
-    }
+    Entity::updateLogic();
 }
 
 bool Movable::hasReachedWorldEdges() {

@@ -57,7 +57,7 @@ int main() {
             }
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
-                for (int i = 0; i <= 50; i++) {
+                for (int i = 0; i <= 1; i++) {
                     auto *clerk = new Clerk(System::window->getDefaultView().getCenter());
                 }
             }

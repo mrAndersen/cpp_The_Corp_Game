@@ -2,31 +2,41 @@
 #include "../../includes/Text/TextEntity.h"
 #include "../../includes/System/System.h"
 #include "../../includes/System/EntityContainer.h"
+#include "../../includes/System/ViewHandler.h"
 
 void TextEntity::update() {
     float frameTimeSeconds = (float) System::frameTimeMcs / 1000000;
     float frameDistance = frameTimeSeconds * speed * System::timeFactor;
 
+    if (fixed) {
+        totalEntityDistance += frameDistance;
+
+        worldCoordinates.x = ViewHandler::left + left;
+        worldCoordinates.y = ViewHandler::top + top;
+    } else {
+        totalEntityDistance = frameDistance;
+    }
+
     if (direction == Direction::Right) {
-        worldCoordinates.x += frameDistance;
+        worldCoordinates.x += totalEntityDistance;
     }
 
     if (direction == Direction::Left) {
-        worldCoordinates.x -= frameDistance;
+        worldCoordinates.x -= totalEntityDistance;
     }
 
     if (direction == Direction::Up) {
-        worldCoordinates.y += frameDistance;
+        worldCoordinates.y += totalEntityDistance;
     }
 
     if (direction == Direction::Down) {
-        worldCoordinates.y -= frameDistance;
+        worldCoordinates.y -= totalEntityDistance;
     }
 
     text.setPosition(System::cToGl(worldCoordinates));
     System::window->draw(text);
 
-    if(liveTimeSeconds != 0 && liveClock.getElapsedTime().asSeconds() >= liveTimeSeconds){
+    if (liveTimeSeconds != 0 && liveClock.getElapsedTime().asSeconds() >= liveTimeSeconds) {
         EntityContainer::remove(this);
     }
 }
@@ -77,4 +87,28 @@ float TextEntity::getSpeed() const {
 
 void TextEntity::setSpeed(float speed) {
     TextEntity::speed = speed;
+}
+
+bool TextEntity::isFixed() const {
+    return fixed;
+}
+
+void TextEntity::setFixed(bool fixed) {
+    TextEntity::fixed = fixed;
+}
+
+float TextEntity::getScreenLeft() const {
+    return screenLeft;
+}
+
+void TextEntity::setScreenLeft(float screenLeft) {
+    TextEntity::screenLeft = screenLeft;
+}
+
+float TextEntity::getScreenTop() const {
+    return screenTop;
+}
+
+void TextEntity::setScreenTop(float screenTop) {
+    TextEntity::screenTop = screenTop;
 }

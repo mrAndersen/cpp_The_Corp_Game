@@ -14,9 +14,27 @@ class TextEntity : public Entity {
     float speed = 100;
     float liveTimeSeconds = 5;
 
+    //fixed offset parameters
+    bool fixed = false;
+    float totalEntityDistance = 0;
+    float screenLeft = 0;
+    float screenTop = 0;
+
     Direction direction = Direction::Up;
 
 public:
+    float getScreenLeft() const;
+
+    void setScreenLeft(float screenLeft);
+
+    float getScreenTop() const;
+
+    void setScreenTop(float screenTop);
+
+    bool isFixed() const;
+
+    void setFixed(bool fixed);
+
     void update() override;
 
     void setString(const std::string &string);

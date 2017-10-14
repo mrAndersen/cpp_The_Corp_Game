@@ -48,7 +48,7 @@ namespace System {
     float salaryTotal = 0;
 
     sf::Clock dayClock = {};
-    GameTime gameTime(10, 0);
+    GameTime gameTime(17, 30);
 
     int startWorkHour = 9;
     int endWorkHour = 18;
@@ -67,7 +67,7 @@ namespace System {
     void refreshDayTime() {
         auto localTimeFactor = 1000 / timeFactor;
 
-        if (dayClock.getElapsedTime().asMilliseconds() >= localTimeFactor / 10) {
+        if (dayClock.getElapsedTime().asMilliseconds() >= localTimeFactor / 5) {
             dayClock.restart();
 
             gameTime = gameTime + 1;
@@ -76,8 +76,10 @@ namespace System {
         if (gameTime.isDayEndHour() && !dayEndProcessed) {
 
             auto *salarySpent = new TextEntity(System::c_red, 40);
+            salarySpent->setFixed(true);
             salarySpent->setString("Salaries: -" + System::f_to_string(salaryTotal) + "$");
-            salarySpent->setWorldCoordinates({ViewHandler::left + 12, ViewHandler::top - 100});
+            salarySpent->setLeft(12);
+            salarySpent->setTop(-100);
             salarySpent->setDirection(Direction::Down);
             salarySpent->setLiveTimeSeconds(3);
 

@@ -6,8 +6,8 @@
 
 class Clerk : public Movable {
 public:
-    const static int width = 74;
-    const static int height = 135;
+    const static int width = 76;
+    const static int height = 120;
 
     float hourEarning = 10.f;
     bool earningProcessed = false;
