@@ -5,7 +5,7 @@
 
 class OfficeClerk: public Office {
 public:
-    const static int width = 450;
+    const static int width = 600;
     const static int height = 150;
 
     explicit OfficeClerk(sf::Vector2f coordinates);

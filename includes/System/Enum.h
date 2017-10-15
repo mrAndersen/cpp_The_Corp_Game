@@ -14,6 +14,12 @@ enum Direction {
     DownLeft
 };
 
+enum ElevatorShafts {
+    EL_Top = 1,
+    EL_Middle = 2,
+    EL_Bottom = 3
+};
+
 enum States {
     S_None = 0,
     S_Stand = 1,
@@ -32,6 +38,7 @@ enum States {
 
 enum Entities {
     E_Entity = 0,
+
     //Ground
     E_StaticGround = 11,
 
@@ -41,9 +48,16 @@ enum Entities {
     //Controls
     E_ButtonAddClerk = 31,
     E_ButtonAddOffice = 32,
+    E_ButtonAddElevator = 33,
+    E_ButtonAddElevatorCabin = 34,
 
     //Office
     E_OfficeClerk = 41,
+
+    //Elevator
+    E_ElevatorShaftBottom = 51,
+    E_ElevatorShaftMiddle = 52,
+    E_ElevatorShaftTop = 53,
 };
 
 #endif
