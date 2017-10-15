@@ -10,6 +10,7 @@ class Entity {
 protected:
     //parameters
     int id;
+
     std::string name = "";
     float health = 100;
     bool valid = true;
@@ -24,6 +25,8 @@ protected:
     float right = 0;
 
     States state = S_None;
+    bool selected = false;
+    bool selectable = false;
 
     sf::IntRect rect;
 
@@ -49,11 +52,16 @@ protected:
     std::map<std::string, int> properties;
 
     //debug
-    sf::VertexArray quad;
     sf::Text debugInfo;
     sf::Text errorString;
 
 public:
+    bool isSelectable() const;
+
+    void setSelectable(bool selectable);
+
+    bool isSelected() const;
+
     bool isValid() const;
 
     int getId() const;
@@ -88,7 +96,7 @@ public:
 
     bool hasType(const std::string &typeName);
 
-    void update();
+    virtual void update();
 
     bool isBelowGround();
 
@@ -195,6 +203,8 @@ public:
     sf::Text &getErrorString();
 
     void setErrorString(sf::Text &errorString);
+
+    void setSelected(bool selected);
 };
 
 #endif //THE_CORP_GAME_ENTITY_H

@@ -1,4 +1,4 @@
-#include <math.h>
+#include <cmath>
 #include <iostream>
 #include "../../includes/Animation/Movable.h"
 #include "../../includes/System/ResourceLoader.h"
@@ -6,6 +6,7 @@
 #include "../../includes/System/EntityContainer.h"
 #include "../../includes/Objects/Ground.h"
 #include "../../includes/System/System.h"
+#include "../../includes/Text/TextEntity.h"
 
 Clerk::Clerk(sf::Vector2f coordinates) {
     setName("clerk");
@@ -13,15 +14,16 @@ Clerk::Clerk(sf::Vector2f coordinates) {
     setWidth(Clerk::width);
     setHeight(Clerk::height);
     setTotalFrames(24);
-    setDefaultSpeed(300);
+    setDefaultSpeed(130);
     setCost(500);
-
     setWorldCoordinates(coordinates);
+    setSelectable(true);
 
     setTexture(ResourceLoader::getTexture(Entities::E_Clerk));
     setDrawOrder(100);
     createAnimationFrames();
 
+    System::salaryTotal += dailySalary;
     EntityContainer::add(this);
 }
 
@@ -33,26 +35,24 @@ void Clerk::updateLogic() {
         hourEarningHint.setCharacterSize(30);
         hourEarningHint.setFillColor(System::c_green);
         hourEarningHint.setFont(*System::gameFont);
-        hourEarningHint.setString("+" + System::to_string_with_precision(hourEarning) + "$");
+        hourEarningHint.setString("+" + System::f_to_string(hourEarning) + "$");
 
         //earning every hour
-        if (System::gameTime.getMinute() == 0 && !earningProcessed) {
+        if (System::gameTime.isEarningHour() && !earningProcessed) {
             System::cash = System::cash + hourEarning;
+
+            auto *earningHint = new TextEntity(System::c_green, 25);
+            auto position = worldCoordinates;
+            position.y += height / 2;
+
+            earningHint->setSpeed(100 * System::timeFactor);
+            earningHint->setLiveTimeSeconds(2 / System::timeFactor);
+            earningHint->setWorldCoordinates(position);
+            earningHint->setString("+" + System::f_to_string(hourEarning) + "$");
+
             earningProcessed = true;
         }
 
-        //earning hint
-        if (System::gameTime.getMinute() <= 35 && System::gameTime.getMinute() >= 0) {
-            if (hourEarningHintClock.getElapsedTime().asMilliseconds() * System::timeFactor >= 1000) {
-                auto position = System::cFromGl(hourEarningHint.getPosition());
-                position.x = worldCoordinates.x + width / 4;
-                position.y = worldCoordinates.y + height / 2 + 24 + System::gameTime.getMinute() * 2;
-
-
-                hourEarningHint.setPosition(System::cToGl(position));
-                System::window->draw(hourEarningHint);
-            }
-        }
 
         //reset earning processing
         if (System::gameTime.getMinute() == 1) {
@@ -60,8 +60,7 @@ void Clerk::updateLogic() {
         }
 
         //salary every day
-        if (System::gameTime.getHour() == System::endWorkHour && System::gameTime.getMinute() == 0 &&
-            !salaryProcessed) {
+        if (System::gameTime.getHour() == System::endWorkHour && System::gameTime.getMinute() == 0 && !salaryProcessed) {
             System::cash = System::cash - dailySalary;
             salaryProcessed = true;
         }
@@ -71,7 +70,6 @@ void Clerk::updateLogic() {
             salaryProcessed = false;
         }
     }
-
 
     Movable::updateLogic();
 }

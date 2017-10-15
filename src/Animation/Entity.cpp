@@ -104,6 +104,18 @@ void Entity::setInvalid() {
 }
 
 void Entity::updateLogic() {
+
+    if (selectable && !selected && leftClicked() && !System::spawningUnit) {
+        setSelected(true);
+    }
+
+    if (selectable && selected && leftClicked() && !System::spawningUnit) {
+        setSelected(false);
+    }
+
+    if (health <= 0) {
+        EntityContainer::remove(this);
+    }
 }
 
 const std::string &Entity::getName() const {
@@ -335,14 +347,14 @@ void Entity::setRight(float right) {
 }
 
 void Entity::renderErrorText() {
-    if (valid == false) {
+    if (!valid) {
         errorString.setPosition(System::cToGl(worldCoordinates.x - width / 2, worldCoordinates.y + height / 2 + 20));
         System::window->draw(errorString);
     }
 }
 
 void Entity::renderDebugInfo() {
-    if (System::animationDebug) {
+    if (System::debug) {
         debugInfo.setPosition(System::cToGl(worldCoordinates.x + width / 2, worldCoordinates.y + height / 2));
         debugInfo.setString(
                 "id: " + std::to_string(id) + "\n" +
@@ -399,6 +411,28 @@ void Entity::setId(int id) {
 
 bool Entity::isValid() const {
     return valid;
+}
+
+bool Entity::isSelected() const {
+    return selected;
+}
+
+void Entity::setSelected(bool selected) {
+    Entity::selected = selected;
+
+    if (selected) {
+        sprite.setColor(sf::Color(0, 0, 0, 200));
+    } else {
+        setNormal();
+    }
+}
+
+bool Entity::isSelectable() const {
+    return selectable;
+}
+
+void Entity::setSelectable(bool selectable) {
+    Entity::selectable = selectable;
 }
 
 

@@ -10,9 +10,9 @@ public:
 
     explicit OfficeClerk(sf::Vector2f coordinates);
 
-    void updateLogic();
+    void updateLogic() override;
 
-    virtual std::string serialize();
+    virtual std::string serialize() override;
 };
 
 #endif //THE_CORP_GAME_OFFICECLERK_H

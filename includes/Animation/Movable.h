@@ -18,8 +18,8 @@ protected:
     Direction direction = Direction::Right;
 
     //pixels per second
-    float defaultSpeed = 300;
-    float currentSpeed = 300;
+    float defaultSpeed = 130;
+    float currentSpeed = 130;
     float fallAcceleration = 980;
 
     Office *currentWorkPlace = nullptr;
@@ -36,13 +36,11 @@ protected:
 
     int floor = 1;
 
-protected:
-
     bool hasReachedWorldEdges();
 
-    void updateLogic();
+    void updateLogic() override;
 
-    void renderCurrentFrame();
+    void renderCurrentFrame() override;
 
 public:
     int getFloor() const;
@@ -71,9 +69,9 @@ public:
 
     bool isInWorkPlace();
 
-    std::string serialize();
+    std::string serialize() override;
 
-    void renderDebugInfo();
+    void renderDebugInfo() override;
 
     void updateAnimation() override;
 

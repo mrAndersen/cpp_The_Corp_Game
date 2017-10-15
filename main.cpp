@@ -12,6 +12,7 @@ int main() {
 
     //preload resources
     ResourceLoader::loadTexturesFromFiles();
+    ResourceLoader::loadFonts();
 
     //load window and debug utilities
     System::initWindow();
@@ -56,7 +57,7 @@ int main() {
             }
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
-                for (int i = 0; i <= 50; i++) {
+                for (int i = 0; i <= 1; i++) {
                     auto *clerk = new Clerk(System::window->getDefaultView().getCenter());
                 }
             }
@@ -66,10 +67,6 @@ int main() {
                     sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) &&
                     sf::Keyboard::isKeyPressed(sf::Keyboard::Add)) {
                 System::timeFactor++;
-            } else {
-//                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Add) && System::animationDebug) {
-//                    System::cash += 1000;
-//                }
             }
 
             if (
@@ -77,10 +74,6 @@ int main() {
                     sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) &&
                     sf::Keyboard::isKeyPressed(sf::Keyboard::Subtract)) {
                 System::timeFactor--;
-            } else {
-//                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Subtract) && System::animationDebug) {
-//                    System::cash -= 1000;
-//                }
             }
 
             if (e.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::LAlt) &&
@@ -109,12 +102,7 @@ int main() {
         ControlPanel::refreshControlPanel();
 
         EntityContainer::refreshVertices();
-
-        for (auto entity : EntityContainer::getItems()) {
-            if (entity) {
-                entity->update();
-            }
-        }
+        EntityContainer::refreshEntities();
 
         System::window->display();
     }

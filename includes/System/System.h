@@ -29,7 +29,6 @@ namespace System {
 
     //utility
     extern sf::Color c_background;
-
     extern sf::Color c_grey;
     extern sf::Color c_red;
     extern sf::Color c_green;
@@ -38,6 +37,9 @@ namespace System {
     //player
     extern float cash;
     extern bool spawningUnit;
+    extern bool dayEndProcessed;
+    extern bool dayStartProcessed;
+    extern float salaryTotal;
 
     extern sf::Clock dayClock;
     extern GameTime gameTime;
@@ -57,7 +59,7 @@ namespace System {
     extern int framesPassed;
     extern int entitiesOnScreen;
     extern int fps;
-    extern bool animationDebug;
+    extern bool debug;
     //debug
 
     RECT getScreenBoundaries();
@@ -72,9 +74,9 @@ namespace System {
 
     void initDebug();
 
-    std::string to_string_with_precision(const float value, const int n = 2);
+    std::string f_to_string(const float value, const int n = 2);
 
-    sf::Text createDebugString(const std::string &alias, int index);
+    sf::Text createDebugString(const std::string &alias);
 
     sf::Vector2f cToGl(sf::Vector2f worldCoordinates);
 

@@ -18,7 +18,11 @@ public:
 
     bool isWorkTime();
 
-    bool isRestTime();
+    bool isEarningHour();
+
+    bool isDayEndHour();
+
+    bool isDayStartHour();
 
     int diffMinutes(const GameTime &target);
 

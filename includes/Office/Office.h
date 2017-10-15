@@ -23,11 +23,11 @@ public:
 
     std::vector<Entity *> &getWorkers();
 
-    void updateLogic();
+    void updateLogic() override;
 
     void spawn();
 
-    void renderDebugInfo();
+    void renderDebugInfo() override;
 
     int getFloor() const;
 

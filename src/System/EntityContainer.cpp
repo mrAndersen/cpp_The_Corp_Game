@@ -4,8 +4,8 @@
 #include "../../includes/System/System.h"
 #include "../../includes/Animation/Entity.h"
 #include "../../includes/Office/OfficeClerk.h"
-#include "../../includes/Objects/ControlButtonAddClerk.h"
-#include "../../includes/Objects/ControlButtonAddOffice.h"
+#include "../../includes/Controls/ControlButtonAddClerk.h"
+#include "../../includes/Controls/ControlButtonAddOffice.h"
 
 namespace EntityContainer {
     std::vector<Entity *> items = {};
@@ -35,7 +35,7 @@ namespace EntityContainer {
     std::vector<Office *> getOffices() {
         std::vector<Office *> buffer;
 
-        for (Entity* entity:items) {
+        for (Entity *entity:items) {
             if (auto d = dynamic_cast<Office *>(entity)) {
                 buffer.push_back(d);
             }
@@ -77,29 +77,31 @@ namespace EntityContainer {
     }
 
     void initGrid() {
-        sf::Color transparentBlack(0, 0, 0, 25);
+        if(System::debug){
+            sf::Color transparentBlack(0, 0, 0, 25);
 
-        for (int i = (int) -System::worldWidth / 2; i < System::worldWidth / 2; i++) {
-            if ((i % System::gridSize) == 0) {
+            for (int i = (int) -System::worldWidth / 2; i < System::worldWidth / 2; i++) {
+                if ((i % System::gridSize) == 0) {
 
-                sf::VertexArray lines;
-                lines.setPrimitiveType(sf::Lines);
-                lines.append(sf::Vertex(System::cToGl(i, 5000), transparentBlack));
-                lines.append(sf::Vertex(System::cToGl(i, System::groundLevel), transparentBlack));
+                    sf::VertexArray lines;
+                    lines.setPrimitiveType(sf::Lines);
+                    lines.append(sf::Vertex(System::cToGl(i, 5000), transparentBlack));
+                    lines.append(sf::Vertex(System::cToGl(i, System::groundLevel), transparentBlack));
 
-                verticies.push_back(lines);
+                    verticies.push_back(lines);
+                }
+
             }
 
-        }
+            for (int j = 8000; j > System::groundLevel; j--) {
+                if ((j % System::gridSize) == 0) {
+                    sf::VertexArray lines;
+                    lines.setPrimitiveType(sf::Lines);
+                    lines.append(sf::Vertex(System::cToGl(-System::worldWidth / 2, j), transparentBlack));
+                    lines.append(sf::Vertex(System::cToGl(System::worldWidth / 2, j), transparentBlack));
 
-        for (int j = 8000; j > System::groundLevel; j--) {
-            if ((j % System::gridSize) == 0) {
-                sf::VertexArray lines;
-                lines.setPrimitiveType(sf::Lines);
-                lines.append(sf::Vertex(System::cToGl(-System::worldWidth / 2, j), transparentBlack));
-                lines.append(sf::Vertex(System::cToGl(System::worldWidth / 2, j), transparentBlack));
-
-                verticies.push_back(lines);
+                    verticies.push_back(lines);
+                }
             }
         }
     }
@@ -107,6 +109,12 @@ namespace EntityContainer {
     void refreshVertices() {
         for (const auto &v_array:verticies) {
             System::window->draw(v_array);
+        }
+    }
+
+    void refreshEntities() {
+        for (auto entity:items) {
+            entity->update();
         }
     }
 

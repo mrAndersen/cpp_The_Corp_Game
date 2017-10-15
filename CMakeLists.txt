@@ -26,7 +26,10 @@ include_directories("${PROJECT_BINARY_DIR}")
 # Define sources and executable
 set(EXECUTABLE_NAME "corpgame")
 add_executable(
-        ${EXECUTABLE_NAME} main.cpp
+        ${EXECUTABLE_NAME}
+
+        main.cpp
+#        main.rc
 
         includes/System/EntityContainer.h
         src/System/EntityContainer.cpp
@@ -57,11 +60,11 @@ add_executable(
         includes/System/ControlPanel.h
         src/System/ControlPanel.cpp
 
-        includes/Objects/ControlButtonAddClerk.h
-        src/Objects/ControlButtonAddClerk.cpp
+        includes/Controls/ControlButtonAddClerk.h
+        src/Controls/ControlButtonAddClerk.cpp
 
-        includes/Objects/ControlButtonAddOffice.h
-        src/Objects/ControlButtonAddOffice.cpp
+        includes/Controls/ControlButtonAddOffice.h
+        src/Controls/ControlButtonAddOffice.cpp
 
         includes/Office/OfficeClerk.h
         src/Office/OfficeClerk.cpp
@@ -71,7 +74,7 @@ add_executable(
 
         includes/Office/Office.h
         src/Office/Office.cpp
-        src/System/GameTime.cpp includes/Utls/GameTime.h src/Objects/Elevator.cpp includes/Office/Elevator.h)
+        src/System/GameTime.cpp includes/Utls/GameTime.h src/Objects/Elevator.cpp includes/Office/Elevator.h src/Text/TextEntity.cpp includes/Text/TextEntity.h src/Controls/ControlCashIndicator.cpp includes/Controls/ControlCashIndicator.h src/Controls/ControlTimeIndicator.cpp includes/Controls/ControlTimeIndicator.h)
 
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
