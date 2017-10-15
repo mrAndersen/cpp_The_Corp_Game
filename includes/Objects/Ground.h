@@ -12,6 +12,7 @@ public:
     const static int height = 100;
 
     explicit Ground(sf::Vector2f coordinates);
+
 };
 
 #endif //THE_CORP_GAME_GROUND_H
