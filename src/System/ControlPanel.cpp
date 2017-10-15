@@ -6,6 +6,7 @@
 #include "../../includes/Text/TextEntity.h"
 #include "../../includes/Controls/ControlCashIndicator.h"
 #include "../../includes/Controls/ControlTimeIndicator.h"
+#include "../../includes/Controls/ControlButtonAddElevator.h"
 
 namespace ControlPanel {
     std::map<std::string, Entity *> controls;
@@ -13,6 +14,7 @@ namespace ControlPanel {
     void initControlPanel() {
         auto *b_add_clerk = new ControlButtonAddClerk();
         auto *b_add_office = new ControlButtonAddOffice();
+        auto *b_add_elevator = new ControlButtonAddElevator();
 
         auto *c_cash_indicator = new ControlCashIndicator(sf::Color::Black, 50);
         auto *c_time_indicator = new ControlTimeIndicator(sf::Color::Black, 20);
@@ -20,6 +22,8 @@ namespace ControlPanel {
 
         controls[b_add_clerk->getName()] = b_add_clerk;
         controls[b_add_office->getName()] = b_add_office;
+        controls[b_add_elevator->getName()] = b_add_elevator;
+
         controls[c_cash_indicator->getName()] = c_cash_indicator;
         controls[c_time_indicator->getName()] = c_time_indicator;
     }
