@@ -65,12 +65,12 @@ void ControlButtonAddClerk::updateLogic() {
             attachedClerk->setInvalid();
 
             //placement error
-            if (attachedClerk && attachedClerk->isBelowGround()) {
+            if (attachedClerk && attachedClerk->isBelowGround() && attachedClerk->getErrorString().getString().isEmpty()) {
                 attachedClerk->getErrorString().setString("Invalid placement position");
             }
 
             //cash error
-            if (System::cash < attachedClerk->getCost()) {
+            if (System::cash < attachedClerk->getCost() && attachedClerk->getErrorString().getString().isEmpty()) {
                 attachedClerk->getErrorString().setString("Not enough cash");
             }
         } else {

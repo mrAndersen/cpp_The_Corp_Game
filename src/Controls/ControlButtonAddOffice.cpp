@@ -62,7 +62,7 @@ void ControlButtonAddOffice::updateLogic() {
         System::spawningUnit = true;
         auto global = System::getGlobalMouse();
 
-        float normalizedX = global.x - ((int) global.x % System::gridSize) + System::gridSize / 2;
+        float normalizedX = global.x - ((int) global.x % System::gridSize) + System::gridSize;
         float normalizedY = global.y - ((int) global.y % System::gridSize) + System::gridSize / 2;
 
         attachedOffice->setWorldCoordinates(sf::Vector2f(normalizedX, normalizedY));

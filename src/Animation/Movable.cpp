@@ -72,7 +72,7 @@ void Movable::updateLogic() {
 //    }
 
     //no work place
-    if (!currentWorkPlace && isOnTheGround()) {
+    if (!currentWorkPlace && isOnTheGround() && errorString.getString().isEmpty()) {
         valid = false;
 
         errorString.setString("No free work places");
