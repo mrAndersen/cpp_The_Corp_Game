@@ -5,15 +5,13 @@
 #include "../Animation/Entity.h"
 #include "Office.h"
 
-class ElevatorShaft : public Office {
+class ElevatorShaftMiddle : public Office {
 
 protected:
-    ElevatorShafts type = ElevatorShafts::EL_Middle;
-
     const static int width = 150;
     const static int height = 150;
 public:
-    explicit ElevatorShaft(sf::Vector2f coordinates);
+    explicit ElevatorShaftMiddle(sf::Vector2f coordinates);
 };
 
 

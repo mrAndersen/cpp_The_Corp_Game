@@ -6,7 +6,8 @@
 #include "../../includes/Text/TextEntity.h"
 #include "../../includes/Controls/ControlCashIndicator.h"
 #include "../../includes/Controls/ControlTimeIndicator.h"
-#include "../../includes/Controls/ControlButtonAddElevator.h"
+#include "../../includes/Controls/ControlButtonAddElevatorShaftMiddle.h"
+#include "../../includes/Controls/ControlButtonAddElevatorShaftTop.h"
 
 namespace ControlPanel {
     std::map<std::string, Entity *> controls;
@@ -14,7 +15,9 @@ namespace ControlPanel {
     void initControlPanel() {
         auto *b_add_clerk = new ControlButtonAddClerk();
         auto *b_add_office = new ControlButtonAddOffice();
-        auto *b_add_elevator = new ControlButtonAddElevator();
+
+        auto *b_add_elevator_middle = new ControlButtonAddElevatorShaftMiddle();
+        auto *b_add_elevator_top = new ControlButtonAddElevatorShaftTop();
 
         auto *c_cash_indicator = new ControlCashIndicator(sf::Color::Black, 50);
         auto *c_time_indicator = new ControlTimeIndicator(sf::Color::Black, 20);
@@ -22,7 +25,9 @@ namespace ControlPanel {
 
         controls[b_add_clerk->getName()] = b_add_clerk;
         controls[b_add_office->getName()] = b_add_office;
-        controls[b_add_elevator->getName()] = b_add_elevator;
+
+        controls[b_add_elevator_middle->getName()] = b_add_elevator_middle;
+        controls[b_add_elevator_top->getName()] = b_add_elevator_top;
 
         controls[c_cash_indicator->getName()] = c_cash_indicator;
         controls[c_time_indicator->getName()] = c_time_indicator;
@@ -32,8 +37,10 @@ namespace ControlPanel {
         int i = 0;
         for (auto control : controls) {
             control.second->setWorldCoordinates(
-                    sf::Vector2f(ViewHandler::left + 600 + i * control.second->getWidth() + i * 20,
-                                 ViewHandler::top - 50));
+                    sf::Vector2f(
+                            ViewHandler::left + 600 + i * control.second->getWidth() + i * 20,
+                            ViewHandler::top - 50)
+            );
             control.second->update();
             i++;
         }

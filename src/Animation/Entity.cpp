@@ -358,6 +358,7 @@ void Entity::renderDebugInfo() {
         debugInfo.setPosition(System::cToGl(worldCoordinates.x + width / 2, worldCoordinates.y + height / 2));
         debugInfo.setString(
                 "id: " + std::to_string(id) + "\n" +
+                "name: " + name + "\n" +
                 "pos: {" + std::to_string(worldCoordinates.x) + "," + std::to_string(worldCoordinates.y) + "}\n" +
                 "left: " + std::to_string(left) + "\n" +
                 "right: " + std::to_string(right) + "\n" +

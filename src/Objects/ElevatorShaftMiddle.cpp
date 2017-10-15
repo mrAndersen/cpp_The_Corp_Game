@@ -1,11 +1,11 @@
-#include "../../includes/Office/ElevatorShaft.h"
+#include "../../includes/Office/ElevatorShaftMiddle.h"
 #include "../../includes/System/EntityContainer.h"
 
-ElevatorShaft::ElevatorShaft(sf::Vector2f coordinates) {
-    setName("elevator.shaft");
+ElevatorShaftMiddle::ElevatorShaftMiddle(sf::Vector2f coordinates) {
+    setName("elevator.shaft.middle");
 
-    setWidth(ElevatorShaft::width);
-    setHeight(ElevatorShaft::height);
+    setWidth(ElevatorShaftMiddle::width);
+    setHeight(ElevatorShaftMiddle::height);
     setCost(1000);
 
     setWorldCoordinates(coordinates);
@@ -17,3 +17,5 @@ ElevatorShaft::ElevatorShaft(sf::Vector2f coordinates) {
 
     EntityContainer::add(this);
 }
+
+

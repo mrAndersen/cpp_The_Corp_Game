@@ -33,7 +33,9 @@ namespace ResourceLoader {
 
         ResourceLoader::loadTexture(Entities::E_ButtonAddClerk, "resources/control.panel/button.add.clerk.png");
         ResourceLoader::loadTexture(Entities::E_ButtonAddOffice, "resources/control.panel/button.add.office.png");
-        ResourceLoader::loadTexture(Entities::E_ButtonAddElevator, "resources/control.panel/button.add.elevator.png");
+
+        ResourceLoader::loadTexture(Entities::E_ButtonAddElevatorShaftMiddle, "resources/control.panel/button.add.elevator.png");
+        ResourceLoader::loadTexture(Entities::E_ButtonAddElevatorShaftTop, "resources/control.panel/button.add.elevator.png");
 
         ResourceLoader::loadTexture(Entities::E_OfficeClerk, "resources/office/office.clerk.png");
 

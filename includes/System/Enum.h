@@ -48,7 +48,8 @@ enum Entities {
     //Controls
     E_ButtonAddClerk = 31,
     E_ButtonAddOffice = 32,
-    E_ButtonAddElevator = 33,
+    E_ButtonAddElevatorShaftMiddle = 33,
+    E_ButtonAddElevatorShaftTop = 33,
     E_ButtonAddElevatorCabin = 34,
 
     //Office

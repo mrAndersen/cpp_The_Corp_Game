@@ -65,7 +65,7 @@ void Movable::updateAnimation() {
 void Movable::updateLogic() {
 
     //update floor
-    floor = ((int) worldCoordinates.y - ((int) worldCoordinates.y % System::gridSize)) / System::gridSize;
+    floor = ((int) worldCoordinates.y - ((int) worldCoordinates.y % System::gridSize)) / System::gridSize / 3;
 
 //    if(isOnTheGround()){
 //        EntityContainer::remove(this);

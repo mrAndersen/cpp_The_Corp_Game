@@ -74,7 +74,27 @@ add_executable(
 
         includes/Office/Office.h
         src/Office/Office.cpp
-        src/System/GameTime.cpp includes/Utls/GameTime.h src/Objects/ElevatorShaft.cpp includes/Office/ElevatorShaft.h src/Text/TextEntity.cpp includes/Text/TextEntity.h src/Controls/ControlCashIndicator.cpp includes/Controls/ControlCashIndicator.h src/Controls/ControlTimeIndicator.cpp includes/Controls/ControlTimeIndicator.h src/Controls/ControlButtonAddElevator.cpp includes/Controls/ControlButtonAddElevator.h)
+        src/System/GameTime.cpp
+        includes/Utls/GameTime.h
+
+        src/Objects/ElevatorShaftMiddle.cpp
+        includes/Office/ElevatorShaftMiddle.h
+
+        src/Text/TextEntity.cpp
+        includes/Text/TextEntity.h
+
+        src/Controls/ControlCashIndicator.cpp
+        includes/Controls/ControlCashIndicator.h
+
+        src/Controls/ControlTimeIndicator.cpp
+        includes/Controls/ControlTimeIndicator.h
+
+        src/Controls/ControlButtonAddElevatorShaftMiddle.cpp
+        includes/Controls/ControlButtonAddElevatorShaftMiddle.h
+
+        src/Controls/ControlButtonAddElevatorShaftTop.cpp
+        includes/Controls/ControlButtonAddElevatorShaftTop.h
+        src/Objects/ElevatorShaftTop.cpp includes/Office/ElevatorShaftTop.h)
 
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})

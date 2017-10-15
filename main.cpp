@@ -56,7 +56,7 @@ int main() {
 //                ViewHandler::handleViewZoomKeyPress(e);
             }
 
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::V)) {
+            if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::V) {
                 System::debug = !System::debug;
             }
 

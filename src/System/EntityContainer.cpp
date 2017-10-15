@@ -21,9 +21,8 @@ namespace EntityContainer {
 
         for (auto entity:items) {
             if (
-                    !dynamic_cast<Ground *>(entity) &&
-                    !dynamic_cast<ControlButtonAddClerk *>(entity) &&
-                    !dynamic_cast<ControlButtonAddOffice *>(entity)
+                    dynamic_cast<Movable *>(entity) ||
+                    dynamic_cast<Office *>(entity)
                     ) {
                 buffer.push_back(entity);
             }
@@ -77,7 +76,7 @@ namespace EntityContainer {
     }
 
     void initGrid() {
-        if(System::debug){
+        if (System::debug) {
             sf::Color transparentBlack(0, 0, 0, 25);
 
             for (int i = (int) -System::worldWidth / 2; i < System::worldWidth / 2; i++) {

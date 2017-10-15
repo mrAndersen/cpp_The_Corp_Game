@@ -19,8 +19,10 @@ std::vector<Office *> Office::getNeighborOffices() {
                 result.push_back(target);
             }
 
-            if ((int) target->getTop() == (int) this->bottom && this->worldCoordinates.x > target->getLeft() &&
-                this->worldCoordinates.x < target->getRight()) {
+            if (
+                    (int) target->getTop() == (int) this->bottom &&
+                    this->worldCoordinates.x == target->getWorldCoordinates().x
+                    ) {
                 result.push_back(target);
             }
         }
@@ -46,7 +48,7 @@ bool Office::intersectsWith() {
 
 void Office::updateLogic() {
     //update floor
-    floor = ((int) worldCoordinates.y - ((int) worldCoordinates.y % System::gridSize)) / System::gridSize;
+    floor = ((int) worldCoordinates.y - ((int) worldCoordinates.y % System::gridSize)) / System::gridSize / 3;
 
     Entity::updateLogic();
 }
@@ -64,11 +66,13 @@ void Office::renderDebugInfo() {
         debugInfo.setPosition(System::cToGl(worldCoordinates.x + width / 2, worldCoordinates.y + height / 2));
         debugInfo.setString(
                 "id: " + std::to_string(id) + "\n" +
-                "pos: {" + std::to_string((int)worldCoordinates.x) + "," + std::to_string((int)worldCoordinates.y) + "}\n" +
-                "left: " + std::to_string((int)left) + "," +
-                "right: " + std::to_string((int)right) + "," +
-                "top: " + std::to_string((int)top) + "," +
-                "bottom: " + std::to_string((int)bottom) + "\n"
+                "name: " + name + "\n" +
+                "pos: {" + std::to_string((int) worldCoordinates.x) + "," + std::to_string((int) worldCoordinates.y) +
+                "}\n" +
+                "left: " + std::to_string((int) left) + "," +
+                "right: " + std::to_string((int) right) + "," +
+                "top: " + std::to_string((int) top) + "," +
+                "bottom: " + std::to_string((int) bottom) + "\n"
                         "floor: " + std::to_string(floor) + "\n"
                         "workers: " + std::to_string(workers.size()) + "\n"
         );
@@ -91,7 +95,7 @@ void Office::spawn() {
 }
 
 bool Office::hasFreeWorkPlaces() {
-    return workers.size() < 3;
+    return workers.size() < 4;
 }
 
 std::vector<Entity *> &Office::getWorkers() {

@@ -10,8 +10,6 @@ ControlButtonAddOffice::ControlButtonAddOffice() {
     setName("button.add.office");
     setDrawOrder(INT_MAX);
 
-    setWorldCoordinates(sf::Vector2f(ViewHandler::left + 600, ViewHandler::top - 50));
-
     setWidth(142);
     setHeight(47);
 
