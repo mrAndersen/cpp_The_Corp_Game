@@ -1,7 +1,7 @@
 #ifndef THE_CORP_GAME_CONTROLBUTTONADDCLERK_H
 #define THE_CORP_GAME_CONTROLBUTTONADDCLERK_H
 
-#include "../Characters/Clerk.h"
+#include "Characters/Clerk.h"
 
 class ControlButtonAddClerk : public Entity {
 public:

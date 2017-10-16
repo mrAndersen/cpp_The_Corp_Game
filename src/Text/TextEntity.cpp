@@ -1,8 +1,8 @@
 #include <climits>
-#include "../../includes/Text/TextEntity.h"
-#include "../../includes/System/System.h"
-#include "../../includes/System/EntityContainer.h"
-#include "../../includes/System/ViewHandler.h"
+#include "TextEntity.h"
+#include "System/System.h"
+#include "System/EntityContainer.h"
+#include "System/ViewHandler.h"
 
 void TextEntity::update() {
     float frameTimeSeconds = (float) System::frameTimeMcs / 1000000;

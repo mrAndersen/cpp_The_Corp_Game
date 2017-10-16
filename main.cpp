@@ -1,11 +1,11 @@
 #include <sstream>
 #include <SFML/Window/Event.hpp>
-#include "includes/System/System.h"
-#include "includes/System/ResourceLoader.h"
-#include "includes/System/ViewHandler.h"
-#include "includes/System/EntityContainer.h"
-#include "includes/System/ControlPanel.h"
-#include "includes/System/SaveManager.h"
+#include "System/System.h"
+#include "System/ResourceLoader.h"
+#include "System/ViewHandler.h"
+#include "System/EntityContainer.h"
+#include "System/ControlPanel.h"
+#include "System/SaveManager.h"
 
 int main() {
     auto *saveManager = new SaveManager();

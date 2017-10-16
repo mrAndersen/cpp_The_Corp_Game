@@ -1,9 +1,9 @@
 #include <SFML/Graphics/View.hpp>
 #include <SFML/Window/Event.hpp>
 
-#include "../../includes/System/Enum.h"
-#include "../../includes/System/System.h"
-#include "../../includes/System/ViewHandler.h"
+#include "Enum.h"
+#include "System.h"
+#include "ViewHandler.h"
 #include <iostream>
 
 namespace ViewHandler {

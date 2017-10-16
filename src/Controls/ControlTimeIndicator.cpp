@@ -1,6 +1,6 @@
-#include "../../includes/Controls/ControlTimeIndicator.h"
-#include "../../includes/System/System.h"
-#include "../../includes/System/ViewHandler.h"
+#include "ControlTimeIndicator.h"
+#include "System/System.h"
+#include "System/ViewHandler.h"
 
 ControlTimeIndicator::ControlTimeIndicator(const sf::Color &color, int size) : TextEntity(color, size) {
     setName("time.indicator");

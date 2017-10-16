@@ -1,10 +1,10 @@
 #include <cmath>
 #include <iostream>
-#include "../../includes/System/Enum.h"
-#include "../../includes/Animation/Movable.h"
-#include "../../includes/System/System.h"
-#include "../../includes/System/EntityContainer.h"
-#include "../../includes/Objects/Ground.h"
+#include "System/Enum.h"
+#include "Movable.h"
+#include "System/System.h"
+#include "System/EntityContainer.h"
+#include "Objects/Ground.h"
 
 void Movable::renderCurrentFrame() {
 

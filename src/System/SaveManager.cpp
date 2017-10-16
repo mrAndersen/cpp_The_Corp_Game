@@ -1,8 +1,8 @@
 #include <SFML/Window/Keyboard.hpp>
 #include <fstream>
-#include "../../includes/System/SaveManager.h"
-#include "../../includes/System/EntityContainer.h"
-#include "../../includes/Office/OfficeClerk.h"
+#include "SaveManager.h"
+#include "EntityContainer.h"
+#include "Office/OfficeClerk.h"
 
 int SaveManager::saveCurrentState(const std::string &fileName) {
     std::ofstream saveFile(fileName, std::ofstream::binary);

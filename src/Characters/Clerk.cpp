@@ -1,12 +1,12 @@
 #include <cmath>
 #include <iostream>
-#include "../../includes/Animation/Movable.h"
-#include "../../includes/System/ResourceLoader.h"
-#include "../../includes/Characters/Clerk.h"
-#include "../../includes/System/EntityContainer.h"
-#include "../../includes/Objects/Ground.h"
-#include "../../includes/System/System.h"
-#include "../../includes/Text/TextEntity.h"
+#include "Animation/Movable.h"
+#include "System/ResourceLoader.h"
+#include "Clerk.h"
+#include "System/EntityContainer.h"
+#include "Objects/Ground.h"
+#include "System/System.h"
+#include "Text/TextEntity.h"
 
 Clerk::Clerk(sf::Vector2f coordinates) {
     setName("clerk");

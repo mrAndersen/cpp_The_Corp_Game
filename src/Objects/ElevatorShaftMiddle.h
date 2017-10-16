@@ -2,8 +2,8 @@
 #define THE_CORP_GAME_ELEVATOR_H
 
 
-#include "../Animation/Entity.h"
-#include "Office.h"
+#include "Animation/Entity.h"
+#include "Office/Office.h"
 
 class ElevatorShaftMiddle : public Office {
 

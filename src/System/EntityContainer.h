@@ -1,10 +1,10 @@
 #ifndef THE_CORP_GAME_ENTITYCONTAINER_H
 #define THE_CORP_GAME_ENTITYCONTAINER_H
 
-#include "../System/ResourceLoader.h"
-#include "../Animation/Movable.h"
-#include "../Characters/Clerk.h"
-#include "../Office/Office.h"
+#include "ResourceLoader.h"
+#include "Animation/Movable.h"
+#include "Characters/Clerk.h"
+#include "Office/Office.h"
 
 namespace EntityContainer {
     extern std::vector<Entity *> items;

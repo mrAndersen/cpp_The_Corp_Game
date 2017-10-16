@@ -1,10 +1,10 @@
 #include <SFML/System.hpp>
 #include <climits>
-#include "../../includes/Controls/ControlButtonAddClerk.h"
-#include "../../includes/System/EntityContainer.h"
-#include "../../includes/System/ViewHandler.h"
-#include "../../includes/System/System.h"
-#include "../../includes/Text/TextEntity.h"
+#include "ControlButtonAddClerk.h"
+#include "System/EntityContainer.h"
+#include "System/ViewHandler.h"
+#include "System/System.h"
+#include "Text/TextEntity.h"
 
 ControlButtonAddClerk::ControlButtonAddClerk() {
     setName("button.add.clerk");

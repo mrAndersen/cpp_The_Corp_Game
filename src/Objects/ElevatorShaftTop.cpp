@@ -1,6 +1,6 @@
-#include "../../includes/Office/ElevatorShaftTop.h"
-#include "../../includes/System/EntityContainer.h"
-#include "../../includes/Office/ElevatorShaftMiddle.h"
+#include "ElevatorShaftTop.h"
+#include "System/EntityContainer.h"
+#include "ElevatorShaftMiddle.h"
 
 
 ElevatorShaftTop::ElevatorShaftTop(sf::Vector2f coordinates) {

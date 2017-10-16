@@ -1,7 +1,7 @@
 #ifndef THE_CORP_GAME_GROUND_H
 #define THE_CORP_GAME_GROUND_H
 
-#include "../Animation/Entity.h"
+#include "Animation/Entity.h"
 
 class Ground : public Entity {
 public:

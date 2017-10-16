@@ -1,7 +1,7 @@
 #include <cmath>
-#include "../../includes/Office/OfficeClerk.h"
-#include "../../includes/System/EntityContainer.h"
-#include "../../includes/System/System.h"
+#include "OfficeClerk.h"
+#include "System/EntityContainer.h"
+#include "System/System.h"
 
 std::vector<Office *> Office::getNeighborOffices() {
     std::vector<Office *> result;

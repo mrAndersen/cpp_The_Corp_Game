@@ -1,8 +1,8 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Font.hpp>
-#include "../../includes/System/Enum.h"
-#include "../../includes/System/ResourceLoader.h"
-#include "../../includes/System/System.h"
+#include "Enum.h"
+#include "ResourceLoader.h"
+#include "System.h"
 
 namespace ResourceLoader {
     std::map<int, std::map<int, sf::Texture*>> textureCollection;

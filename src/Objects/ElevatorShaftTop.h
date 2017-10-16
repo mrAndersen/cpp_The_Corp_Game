@@ -2,7 +2,7 @@
 #define THE_CORP_GAME_ELEVATORSHAFTTOP_H
 
 
-#include "Office.h"
+#include "Office/Office.h"
 
 class ElevatorShaftTop : public Office {
 

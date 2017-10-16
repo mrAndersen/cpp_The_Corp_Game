@@ -1,8 +1,8 @@
 #ifndef THE_CORP_GAME_CONTROLBUTTONADDOFFICE_H
 #define THE_CORP_GAME_CONTROLBUTTONADDOFFICE_H
 
-#include "../Animation/Entity.h"
-#include "../Office/Office.h"
+#include "Animation/Entity.h"
+#include "Office/Office.h"
 
 class ControlButtonAddOffice : public Entity {
 public:

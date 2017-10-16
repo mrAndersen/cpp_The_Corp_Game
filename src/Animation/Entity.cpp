@@ -1,9 +1,9 @@
 #include <sstream>
-#include "../../includes/Animation/Entity.h"
-#include "../../includes/System/System.h"
-#include "../../includes/System/Enum.h"
-#include "../../includes/System/EntityContainer.h"
-#include "../../includes/Objects/Ground.h"
+#include "Entity.h"
+#include "System/System.h"
+#include "System/Enum.h"
+#include "System/EntityContainer.h"
+#include "Objects/Ground.h"
 
 std::string Entity::serialize() {
     std::map<int, std::string> parameters;

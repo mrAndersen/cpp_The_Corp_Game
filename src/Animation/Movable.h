@@ -6,9 +6,9 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Clock.hpp>
-#include "../System/Enum.h"
-#include "../Office/Office.h"
-#include "../Utls/GameTime.h"
+#include "System/Enum.h"
+#include "Office/Office.h"
+#include "System/GameTime.h"
 
 
 class Movable : public Entity {

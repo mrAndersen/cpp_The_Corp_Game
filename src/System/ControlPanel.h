@@ -5,7 +5,7 @@
 #ifndef THE_CORP_GAME_CONTROLPANEL_H
 #define THE_CORP_GAME_CONTROLPANEL_H
 
-#include "../Animation/Entity.h"
+#include "Animation/Entity.h"
 
 namespace ControlPanel {
 

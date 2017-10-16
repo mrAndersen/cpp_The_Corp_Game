@@ -3,10 +3,10 @@
 #include <psapi.h>
 #include <sstream>
 #include <iomanip>
-#include "../../includes/System/System.h"
-#include "../../includes/System/ViewHandler.h"
-#include "../../includes/Utls/GameTime.h"
-#include "../../includes/Text/TextEntity.h"
+#include "System.h"
+#include "ViewHandler.h"
+#include "GameTime.h"
+#include "Text/TextEntity.h"
 
 namespace System {
     unsigned int screenWidth = 1850;

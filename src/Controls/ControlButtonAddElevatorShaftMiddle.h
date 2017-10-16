@@ -1,7 +1,7 @@
 #ifndef THE_CORP_GAME_CONTROLBUTTONADDELEVATORSHAFTMIDDLE_H
 #define THE_CORP_GAME_CONTROLBUTTONADDELEVATORSHAFTMIDDLE_H
 
-#include "../Office/ElevatorShaftMiddle.h"
+#include "Objects/ElevatorShaftMiddle.h"
 
 class ControlButtonAddElevatorShaftMiddle : public Entity {
     const static int width = 142;

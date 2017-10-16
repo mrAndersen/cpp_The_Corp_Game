@@ -1,10 +1,11 @@
 #include <climits>
-#include "../../includes/Controls/ControlButtonAddOffice.h"
-#include "../../includes/System/EntityContainer.h"
-#include "../../includes/System/ViewHandler.h"
-#include "../../includes/System/System.h"
-#include "../../includes/Office/OfficeClerk.h"
-#include "../../includes/Text/TextEntity.h"
+#include <cmath>
+#include "ControlButtonAddOffice.h"
+#include "System/EntityContainer.h"
+#include "System/ViewHandler.h"
+#include "System/System.h"
+#include "Office/OfficeClerk.h"
+#include "Text/TextEntity.h"
 
 ControlButtonAddOffice::ControlButtonAddOffice() {
     setName("button.add.office");
@@ -80,7 +81,7 @@ void ControlButtonAddOffice::updateLogic() {
                         ->getErrorString()
                         .setString(
                                 "Not enough cash, need " +
-                                System::f_to_string(abs(System::cash - attachedOffice->getCost())) +
+                                System::f_to_string(fabs(System::cash - attachedOffice->getCost())) +
                                 "$ more"
                         );
             }

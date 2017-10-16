@@ -1,11 +1,11 @@
-#include "../../includes/Characters/Clerk.h"
-#include "../../includes/System/EntityContainer.h"
-#include "../../includes/Objects/Ground.h"
-#include "../../includes/System/System.h"
-#include "../../includes/Animation/Entity.h"
-#include "../../includes/Office/OfficeClerk.h"
-#include "../../includes/Controls/ControlButtonAddClerk.h"
-#include "../../includes/Controls/ControlButtonAddOffice.h"
+#include "Characters/Clerk.h"
+#include "EntityContainer.h"
+#include "Objects/Ground.h"
+#include "System.h"
+#include "Animation/Entity.h"
+#include "Office/OfficeClerk.h"
+#include "Controls/ControlButtonAddClerk.h"
+#include "Controls/ControlButtonAddOffice.h"
 
 namespace EntityContainer {
     std::vector<Entity *> items = {};

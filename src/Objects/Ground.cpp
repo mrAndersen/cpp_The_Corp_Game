@@ -1,7 +1,7 @@
 #include <SFML/System.hpp>
-#include "../../includes/Objects/Ground.h"
-#include "../../includes/System/ResourceLoader.h"
-#include "../../includes/System/EntityContainer.h"
+#include "Ground.h"
+#include "System/ResourceLoader.h"
+#include "System/EntityContainer.h"
 
 Ground::Ground(sf::Vector2f coordinates) {
     setName("ground");

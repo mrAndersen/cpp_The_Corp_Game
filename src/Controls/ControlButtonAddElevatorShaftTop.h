@@ -1,8 +1,8 @@
 #ifndef THE_CORP_GAME_CONTROLBUTTONADDELEVATORSHAFTTOP_H
 #define THE_CORP_GAME_CONTROLBUTTONADDELEVATORSHAFTTOP_H
 
-#include "../Office/ElevatorShaftMiddle.h"
-#include "../Office/ElevatorShaftTop.h"
+#include "Objects/ElevatorShaftMiddle.h"
+#include "Objects/ElevatorShaftTop.h"
 
 class ControlButtonAddElevatorShaftTop : public Entity {
     const static int width = 142;

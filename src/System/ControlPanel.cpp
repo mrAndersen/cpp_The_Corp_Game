@@ -1,13 +1,13 @@
 #include <climits>
-#include "../../includes/System/ControlPanel.h"
-#include "../../includes/System/ViewHandler.h"
-#include "../../includes/Controls/ControlButtonAddClerk.h"
-#include "../../includes/Controls/ControlButtonAddOffice.h"
-#include "../../includes/Text/TextEntity.h"
-#include "../../includes/Controls/ControlCashIndicator.h"
-#include "../../includes/Controls/ControlTimeIndicator.h"
-#include "../../includes/Controls/ControlButtonAddElevatorShaftMiddle.h"
-#include "../../includes/Controls/ControlButtonAddElevatorShaftTop.h"
+#include "ControlPanel.h"
+#include "ViewHandler.h"
+#include "Controls/ControlButtonAddClerk.h"
+#include "Controls/ControlButtonAddOffice.h"
+#include "Text/TextEntity.h"
+#include "Controls/ControlCashIndicator.h"
+#include "Controls/ControlTimeIndicator.h"
+#include "Controls/ControlButtonAddElevatorShaftMiddle.h"
+#include "Controls/ControlButtonAddElevatorShaftTop.h"
 
 namespace ControlPanel {
     std::map<std::string, Entity *> controls;

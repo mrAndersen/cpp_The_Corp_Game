@@ -1,5 +1,5 @@
-#include "../../includes/Office/ElevatorShaftMiddle.h"
-#include "../../includes/System/EntityContainer.h"
+#include "ElevatorShaftMiddle.h"
+#include "System/EntityContainer.h"
 
 ElevatorShaftMiddle::ElevatorShaftMiddle(sf::Vector2f coordinates) {
     setName("elevator.shaft.middle");

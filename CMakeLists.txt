@@ -31,70 +31,70 @@ add_executable(
         main.cpp
 #        main.rc
 
-        includes/System/EntityContainer.h
+        src/System/EntityContainer.h
         src/System/EntityContainer.cpp
 
-        includes/Animation/Entity.h
+        src/Animation/Entity.h
         src/Animation/Entity.cpp
 
-        includes/Characters/Clerk.h
+        src/Characters/Clerk.h
         src/Characters/Clerk.cpp
 
-        includes/Animation/Movable.h
+        src/Animation/Movable.h
         src/Animation/Movable.cpp
 
-        includes/System/Enum.h
+        src/System/Enum.h
 
-        includes/System/ResourceLoader.h
+        src/System/ResourceLoader.h
         src/System/ResourceLoader.cpp
 
-        includes/System/ViewHandler.h
+        src/System/ViewHandler.h
         src/System/ViewHandler.cpp
 
 
-        includes/System/System.h
+        src/System/System.h
         src/System/System.cpp
 
-        includes/Objects/Ground.h
+        src/Objects/Ground.h
         src/Objects/Ground.cpp
-        includes/System/ControlPanel.h
+        src/System/ControlPanel.h
         src/System/ControlPanel.cpp
 
-        includes/Controls/ControlButtonAddClerk.h
+        src/Controls/ControlButtonAddClerk.h
         src/Controls/ControlButtonAddClerk.cpp
 
-        includes/Controls/ControlButtonAddOffice.h
+        src/Controls/ControlButtonAddOffice.h
         src/Controls/ControlButtonAddOffice.cpp
 
-        includes/Office/OfficeClerk.h
+        src/Office/OfficeClerk.h
         src/Office/OfficeClerk.cpp
 
-        includes/System/SaveManager.h
+        src/System/SaveManager.h
         src/System/SaveManager.cpp
 
-        includes/Office/Office.h
+        src/Office/Office.h
         src/Office/Office.cpp
         src/System/GameTime.cpp
-        includes/Utls/GameTime.h
+        src/System/GameTime.h
 
         src/Objects/ElevatorShaftMiddle.cpp
-        includes/Office/ElevatorShaftMiddle.h
+        src/Objects/ElevatorShaftMiddle.h
 
         src/Text/TextEntity.cpp
-        includes/Text/TextEntity.h
+        src/Text/TextEntity.h
 
         src/Controls/ControlCashIndicator.cpp
-        includes/Controls/ControlCashIndicator.h
+        src/Controls/ControlCashIndicator.h
 
         src/Controls/ControlTimeIndicator.cpp
-        includes/Controls/ControlTimeIndicator.h
+        src/Controls/ControlTimeIndicator.h
 
         src/Controls/ControlButtonAddElevatorShaftMiddle.cpp
-        includes/Controls/ControlButtonAddElevatorShaftMiddle.h
+        src/Controls/ControlButtonAddElevatorShaftMiddle.h
 
         src/Controls/ControlButtonAddElevatorShaftTop.cpp
-        includes/Controls/ControlButtonAddElevatorShaftTop.h
-        src/Objects/ElevatorShaftTop.cpp includes/Office/ElevatorShaftTop.h)
+        src/Controls/ControlButtonAddElevatorShaftTop.h
+        src/Objects/ElevatorShaftTop.cpp src/Objects/ElevatorShaftTop.h)
 
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})

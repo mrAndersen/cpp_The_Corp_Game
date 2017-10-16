@@ -1,10 +1,12 @@
-#include "../../includes/System/ResourceLoader.h"
-#include "../../includes/System/EntityContainer.h"
-#include "../../includes/System/System.h"
-#include "../../includes/Text/TextEntity.h"
-#include "../../includes/Controls/ControlButtonAddElevatorShaftTop.h"
-#include "../../includes/System/ViewHandler.h"
-#include "../../includes/Office/ElevatorShaftTop.h"
+#include <climits>
+#include <cmath>
+#include "System/ResourceLoader.h"
+#include "System/EntityContainer.h"
+#include "System/System.h"
+#include "Text/TextEntity.h"
+#include "ControlButtonAddElevatorShaftTop.h"
+#include "System/ViewHandler.h"
+#include "Objects/ElevatorShaftTop.h"
 
 ControlButtonAddElevatorShaftTop::ControlButtonAddElevatorShaftTop() {
     setName("button.add.elevator.shaft.top");
@@ -93,7 +95,7 @@ void ControlButtonAddElevatorShaftTop::updateLogic() {
                         ->getErrorString()
                         .setString(
                                 "Not enough cash, need " +
-                                System::f_to_string(abs(System::cash - attachedShaft->getCost())) +
+                                System::f_to_string(fabs(System::cash - attachedShaft->getCost())) +
                                 "$ more"
                         );
             }
