@@ -31,10 +31,10 @@ protected:
 
     //attr
     float cost = 0;
-
-    bool spawned = false;
-
     int floor = 1;
+    std::string personName;
+    Gender gender = Gender::G_Male;
+
 
     bool hasReachedWorldEdges();
 
@@ -43,17 +43,25 @@ protected:
     void renderCurrentFrame() override;
 
 public:
+    Movable();
+
+    Gender getGender() const;
+
+    void setGender(Gender gender);
+
+    const std::string &getPersonName() const;
+
+    void setPersonName(const std::string &personName);
+
     int getFloor() const;
 
     void setFloor(int floor);
 
     bool isSpawned() const;
 
-    Movable();
-
     Direction getDirection() const;
 
-    void spawn();
+    void spawn() override;
 
     float getCost() const;
 

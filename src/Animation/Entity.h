@@ -27,6 +27,7 @@ protected:
     States state = S_None;
     bool selected = false;
     bool selectable = false;
+    bool spawned = false;
 
     sf::IntRect rect;
 
@@ -56,6 +57,10 @@ protected:
     sf::Text errorString;
 
 public:
+    virtual void spawn();
+
+    bool isSpawned();
+
     bool isSelectable() const;
 
     void setSelectable(bool selectable);
@@ -103,6 +108,8 @@ public:
     bool isAboveGround();
 
     bool isOnTheGround();
+
+    bool intersectsWithObjects();
 
     virtual void updateAnimation();
 

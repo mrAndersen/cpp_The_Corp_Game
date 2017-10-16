@@ -15,6 +15,10 @@ namespace ResourceLoader {
     void loadTexturesFromFiles();
 
     void loadFonts();
+
+    void loadNames();
+
+    std::string getRandomName(Gender gender);
 }
 
 #endif //THE_CORP_GAME_RESOURCELOADER_H

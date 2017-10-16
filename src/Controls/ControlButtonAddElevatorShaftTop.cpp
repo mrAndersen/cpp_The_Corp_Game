@@ -26,11 +26,10 @@ void ControlButtonAddElevatorShaftTop::updateLogic() {
     bool spawnCondition = attachedShaft &&
                           System::cash >= attachedShaft->getCost() &&
                           !attachedShaft->isBelowGround() &&
-                          !attachedShaft->intersectsWith() &&
-                          !attachedShaft->getNeighborOffices().empty() &&
+                          !attachedShaft->intersectsWithObjects() &&
                           attachedShaft->hasMiddleShaftOnTheBottom();
 
-    if (leftClicked() && !attachedShaft) {
+    if (leftClicked() && !attachedShaft && !System::spawningUnit) {
         attachedShaft = new ElevatorShaftTop(sf::Vector2f(System::g_x, System::g_y));
         attachedShaft->setTransparent();
     }
@@ -84,9 +83,12 @@ void ControlButtonAddElevatorShaftTop::updateLogic() {
             attachedShaft->setInvalid();
 
             //placement error
-            if (attachedShaft && (attachedShaft->intersectsWith() || attachedShaft->getNeighborOffices().empty() ||
-                                  !attachedShaft->isOnTheGround())) {
-                attachedShaft->getErrorString().setString("Invalid placement position, must be placed on top of the shaft");
+            if (
+                    attachedShaft &&
+                    (attachedShaft->intersectsWithObjects() || attachedShaft->getNeighborOffices().empty() ||
+                     !attachedShaft->isOnTheGround())) {
+                attachedShaft->getErrorString().setString(
+                        "Invalid placement position, must be placed on top of the shaft");
             }
 
             //cash error

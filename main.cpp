@@ -13,6 +13,7 @@ int main() {
     //preload resources
     ResourceLoader::loadTexturesFromFiles();
     ResourceLoader::loadFonts();
+    ResourceLoader::loadNames();
 
     //load window and debug utilities
     System::initWindow();
@@ -47,6 +48,23 @@ int main() {
                 System::initWindow();
             }
 
+            //entity selection
+            if (e.type == sf::Event::MouseButtonPressed && e.mouseButton.button == sf::Mouse::Left) {
+
+                for (auto ex:EntityContainer::getItems()) {
+                    if (ex->mouseIn() && ex->isSelectable() && ex->isSpawned() && ex->getLiveClock().getElapsedTime().asSeconds() >= 1) {
+
+                        for (auto ei:EntityContainer::getItems()) {
+                            if(ei != ex){
+                                ei->setSelected(false);
+                            }
+                        }
+
+                        ex->setSelected(!ex->isSelected());
+                    }
+                }
+            }
+
             if (e.type == sf::Event::KeyPressed || e.type == sf::Event::KeyReleased) {
                 ViewHandler::handleViewScrollKeyPress(e);
                 saveManager->handleSaveEvent();
@@ -59,6 +77,17 @@ int main() {
             if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::V) {
                 System::debug = !System::debug;
             }
+
+            if(System::debug){
+                if(e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::Numpad0 && sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)){
+                    System::cash = 0;
+                }
+
+                if(e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::Numpad5 && sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)){
+                    System::cash = 50000;
+                }
+            }
+
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
                 for (int i = 0; i <= 1; i++) {

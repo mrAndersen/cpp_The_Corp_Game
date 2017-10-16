@@ -2,7 +2,7 @@
 #include "System/ResourceLoader.h"
 #include "System/EntityContainer.h"
 
-OfficeClerk::OfficeClerk(sf::Vector2f coordinates) {
+OfficeClerk::OfficeClerk(sf::Vector2f coordinates) : Office() {
     setName("office.clerk");
 
     setWidth(OfficeClerk::width);

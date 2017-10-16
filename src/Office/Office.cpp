@@ -31,21 +31,6 @@ std::vector<Office *> Office::getNeighborOffices() {
     return result;
 }
 
-bool Office::intersectsWith() {
-    std::vector<Office *> result;
-    std::vector<Office *> offices = EntityContainer::getOffices();
-
-    for (auto target:offices) {
-        if (target != this) {
-            if (this->rect.intersects(target->getRect())) {
-                return true;
-            }
-        }
-    }
-
-    return false;
-}
-
 void Office::updateLogic() {
     //update floor
     floor = ((int) worldCoordinates.y - ((int) worldCoordinates.y % System::gridSize)) / System::gridSize / 3;
@@ -102,7 +87,9 @@ std::vector<Entity *> &Office::getWorkers() {
     return workers;
 }
 
-bool Office::isSpawned() const {
-    return spawned;
+
+
+Office::Office() {
+    setSelectable(true);
 }
 

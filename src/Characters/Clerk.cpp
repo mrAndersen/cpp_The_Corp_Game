@@ -8,7 +8,7 @@
 #include "System/System.h"
 #include "Text/TextEntity.h"
 
-Clerk::Clerk(sf::Vector2f coordinates) {
+Clerk::Clerk(sf::Vector2f coordinates) : Movable() {
     setName("clerk");
 
     setWidth(Clerk::width);
@@ -60,7 +60,8 @@ void Clerk::updateLogic() {
         }
 
         //salary every day
-        if (System::gameTime.getHour() == System::endWorkHour && System::gameTime.getMinute() == 0 && !salaryProcessed) {
+        if (System::gameTime.getHour() == System::endWorkHour && System::gameTime.getMinute() == 0 &&
+            !salaryProcessed) {
             System::cash = System::cash - dailySalary;
             salaryProcessed = true;
         }

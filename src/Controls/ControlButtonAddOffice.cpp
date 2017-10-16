@@ -25,10 +25,10 @@ void ControlButtonAddOffice::updateLogic() {
     bool spawnCondition = attachedOffice &&
                           System::cash >= attachedOffice->getCost() &&
                           !attachedOffice->isBelowGround() &&
-                          !attachedOffice->intersectsWith() &&
+                          !attachedOffice->intersectsWithObjects() &&
                           (!attachedOffice->getNeighborOffices().empty() || attachedOffice->isOnTheGround());
 
-    if (leftClicked() && !attachedOffice) {
+    if (leftClicked() && !attachedOffice && !System::spawningUnit) {
         attachedOffice = new OfficeClerk(sf::Vector2f(System::g_x, System::g_y));
         attachedOffice->setTransparent();
     }
@@ -70,7 +70,7 @@ void ControlButtonAddOffice::updateLogic() {
             attachedOffice->setInvalid();
 
             //placement error
-            if (attachedOffice && (attachedOffice->intersectsWith() || attachedOffice->getNeighborOffices().empty() ||
+            if (attachedOffice && (attachedOffice->intersectsWithObjects() || attachedOffice->getNeighborOffices().empty() ||
                                    !attachedOffice->isOnTheGround())) {
                 attachedOffice->getErrorString().setString("Invalid placement position");
             }

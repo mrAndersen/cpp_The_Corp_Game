@@ -1,3 +1,5 @@
+#include <Objects/ElevatorShaftMiddle.h>
+#include <Objects/ElevatorShaftTop.h>
 #include "Characters/Clerk.h"
 #include "EntityContainer.h"
 #include "Objects/Ground.h"
@@ -37,6 +39,20 @@ namespace EntityContainer {
         for (Entity *entity:items) {
             if (auto d = dynamic_cast<Office *>(entity)) {
                 buffer.push_back(d);
+            }
+        }
+
+        return buffer;
+    }
+
+    std::vector<Entity *> getElevatorShafts() {
+        std::vector<Entity *> buffer;
+
+        for (Entity *entity:items) {
+            if (
+                    dynamic_cast<ElevatorShaftMiddle *>(entity) ||
+                    dynamic_cast<ElevatorShaftTop *>(entity)) {
+                buffer.push_back(entity);
             }
         }
 

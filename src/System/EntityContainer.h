@@ -17,6 +17,8 @@ namespace EntityContainer {
 
     std::vector<Office *> getOffices();
 
+    std::vector<Entity *> getElevatorShafts();
+
     void add(Entity *item);
 
     void remove(Entity *item);

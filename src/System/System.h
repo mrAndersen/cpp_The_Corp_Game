@@ -87,6 +87,8 @@ namespace System {
     sf::Vector2f cFromGl(float x, float y);
 
     sf::Vector2f getGlobalMouse();
+
+    int getRandom(int min, int max);
 }
 
 #endif //THE_CORP_GAME_SYSTEM_H

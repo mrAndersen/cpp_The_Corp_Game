@@ -94,7 +94,7 @@ add_executable(
 
         src/Controls/ControlButtonAddElevatorShaftTop.cpp
         src/Controls/ControlButtonAddElevatorShaftTop.h
-        src/Objects/ElevatorShaftTop.cpp src/Objects/ElevatorShaftTop.h)
+        src/Objects/ElevatorShaftTop.cpp src/Objects/ElevatorShaftTop.h src/Objects/ElevatorCabin.cpp src/Objects/ElevatorCabin.h)
 
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})

@@ -3,6 +3,7 @@
 #include <psapi.h>
 #include <sstream>
 #include <iomanip>
+#include <random>
 #include "System.h"
 #include "ViewHandler.h"
 #include "GameTime.h"
@@ -88,7 +89,7 @@ namespace System {
             dayStartProcessed = false;
         }
 
-        if(gameTime.isDayStartHour() && !dayStartProcessed){
+        if (gameTime.isDayStartHour() && !dayStartProcessed) {
             dayStartProcessed = true;
             dayEndProcessed = false;
         }
@@ -115,7 +116,7 @@ namespace System {
     }
 
     void refreshDebugPanel() {
-        if(debug){
+        if (debug) {
             auto mousePosition = sf::Mouse::getPosition(*window);
             auto coordMap = window->mapPixelToCoords(mousePosition);
 
@@ -252,6 +253,10 @@ namespace System {
 
         out << std::setprecision(n) << std::fixed << value;
         return out.str();
+    }
+
+    int getRandom(int min, int max) {
+        return min + (rand() * (max - min) / RAND_MAX);
     }
 }
 

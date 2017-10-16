@@ -105,14 +105,6 @@ void Entity::setInvalid() {
 
 void Entity::updateLogic() {
 
-    if (selectable && !selected && leftClicked() && !System::spawningUnit) {
-        setSelected(true);
-    }
-
-    if (selectable && selected && leftClicked() && !System::spawningUnit) {
-        setSelected(false);
-    }
-
     if (health <= 0) {
         EntityContainer::remove(this);
     }
@@ -156,6 +148,30 @@ bool Entity::isOnTheGround() {
     return
             bottom - delta < System::groundLevel + Ground::height ||
             bottom + delta < System::groundLevel + Ground::height;
+}
+
+bool Entity::intersectsWithObjects() {
+    std::vector<Office *> result;
+    std::vector<Office *> offices = EntityContainer::getOffices();
+    std::vector<Entity *> shafts = EntityContainer::getElevatorShafts();
+
+    for (auto target:offices) {
+        if(this != target){
+            if (this->rect.intersects(target->getRect())) {
+                return true;
+            }
+        }
+    }
+
+    for (auto target:shafts) {
+        if(this != target){
+            if (this->rect.intersects(target->getRect())) {
+                return true;
+            }
+        }
+    }
+
+    return false;
 }
 
 int Entity::getWidth() const {
@@ -434,6 +450,14 @@ bool Entity::isSelectable() const {
 
 void Entity::setSelectable(bool selectable) {
     Entity::selectable = selectable;
+}
+
+bool Entity::isSpawned() {
+    return spawned;
+}
+
+void Entity::spawn() {
+
 }
 
 

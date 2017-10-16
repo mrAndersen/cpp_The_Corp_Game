@@ -4,15 +4,25 @@
 
 #include "Office/Office.h"
 
-class ElevatorShaftTop : public Office {
+class ElevatorShaftTop : public Entity {
 
 protected:
     const static int width = 150;
     const static int height = 150;
+
+    float cost = 0;
 public:
     explicit ElevatorShaftTop(sf::Vector2f coordinates);
 
     bool hasMiddleShaftOnTheBottom();
+
+    float getCost() const;
+
+    void setCost(float cost);
+
+    void spawn() override;
+
+    std::vector<Office *> getNeighborOffices();
 };
 
 
