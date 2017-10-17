@@ -59,7 +59,7 @@ void Office::renderDebugInfo() {
                 "top: " + std::to_string((int) top) + "," +
                 "bottom: " + std::to_string((int) bottom) + "\n"
                         "floor: " + std::to_string(floor) + "\n"
-                        "workers: " + std::to_string(workers.size()) + "\n"
+                        "workers: " + std::to_string(getBusyWorkPlaces()) + "\n"
         );
         System::window->draw(debugInfo);
     }
@@ -79,17 +79,42 @@ void Office::spawn() {
     spawned = true;
 }
 
-bool Office::hasFreeWorkPlaces() {
-    return workers.size() < 4;
-}
-
-std::vector<Entity *> &Office::getWorkers() {
-    return workers;
-}
-
-
-
 Office::Office() {
+//    auto w1 = new WorkPlace({worldCoordinates.x,worldCoordinates.y - });
+//    auto w2 = new WorkPlace({worldCoordinates.x,worldCoordinates.y - });
+//    auto w3 = new WorkPlace({worldCoordinates.x,worldCoordinates.y +});
+//    auto w4 = new WorkPlace({worldCoordinates.x,worldCoordinates.y +});
+
+
     setSelectable(true);
+}
+
+bool Office::hasFreeWorkPlaces() {
+    for (int i = 0; i < 4; ++i) {
+        if (!workPlaces[i]->getWorker()) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+void Office::addWorker(Movable *worker) {
+    for (int i = 0; i < 4; ++i) {
+        if (!workPlaces[i]->getWorker()) {
+            workPlaces[i]->setWorker(worker);
+        }
+    }
+}
+
+int Office::getBusyWorkPlaces() {
+    int j = 0;
+
+    for (int i = 0; i < 4; ++i) {
+        if (!workPlaces[i]->getWorker()) {
+            j++;
+        }
+    }
+    return j;
 }
 

@@ -13,7 +13,7 @@ Ground::Ground(sf::Vector2f coordinates) {
     setWorldCoordinates(coordinates);
 
     setTotalFrames(1);
-    setTexture(ResourceLoader::getTexture(Entities::E_StaticGround));
+    addTexture(ResourceLoader::getTexture(Entities::E_StaticGround));
     createAnimationFrames();
 
     EntityContainer::add(this);

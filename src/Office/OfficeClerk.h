@@ -1,7 +1,7 @@
 #ifndef THE_CORP_GAME_OFFICECLERK_H
 #define THE_CORP_GAME_OFFICECLERK_H
 
-#include "Animation/Movable.h"
+#include "Office.h"
 
 class OfficeClerk: public Office {
 public:

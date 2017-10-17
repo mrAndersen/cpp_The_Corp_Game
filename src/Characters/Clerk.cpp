@@ -1,6 +1,5 @@
 #include <cmath>
 #include <iostream>
-#include "Animation/Movable.h"
 #include "System/ResourceLoader.h"
 #include "Clerk.h"
 #include "System/EntityContainer.h"
@@ -19,7 +18,10 @@ Clerk::Clerk(sf::Vector2f coordinates) : Movable() {
     setWorldCoordinates(coordinates);
     setSelectable(true);
 
-    setTexture(ResourceLoader::getTexture(Entities::E_Clerk));
+    addTexture(ResourceLoader::getTexture(Entities::E_Clerk, S_None), S_None);
+    addTexture(ResourceLoader::getTexture(Entities::E_Clerk, S_GoToOffice), S_GoToOffice);
+    addTexture(ResourceLoader::getTexture(Entities::E_Clerk, S_Working), S_Working);
+
     setDrawOrder(100);
     createAnimationFrames();
 

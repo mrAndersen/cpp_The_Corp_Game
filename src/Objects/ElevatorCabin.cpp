@@ -1,7 +1,3 @@
-//
-// Created by mrAndersen on 16.10.2017.
-//
-
 #include <System/ResourceLoader.h>
 #include <System/EntityContainer.h>
 #include "ElevatorCabin.h"
@@ -16,8 +12,8 @@ ElevatorCabin::ElevatorCabin(sf::Vector2f coordinates) {
     setWorldCoordinates(coordinates);
 
     setTotalFrames(1);
-    setTexture(ResourceLoader::getTexture(Entities::E_ElevatorCabin));
-    setDrawOrder(98);
+    addTexture(ResourceLoader::getTexture(Entities::E_ElevatorCabin));
+    setDrawOrder(DrawOrder::D_ElevatorCabin);
     createAnimationFrames();
 
     EntityContainer::add(this);
@@ -35,6 +31,43 @@ bool ElevatorCabin::isSpawned() const {
     return spawned;
 }
 
-void ElevatorCabin::setSpawned(bool spawned) {
-    ElevatorCabin::spawned = spawned;
+bool ElevatorCabin::isInsideShaftBoundaries() {
+    for (auto e:EntityContainer::getItems()) {
+        if (e != this) {
+            if (
+                    e->getName() == "elevator.shaft.middle" &&
+                    (int) e->getLeft() == (int) left &&
+                    (int) e->getBottom() == (int) bottom &&
+                    (int) e->getTop() == (int) top &&
+                    (int) e->getRight() == (int) right
+                    )
+            {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+void ElevatorCabin::updateLogic() {
+    Entity::updateLogic();
+}
+
+void ElevatorCabin::spawn() {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    Entity::spawn();
 }

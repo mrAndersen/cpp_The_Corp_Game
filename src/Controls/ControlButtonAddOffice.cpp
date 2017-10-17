@@ -15,7 +15,7 @@ ControlButtonAddOffice::ControlButtonAddOffice() {
     setHeight(47);
 
     setTotalFrames(1);
-    setTexture(ResourceLoader::getTexture(Entities::E_ButtonAddOffice));
+    addTexture(ResourceLoader::getTexture(Entities::E_ButtonAddOffice));
     createAnimationFrames();
 
     EntityContainer::add(this);

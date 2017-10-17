@@ -34,6 +34,11 @@ void Entity::update() {
 }
 
 void Entity::updateAnimation() {
+    if (textures[state]) {
+        sprite.setTexture(*textures[state]);
+    } else {
+        sprite.setTexture(*textures[S_None]);
+    }
 
     if (frameClock.getElapsedTime().asMicroseconds() >= animationResolution / System::timeFactor) {
         currentFrame = (currentFrame == (totalFrames - 1)) ? 0 : currentFrame + 1;
@@ -156,7 +161,7 @@ bool Entity::intersectsWithObjects() {
     std::vector<Entity *> shafts = EntityContainer::getElevatorShafts();
 
     for (auto target:offices) {
-        if(this != target){
+        if (this != target) {
             if (this->rect.intersects(target->getRect())) {
                 return true;
             }
@@ -164,7 +169,7 @@ bool Entity::intersectsWithObjects() {
     }
 
     for (auto target:shafts) {
-        if(this != target){
+        if (this != target) {
             if (this->rect.intersects(target->getRect())) {
                 return true;
             }
@@ -401,8 +406,8 @@ sf::Texture *Entity::getTexture(States state) {
     return textures[state];
 }
 
-void Entity::setTexture(sf::Texture *texture, States state) {
-    textures[state] = texture;
+void Entity::addTexture(sf::Texture *texture, States state) {
+    textures.insert(std::pair<int, sf::Texture *>(state, texture));
 }
 
 Entity::Entity() {
@@ -457,7 +462,7 @@ bool Entity::isSpawned() {
 }
 
 void Entity::spawn() {
-
+    spawned = true;
 }
 
 

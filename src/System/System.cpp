@@ -49,7 +49,7 @@ namespace System {
     float salaryTotal = 0;
 
     sf::Clock dayClock = {};
-    GameTime gameTime(17, 30);
+    GameTime gameTime(10, 30);
 
     int startWorkHour = 9;
     int endWorkHour = 18;

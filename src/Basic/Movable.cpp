@@ -96,11 +96,18 @@ void Movable::updateLogic() {
         state = S_Falling;
     }
 
-    //stop falling
-    if (isOnTheGround() && state == S_Falling) {
+    //stop falling and has office
+    if (isOnTheGround() && state == S_Falling && currentWorkPlace) {
         direction = Direction::None;
         state = S_GoToOffice;
     }
+
+    //stop falling and no office
+    if (isOnTheGround() && state == S_Falling && !currentWorkPlace) {
+        direction = Direction::None;
+        state = S_None;
+    }
+
 
     //stop smoking
     if (state == S_Smoke && System::gameTime.diffMinutes(smokeStarted) >= smokePeriodMinutes) {
@@ -221,7 +228,7 @@ void Movable::searchWorkPlace() {
         for (auto office:EntityContainer::getOffices()) {
             if (office->hasFreeWorkPlaces() && office->isSpawned()) {
                 currentWorkPlace = office;
-                office->getWorkers().push_back(this);
+                office->addWorker(this);
 
                 return;
             }

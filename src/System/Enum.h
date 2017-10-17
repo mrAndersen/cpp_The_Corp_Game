@@ -1,6 +1,12 @@
 #ifndef CORP_GAME_ENUM
 #define CORP_GAME_ENUM
 
+enum DrawOrder {
+    D_Offices = 98,
+    D_ElevatorShafts = 110,
+    D_ElevatorCabin = 120
+};
+
 enum Gender {
     G_Male = 1,
     G_Female = 2
@@ -17,12 +23,6 @@ enum Direction {
     UpLeft,
     DownRight,
     DownLeft
-};
-
-enum ElevatorShafts {
-    EL_Top = 1,
-    EL_Middle = 2,
-    EL_Bottom = 3
 };
 
 enum States {

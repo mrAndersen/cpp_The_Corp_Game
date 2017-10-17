@@ -1,8 +1,9 @@
-#ifndef THE_CORP_GAME_ELEVATOR_H
-#define THE_CORP_GAME_ELEVATOR_H
+#ifndef THE_CORP_GAME_ELEVATORSHATFMIDDLE_H
+#define THE_CORP_GAME_ELEVATORSHATFMIDDLE_H
 
-#include "Animation/Entity.h"
+#include <Basic/Entity.h>
 #include "Office/Office.h"
+#include <Component/WorkPlace.h>
 
 class ElevatorShaftMiddle : public Entity {
 
@@ -25,4 +26,4 @@ public:
     std::vector<Office *> getNeighborOffices();
 };
 
-#endif //THE_CORP_GAME_ELEVATOR_H
+#endif

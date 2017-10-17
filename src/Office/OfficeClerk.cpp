@@ -12,7 +12,7 @@ OfficeClerk::OfficeClerk(sf::Vector2f coordinates) : Office() {
     setWorldCoordinates(coordinates);
 
     setTotalFrames(1);
-    setTexture(ResourceLoader::getTexture(Entities::E_OfficeClerk));
+    addTexture(ResourceLoader::getTexture(Entities::E_OfficeClerk));
     setDrawOrder(98);
     createAnimationFrames();
 
