@@ -1,7 +1,7 @@
 #include <cmath>
-#include "../../includes/Office/OfficeClerk.h"
-#include "../../includes/System/EntityContainer.h"
-#include "../../includes/System/System.h"
+#include "OfficeClerk.h"
+#include "System/EntityContainer.h"
+#include "System/System.h"
 
 std::vector<Office *> Office::getNeighborOffices() {
     std::vector<Office *> result;
@@ -19,8 +19,10 @@ std::vector<Office *> Office::getNeighborOffices() {
                 result.push_back(target);
             }
 
-            if ((int) target->getTop() == (int) this->bottom && this->worldCoordinates.x > target->getLeft() &&
-                this->worldCoordinates.x < target->getRight()) {
+            if (
+                    (int) target->getTop() == (int) this->bottom &&
+                    this->worldCoordinates.x == target->getWorldCoordinates().x
+                    ) {
                 result.push_back(target);
             }
         }
@@ -29,24 +31,9 @@ std::vector<Office *> Office::getNeighborOffices() {
     return result;
 }
 
-bool Office::intersectsWith() {
-    std::vector<Office *> result;
-    std::vector<Office *> offices = EntityContainer::getOffices();
-
-    for (auto target:offices) {
-        if (target != this) {
-            if (this->rect.intersects(target->getRect())) {
-                return true;
-            }
-        }
-    }
-
-    return false;
-}
-
 void Office::updateLogic() {
     //update floor
-    floor = ((int) worldCoordinates.y - ((int) worldCoordinates.y % System::gridSize)) / System::gridSize;
+    floor = ((int) worldCoordinates.y - ((int) worldCoordinates.y % System::gridSize)) / System::gridSize / 3;
 
     Entity::updateLogic();
 }
@@ -64,11 +51,13 @@ void Office::renderDebugInfo() {
         debugInfo.setPosition(System::cToGl(worldCoordinates.x + width / 2, worldCoordinates.y + height / 2));
         debugInfo.setString(
                 "id: " + std::to_string(id) + "\n" +
-                "pos: {" + std::to_string((int)worldCoordinates.x) + "," + std::to_string((int)worldCoordinates.y) + "}\n" +
-                "left: " + std::to_string((int)left) + "," +
-                "right: " + std::to_string((int)right) + "," +
-                "top: " + std::to_string((int)top) + "," +
-                "bottom: " + std::to_string((int)bottom) + "\n"
+                "name: " + name + "\n" +
+                "pos: {" + std::to_string((int) worldCoordinates.x) + "," + std::to_string((int) worldCoordinates.y) +
+                "}\n" +
+                "left: " + std::to_string((int) left) + "," +
+                "right: " + std::to_string((int) right) + "," +
+                "top: " + std::to_string((int) top) + "," +
+                "bottom: " + std::to_string((int) bottom) + "\n"
                         "floor: " + std::to_string(floor) + "\n"
                         "workers: " + std::to_string(workers.size()) + "\n"
         );
@@ -91,14 +80,16 @@ void Office::spawn() {
 }
 
 bool Office::hasFreeWorkPlaces() {
-    return workers.size() < 3;
+    return workers.size() < 4;
 }
 
 std::vector<Entity *> &Office::getWorkers() {
     return workers;
 }
 
-bool Office::isSpawned() const {
-    return spawned;
+
+
+Office::Office() {
+    setSelectable(true);
 }
 

@@ -1,14 +1,14 @@
 #include <cmath>
 #include <iostream>
-#include "../../includes/Animation/Movable.h"
-#include "../../includes/System/ResourceLoader.h"
-#include "../../includes/Characters/Clerk.h"
-#include "../../includes/System/EntityContainer.h"
-#include "../../includes/Objects/Ground.h"
-#include "../../includes/System/System.h"
-#include "../../includes/Text/TextEntity.h"
+#include "Animation/Movable.h"
+#include "System/ResourceLoader.h"
+#include "Clerk.h"
+#include "System/EntityContainer.h"
+#include "Objects/Ground.h"
+#include "System/System.h"
+#include "Text/TextEntity.h"
 
-Clerk::Clerk(sf::Vector2f coordinates) {
+Clerk::Clerk(sf::Vector2f coordinates) : Movable() {
     setName("clerk");
 
     setWidth(Clerk::width);
@@ -60,7 +60,8 @@ void Clerk::updateLogic() {
         }
 
         //salary every day
-        if (System::gameTime.getHour() == System::endWorkHour && System::gameTime.getMinute() == 0 && !salaryProcessed) {
+        if (System::gameTime.getHour() == System::endWorkHour && System::gameTime.getMinute() == 0 &&
+            !salaryProcessed) {
             System::cash = System::cash - dailySalary;
             salaryProcessed = true;
         }

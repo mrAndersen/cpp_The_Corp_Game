@@ -1,9 +1,9 @@
 #include <sstream>
-#include "../../includes/Animation/Entity.h"
-#include "../../includes/System/System.h"
-#include "../../includes/System/Enum.h"
-#include "../../includes/System/EntityContainer.h"
-#include "../../includes/Objects/Ground.h"
+#include "Entity.h"
+#include "System/System.h"
+#include "System/Enum.h"
+#include "System/EntityContainer.h"
+#include "Objects/Ground.h"
 
 std::string Entity::serialize() {
     std::map<int, std::string> parameters;
@@ -105,14 +105,6 @@ void Entity::setInvalid() {
 
 void Entity::updateLogic() {
 
-    if (selectable && !selected && leftClicked() && !System::spawningUnit) {
-        setSelected(true);
-    }
-
-    if (selectable && selected && leftClicked() && !System::spawningUnit) {
-        setSelected(false);
-    }
-
     if (health <= 0) {
         EntityContainer::remove(this);
     }
@@ -156,6 +148,30 @@ bool Entity::isOnTheGround() {
     return
             bottom - delta < System::groundLevel + Ground::height ||
             bottom + delta < System::groundLevel + Ground::height;
+}
+
+bool Entity::intersectsWithObjects() {
+    std::vector<Office *> result;
+    std::vector<Office *> offices = EntityContainer::getOffices();
+    std::vector<Entity *> shafts = EntityContainer::getElevatorShafts();
+
+    for (auto target:offices) {
+        if(this != target){
+            if (this->rect.intersects(target->getRect())) {
+                return true;
+            }
+        }
+    }
+
+    for (auto target:shafts) {
+        if(this != target){
+            if (this->rect.intersects(target->getRect())) {
+                return true;
+            }
+        }
+    }
+
+    return false;
 }
 
 int Entity::getWidth() const {
@@ -358,6 +374,7 @@ void Entity::renderDebugInfo() {
         debugInfo.setPosition(System::cToGl(worldCoordinates.x + width / 2, worldCoordinates.y + height / 2));
         debugInfo.setString(
                 "id: " + std::to_string(id) + "\n" +
+                "name: " + name + "\n" +
                 "pos: {" + std::to_string(worldCoordinates.x) + "," + std::to_string(worldCoordinates.y) + "}\n" +
                 "left: " + std::to_string(left) + "\n" +
                 "right: " + std::to_string(right) + "\n" +
@@ -433,6 +450,14 @@ bool Entity::isSelectable() const {
 
 void Entity::setSelectable(bool selectable) {
     Entity::selectable = selectable;
+}
+
+bool Entity::isSpawned() {
+    return spawned;
+}
+
+void Entity::spawn() {
+
 }
 
 

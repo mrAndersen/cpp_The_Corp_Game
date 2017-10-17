@@ -2,9 +2,9 @@
 // Created by mrAndersen on 13.10.2017.
 //
 
-#include "../../includes/Controls/ControlCashIndicator.h"
-#include "../../includes/System/System.h"
-#include "../../includes/System/ViewHandler.h"
+#include "ControlCashIndicator.h"
+#include "System/System.h"
+#include "System/ViewHandler.h"
 
 ControlCashIndicator::ControlCashIndicator(const sf::Color &color, int size) : TextEntity(color, size) {
     setName("cash.indicator");

@@ -1,5 +1,5 @@
-#include "../../includes/Utls/GameTime.h"
-#include "../../includes/System/System.h"
+#include "GameTime.h"
+#include "System.h"
 
 GameTime operator+(const GameTime &a, const GameTime &b) {
     auto c_hour = a.hour + b.hour;

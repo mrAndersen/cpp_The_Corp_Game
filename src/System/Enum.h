@@ -1,6 +1,11 @@
 #ifndef CORP_GAME_ENUM
 #define CORP_GAME_ENUM
 
+enum Gender {
+    G_Male = 1,
+    G_Female = 2
+};
+
 enum Direction {
     None,
     Right,
@@ -48,7 +53,8 @@ enum Entities {
     //Controls
     E_ButtonAddClerk = 31,
     E_ButtonAddOffice = 32,
-    E_ButtonAddElevator = 33,
+    E_ButtonAddElevatorShaftMiddle = 33,
+    E_ButtonAddElevatorShaftTop = 33,
     E_ButtonAddElevatorCabin = 34,
 
     //Office
@@ -58,6 +64,7 @@ enum Entities {
     E_ElevatorShaftBottom = 51,
     E_ElevatorShaftMiddle = 52,
     E_ElevatorShaftTop = 53,
+    E_ElevatorCabin = 54
 };
 
 #endif

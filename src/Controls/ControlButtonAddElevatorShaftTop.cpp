@@ -1,35 +1,36 @@
-#include "../../includes/Controls/ControlButtonAddElevator.h"
-#include "../../includes/System/ViewHandler.h"
-#include "../../includes/System/ResourceLoader.h"
-#include "../../includes/System/EntityContainer.h"
-#include "../../includes/System/System.h"
-#include "../../includes/Text/TextEntity.h"
+#include <climits>
+#include <cmath>
+#include "System/ResourceLoader.h"
+#include "System/EntityContainer.h"
+#include "System/System.h"
+#include "Text/TextEntity.h"
+#include "ControlButtonAddElevatorShaftTop.h"
+#include "System/ViewHandler.h"
+#include "Objects/ElevatorShaftTop.h"
 
-ControlButtonAddElevator::ControlButtonAddElevator() {
-    setName("button.add.elevator");
+ControlButtonAddElevatorShaftTop::ControlButtonAddElevatorShaftTop() {
+    setName("button.add.elevator.shaft.top");
     setDrawOrder(INT_MAX);
-
-    setWorldCoordinates(sf::Vector2f(ViewHandler::left + 750, ViewHandler::top - 50));
 
     setWidth(142);
     setHeight(47);
 
     setTotalFrames(1);
-    setTexture(ResourceLoader::getTexture(Entities::E_ButtonAddElevator));
+    setTexture(ResourceLoader::getTexture(Entities::E_ButtonAddElevatorShaftTop));
     createAnimationFrames();
 
     EntityContainer::add(this);
 }
 
-void ControlButtonAddElevator::updateLogic() {
+void ControlButtonAddElevatorShaftTop::updateLogic() {
     bool spawnCondition = attachedShaft &&
                           System::cash >= attachedShaft->getCost() &&
                           !attachedShaft->isBelowGround() &&
-                          !attachedShaft->intersectsWith() &&
-                          (!attachedShaft->getNeighborOffices().empty() || attachedShaft->isOnTheGround());
+                          !attachedShaft->intersectsWithObjects() &&
+                          attachedShaft->hasMiddleShaftOnTheBottom();
 
-    if (leftClicked() && !attachedShaft) {
-        attachedShaft = new ElevatorShaft(sf::Vector2f(System::g_x, System::g_y));
+    if (leftClicked() && !attachedShaft && !System::spawningUnit) {
+        attachedShaft = new ElevatorShaftTop(sf::Vector2f(System::g_x, System::g_y));
         attachedShaft->setTransparent();
     }
 
@@ -53,6 +54,18 @@ void ControlButtonAddElevator::updateLogic() {
         spent->setWorldCoordinates(position);
         spent->setString("-" + System::f_to_string(attachedShaft->getCost()) + "$");
 
+//        //change to top shaft
+//        if(!attachedShaft->isOnTheGround()){
+//
+//            auto topShaftPosition = attachedShaft->getWorldCoordinates();
+//            topShaftPosition.y += attachedShaft->getHeight() / 2;
+//
+//            auto topShaft = new ElevatorShaft(topShaftPosition);
+//            topShaft->setType(ElevatorShafts::EL_Top);
+//
+//            attachedShaft->setTopShaft(topShaft);
+//        }
+
         System::spawningUnit = false;
         attachedShaft = nullptr;
     }
@@ -70,9 +83,12 @@ void ControlButtonAddElevator::updateLogic() {
             attachedShaft->setInvalid();
 
             //placement error
-            if (attachedShaft && (attachedShaft->intersectsWith() || attachedShaft->getNeighborOffices().empty() ||
-                                  !attachedShaft->isOnTheGround())) {
-                attachedShaft->getErrorString().setString("Invalid placement position");
+            if (
+                    attachedShaft &&
+                    (attachedShaft->intersectsWithObjects() || attachedShaft->getNeighborOffices().empty() ||
+                     !attachedShaft->isOnTheGround())) {
+                attachedShaft->getErrorString().setString(
+                        "Invalid placement position, must be placed on top of the shaft");
             }
 
             //cash error
@@ -81,7 +97,7 @@ void ControlButtonAddElevator::updateLogic() {
                         ->getErrorString()
                         .setString(
                                 "Not enough cash, need " +
-                                System::f_to_string(abs(System::cash - attachedShaft->getCost())) +
+                                System::f_to_string(fabs(System::cash - attachedShaft->getCost())) +
                                 "$ more"
                         );
             }
@@ -90,3 +106,17 @@ void ControlButtonAddElevator::updateLogic() {
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

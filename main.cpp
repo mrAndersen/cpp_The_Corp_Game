@@ -1,11 +1,11 @@
 #include <sstream>
 #include <SFML/Window/Event.hpp>
-#include "includes/System/System.h"
-#include "includes/System/ResourceLoader.h"
-#include "includes/System/ViewHandler.h"
-#include "includes/System/EntityContainer.h"
-#include "includes/System/ControlPanel.h"
-#include "includes/System/SaveManager.h"
+#include "System/System.h"
+#include "System/ResourceLoader.h"
+#include "System/ViewHandler.h"
+#include "System/EntityContainer.h"
+#include "System/ControlPanel.h"
+#include "System/SaveManager.h"
 
 int main() {
     auto *saveManager = new SaveManager();
@@ -13,6 +13,7 @@ int main() {
     //preload resources
     ResourceLoader::loadTexturesFromFiles();
     ResourceLoader::loadFonts();
+    ResourceLoader::loadNames();
 
     //load window and debug utilities
     System::initWindow();
@@ -47,6 +48,23 @@ int main() {
                 System::initWindow();
             }
 
+            //entity selection
+            if (e.type == sf::Event::MouseButtonPressed && e.mouseButton.button == sf::Mouse::Left) {
+
+                for (auto ex:EntityContainer::getItems()) {
+                    if (ex->mouseIn() && ex->isSelectable() && ex->isSpawned() && ex->getLiveClock().getElapsedTime().asSeconds() >= 1) {
+
+                        for (auto ei:EntityContainer::getItems()) {
+                            if(ei != ex){
+                                ei->setSelected(false);
+                            }
+                        }
+
+                        ex->setSelected(!ex->isSelected());
+                    }
+                }
+            }
+
             if (e.type == sf::Event::KeyPressed || e.type == sf::Event::KeyReleased) {
                 ViewHandler::handleViewScrollKeyPress(e);
                 saveManager->handleSaveEvent();
@@ -56,9 +74,20 @@ int main() {
 //                ViewHandler::handleViewZoomKeyPress(e);
             }
 
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::LAlt)) {
+            if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::V) {
                 System::debug = !System::debug;
             }
+
+            if(System::debug){
+                if(e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::Numpad0 && sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)){
+                    System::cash = 0;
+                }
+
+                if(e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::Numpad5 && sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)){
+                    System::cash = 50000;
+                }
+            }
+
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
                 for (int i = 0; i <= 1; i++) {

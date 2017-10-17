@@ -1,10 +1,11 @@
 #include <cmath>
 #include <iostream>
-#include "../../includes/System/Enum.h"
-#include "../../includes/Animation/Movable.h"
-#include "../../includes/System/System.h"
-#include "../../includes/System/EntityContainer.h"
-#include "../../includes/Objects/Ground.h"
+#include <fstream>
+#include "System/Enum.h"
+#include "Movable.h"
+#include "System/System.h"
+#include "System/EntityContainer.h"
+#include "Objects/Ground.h"
 
 void Movable::renderCurrentFrame() {
 
@@ -26,8 +27,8 @@ void Movable::renderDebugInfo() {
         debugInfo.setPosition(System::cToGl(worldCoordinates.x + width / 2, worldCoordinates.y + height / 2));
         debugInfo.setString(
                 "id: " + std::to_string(id) + "\n" +
-                "pos: {" + std::to_string((int) worldCoordinates.x) + "," + std::to_string((int) worldCoordinates.y) +
-                "}\n" +
+                        "name: " + personName + "\n" +
+                "pos: {" + std::to_string((int) worldCoordinates.x) + "," + std::to_string((int) worldCoordinates.y) + "}\n" +
                 "left: " + std::to_string((int) left) + "," +
                 "right: " + std::to_string((int) right) + "," +
                 "top: " + std::to_string((int) top) + "," +
@@ -48,7 +49,7 @@ void Movable::updateAnimation() {
 
     if (direction == Direction::Down && state == S_Falling) {
         worldCoordinates.y -= frameDistance;
-        currentSpeed = currentSpeed + fallAcceleration * frameTimeSeconds;
+        currentSpeed = currentSpeed + fallAcceleration * frameTimeSeconds * System::timeFactor;
     }
 
     if (direction == Direction::Right) {
@@ -65,14 +66,14 @@ void Movable::updateAnimation() {
 void Movable::updateLogic() {
 
     //update floor
-    floor = ((int) worldCoordinates.y - ((int) worldCoordinates.y % System::gridSize)) / System::gridSize;
+    floor = ((int) worldCoordinates.y - ((int) worldCoordinates.y % System::gridSize)) / System::gridSize / 3;
 
 //    if(isOnTheGround()){
 //        EntityContainer::remove(this);
 //    }
 
     //no work place
-    if (!currentWorkPlace && isOnTheGround()) {
+    if (!currentWorkPlace && isOnTheGround() && errorString.getString().isEmpty()) {
         valid = false;
 
         errorString.setString("No free work places");
@@ -186,7 +187,7 @@ std::string Movable::serialize() {
 }
 
 Movable::Movable() : Entity() {
-
+    personName = ResourceLoader::getRandomName(gender);
 }
 
 float Movable::getDefaultSpeed() const {
@@ -208,6 +209,7 @@ void Movable::setCost(float cost) {
 void Movable::spawn() {
     System::cash -= this->cost;
     spawned = true;
+    liveClock.restart();
 
     if (isAboveGround()) {
         state = S_Falling;
@@ -246,5 +248,20 @@ bool Movable::isInWorkPlace() {
             (int) worldCoordinates.x == (int) currentWorkPlace->getWorldCoordinates().x;
 }
 
+const std::string &Movable::getPersonName() const {
+    return personName;
+}
+
+void Movable::setPersonName(const std::string &personName) {
+    Movable::personName = personName;
+}
+
+Gender Movable::getGender() const {
+    return gender;
+}
+
+void Movable::setGender(Gender gender) {
+    Movable::gender = gender;
+}
 
 

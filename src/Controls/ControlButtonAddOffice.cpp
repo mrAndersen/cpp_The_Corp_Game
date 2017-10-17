@@ -1,16 +1,15 @@
 #include <climits>
-#include "../../includes/Controls/ControlButtonAddOffice.h"
-#include "../../includes/System/EntityContainer.h"
-#include "../../includes/System/ViewHandler.h"
-#include "../../includes/System/System.h"
-#include "../../includes/Office/OfficeClerk.h"
-#include "../../includes/Text/TextEntity.h"
+#include <cmath>
+#include "ControlButtonAddOffice.h"
+#include "System/EntityContainer.h"
+#include "System/ViewHandler.h"
+#include "System/System.h"
+#include "Office/OfficeClerk.h"
+#include "Text/TextEntity.h"
 
 ControlButtonAddOffice::ControlButtonAddOffice() {
     setName("button.add.office");
     setDrawOrder(INT_MAX);
-
-    setWorldCoordinates(sf::Vector2f(ViewHandler::left + 600, ViewHandler::top - 50));
 
     setWidth(142);
     setHeight(47);
@@ -26,10 +25,10 @@ void ControlButtonAddOffice::updateLogic() {
     bool spawnCondition = attachedOffice &&
                           System::cash >= attachedOffice->getCost() &&
                           !attachedOffice->isBelowGround() &&
-                          !attachedOffice->intersectsWith() &&
+                          !attachedOffice->intersectsWithObjects() &&
                           (!attachedOffice->getNeighborOffices().empty() || attachedOffice->isOnTheGround());
 
-    if (leftClicked() && !attachedOffice) {
+    if (leftClicked() && !attachedOffice && !System::spawningUnit) {
         attachedOffice = new OfficeClerk(sf::Vector2f(System::g_x, System::g_y));
         attachedOffice->setTransparent();
     }
@@ -62,7 +61,7 @@ void ControlButtonAddOffice::updateLogic() {
         System::spawningUnit = true;
         auto global = System::getGlobalMouse();
 
-        float normalizedX = global.x - ((int) global.x % System::gridSize) + System::gridSize / 2;
+        float normalizedX = global.x - ((int) global.x % System::gridSize) + System::gridSize;
         float normalizedY = global.y - ((int) global.y % System::gridSize) + System::gridSize / 2;
 
         attachedOffice->setWorldCoordinates(sf::Vector2f(normalizedX, normalizedY));
@@ -71,7 +70,7 @@ void ControlButtonAddOffice::updateLogic() {
             attachedOffice->setInvalid();
 
             //placement error
-            if (attachedOffice && (attachedOffice->intersectsWith() || attachedOffice->getNeighborOffices().empty() ||
+            if (attachedOffice && (attachedOffice->intersectsWithObjects() || attachedOffice->getNeighborOffices().empty() ||
                                    !attachedOffice->isOnTheGround())) {
                 attachedOffice->getErrorString().setString("Invalid placement position");
             }
@@ -82,7 +81,7 @@ void ControlButtonAddOffice::updateLogic() {
                         ->getErrorString()
                         .setString(
                                 "Not enough cash, need " +
-                                System::f_to_string(abs(System::cash - attachedOffice->getCost())) +
+                                System::f_to_string(fabs(System::cash - attachedOffice->getCost())) +
                                 "$ more"
                         );
             }

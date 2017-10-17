@@ -1,16 +1,14 @@
 #include <SFML/System.hpp>
 #include <climits>
-#include "../../includes/Controls/ControlButtonAddClerk.h"
-#include "../../includes/System/EntityContainer.h"
-#include "../../includes/System/ViewHandler.h"
-#include "../../includes/System/System.h"
-#include "../../includes/Text/TextEntity.h"
+#include "ControlButtonAddClerk.h"
+#include "System/EntityContainer.h"
+#include "System/ViewHandler.h"
+#include "System/System.h"
+#include "Text/TextEntity.h"
 
 ControlButtonAddClerk::ControlButtonAddClerk() {
     setName("button.add.clerk");
     setDrawOrder(INT_MAX);
-
-    setWorldCoordinates(sf::Vector2f(ViewHandler::left + 600, ViewHandler::top - 50));
 
     setWidth(142);
     setHeight(47);
@@ -65,12 +63,12 @@ void ControlButtonAddClerk::updateLogic() {
             attachedClerk->setInvalid();
 
             //placement error
-            if (attachedClerk && attachedClerk->isBelowGround()) {
+            if (attachedClerk && attachedClerk->isBelowGround() && attachedClerk->getErrorString().getString().isEmpty()) {
                 attachedClerk->getErrorString().setString("Invalid placement position");
             }
 
             //cash error
-            if (System::cash < attachedClerk->getCost()) {
+            if (System::cash < attachedClerk->getCost() && attachedClerk->getErrorString().getString().isEmpty()) {
                 attachedClerk->getErrorString().setString("Not enough cash");
             }
         } else {

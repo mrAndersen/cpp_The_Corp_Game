@@ -1,11 +1,13 @@
-#include "../../includes/Characters/Clerk.h"
-#include "../../includes/System/EntityContainer.h"
-#include "../../includes/Objects/Ground.h"
-#include "../../includes/System/System.h"
-#include "../../includes/Animation/Entity.h"
-#include "../../includes/Office/OfficeClerk.h"
-#include "../../includes/Controls/ControlButtonAddClerk.h"
-#include "../../includes/Controls/ControlButtonAddOffice.h"
+#include <Objects/ElevatorShaftMiddle.h>
+#include <Objects/ElevatorShaftTop.h>
+#include "Characters/Clerk.h"
+#include "EntityContainer.h"
+#include "Objects/Ground.h"
+#include "System.h"
+#include "Animation/Entity.h"
+#include "Office/OfficeClerk.h"
+#include "Controls/ControlButtonAddClerk.h"
+#include "Controls/ControlButtonAddOffice.h"
 
 namespace EntityContainer {
     std::vector<Entity *> items = {};
@@ -21,9 +23,8 @@ namespace EntityContainer {
 
         for (auto entity:items) {
             if (
-                    !dynamic_cast<Ground *>(entity) &&
-                    !dynamic_cast<ControlButtonAddClerk *>(entity) &&
-                    !dynamic_cast<ControlButtonAddOffice *>(entity)
+                    dynamic_cast<Movable *>(entity) ||
+                    dynamic_cast<Office *>(entity)
                     ) {
                 buffer.push_back(entity);
             }
@@ -38,6 +39,20 @@ namespace EntityContainer {
         for (Entity *entity:items) {
             if (auto d = dynamic_cast<Office *>(entity)) {
                 buffer.push_back(d);
+            }
+        }
+
+        return buffer;
+    }
+
+    std::vector<Entity *> getElevatorShafts() {
+        std::vector<Entity *> buffer;
+
+        for (Entity *entity:items) {
+            if (
+                    dynamic_cast<ElevatorShaftMiddle *>(entity) ||
+                    dynamic_cast<ElevatorShaftTop *>(entity)) {
+                buffer.push_back(entity);
             }
         }
 
@@ -77,7 +92,7 @@ namespace EntityContainer {
     }
 
     void initGrid() {
-        if(System::debug){
+        if (System::debug) {
             sf::Color transparentBlack(0, 0, 0, 25);
 
             for (int i = (int) -System::worldWidth / 2; i < System::worldWidth / 2; i++) {
