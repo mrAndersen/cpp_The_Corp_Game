@@ -1,6 +1,7 @@
 #ifndef THE_CORP_GAME_CONTROLBUTTONADDELEVATORSHAFTMIDDLE_H
 #define THE_CORP_GAME_CONTROLBUTTONADDELEVATORSHAFTMIDDLE_H
 
+#include <Basic/Entity.h>
 #include "Objects/ElevatorShaftMiddle.h"
 
 class ControlButtonAddElevatorShaftMiddle : public Entity {
@@ -10,7 +11,6 @@ class ControlButtonAddElevatorShaftMiddle : public Entity {
     ElevatorShaftMiddle *attachedShaft = nullptr;
 
 public:
-
     explicit ControlButtonAddElevatorShaftMiddle();
 
     void updateLogic() override;

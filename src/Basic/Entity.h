@@ -177,7 +177,7 @@ public:
 
     sf::Texture *getTexture(States state = S_None);
 
-    void setTexture(sf::Texture *texture, States state = S_None);
+    void addTexture(sf::Texture *texture, States state = S_None);
 
     const sf::Clock &getLiveClock() const;
 

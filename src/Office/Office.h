@@ -1,15 +1,19 @@
 #ifndef THE_CORP_GAME_OFFICE_H
 #define THE_CORP_GAME_OFFICE_H
 
-#include "Animation/Entity.h"
+#include <Basic/Entity.h>
+#include <Component/WorkPlace.h>
+#include <Basic/Movable.h>
 
+class Movable;
+class WorkPlace;
 class Office : public Entity {
 protected:
     int floor = 1;
 
     float cost = 0;
 
-    std::vector<Entity *> workers;
+    WorkPlace *workPlaces[4];
 public:
     Office();
 
@@ -18,8 +22,6 @@ public:
     float getCost() const;
 
     void setCost(float cost);
-
-    std::vector<Entity *> &getWorkers();
 
     void updateLogic() override;
 
@@ -32,6 +34,10 @@ public:
     void setFloor(int floor);
 
     bool hasFreeWorkPlaces();
+
+    void addWorker(Movable * worker);
+
+    int getBusyWorkPlaces();
 };
 
 #endif //THE_CORP_GAME_OFFICE_H

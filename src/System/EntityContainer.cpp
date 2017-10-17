@@ -1,18 +1,17 @@
+#include <Office/Office.h>
 #include <Objects/ElevatorShaftMiddle.h>
 #include <Objects/ElevatorShaftTop.h>
-#include "Characters/Clerk.h"
+#include <Component/Elevator.h>
 #include "EntityContainer.h"
 #include "Objects/Ground.h"
 #include "System.h"
-#include "Animation/Entity.h"
-#include "Office/OfficeClerk.h"
-#include "Controls/ControlButtonAddClerk.h"
-#include "Controls/ControlButtonAddOffice.h"
 
 namespace EntityContainer {
     std::vector<Entity *> items = {};
 
     std::vector<sf::VertexArray> verticies;
+
+    std::vector<Elevator *> elevators;
 
     std::vector<Entity *> getItems() {
         return items;
@@ -58,6 +57,11 @@ namespace EntityContainer {
 
         return buffer;
     }
+
+    std::vector<Elevator *> getElevators() {
+        return elevators;
+    }
+
 
     void add(Entity *item) {
         items.push_back(item);
@@ -131,6 +135,10 @@ namespace EntityContainer {
         for (auto entity:items) {
             entity->update();
         }
+    }
+
+    void addElevator(Elevator * elevator) {
+        elevators.push_back(elevator);
     }
 
 

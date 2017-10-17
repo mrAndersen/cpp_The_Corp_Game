@@ -1,16 +1,17 @@
 #ifndef THE_CORP_GAME_MOVABLE_H
 #define THE_CORP_GAME_MOVABLE_H
 
+#include <Office/Office.h>
 #include "Entity.h"
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Clock.hpp>
 #include "System/Enum.h"
-#include "Office/Office.h"
 #include "System/GameTime.h"
+#include <Component/WorkPlace.h>
 
-
+class Office;
 class Movable : public Entity {
 
 protected:

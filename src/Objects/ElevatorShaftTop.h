@@ -2,6 +2,7 @@
 #define THE_CORP_GAME_ELEVATORSHAFTTOP_H
 
 
+#include <Basic/Entity.h>
 #include "Office/Office.h"
 
 class ElevatorShaftTop : public Entity {

@@ -1,5 +1,7 @@
 #include <sstream>
 #include <SFML/Window/Event.hpp>
+#include <Objects/ElevatorShaftMiddle.h>
+#include <Objects/ElevatorShaftTop.h>
 #include "System/System.h"
 #include "System/ResourceLoader.h"
 #include "System/ViewHandler.h"
@@ -52,10 +54,15 @@ int main() {
             if (e.type == sf::Event::MouseButtonPressed && e.mouseButton.button == sf::Mouse::Left) {
 
                 for (auto ex:EntityContainer::getItems()) {
-                    if (ex->mouseIn() && ex->isSelectable() && ex->isSpawned() && ex->getLiveClock().getElapsedTime().asSeconds() >= 1) {
-
+                    if (
+                            !System::spawningUnit &&
+                            ex->mouseIn() &&
+                            ex->isSelectable() &&
+                            ex->isSpawned() &&
+                            ex->getLiveClock().getElapsedTime().asSeconds() >= 1
+                            ) {
                         for (auto ei:EntityContainer::getItems()) {
-                            if(ei != ex){
+                            if (ei != ex) {
                                 ei->setSelected(false);
                             }
                         }
@@ -78,21 +85,31 @@ int main() {
                 System::debug = !System::debug;
             }
 
-            if(System::debug){
-                if(e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::Numpad0 && sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)){
+            if (System::debug) {
+                if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::Numpad0 &&
+                    sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) {
                     System::cash = 0;
                 }
 
-                if(e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::Numpad5 && sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)){
+                if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::Numpad5 &&
+                    sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) {
                     System::cash = 50000;
                 }
             }
 
+            if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::P) {
 
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
-                for (int i = 0; i <= 1; i++) {
-                    auto *clerk = new Clerk(System::window->getDefaultView().getCenter());
-                }
+                auto a1 = new ElevatorShaftMiddle(sf::Vector2f(775,175));
+                auto a2 = new ElevatorShaftMiddle(sf::Vector2f(775,175 + 150));
+                auto a3 = new ElevatorShaftMiddle(sf::Vector2f(775,175 + 300));
+                auto a4 = new ElevatorShaftMiddle(sf::Vector2f(775,175 + 450));
+                auto a5 = new ElevatorShaftTop(sf::Vector2f(775,175 + 600));
+
+
+
+//                for (int i = 0; i <= 1; i++) {
+//                    auto *clerk = new Clerk(System::window->getDefaultView().getCenter());
+//                }
             }
 
             if (

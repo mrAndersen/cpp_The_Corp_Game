@@ -15,8 +15,8 @@ ElevatorShaftTop::ElevatorShaftTop(sf::Vector2f coordinates) {
     setSelectable(true);
 
     setTotalFrames(1);
-    setTexture(ResourceLoader::getTexture(Entities::E_ElevatorShaftTop));
-    setDrawOrder(98);
+    addTexture(ResourceLoader::getTexture(Entities::E_ElevatorShaftTop));
+    setDrawOrder(DrawOrder::D_ElevatorShafts);
     createAnimationFrames();
 
     EntityContainer::add(this);
