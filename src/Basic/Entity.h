@@ -4,12 +4,16 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics.hpp>
 #include "System/Enum.h"
+#include "Animation.h"
 
+class Animation;
 class Entity {
 
 protected:
     //parameters
     int id;
+    std::map<States, Animation> animations;
+    Animation *currentAnimation;
 
     std::string name = "";
     float health = 100;
@@ -31,23 +35,11 @@ protected:
 
     sf::IntRect rect;
 
-    int textureWidth = 0;
-    int textureHeight = 0;
-
     //animation properties
-    std::vector<sf::IntRect> frames = {};
-    int totalFrames = 8;
-    int currentFrame = 0;
-    float scale = 1.f;
-    sf::Sprite sprite;
-    std::map<int, sf::Texture*> textures;
     int drawOrder = 1;
+    Direction direction = Direction::None;
 
-    sf::Clock frameClock;
     sf::Clock liveClock;
-
-    //microseconds default
-    float animationResolution = 500000;
 
     //property map
     std::map<std::string, int> properties;
@@ -58,6 +50,14 @@ protected:
 
 public:
     virtual void spawn();
+
+    Direction getDirection() const;
+
+    void setDirection(Direction direction);
+
+    void addAnimation(States state, const Animation &animation);
+
+    void selectAnimation(States state);
 
     bool isSpawned();
 
@@ -111,10 +111,6 @@ public:
 
     bool intersectsWithObjects();
 
-    virtual void updateAnimation();
-
-    virtual void renderCurrentFrame();
-
     bool mouseIn();
 
     bool leftClicked();
@@ -155,49 +151,13 @@ public:
 
     void setHeight(int height);
 
-    const std::vector<sf::IntRect> &getFrames() const;
-
-    void setFrames(const std::vector<sf::IntRect> &frames);
-
-    int getTotalFrames() const;
-
-    void setTotalFrames(int totalFrames);
-
-    int getCurrentFrame() const;
-
-    void setCurrentFrame(int currentFrame);
-
-    float getScale() const;
-
-    void setScale(float scale);
-
-    sf::Sprite &getSprite();
-
-    void setSprite(const sf::Sprite &sprite);
-
-    sf::Texture *getTexture(States state = S_None);
-
-    void addTexture(sf::Texture *texture, States state = S_None);
-
     const sf::Clock &getLiveClock() const;
 
     void setLiveClock(const sf::Clock &liveClock);
 
-    float getAnimationResolution() const;
-
-    void setAnimationResolution(float animationResolution);
-
     void setInvalid();
 
     virtual std::string serialize();
-
-    int getTextureWidth() const;
-
-    void setTextureWidth(int textureWidth);
-
-    int getTextureHeight() const;
-
-    void setTextureHeight(int textureHeight);
 
     void createAnimationFrames();
 

@@ -5,9 +5,6 @@
 
 class Ground : public Entity {
 public:
-    const static int textureWidth = 578;
-    const static int textureHeight = 100;
-
     const static int width = 578;
     const static int height = 100;
 

@@ -11,9 +11,8 @@ ElevatorShaftMiddle::ElevatorShaftMiddle(sf::Vector2f coordinates) {
 
     setWorldCoordinates(coordinates);
     setSelectable(true);
+    addAnimation(S_None, Animation(this, S_None, 1, ResourceLoader::getTexture(E_ElevatorShaftMiddle)));
 
-    setTotalFrames(1);
-    addTexture(ResourceLoader::getTexture(Entities::E_ElevatorShaftMiddle));
     setDrawOrder(DrawOrder::D_ElevatorShafts);
     createAnimationFrames();
 

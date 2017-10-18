@@ -13,8 +13,8 @@ ControlButtonAddClerk::ControlButtonAddClerk() {
     setWidth(142);
     setHeight(47);
 
-    setTotalFrames(1);
-    addTexture(ResourceLoader::getTexture(Entities::E_ButtonAddClerk));
+    addAnimation(S_None, Animation(this, S_None, 1, ResourceLoader::getTexture(E_ButtonAddClerk, S_None)));
+
     createAnimationFrames();
 
     EntityContainer::add(this);

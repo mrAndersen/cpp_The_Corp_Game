@@ -6,68 +6,16 @@
 #include "Objects/Ground.h"
 
 std::string Entity::serialize() {
-    std::map<int, std::string> parameters;
-    std::string serialized;
 
-    parameters[1] = std::to_string(E_Entity);
-    parameters[2] = name;
-    parameters[3] = std::to_string(health);
-    parameters[4] = std::to_string(worldCoordinates.x) + "." + std::to_string(worldCoordinates.y);
-    parameters[5] = std::to_string(width);
-    parameters[6] = std::to_string(height);
-    parameters[7] = std::to_string(totalFrames);
-    parameters[8] = std::to_string(currentFrame);
-    parameters[9] = std::to_string(drawOrder);
-    parameters[10] = std::to_string(liveClock.getElapsedTime().asMicroseconds());
-    parameters[11] = std::to_string(animationResolution);
 
-    for (const auto &node:parameters) {
-        serialized += std::to_string(node.first) + ":" + node.second + "|";
-    }
-
-    return serialized;
 }
 
 void Entity::update() {
     updateLogic();
-    updateAnimation();
-}
-
-void Entity::updateAnimation() {
-    if (textures[state]) {
-        sprite.setTexture(*textures[state]);
-    } else {
-        sprite.setTexture(*textures[S_None]);
-    }
-
-    if (frameClock.getElapsedTime().asMicroseconds() >= animationResolution / System::timeFactor) {
-        currentFrame = (currentFrame == (totalFrames - 1)) ? 0 : currentFrame + 1;
-
-        frameClock.restart();
-    }
+    currentAnimation->update();
 
     renderDebugInfo();
     renderErrorText();
-    renderCurrentFrame();
-}
-
-void Entity::renderCurrentFrame() {
-    top = worldCoordinates.y + height / 2;
-    bottom = worldCoordinates.y - height / 2;
-    left = worldCoordinates.x - width / 2;
-    right = worldCoordinates.x + width / 2;
-
-    rect.height = height;
-    rect.width = width;
-    rect.left = (int) left;
-    rect.top = (int) top;
-
-    auto frame = frames[currentFrame];
-
-    sprite.setPosition(System::cToGl(worldCoordinates));
-    sprite.setTextureRect(frame);
-
-    System::window->draw(sprite);
 }
 
 bool Entity::mouseIn() {
@@ -96,19 +44,28 @@ bool Entity::rightClickedOutside() {
 
 void Entity::setTransparent() {
     valid = true;
-    sprite.setColor(sf::Color(255, 255, 255, 96));
+    currentAnimation->getSprite().setColor(sf::Color(255, 255, 255, 96));
 }
 
 void Entity::setNormal() {
-    sprite.setColor(sf::Color(255, 255, 255, 255));
+    currentAnimation->getSprite().setColor(sf::Color(255, 255, 255, 255));
 }
 
 void Entity::setInvalid() {
     valid = false;
-    sprite.setColor(sf::Color(255, 0, 0, 255));
+    currentAnimation->getSprite().setColor(sf::Color(255, 0, 0, 255));
 }
 
 void Entity::updateLogic() {
+    top = worldCoordinates.y + height / 2;
+    bottom = worldCoordinates.y - height / 2;
+    left = worldCoordinates.x - width / 2;
+    right = worldCoordinates.x + width / 2;
+
+    rect.height = height;
+    rect.width = width;
+    rect.left = (int) left;
+    rect.top = (int) top;
 
     if (health <= 0) {
         EntityContainer::remove(this);
@@ -195,60 +152,12 @@ void Entity::setHeight(int height) {
     Entity::height = height;
 }
 
-const std::vector<sf::IntRect> &Entity::getFrames() const {
-    return frames;
-}
-
-void Entity::setFrames(const std::vector<sf::IntRect> &frames) {
-    Entity::frames = frames;
-}
-
-int Entity::getTotalFrames() const {
-    return totalFrames;
-}
-
-void Entity::setTotalFrames(int totalFrames) {
-    Entity::totalFrames = totalFrames;
-}
-
-int Entity::getCurrentFrame() const {
-    return currentFrame;
-}
-
-void Entity::setCurrentFrame(int currentFrame) {
-    Entity::currentFrame = currentFrame;
-}
-
-float Entity::getScale() const {
-    return scale;
-}
-
-void Entity::setScale(float scale) {
-    Entity::scale = scale;
-}
-
-sf::Sprite &Entity::getSprite() {
-    return sprite;
-}
-
-void Entity::setSprite(const sf::Sprite &sprite) {
-    Entity::sprite = sprite;
-}
-
 const sf::Clock &Entity::getLiveClock() const {
     return liveClock;
 }
 
 void Entity::setLiveClock(const sf::Clock &liveClock) {
     Entity::liveClock = liveClock;
-}
-
-float Entity::getAnimationResolution() const {
-    return animationResolution;
-}
-
-void Entity::setAnimationResolution(float animationResolution) {
-    Entity::animationResolution = animationResolution;
 }
 
 int Entity::getDrawOrder() const {
@@ -268,24 +177,7 @@ void Entity::createAnimationFrames() {
     errorString.setCharacterSize(16);
     errorString.setFillColor(System::c_red);
 
-    if (!textureHeight) {
-        textureHeight = height;
-    }
-
-    if (!textureWidth) {
-        textureWidth = width;
-    }
-
-    sprite.setTexture(*textures[state]);
-    sprite.setOrigin(width / 2, height / 2);
-
-    for (int i = 0; i < totalFrames; ++i) {
-        sf::IntRect rect(i * textureWidth, 0, textureWidth, textureHeight);
-        frames.push_back(rect);
-    }
-
-    animationResolution = 1000000 / frames.size();
-    sprite.setTextureRect(frames[0]);
+    selectAnimation(S_None);
 }
 
 sf::Text &Entity::getErrorString() {
@@ -294,22 +186,6 @@ sf::Text &Entity::getErrorString() {
 
 void Entity::setErrorString(sf::Text &errorString) {
     Entity::errorString = errorString;
-}
-
-int Entity::getTextureWidth() const {
-    return textureWidth;
-}
-
-void Entity::setTextureWidth(int textureWidth) {
-    Entity::textureWidth = textureWidth;
-}
-
-int Entity::getTextureHeight() const {
-    return textureHeight;
-}
-
-void Entity::setTextureHeight(int textureHeight) {
-    Entity::textureHeight = textureHeight;
 }
 
 std::vector<std::string> Entity::getTypeTree() {
@@ -398,18 +274,6 @@ void Entity::setRect(const sf::IntRect &rect) {
     Entity::rect = rect;
 }
 
-sf::Texture *Entity::getTexture(States state) {
-    if (!textures.count(state)) {
-        throw std::invalid_argument("Unable to get texture for state");
-    }
-
-    return textures[state];
-}
-
-void Entity::addTexture(sf::Texture *texture, States state) {
-    textures.insert(std::pair<int, sf::Texture *>(state, texture));
-}
-
 Entity::Entity() {
     System::entitySequence++;
     id = System::entitySequence;
@@ -443,7 +307,7 @@ void Entity::setSelected(bool selected) {
     Entity::selected = selected;
 
     if (selected) {
-        sprite.setColor(sf::Color(0, 0, 0, 200));
+        currentAnimation->getSprite().setColor(sf::Color(0, 0, 0, 200));
     } else {
         setNormal();
     }
@@ -463,6 +327,22 @@ bool Entity::isSpawned() {
 
 void Entity::spawn() {
     spawned = true;
+}
+
+void Entity::addAnimation(States state, const Animation &animation) {
+    animations.insert(std::pair<States, Animation>(state, animation));
+}
+
+void Entity::selectAnimation(States state) {
+    currentAnimation = &animations.find(state).operator*().second;
+}
+
+Direction Entity::getDirection() const {
+    return direction;
+}
+
+void Entity::setDirection(Direction direction) {
+    Entity::direction = direction;
 }
 
 

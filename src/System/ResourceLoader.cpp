@@ -26,7 +26,7 @@ namespace ResourceLoader {
         }
 
         sf::Texture *texture = textureCollection[target][state];
-        texture->setSmooth(true);
+        texture->setSmooth(false);
 
         return texture;
     }
