@@ -10,9 +10,8 @@ ElevatorCabin::ElevatorCabin(sf::Vector2f coordinates) {
     setCost(500);
 
     setWorldCoordinates(coordinates);
+    addAnimation(S_None, Animation(this, S_None, 1, ResourceLoader::getTexture(E_ElevatorCabin)));
 
-    setTotalFrames(1);
-    addTexture(ResourceLoader::getTexture(Entities::E_ElevatorCabin));
     setDrawOrder(DrawOrder::D_ElevatorCabin);
     createAnimationFrames();
 

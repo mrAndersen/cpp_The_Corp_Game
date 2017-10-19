@@ -7,21 +7,6 @@
 #include "System/EntityContainer.h"
 #include "Objects/Ground.h"
 
-void Movable::renderCurrentFrame() {
-
-    if (direction == Direction::Left) {
-        sprite.setScale(-1.f, 1.f);
-        sprite.setRotation(0);
-    }
-
-    if (direction == Direction::Right) {
-        sprite.setScale(1.f, 1.f);
-        sprite.setRotation(0);
-    }
-
-    Entity::renderCurrentFrame();
-}
-
 void Movable::renderDebugInfo() {
     if (System::debug) {
         debugInfo.setPosition(System::cToGl(worldCoordinates.x + width / 2, worldCoordinates.y + height / 2));
@@ -43,27 +28,9 @@ void Movable::renderDebugInfo() {
     }
 }
 
-void Movable::updateAnimation() {
+void Movable::updateLogic() {
     float frameTimeSeconds = (float) System::frameTimeMcs / 1000000;
     float frameDistance = frameTimeSeconds * currentSpeed * System::timeFactor;
-
-    if (direction == Direction::Down && state == S_Falling) {
-        worldCoordinates.y -= frameDistance;
-        currentSpeed = currentSpeed + fallAcceleration * frameTimeSeconds * System::timeFactor;
-    }
-
-    if (direction == Direction::Right) {
-        worldCoordinates.x += frameDistance;
-    }
-
-    if (direction == Direction::Left) {
-        worldCoordinates.x -= frameDistance;
-    }
-
-    Entity::updateAnimation();
-}
-
-void Movable::updateLogic() {
 
     //update floor
     floor = ((int) worldCoordinates.y - ((int) worldCoordinates.y % System::gridSize)) / System::gridSize / 3;
@@ -94,6 +61,11 @@ void Movable::updateLogic() {
     //falling
     if (!isOnTheGround() && isAboveGround() && direction == Direction::Down) {
         state = S_Falling;
+    }
+
+    if(state == S_Falling){
+        worldCoordinates.y -= frameDistance;
+        currentSpeed = currentSpeed + fallAcceleration * frameTimeSeconds;
     }
 
     //stop falling and has office
@@ -163,14 +135,6 @@ void Movable::updateLogic() {
 bool Movable::hasReachedWorldEdges() {
     return !((worldCoordinates.x + width / 2) <= System::worldWidth / 2 &&
              (worldCoordinates.x - width / 2) >= -System::worldWidth / 2);
-}
-
-Direction Movable::getDirection() const {
-    return direction;
-}
-
-void Movable::setDirection(Direction direction) {
-    Movable::direction = direction;
 }
 
 float Movable::getCurrentSpeed() const {

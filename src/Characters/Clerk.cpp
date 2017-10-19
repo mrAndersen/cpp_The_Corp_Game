@@ -10,17 +10,17 @@
 Clerk::Clerk(sf::Vector2f coordinates) : Movable() {
     setName("clerk");
 
+    addAnimation(S_None, Animation(this, S_None, 24, ResourceLoader::getTexture(E_Clerk, S_None)));
+    addAnimation(S_GoToOffice, Animation(this, S_GoToOffice, 24, ResourceLoader::getTexture(E_Clerk, S_GoToOffice)));
+    addAnimation(S_Working, Animation(this, S_Working, 24, ResourceLoader::getTexture(E_Clerk, S_Working)));
+
     setWidth(Clerk::width);
     setHeight(Clerk::height);
-    setTotalFrames(24);
     setDefaultSpeed(130);
+
     setCost(500);
     setWorldCoordinates(coordinates);
     setSelectable(true);
-
-    addTexture(ResourceLoader::getTexture(Entities::E_Clerk, S_None), S_None);
-    addTexture(ResourceLoader::getTexture(Entities::E_Clerk, S_GoToOffice), S_GoToOffice);
-    addTexture(ResourceLoader::getTexture(Entities::E_Clerk, S_Working), S_Working);
 
     setDrawOrder(100);
     createAnimationFrames();

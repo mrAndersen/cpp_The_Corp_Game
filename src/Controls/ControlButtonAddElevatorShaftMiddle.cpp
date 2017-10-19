@@ -14,8 +14,7 @@ ControlButtonAddElevatorShaftMiddle::ControlButtonAddElevatorShaftMiddle() {
     setWidth(142);
     setHeight(47);
 
-    setTotalFrames(1);
-    addTexture(ResourceLoader::getTexture(Entities::E_ButtonAddElevatorShaftMiddle));
+    addAnimation(S_None, Animation(this, S_None, 1, ResourceLoader::getTexture(E_ButtonAddElevatorShaftMiddle)));
     createAnimationFrames();
 
     EntityContainer::add(this);

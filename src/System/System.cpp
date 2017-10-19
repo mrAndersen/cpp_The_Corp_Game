@@ -4,6 +4,8 @@
 #include <sstream>
 #include <iomanip>
 #include <random>
+#include <chrono>
+#include <climits>
 #include "System.h"
 #include "ViewHandler.h"
 #include "GameTime.h"
@@ -256,7 +258,11 @@ namespace System {
     }
 
     int getRandom(int min, int max) {
-        return min + (rand() * (max - min) / RAND_MAX);
+        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+        std::mt19937 generator(seed);
+
+        auto random = (int) (min + (float) generator() * (max - min) / ULONG_MAX);
+        return random;
     }
 }
 

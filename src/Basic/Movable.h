@@ -16,7 +16,6 @@ class Movable : public Entity {
 
 protected:
     float distancePassed = 0;
-    Direction direction = Direction::Right;
 
     //pixels per second
     float defaultSpeed = 130;
@@ -36,12 +35,9 @@ protected:
     std::string personName;
     Gender gender = Gender::G_Male;
 
-
     bool hasReachedWorldEdges();
 
     void updateLogic() override;
-
-    void renderCurrentFrame() override;
 
 public:
     Movable();
@@ -60,15 +56,11 @@ public:
 
     bool isSpawned() const;
 
-    Direction getDirection() const;
-
     void spawn() override;
 
     float getCost() const;
 
     void setCost(float cost);
-
-    void setDirection(Direction direction);
 
     float getFallAcceleration() const;
 
@@ -81,8 +73,6 @@ public:
     std::string serialize() override;
 
     void renderDebugInfo() override;
-
-    void updateAnimation() override;
 
     float getCurrentSpeed() const;
 
