@@ -29,6 +29,8 @@ void Movable::renderDebugInfo() {
 }
 
 void Movable::updateLogic() {
+    float frameTimeSeconds = (float) System::frameTimeMcs / 1000000;
+    float frameDistance = frameTimeSeconds * currentSpeed * System::timeFactor;
 
     //update floor
     floor = ((int) worldCoordinates.y - ((int) worldCoordinates.y % System::gridSize)) / System::gridSize / 3;
@@ -59,6 +61,11 @@ void Movable::updateLogic() {
     //falling
     if (!isOnTheGround() && isAboveGround() && direction == Direction::Down) {
         state = S_Falling;
+    }
+
+    if(state == S_Falling){
+        worldCoordinates.y -= frameDistance;
+        currentSpeed = currentSpeed + fallAcceleration * frameTimeSeconds;
     }
 
     //stop falling and has office

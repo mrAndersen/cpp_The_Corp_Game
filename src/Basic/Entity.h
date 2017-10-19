@@ -13,7 +13,7 @@ protected:
     //parameters
     int id;
     std::map<States, Animation> animations;
-    Animation *currentAnimation;
+    Animation *currentAnimation = nullptr;
 
     std::string name = "";
     float health = 100;

@@ -57,6 +57,8 @@ void Entity::setInvalid() {
 }
 
 void Entity::updateLogic() {
+    selectAnimation(state);
+
     top = worldCoordinates.y + height / 2;
     bottom = worldCoordinates.y - height / 2;
     left = worldCoordinates.x - width / 2;
@@ -177,7 +179,7 @@ void Entity::createAnimationFrames() {
     errorString.setCharacterSize(16);
     errorString.setFillColor(System::c_red);
 
-    selectAnimation(S_None);
+    selectAnimation(state);
 }
 
 sf::Text &Entity::getErrorString() {
