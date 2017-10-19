@@ -12,6 +12,12 @@ enum Gender {
     G_Female = 2
 };
 
+enum Race {
+    R_White = 1,
+    R_Black = 2,
+    R_Asian = 3
+};
+
 enum Direction {
     None,
     Right,

@@ -33,7 +33,9 @@ protected:
     float cost = 0;
     int floor = 1;
     std::string personName;
+
     Gender gender = Gender::G_Male;
+    Race race = Race::R_White;
 
     bool hasReachedWorldEdges();
 
