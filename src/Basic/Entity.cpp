@@ -338,7 +338,11 @@ void Entity::addAnimation(States state, const Animation &animation) {
 }
 
 void Entity::selectAnimation(States state) {
-    currentAnimation = &animations.find(state).operator*().second;
+    if (!animations.count(state)) {
+        currentAnimation = &animations.find(S_None).operator*().second;
+    } else {
+        currentAnimation = &animations.find(state).operator*().second;
+    }
 }
 
 Direction Entity::getDirection() const {

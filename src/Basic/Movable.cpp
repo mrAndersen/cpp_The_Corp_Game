@@ -98,6 +98,7 @@ void Movable::updateLogic() {
 
         if (isInWorkPlace()) {
             state = S_Working;
+            worldCoordinates = currentWorkPlace->getWorldCoordinates();
         } else {
             if (currentWorkPlace->getParentOffice()->getFloor() == this->floor) {
                 //office is on the same floor

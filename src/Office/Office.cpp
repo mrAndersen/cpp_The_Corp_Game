@@ -35,10 +35,10 @@ void Office::updateLogic() {
     //update floor
     floor = ((int) worldCoordinates.y - ((int) worldCoordinates.y % System::gridSize)) / System::gridSize / 3;
 
-    workPlaces[0]->setWorldCoordinates({worldCoordinates.x - 300, worldCoordinates.y});
-    workPlaces[1]->setWorldCoordinates({worldCoordinates.x - 150, worldCoordinates.y});
-    workPlaces[2]->setWorldCoordinates({worldCoordinates.x + 150, worldCoordinates.y});
-    workPlaces[3]->setWorldCoordinates({worldCoordinates.x + 300, worldCoordinates.y});
+    workPlaces[0]->setWorldCoordinates({worldCoordinates.x - width / 2 + 70, worldCoordinates.y - 11});
+    workPlaces[1]->setWorldCoordinates({worldCoordinates.x - width / 2 + 220, worldCoordinates.y - 11});
+    workPlaces[2]->setWorldCoordinates({worldCoordinates.x - width / 2 + 372, worldCoordinates.y - 11});
+    workPlaces[3]->setWorldCoordinates({worldCoordinates.x - width / 2 + 516, worldCoordinates.y - 11});
 
     Entity::updateLogic();
 }

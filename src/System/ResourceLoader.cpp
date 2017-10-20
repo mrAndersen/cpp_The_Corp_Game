@@ -32,9 +32,10 @@ namespace ResourceLoader {
     }
 
     void loadTexturesFromFiles() {
-        ResourceLoader::loadTexture(Entities::E_OfficeClerk, "resources/office/office.clerk.png");
+        ResourceLoader::loadTexture(Entities::E_OfficeDefault, "resources/office/office.default.png");
 
 
+        //----<<Clerk>>-----
         ResourceLoader::loadTexture(Entities::E_Clerk, "resources/characters/clerk/white.level_1.wait.png", S_None);
         ResourceLoader::loadTexture(Entities::E_Clerk, "resources/characters/clerk/white.level_1.walk.png", S_GoToOffice);
         ResourceLoader::loadTexture(Entities::E_Clerk, "resources/characters/clerk/white.level_1.work.png", S_Working);
