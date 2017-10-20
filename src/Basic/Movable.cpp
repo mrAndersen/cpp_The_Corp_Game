@@ -12,17 +12,20 @@ void Movable::renderDebugInfo() {
         debugInfo.setPosition(System::cToGl(worldCoordinates.x + width / 2, worldCoordinates.y + height / 2));
         debugInfo.setString(
                 "id: " + std::to_string(id) + "\n" +
-                        "name: " + personName + "\n" +
-                "pos: {" + std::to_string((int) worldCoordinates.x) + "," + std::to_string((int) worldCoordinates.y) + "}\n" +
+                "name: " + personName + "\n" +
+                "pos: {" + std::to_string((int) worldCoordinates.x) + "," + std::to_string((int) worldCoordinates.y) +
+                "}\n" +
                 "left: " + std::to_string((int) left) + "," +
                 "right: " + std::to_string((int) right) + "," +
                 "top: " + std::to_string((int) top) + "," +
                 "bottom: " + std::to_string((int) bottom) + "\n" +
-                "office: " + std::to_string(currentWorkPlace ? currentWorkPlace->getId() : 0) + "\n" +
+                "office: " + std::to_string(currentWorkPlace ? currentWorkPlace->getParentOffice()->getId() : 0) +
+                "\n" +
                 "state: " + std::to_string(state) + "\n" +
                 "floor: " + std::to_string(floor) + "\n" +
                 "speed: " + std::to_string((int) currentSpeed) + "p/s\n" +
                 "selected: " + std::to_string((int) selected) + "\n"
+                        "race: " + std::to_string((int) race) + " gender: " + std::to_string((int) gender)
         );
         System::window->draw(debugInfo);
     }
@@ -63,23 +66,23 @@ void Movable::updateLogic() {
         state = S_Falling;
     }
 
-    if(state == S_Falling){
+    if (state == S_Falling) {
         worldCoordinates.y -= frameDistance;
         currentSpeed = currentSpeed + fallAcceleration * frameTimeSeconds;
     }
 
-    //stop falling and has office
-    if (isOnTheGround() && state == S_Falling && currentWorkPlace) {
-        direction = Direction::None;
-        state = S_GoToOffice;
-    }
+    //stop falling
+    if (isOnTheGround() && state == S_Falling) {
+        //normalize
+        worldCoordinates.y = System::groundLevel + Ground::height + height / 2;
 
-    //stop falling and no office
-    if (isOnTheGround() && state == S_Falling && !currentWorkPlace) {
         direction = Direction::None;
-        state = S_None;
+        if (currentWorkPlace) {
+            state = S_GoToOffice;
+        } else {
+            state = S_None;
+        }
     }
-
 
     //stop smoking
     if (state == S_Smoke && System::gameTime.diffMinutes(smokeStarted) >= smokePeriodMinutes) {
@@ -96,7 +99,7 @@ void Movable::updateLogic() {
         if (isInWorkPlace()) {
             state = S_Working;
         } else {
-            if (currentWorkPlace->getFloor() == this->floor) {
+            if (currentWorkPlace->getParentOffice()->getFloor() == this->floor) {
                 //office is on the same floor
 
                 if (currentWorkPlace->getWorldCoordinates().x < this->worldCoordinates.x) {
@@ -129,6 +132,16 @@ void Movable::updateLogic() {
         searchWorkPlace();
     }
 
+
+    //movement
+    if (direction == Direction::Right) {
+        worldCoordinates.x += frameDistance;
+    }
+
+    if (direction == Direction::Left) {
+        worldCoordinates.x -= frameDistance;
+    }
+
     Entity::updateLogic();
 }
 
@@ -159,6 +172,35 @@ std::string Movable::serialize() {
 
 Movable::Movable() : Entity() {
     personName = ResourceLoader::getRandomName(gender);
+
+    auto rnd = System::getRandom(1, 3);
+
+    switch (rnd) {
+        case 1:
+            race = R_White;
+            break;
+        case 2:
+            race = R_Black;
+            break;
+        case 3:
+            race = R_Asian;
+            break;
+        default:
+            race = R_White;
+    }
+
+    auto rnd2 = System::getRandom(1, 2);
+
+    switch (rnd2) {
+        case 1:
+            gender = G_Male;
+            break;
+        case 2:
+            gender = G_Female;
+            break;
+        default:
+            gender = G_Male;
+    }
 }
 
 float Movable::getDefaultSpeed() const {
@@ -191,8 +233,9 @@ void Movable::searchWorkPlace() {
     if (!this->currentWorkPlace && this->isSpawned()) {
         for (auto office:EntityContainer::getOffices()) {
             if (office->hasFreeWorkPlaces() && office->isSpawned()) {
-                currentWorkPlace = office;
-                office->addWorker(this);
+
+                currentWorkPlace = office->getNextFreeWorkPlace();
+                currentWorkPlace->setWorker(this);
 
                 return;
             }
@@ -215,7 +258,7 @@ void Movable::setFloor(int floor) {
 bool Movable::isInWorkPlace() {
     return
             currentWorkPlace &&
-            floor == currentWorkPlace->getFloor() &&
+            floor == currentWorkPlace->getParentOffice()->getFloor() &&
             (int) worldCoordinates.x == (int) currentWorkPlace->getWorldCoordinates().x;
 }
 

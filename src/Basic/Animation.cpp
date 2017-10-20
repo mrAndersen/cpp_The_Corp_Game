@@ -1,4 +1,5 @@
 #include <System/System.h>
+#include <iostream>
 #include "Animation.h"
 
 States Animation::getState() const {
@@ -74,6 +75,7 @@ Animation::Animation(Entity *entity, States state, int totalFrames, sf::Texture 
     this->height = entity->getHeight();
 
     sprite.setOrigin(width / 2, height / 2);
+    sprite.setTexture(*texture);
 
     for (int i = 0; i < totalFrames; ++i) {
         sf::IntRect rect(i * width, 0, width, height);
@@ -85,15 +87,14 @@ Animation::Animation(Entity *entity, States state, int totalFrames, sf::Texture 
 }
 
 void Animation::update() {
+
     if (frameClock.getElapsedTime().asMicroseconds() >= animationResolution / System::timeFactor) {
         currentFrame = (currentFrame == (totalFrames - 1)) ? 0 : currentFrame + 1;
-
         frameClock.restart();
     }
 
     auto frame = frames[currentFrame];
 
-    sprite.setTexture(*texture);
     sprite.setPosition(System::cToGl(entity->getWorldCoordinates()));
     sprite.setTextureRect(frame);
 
@@ -116,4 +117,12 @@ Entity *Animation::getEntity() const {
 
 void Animation::setEntity(Entity *entity) {
     Animation::entity = entity;
+}
+
+const sf::Clock &Animation::getFrameClock() const {
+    return frameClock;
+}
+
+void Animation::setFrameClock(const sf::Clock &frameClock) {
+    Animation::frameClock = frameClock;
 }

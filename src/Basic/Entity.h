@@ -159,7 +159,7 @@ public:
 
     virtual std::string serialize();
 
-    void createAnimationFrames();
+    void initEntity();
 
     virtual void renderDebugInfo();
 

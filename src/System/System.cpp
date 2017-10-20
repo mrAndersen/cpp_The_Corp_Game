@@ -261,8 +261,8 @@ namespace System {
         unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
         std::mt19937 generator(seed);
 
-        auto random = (int) (min + (float) generator() * (max - min) / ULONG_MAX);
-        return random;
+        std::uniform_int_distribution<int> distribution(min, max);
+        return distribution.operator()(generator);
     }
 }
 

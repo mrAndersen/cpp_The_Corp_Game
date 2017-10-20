@@ -1,7 +1,6 @@
 #ifndef THE_CORP_GAME_MOVABLE_H
 #define THE_CORP_GAME_MOVABLE_H
 
-#include <Office/Office.h>
 #include "Entity.h"
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics.hpp>
@@ -12,6 +11,7 @@
 #include <Component/WorkPlace.h>
 
 class Office;
+class WorkPlace;
 class Movable : public Entity {
 
 protected:
@@ -22,7 +22,7 @@ protected:
     float currentSpeed = 130;
     float fallAcceleration = 980;
 
-    Office *currentWorkPlace = nullptr;
+    WorkPlace *currentWorkPlace = nullptr;
     sf::Clock workPlaceSearchResolution;
 
     //relevant to game time

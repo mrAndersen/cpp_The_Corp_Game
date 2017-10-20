@@ -13,7 +13,7 @@ ElevatorCabin::ElevatorCabin(sf::Vector2f coordinates) {
     addAnimation(S_None, Animation(this, S_None, 1, ResourceLoader::getTexture(E_ElevatorCabin)));
 
     setDrawOrder(DrawOrder::D_ElevatorCabin);
-    createAnimationFrames();
+    initEntity();
 
     EntityContainer::add(this);
 }

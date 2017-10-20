@@ -2,8 +2,8 @@
 #define THE_CORP_GAME_OFFICE_H
 
 #include <Basic/Entity.h>
-#include <Component/WorkPlace.h>
 #include <Basic/Movable.h>
+#include <Component/WorkPlace.h>
 
 class Movable;
 class WorkPlace;
@@ -13,7 +13,7 @@ protected:
 
     float cost = 0;
 
-    WorkPlace *workPlaces[4];
+    WorkPlace* workPlaces[4];
 public:
     Office();
 
@@ -38,6 +38,8 @@ public:
     void addWorker(Movable * worker);
 
     int getBusyWorkPlaces();
+
+    WorkPlace* getNextFreeWorkPlace();
 };
 
 #endif //THE_CORP_GAME_OFFICE_H

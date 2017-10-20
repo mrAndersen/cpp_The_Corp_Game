@@ -16,7 +16,7 @@ ControlButtonAddElevatorShaftTop::ControlButtonAddElevatorShaftTop() {
     setHeight(47);
 
     addAnimation(S_None, Animation(this, S_None, 1, ResourceLoader::getTexture(E_ButtonAddElevatorShaftTop)));
-    createAnimationFrames();
+    initEntity();
 
     EntityContainer::add(this);
 }
@@ -87,7 +87,7 @@ void ControlButtonAddElevatorShaftTop::updateLogic() {
                     (attachedShaft->intersectsWithObjects() || attachedShaft->getNeighborOffices().empty() ||
                      !attachedShaft->isOnTheGround())) {
                 attachedShaft->getErrorString().setString(
-                        "Invalid placement position, must be placed on top of the shaft");
+                        "Invalid placement position\nmust be placed on top of the shaft");
             }
 
             //cash error

@@ -1,8 +1,5 @@
+#include <System/System.h>
 #include "WorkPlace.h"
-
-WorkPlace::WorkPlace(const sf::Vector2f &worldCoordinates) : worldCoordinates(worldCoordinates) {
-
-}
 
 const sf::Vector2f &WorkPlace::getWorldCoordinates() const {
     return worldCoordinates;
@@ -26,4 +23,24 @@ Movable *WorkPlace::getWorker() const {
 
 void WorkPlace::setWorker(Movable *worker) {
     WorkPlace::worker = worker;
+}
+
+WorkPlace::WorkPlace(const sf::Vector2f &worldCoordinates, Office *parentOffice) {
+    this->worldCoordinates = worldCoordinates;
+    this->parentOffice = parentOffice;
+}
+
+void WorkPlace::drawDebug() {
+    sf::RectangleShape rect;
+
+    rect.setPosition(System::cToGl(worldCoordinates));
+    rect.setSize({15, 15});
+
+    if(worker){
+        rect.setFillColor(sf::Color::Red);
+    }else{
+        rect.setFillColor(sf::Color::Green);
+    }
+
+    System::window->draw(rect);
 }

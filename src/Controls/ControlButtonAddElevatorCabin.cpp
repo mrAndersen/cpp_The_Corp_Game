@@ -14,7 +14,7 @@ ControlButtonAddElevatorCabin::ControlButtonAddElevatorCabin() {
     setHeight(47);
 
     addAnimation(S_None, Animation(this, S_None, 1, ResourceLoader::getTexture(E_ButtonAddElevatorShaftMiddle)));
-    createAnimationFrames();
+    initEntity();
 
     EntityContainer::add(this);
 
@@ -26,7 +26,7 @@ void ControlButtonAddElevatorCabin::updateLogic() {
                           attachedCabin->isInsideShaftBoundaries();
 
     if (leftClicked() && !attachedCabin && !System::spawningUnit) {
-        attachedCabin = new ElevatorCabin(sf::Vector2f(System::g_x, System::g_y));
+        attachedCabin = new ElevatorCabin({System::g_x, System::g_y});
         attachedCabin->setTransparent();
     }
 

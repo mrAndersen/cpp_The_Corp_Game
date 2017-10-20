@@ -43,13 +43,9 @@ public:
 
     void setLiveTimeSeconds(float liveTimeSeconds);
 
-    Direction getDirection() const;
-
     float getSpeed() const;
 
     void setSpeed(float speed);
-
-    void setDirection(Direction direction);
 
     TextEntity(const sf::Color &color, int size);
 
