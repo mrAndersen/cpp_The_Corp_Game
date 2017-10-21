@@ -10,10 +10,10 @@ OfficeClerk::OfficeClerk(sf::Vector2f coordinates) : Office() {
     setCost(2500);
 
     setWorldCoordinates(coordinates);
-    addAnimation(S_None, Animation(this, S_None, 1, ResourceLoader::getTexture(E_OfficeClerk)));
+    addAnimation(S_None, Animation(this, S_None, 6, ResourceLoader::getTexture(E_OfficeDefault)));
 
-    setDrawOrder(98);
-    createAnimationFrames();
+    setDrawOrder(D_Offices);
+    initEntity();
 
     EntityContainer::add(this);
 }

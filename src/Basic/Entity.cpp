@@ -107,7 +107,7 @@ bool Entity::isAboveGround() {
 }
 
 bool Entity::isOnTheGround() {
-    int delta = 2;
+    int delta = 3;
 
     return
             bottom - delta < System::groundLevel + Ground::height ||
@@ -170,7 +170,7 @@ void Entity::setDrawOrder(int drawOrder) {
     Entity::drawOrder = drawOrder;
 }
 
-void Entity::createAnimationFrames() {
+void Entity::initEntity() {
     debugInfo.setFont(*System::debugFont);
     debugInfo.setCharacterSize(10);
     debugInfo.setFillColor(sf::Color::Black);
@@ -179,7 +179,7 @@ void Entity::createAnimationFrames() {
     errorString.setCharacterSize(16);
     errorString.setFillColor(System::c_red);
 
-    selectAnimation(state);
+    selectAnimation(S_None);
 }
 
 sf::Text &Entity::getErrorString() {
@@ -279,6 +279,8 @@ void Entity::setRect(const sf::IntRect &rect) {
 Entity::Entity() {
     System::entitySequence++;
     id = System::entitySequence;
+
+    selectAnimation(S_None);
 }
 
 States Entity::getState() const {
@@ -309,7 +311,7 @@ void Entity::setSelected(bool selected) {
     Entity::selected = selected;
 
     if (selected) {
-        currentAnimation->getSprite().setColor(sf::Color(0, 0, 0, 200));
+        currentAnimation->getSprite().setColor(sf::Color(0, 255, 0, 255));
     } else {
         setNormal();
     }
@@ -336,7 +338,11 @@ void Entity::addAnimation(States state, const Animation &animation) {
 }
 
 void Entity::selectAnimation(States state) {
-    currentAnimation = &animations.find(state).operator*().second;
+    if (!animations.count(state)) {
+        currentAnimation = &animations.find(S_None).operator*().second;
+    } else {
+        currentAnimation = &animations.find(state).operator*().second;
+    }
 }
 
 Direction Entity::getDirection() const {

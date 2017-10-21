@@ -15,8 +15,7 @@ ControlButtonAddClerk::ControlButtonAddClerk() {
 
     addAnimation(S_None, Animation(this, S_None, 1, ResourceLoader::getTexture(E_ButtonAddClerk, S_None)));
 
-    createAnimationFrames();
-
+    initEntity();
     EntityContainer::add(this);
 }
 
@@ -26,7 +25,7 @@ void ControlButtonAddClerk::updateLogic() {
                           !attachedClerk->isBelowGround();
 
     if (leftClicked() && !attachedClerk && !System::spawningUnit) {
-        attachedClerk = new Clerk(sf::Vector2f(System::g_x, System::g_y));
+        attachedClerk = new Clerk({System::g_x, System::g_y});
     }
 
     if (rightClickedOutside() && attachedClerk) {
@@ -63,7 +62,8 @@ void ControlButtonAddClerk::updateLogic() {
             attachedClerk->setInvalid();
 
             //placement error
-            if (attachedClerk && attachedClerk->isBelowGround() && attachedClerk->getErrorString().getString().isEmpty()) {
+            if (attachedClerk && attachedClerk->isBelowGround() &&
+                attachedClerk->getErrorString().getString().isEmpty()) {
                 attachedClerk->getErrorString().setString("Invalid placement position");
             }
 

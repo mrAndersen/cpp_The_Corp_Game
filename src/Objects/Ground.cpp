@@ -12,7 +12,7 @@ Ground::Ground(sf::Vector2f coordinates) {
 
     addAnimation(S_None, Animation(this, S_None, 1, ResourceLoader::getTexture(E_StaticGround)));
 
-    createAnimationFrames();
+    initEntity();
 
     EntityContainer::add(this);
 }

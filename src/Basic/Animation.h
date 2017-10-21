@@ -30,6 +30,10 @@ class Animation {
 public:
     Animation(Entity *entity, States state, int totalFrames, sf::Texture *texture);
 
+    const sf::Clock &getFrameClock() const;
+
+    void setFrameClock(const sf::Clock &frameClock);
+
     Entity *getEntity() const;
 
     void setEntity(Entity *entity);

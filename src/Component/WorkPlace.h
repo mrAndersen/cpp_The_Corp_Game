@@ -2,10 +2,11 @@
 #define THE_CORP_GAME_WORKPLACE_H
 
 #include <Basic/Movable.h>
+#include <Office/Office.h>
 #include <SFML/System/Vector2.hpp>
 
-class Movable;
 class Office;
+class Movable;
 class WorkPlace {
 
     sf::Vector2f worldCoordinates;
@@ -13,7 +14,7 @@ class WorkPlace {
     Movable *worker = nullptr;
 
 public:
-    explicit WorkPlace(const sf::Vector2f &worldCoordinates);
+    WorkPlace(const sf::Vector2f &worldCoordinates, Office *parentOffice);
 
     const sf::Vector2f &getWorldCoordinates() const;
 
@@ -26,6 +27,8 @@ public:
     Movable *getWorker() const;
 
     void setWorker(Movable *worker);
+
+    void drawDebug();
 };
 
 

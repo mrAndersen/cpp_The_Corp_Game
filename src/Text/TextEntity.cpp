@@ -50,7 +50,7 @@ void TextEntity::setText(const sf::Text &text) {
     TextEntity::text = text;
 }
 
-TextEntity::TextEntity(const sf::Color &color, int size) : color(color), size(size) {
+TextEntity::TextEntity(const sf::Color &color, int size) : Entity() {
     text.setCharacterSize((unsigned int) size);
     text.setFillColor(color);
     text.setFont(*System::gameFont);
@@ -58,6 +58,7 @@ TextEntity::TextEntity(const sf::Color &color, int size) : color(color), size(si
     setDrawOrder(INT_MAX);
 
     EntityContainer::add(this);
+
 }
 
 void TextEntity::setString(const std::string &string) {
@@ -71,14 +72,6 @@ float TextEntity::getLiveTimeSeconds() const {
 
 void TextEntity::setLiveTimeSeconds(float liveTimeSeconds) {
     TextEntity::liveTimeSeconds = liveTimeSeconds;
-}
-
-Direction TextEntity::getDirection() const {
-    return direction;
-}
-
-void TextEntity::setDirection(Direction direction) {
-    TextEntity::direction = direction;
 }
 
 float TextEntity::getSpeed() const {

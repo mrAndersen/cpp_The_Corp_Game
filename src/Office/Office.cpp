@@ -35,6 +35,11 @@ void Office::updateLogic() {
     //update floor
     floor = ((int) worldCoordinates.y - ((int) worldCoordinates.y % System::gridSize)) / System::gridSize / 3;
 
+    workPlaces[0]->setWorldCoordinates({worldCoordinates.x - width / 2 + 70, worldCoordinates.y - 11});
+    workPlaces[1]->setWorldCoordinates({worldCoordinates.x - width / 2 + 220, worldCoordinates.y - 11});
+    workPlaces[2]->setWorldCoordinates({worldCoordinates.x - width / 2 + 372, worldCoordinates.y - 11});
+    workPlaces[3]->setWorldCoordinates({worldCoordinates.x - width / 2 + 516, worldCoordinates.y - 11});
+
     Entity::updateLogic();
 }
 
@@ -61,6 +66,11 @@ void Office::renderDebugInfo() {
                         "floor: " + std::to_string(floor) + "\n"
                         "workers: " + std::to_string(getBusyWorkPlaces()) + "\n"
         );
+
+        for (auto &workPlace : workPlaces) {
+            workPlace->drawDebug();
+        }
+
         System::window->draw(debugInfo);
     }
 }
@@ -80,18 +90,17 @@ void Office::spawn() {
 }
 
 Office::Office() {
-//    auto w1 = new WorkPlace({worldCoordinates.x,worldCoordinates.y - });
-//    auto w2 = new WorkPlace({worldCoordinates.x,worldCoordinates.y - });
-//    auto w3 = new WorkPlace({worldCoordinates.x,worldCoordinates.y +});
-//    auto w4 = new WorkPlace({worldCoordinates.x,worldCoordinates.y +});
-
+    workPlaces[0] = new WorkPlace({worldCoordinates.x - 300, worldCoordinates.y}, this);
+    workPlaces[1] = new WorkPlace({worldCoordinates.x - 150, worldCoordinates.y}, this);
+    workPlaces[2] = new WorkPlace({worldCoordinates.x + 150, worldCoordinates.y}, this);
+    workPlaces[3] = new WorkPlace({worldCoordinates.x + 300, worldCoordinates.y}, this);
 
     setSelectable(true);
 }
 
 bool Office::hasFreeWorkPlaces() {
-    for (int i = 0; i < 4; ++i) {
-        if (!workPlaces[i]->getWorker()) {
+    for (auto &workPlace : workPlaces) {
+        if (!workPlace->getWorker()) {
             return true;
         }
     }
@@ -100,9 +109,9 @@ bool Office::hasFreeWorkPlaces() {
 }
 
 void Office::addWorker(Movable *worker) {
-    for (int i = 0; i < 4; ++i) {
-        if (!workPlaces[i]->getWorker()) {
-            workPlaces[i]->setWorker(worker);
+    for (auto &workPlace : workPlaces) {
+        if (!workPlace->getWorker()) {
+            workPlace->setWorker(worker);
         }
     }
 }
@@ -110,11 +119,19 @@ void Office::addWorker(Movable *worker) {
 int Office::getBusyWorkPlaces() {
     int j = 0;
 
-    for (int i = 0; i < 4; ++i) {
-        if (!workPlaces[i]->getWorker()) {
+    for (auto &workPlace : workPlaces) {
+        if (workPlace->getWorker() != nullptr) {
             j++;
         }
     }
     return j;
+}
+
+WorkPlace *Office::getNextFreeWorkPlace() {
+    for (auto &workPlace : workPlaces) {
+        if (!workPlace->getWorker()) {
+            return workPlace;
+        }
+    }
 }
 

@@ -106,6 +106,8 @@ int main() {
                 auto a5 = new ElevatorShaftTop(sf::Vector2f(775,175 + 600));
 
 
+                break;
+
 
 //                for (int i = 0; i <= 1; i++) {
 //                    auto *clerk = new Clerk(System::window->getDefaultView().getCenter());

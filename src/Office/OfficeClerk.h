@@ -1,5 +1,5 @@
-#ifndef THE_CORP_GAME_OFFICECLERK_H
-#define THE_CORP_GAME_OFFICECLERK_H
+#ifndef THE_CORP_GAME_OFFICEDEFAULT_H
+#define THE_CORP_GAME_OFFICEDEFAULT_H
 
 #include "Office.h"
 
@@ -15,4 +15,4 @@ public:
     virtual std::string serialize() override;
 };
 
-#endif //THE_CORP_GAME_OFFICECLERK_H
+#endif

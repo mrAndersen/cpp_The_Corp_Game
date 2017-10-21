@@ -1,6 +1,10 @@
 #ifndef CORP_GAME_ENUM
 #define CORP_GAME_ENUM
 
+enum Multiplier {
+    M_Race = 17,
+};
+
 enum DrawOrder {
     D_Offices = 98,
     D_ElevatorShafts = 110,
@@ -10,6 +14,12 @@ enum DrawOrder {
 enum Gender {
     G_Male = 1,
     G_Female = 2
+};
+
+enum Race {
+    R_White = 1,
+    R_Black = 2,
+    R_Asian = 3
 };
 
 enum Direction {
@@ -45,23 +55,23 @@ enum Entities {
     E_Entity = 0,
 
     //Ground
-    E_StaticGround = 11,
+            E_StaticGround = 11,
 
     //Characters
-    E_Clerk = 21,
+            E_Clerk = 21,
 
     //Controls
-    E_ButtonAddClerk = 31,
+            E_ButtonAddClerk = 31,
     E_ButtonAddOffice = 32,
     E_ButtonAddElevatorShaftMiddle = 33,
     E_ButtonAddElevatorShaftTop = 33,
     E_ButtonAddElevatorCabin = 34,
 
     //Office
-    E_OfficeClerk = 41,
+            E_OfficeDefault = 41,
 
     //Elevator
-    E_ElevatorShaftBottom = 51,
+            E_ElevatorShaftBottom = 51,
     E_ElevatorShaftMiddle = 52,
     E_ElevatorShaftTop = 53,
     E_ElevatorCabin = 54

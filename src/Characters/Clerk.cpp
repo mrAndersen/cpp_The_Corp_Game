@@ -3,27 +3,27 @@
 #include "System/ResourceLoader.h"
 #include "Clerk.h"
 #include "System/EntityContainer.h"
-#include "Objects/Ground.h"
 #include "System/System.h"
 #include "Text/TextEntity.h"
 
 Clerk::Clerk(sf::Vector2f coordinates) : Movable() {
     setName("clerk");
+    setWidth(Clerk::width);
+    setHeight(Clerk::height);
 
     addAnimation(S_None, Animation(this, S_None, 24, ResourceLoader::getTexture(E_Clerk, S_None)));
     addAnimation(S_GoToOffice, Animation(this, S_GoToOffice, 24, ResourceLoader::getTexture(E_Clerk, S_GoToOffice)));
     addAnimation(S_Working, Animation(this, S_Working, 24, ResourceLoader::getTexture(E_Clerk, S_Working)));
 
-    setWidth(Clerk::width);
-    setHeight(Clerk::height);
     setDefaultSpeed(130);
 
     setCost(500);
     setWorldCoordinates(coordinates);
     setSelectable(true);
 
-    setDrawOrder(100);
-    createAnimationFrames();
+
+    setDrawOrder(1000);
+    initEntity();
 
     System::salaryTotal += dailySalary;
     EntityContainer::add(this);
