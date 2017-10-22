@@ -11,11 +11,14 @@ std::string Entity::serialize() {
 }
 
 void Entity::update() {
-    updateLogic();
-    currentAnimation->update();
+    if (currentAnimation) {
+        currentAnimation->update();
+    }
 
     renderDebugInfo();
     renderErrorText();
+
+    updateLogic();
 }
 
 bool Entity::mouseIn() {
@@ -44,16 +47,23 @@ bool Entity::rightClickedOutside() {
 
 void Entity::setTransparent() {
     valid = true;
-    currentAnimation->getSprite().setColor(sf::Color(255, 255, 255, 96));
+
+    if (currentAnimation) {
+        currentAnimation->getSprite().setColor(sf::Color(255, 255, 255, 96));
+    }
 }
 
 void Entity::setNormal() {
-    currentAnimation->getSprite().setColor(sf::Color(255, 255, 255, 255));
+    if (currentAnimation) {
+        currentAnimation->getSprite().setColor(sf::Color(255, 255, 255, 255));
+    }
 }
 
 void Entity::setInvalid() {
     valid = false;
-    currentAnimation->getSprite().setColor(sf::Color(255, 0, 0, 255));
+    if (currentAnimation) {
+        currentAnimation->getSprite().setColor(sf::Color(255, 0, 0, 255));
+    }
 }
 
 void Entity::updateLogic() {
@@ -68,10 +78,6 @@ void Entity::updateLogic() {
     rect.width = width;
     rect.left = (int) left;
     rect.top = (int) top;
-
-    if (health <= 0) {
-        EntityContainer::remove(this);
-    }
 }
 
 const std::string &Entity::getName() const {
@@ -338,10 +344,12 @@ void Entity::addAnimation(States state, const Animation &animation) {
 }
 
 void Entity::selectAnimation(States state) {
-    if (!animations.count(state)) {
-        currentAnimation = &animations.find(S_None).operator*().second;
-    } else {
-        currentAnimation = &animations.find(state).operator*().second;
+    if (!animations.empty()) {
+        if (!animations.count(state)) {
+            currentAnimation = &animations.find(S_None).operator*().second;
+        } else {
+            currentAnimation = &animations.find(state).operator*().second;
+        }
     }
 }
 
@@ -352,5 +360,3 @@ Direction Entity::getDirection() const {
 void Entity::setDirection(Direction direction) {
     Entity::direction = direction;
 }
-
-

@@ -87,7 +87,6 @@ Animation::Animation(Entity *entity, States state, int totalFrames, sf::Texture 
 }
 
 void Animation::update() {
-
     if (frameClock.getElapsedTime().asMicroseconds() >= animationResolution / System::timeFactor) {
         currentFrame = (currentFrame == (totalFrames - 1)) ? 0 : currentFrame + 1;
         frameClock.restart();

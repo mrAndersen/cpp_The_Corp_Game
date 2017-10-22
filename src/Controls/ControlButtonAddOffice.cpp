@@ -44,14 +44,6 @@ void ControlButtonAddOffice::updateLogic() {
         attachedOffice->setNormal();
         attachedOffice->spawn();
 
-        auto *spent = new TextEntity(System::c_red, 30);
-        auto position = attachedOffice->getWorldCoordinates();
-        position.y += attachedOffice->getHeight() / 2;
-
-        spent->setLiveTimeSeconds(4);
-        spent->setWorldCoordinates(position);
-        spent->setString("-" + System::f_to_string(attachedOffice->getCost()) + "$");
-
         System::spawningUnit = false;
         attachedOffice = nullptr;
     }
@@ -80,7 +72,7 @@ void ControlButtonAddOffice::updateLogic() {
                         ->getErrorString()
                         .setString(
                                 "Not enough cash, need " +
-                                System::f_to_string(fabs(System::cash - attachedOffice->getCost())) +
+                                System::f_to_string(std::abs(System::cash - attachedOffice->getCost())) +
                                 "$ more"
                         );
             }

@@ -1,4 +1,5 @@
 #include <System/System.h>
+#include <Text/TextEntity.h>
 #include "ElevatorShaftMiddle.h"
 #include "System/EntityContainer.h"
 
@@ -10,7 +11,7 @@ ElevatorShaftMiddle::ElevatorShaftMiddle(sf::Vector2f coordinates) {
     setCost(1000);
 
     setWorldCoordinates(coordinates);
-    setSelectable(true);
+    setSelectable(false);
     addAnimation(S_None, Animation(this, S_None, 1, ResourceLoader::getTexture(E_ElevatorShaftMiddle)));
 
     setDrawOrder(DrawOrder::D_ElevatorShafts);
@@ -68,6 +69,14 @@ std::vector<Office *> ElevatorShaftMiddle::getNeighborOffices() {
 
 void ElevatorShaftMiddle::spawn() {
     System::cash -= this->cost;
+
+    auto *spent = new TextEntity(System::c_red, 30);
+    auto position = this->getWorldCoordinates();
+    position.y += this->getHeight() / 2;
+
+    spent->setLiveTimeSeconds(4);
+    spent->setWorldCoordinates(position);
+    spent->setString("-" + System::f_to_string(this->getCost()) + "$");
 
     spawned = true;
 }

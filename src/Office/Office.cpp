@@ -1,4 +1,5 @@
 #include <cmath>
+#include <Text/TextEntity.h>
 #include "OfficeClerk.h"
 #include "System/EntityContainer.h"
 #include "System/System.h"
@@ -85,6 +86,14 @@ void Office::setCost(float cost) {
 
 void Office::spawn() {
     System::cash -= this->cost;
+
+    auto *spent = new TextEntity(System::c_red, 30);
+    auto position = worldCoordinates;
+    position.y += height / 2;
+
+    spent->setLiveTimeSeconds(4);
+    spent->setWorldCoordinates(position);
+    spent->setString("-" + System::f_to_string(cost) + "$");
 
     spawned = true;
 }

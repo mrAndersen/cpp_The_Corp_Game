@@ -35,7 +35,7 @@ public:
 
     void setFixed(bool fixed);
 
-    void update() override;
+    void updateLogic() override;
 
     void setString(const std::string &string);
 

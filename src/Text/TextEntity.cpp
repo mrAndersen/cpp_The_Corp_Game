@@ -4,7 +4,7 @@
 #include "System/EntityContainer.h"
 #include "System/ViewHandler.h"
 
-void TextEntity::update() {
+void TextEntity::updateLogic() {
     float frameTimeSeconds = (float) System::frameTimeMcs / 1000000;
     float frameDistance = frameTimeSeconds * speed * System::timeFactor;
 
@@ -38,6 +38,8 @@ void TextEntity::update() {
 
     if (liveTimeSeconds != 0 && liveClock.getElapsedTime().asSeconds() >= liveTimeSeconds) {
         EntityContainer::remove(this);
+    } else {
+        Entity::updateLogic();
     }
 }
 
@@ -58,7 +60,6 @@ TextEntity::TextEntity(const sf::Color &color, int size) : Entity() {
     setDrawOrder(INT_MAX);
 
     EntityContainer::add(this);
-
 }
 
 void TextEntity::setString(const std::string &string) {

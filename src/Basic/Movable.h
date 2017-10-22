@@ -9,9 +9,14 @@
 #include "System/Enum.h"
 #include "System/GameTime.h"
 #include <Component/WorkPlace.h>
+#include <Component/Elevator.h>
 
 class Office;
+
 class WorkPlace;
+
+class Elevator;
+
 class Movable : public Entity {
 
 protected:
@@ -69,6 +74,8 @@ public:
     void setFallAcceleration(float fallAcceleration);
 
     void searchWorkPlace();
+
+    Elevator *searchNearestElevator();
 
     bool isInWorkPlace();
 

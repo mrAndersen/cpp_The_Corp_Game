@@ -1,6 +1,7 @@
 #include <cmath>
 #include <iostream>
 #include <fstream>
+#include <Text/TextEntity.h>
 #include "System/Enum.h"
 #include "Movable.h"
 #include "System/System.h"
@@ -95,28 +96,68 @@ void Movable::updateLogic() {
 
     //go to office
     if (state == S_GoToOffice && currentWorkPlace) {
-
         if (isInWorkPlace()) {
             state = S_Working;
-            worldCoordinates = currentWorkPlace->getWorldCoordinates();
-        } else {
-            if (currentWorkPlace->getParentOffice()->getFloor() == this->floor) {
-                //office is on the same floor
 
+            worldCoordinates = currentWorkPlace->getWorldCoordinates();
+            direction = Direction::Right;
+        } else {
+
+            //office is on the same floor
+            if (currentWorkPlace->getParentOffice()->getFloor() == this->floor) {
                 if (currentWorkPlace->getWorldCoordinates().x < this->worldCoordinates.x) {
                     direction = Direction::Left;
                 } else {
                     direction = Direction::Right;
                 }
             } else {
-                state = S_GoToElevator;
+                auto elevator = searchNearestElevator();
+
+                //go to nearest elevator
+                if (elevator) {
+                    auto waitPointLeft = elevator->getLeft() - width / 2;
+                    auto waitPointRight = elevator->getRight() + width / 2;
+
+                    if ((int) worldCoordinates.x == (int) waitPointLeft ||
+                        (int) worldCoordinates.x == (int) waitPointRight) {
+
+                        direction = Direction::None;
+                        state = S_None;
+
+                        //cabin here - go there
+                        if (elevator->getCabin()->getFloor() == floor) {
+                            std::cout << elevator->getCabin()->getFloor() << "\r";
+
+                            if (elevator->getCabin()->getWorldCoordinates().x <= worldCoordinates.x) {
+                                direction = Direction::Right;
+                            }
+
+                            if (elevator->getCabin()->getWorldCoordinates().x >= worldCoordinates.x) {
+                                direction = Direction::Left;
+                            }
+
+                            if (elevator->getCabin()->isMovableInside(this)) {
+                                direction = Direction::None;
+                                elevator->getCabin()->addMovable(this);
+                            }
+                        } else {
+                            //call cabin
+                            elevator->addToQueue(floor);
+                        }
+                    } else {
+                        if (worldCoordinates.x < waitPointLeft && worldCoordinates.x < elevator->getLeft()) {
+                            direction = Direction::Right;
+                        }
+
+                        if (worldCoordinates.x > waitPointRight && worldCoordinates.x > elevator->getRight()) {
+                            direction = Direction::Left;
+                        }
+                    }
+                }
             }
         }
     }
 
-    if (state == S_GoToElevator) {
-
-    }
 
     //not working - but should
     if (
@@ -225,6 +266,14 @@ void Movable::spawn() {
     spawned = true;
     liveClock.restart();
 
+    auto *spent = new TextEntity(System::c_red, 30);
+    auto position = worldCoordinates;
+    position.y += height / 2;
+
+    spent->setLiveTimeSeconds(4);
+    spent->setWorldCoordinates(position);
+    spent->setString("-" + System::f_to_string(this->getCost()) + "$");
+
     if (isAboveGround()) {
         state = S_Falling;
     }
@@ -277,6 +326,25 @@ Gender Movable::getGender() const {
 
 void Movable::setGender(Gender gender) {
     Movable::gender = gender;
+}
+
+Elevator *Movable::searchNearestElevator() {
+    auto elevators = EntityContainer::getElevators();
+
+    if (elevators.empty()) {
+        return nullptr;
+    }
+
+    std::map<int, Elevator *> buffer;
+
+    for (auto el:elevators) {
+        auto elevatorCenter = el->getRight() - el->getLeft();
+        auto distance = std::abs(worldCoordinates.x - elevatorCenter);
+
+        buffer[(int) distance] = el;
+    }
+
+    return buffer.begin().operator*().second;
 }
 
 

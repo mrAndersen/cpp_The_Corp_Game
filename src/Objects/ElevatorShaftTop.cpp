@@ -1,4 +1,5 @@
 #include <System/System.h>
+#include <Text/TextEntity.h>
 #include "ElevatorShaftTop.h"
 #include "System/EntityContainer.h"
 #include "ElevatorShaftMiddle.h"
@@ -44,6 +45,14 @@ void ElevatorShaftTop::setCost(float cost) {
 void ElevatorShaftTop::spawn() {
     System::cash -= this->cost;
 
+    auto *spent = new TextEntity(System::c_red, 30);
+    auto position = this->getWorldCoordinates();
+    position.y += this->getHeight() / 2;
+
+    spent->setLiveTimeSeconds(4);
+    spent->setWorldCoordinates(position);
+    spent->setString("-" + System::f_to_string(this->getCost()) + "$");
+
     spawned = true;
 }
 
@@ -71,5 +80,31 @@ std::vector<Office *> ElevatorShaftTop::getNeighborOffices() {
     }
 
     return result;
+}
+
+Elevator *ElevatorShaftTop::getElevator() const {
+    return elevator;
+}
+
+void ElevatorShaftTop::setElevator(Elevator *elevator) {
+    ElevatorShaftTop::elevator = elevator;
+}
+
+void ElevatorShaftTop::updateLogic() {
+
+    if(elevator){
+        elevator->update();
+    }
+
+    Entity::updateLogic();
+}
+
+void ElevatorShaftTop::renderDebugInfo() {
+
+    if (elevator && System::debug) {
+        elevator->drawDebug();
+    }
+
+    Entity::renderDebugInfo();
 }
 

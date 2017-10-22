@@ -2,6 +2,7 @@
 #include <SFML/Window/Event.hpp>
 #include <Objects/ElevatorShaftMiddle.h>
 #include <Objects/ElevatorShaftTop.h>
+#include <Office/OfficeClerk.h>
 #include "System/System.h"
 #include "System/ResourceLoader.h"
 #include "System/ViewHandler.h"
@@ -97,21 +98,24 @@ int main() {
                 }
             }
 
-            if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::P) {
+            if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::F) {
+                auto top = 900;
 
-                auto a1 = new ElevatorShaftMiddle(sf::Vector2f(775,175));
-                auto a2 = new ElevatorShaftMiddle(sf::Vector2f(775,175 + 150));
-                auto a3 = new ElevatorShaftMiddle(sf::Vector2f(775,175 + 300));
-                auto a4 = new ElevatorShaftMiddle(sf::Vector2f(775,175 + 450));
-                auto a5 = new ElevatorShaftTop(sf::Vector2f(775,175 + 600));
+                for (int i = 0; i <= top; ++i) {
 
+                    if ((i % 150 == 0 || i == 0) && i != top) {
+                        auto a = new ElevatorShaftMiddle({775, 175 + (float) i});
+                        auto o = new OfficeClerk({1150, 175 + (float) i});
 
-                break;
+                        o->spawn();
+                        a->spawn();
+                    }
 
-
-//                for (int i = 0; i <= 1; i++) {
-//                    auto *clerk = new Clerk(System::window->getDefaultView().getCenter());
-//                }
+                    if (i == top) {
+                        auto t = new ElevatorShaftTop({775, 175 + (float) i});
+                        t->spawn();
+                    }
+                }
             }
 
             if (

@@ -72,15 +72,8 @@ namespace EntityContainer {
     }
 
     void remove(Entity *item) {
-        auto i = items.begin();
-        while (i != items.end()) {
-            if (*i == item) {
-                i = items.erase(i);
-                delete item;
-            } else {
-                ++i;
-            }
-        }
+        items.erase(std::remove(items.begin(), items.end(), item), items.end());
+        delete item;
     }
 
     int size() {
@@ -132,12 +125,18 @@ namespace EntityContainer {
     }
 
     void refreshEntities() {
+        auto realSize = items.size();
         for (auto entity:items) {
             entity->update();
+
+            //invalidated iterator
+            if (items.size() != realSize) {
+                return;
+            }
         }
     }
 
-    void addElevator(Elevator * elevator) {
+    void addElevator(Elevator *elevator) {
         elevators.push_back(elevator);
     }
 
