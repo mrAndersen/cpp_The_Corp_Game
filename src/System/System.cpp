@@ -42,7 +42,7 @@ namespace System {
     //utility
 
     //player
-    float cash = 30000;
+    float cash = 50000;
     bool spawningUnit = false;
 
     bool dayEndProcessed = false;

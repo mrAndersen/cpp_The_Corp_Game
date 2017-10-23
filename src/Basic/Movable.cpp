@@ -86,13 +86,9 @@ void Movable::updateLogic() {
         }
     }
 
-    //stop smoking
-    if (state == S_Smoke && System::gameTime.diffMinutes(smokeStarted) >= smokePeriodMinutes) {
-        state = S_GoToOffice;
-    }
-
-    if (state == S_Working) {
-        direction = Direction::None;
+    if(state == S_Working){
+        currentSpeed = 0;
+        direction = Direction::Right;
     }
 
     //go to office
@@ -158,8 +154,12 @@ void Movable::updateLogic() {
     if (state == S_WaitForElevator) {
         auto elevator = searchNearestElevator();
 
-        //cabin here - go there
-        if (elevator->getCabin()->getFloor() == floor && (int) elevator->getCabin()->getBottom() == (int) bottom) {
+        //cabin here and has space - go there
+        if (
+                elevator->getCabin()->getFloor() == floor &&
+                (int) elevator->getCabin()->getBottom() == (int) bottom &&
+                elevator->getCabin()->hasFreeSpace()
+                ) {
             state = S_GoToCabin;
         } else {
             //call cabin
@@ -169,17 +169,25 @@ void Movable::updateLogic() {
 
     if (state == S_GoToCabin) {
         auto elevator = searchNearestElevator();
+        auto cabin = elevator->getCabin();
         currentSpeed = defaultSpeed;
 
-        if (elevator->getCabin()->getWorldCoordinates().x > worldCoordinates.x) {
+        if (!randomedCabinPosition) {
+            auto minCabinXPosition = cabin->getWorldCoordinates().x - cabin->getWidth() / 2;
+            auto maxCabinXPosition = cabin->getWorldCoordinates().x + cabin->getWidth() / 2;
+
+            randomedCabinPosition = System::getRandom(minCabinXPosition, maxCabinXPosition);
+        }
+
+        if (randomedCabinPosition > worldCoordinates.x) {
             direction = Direction::Right;
         }
 
-        if (elevator->getCabin()->getWorldCoordinates().x < worldCoordinates.x) {
+        if (randomedCabinPosition < worldCoordinates.x) {
             direction = Direction::Left;
         }
 
-        if ((int) elevator->getCabin()->getWorldCoordinates().x == (int) worldCoordinates.x) {
+        if (randomedCabinPosition == (int) worldCoordinates.x) {
             currentSpeed = 0;
             elevator->getCabin()->addMovable(this);
 
@@ -197,9 +205,14 @@ void Movable::updateLogic() {
         auto elevator = searchNearestElevator();
 
         currentSpeed = 0;
-        direction = Direction::None;;
+        direction = Direction::None;
 
-        if (floor == destinationFloor) {
+        //end of ride
+        if (floor == destinationFloor && elevator->isWaiting()) {
+            elevator->getCabin()->removeMovable(this);
+            worldCoordinates.y = 100 + (System::gridSize * 3 * (destinationFloor - 1)) + height / 2;
+            randomedCabinPosition = 0;
+
             state = S_None;
             destinationFloor = 0;
         }
@@ -391,9 +404,9 @@ Elevator *Movable::searchNearestElevator() {
 
     for (auto el:elevators) {
         auto elevatorCenter = el->getRight() - el->getLeft();
-        auto distance = std::abs(worldCoordinates.x - elevatorCenter);
+        int distance = std::abs(worldCoordinates.x - elevatorCenter);
 
-        buffer[(int) distance] = el;
+        buffer[distance] = el;
     }
 
     return buffer.begin().operator*().second;

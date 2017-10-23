@@ -18,8 +18,9 @@ Clerk::Clerk(sf::Vector2f coordinates) : Movable() {
     addAnimation(S_GoToCabin, Animation(this, S_GoToCabin, 24, ResourceLoader::getTexture(E_Clerk, S_GoToCabin)));
 
     addAnimation(S_Working, Animation(this, S_Working, 24, ResourceLoader::getTexture(E_Clerk, S_Working)));
+    addAnimation(S_Smoking, Animation(this, S_Smoking, 66, ResourceLoader::getTexture(E_Clerk, S_Smoking), 2750000));
 
-    setDefaultSpeed(130);
+    setDefaultSpeed(150);
 
     setCost(500);
     setWorldCoordinates(coordinates);

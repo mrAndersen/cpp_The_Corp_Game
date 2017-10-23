@@ -41,6 +41,7 @@ namespace ResourceLoader {
         ResourceLoader::loadTexture(Entities::E_Clerk, "resources/characters/clerk/w.l1.walk.png", S_GoToElevator);
         ResourceLoader::loadTexture(Entities::E_Clerk, "resources/characters/clerk/w.l1.walk.png", S_GoToCabin);
         ResourceLoader::loadTexture(Entities::E_Clerk, "resources/characters/clerk/w.l1.work.png", S_Working);
+        ResourceLoader::loadTexture(Entities::E_Clerk, "resources/characters/clerk/w.l1.smoke.png", S_Smoking);
 
 
         ResourceLoader::loadTexture(Entities::E_StaticGround, "resources/ground.png");

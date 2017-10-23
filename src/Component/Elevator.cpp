@@ -121,3 +121,11 @@ ElevatorCabin *Elevator::getCabin() const {
 void Elevator::setCabin(ElevatorCabin *cabin) {
     Elevator::cabin = cabin;
 }
+
+bool Elevator::isWaiting() const {
+    return waiting;
+}
+
+void Elevator::setWaiting(bool waiting) {
+    Elevator::waiting = waiting;
+}

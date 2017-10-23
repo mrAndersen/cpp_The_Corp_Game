@@ -29,6 +29,8 @@ protected:
 
     WorkPlace *currentWorkPlace = nullptr;
     int destinationFloor = 0;
+    int randomedCabinPosition = 0;
+
     sf::Clock workPlaceSearchResolution;
 
     //relevant to game time

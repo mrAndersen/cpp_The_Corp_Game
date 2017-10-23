@@ -65,12 +65,6 @@ void ElevatorCabin::updateLogic() {
     if (!currentPeople.empty()) {
         for (auto p:currentPeople) {
             p->setWorldCoordinates({p->getWorldCoordinates().x, worldCoordinates.y - 15});
-
-            if (p->getDestinationFloor() == floor) {
-                removeMovable(p);
-                p->setWorldCoordinates({p->getWorldCoordinates().x, System::gridSize * (p->getFloor() + 1) * 3 + 10});
-                break;
-            }
         }
     }
 
@@ -107,7 +101,7 @@ void ElevatorCabin::spawn() {
         };
     }
 
-    elevator->addToQueue(3);
+    elevator->addToQueue(1);
     elevator->finish();
 
     Entity::spawn();
@@ -177,4 +171,8 @@ int ElevatorCabin::getSpeed() const {
 
 void ElevatorCabin::setSpeed(int speed) {
     ElevatorCabin::speed = speed;
+}
+
+bool ElevatorCabin::hasFreeSpace() {
+    return currentPeople.size() < capacity;
 }

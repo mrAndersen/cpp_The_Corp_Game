@@ -26,7 +26,7 @@ include_directories("${PROJECT_BINARY_DIR}")
 # Define sources and executable
 set(EXECUTABLE_NAME "corpgame")
 add_executable(
-        ${EXECUTABLE_NAME}
+        ${EXECUTABLE_NAME} WIN32
 
         main.cpp
 #        main.rc

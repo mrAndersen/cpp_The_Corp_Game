@@ -28,7 +28,7 @@ class Animation {
 
     sf::Clock frameClock;
 public:
-    Animation(Entity *entity, States state, int totalFrames, sf::Texture *texture);
+    Animation(Entity *entity, States state, int totalFrames, sf::Texture *texture, int animationDuration = 1000000);
 
     const sf::Clock &getFrameClock() const;
 

@@ -22,6 +22,8 @@ class ElevatorCabin : public Entity {
 public:
     explicit ElevatorCabin(sf::Vector2f coordinates);
 
+    bool hasFreeSpace();
+
     int getSpeed() const;
 
     void setSpeed(int speed);
