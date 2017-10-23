@@ -44,26 +44,6 @@ void ControlButtonAddElevatorShaftMiddle::updateLogic() {
         attachedShaft->setNormal();
         attachedShaft->spawn();
 
-        auto *spent = new TextEntity(System::c_red, 30);
-        auto position = attachedShaft->getWorldCoordinates();
-        position.y += attachedShaft->getHeight() / 2;
-
-        spent->setLiveTimeSeconds(4);
-        spent->setWorldCoordinates(position);
-        spent->setString("-" + System::f_to_string(attachedShaft->getCost()) + "$");
-
-//        //change to top shaft
-//        if(!attachedShaft->isOnTheGround()){
-//
-//            auto topShaftPosition = attachedShaft->getWorldCoordinates();
-//            topShaftPosition.y += attachedShaft->getHeight() / 2;
-//
-//            auto topShaft = new ElevatorShaft(topShaftPosition);
-//            topShaft->setType(ElevatorShafts::EL_Top);
-//
-//            attachedShaft->setTopShaft(topShaft);
-//        }
-
         System::spawningUnit = false;
         attachedShaft = nullptr;
     }
@@ -93,7 +73,7 @@ void ControlButtonAddElevatorShaftMiddle::updateLogic() {
                         ->getErrorString()
                         .setString(
                                 "Not enough cash, need " +
-                                System::f_to_string(fabs(System::cash - attachedShaft->getCost())) +
+                                System::f_to_string(std::abs(System::cash - attachedShaft->getCost())) +
                                 "$ more"
                         );
             }

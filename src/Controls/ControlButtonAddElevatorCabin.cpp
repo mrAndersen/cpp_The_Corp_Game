@@ -42,14 +42,6 @@ void ControlButtonAddElevatorCabin::updateLogic() {
         attachedCabin->setNormal();
         attachedCabin->spawn();
 
-        auto *spent = new TextEntity(System::c_red, 30);
-        auto position = attachedCabin->getWorldCoordinates();
-        position.y += attachedCabin->getHeight() / 2;
-
-        spent->setLiveTimeSeconds(4);
-        spent->setWorldCoordinates(position);
-        spent->setString("-" + System::f_to_string(attachedCabin->getCost()) + "$");
-
         System::spawningUnit = false;
         attachedCabin = nullptr;
     }
@@ -77,7 +69,7 @@ void ControlButtonAddElevatorCabin::updateLogic() {
                         ->getErrorString()
                         .setString(
                                 "Not enough cash, need " +
-                                System::f_to_string(fabs(System::cash - attachedCabin->getCost())) +
+                                System::f_to_string(std::abs(System::cash - attachedCabin->getCost())) +
                                 "$ more"
                         );
             }

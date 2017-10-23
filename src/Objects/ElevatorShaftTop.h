@@ -1,10 +1,11 @@
 #ifndef THE_CORP_GAME_ELEVATORSHAFTTOP_H
 #define THE_CORP_GAME_ELEVATORSHAFTTOP_H
 
-
 #include <Basic/Entity.h>
+#include <Component/Elevator.h>
 #include "Office/Office.h"
 
+class Elevator;
 class ElevatorShaftTop : public Entity {
 
 protected:
@@ -12,8 +13,14 @@ protected:
     const static int height = 150;
 
     float cost = 0;
+
+    Elevator *elevator = nullptr;
 public:
     explicit ElevatorShaftTop(sf::Vector2f coordinates);
+
+    Elevator *getElevator() const;
+
+    void setElevator(Elevator *elevator);
 
     bool hasMiddleShaftOnTheBottom();
 
@@ -22,6 +29,10 @@ public:
     void setCost(float cost);
 
     void spawn() override;
+
+    void updateLogic() override;
+
+    void renderDebugInfo() override;
 
     std::vector<Office *> getNeighborOffices();
 };
