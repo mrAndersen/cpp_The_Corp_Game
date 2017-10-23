@@ -165,6 +165,7 @@ int Entity::getDrawOrder() const {
 
 void Entity::setDrawOrder(int drawOrder) {
     Entity::drawOrder = drawOrder;
+    EntityContainer::resort();
 }
 
 void Entity::initEntity() {

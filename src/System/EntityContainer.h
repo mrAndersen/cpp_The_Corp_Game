@@ -27,6 +27,8 @@ namespace EntityContainer {
 
     void add(Entity *item);
 
+    void resort();
+
     void remove(Entity *item);
 
     int size();

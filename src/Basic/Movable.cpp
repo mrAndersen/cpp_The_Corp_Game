@@ -57,6 +57,7 @@ void Movable::updateLogic() {
     //end of work day
     if (!System::gameTime.isWorkTime()) {
         state = S_GoHome;
+        setDrawOrder(D_Characters);
     }
 
     if (state == S_GoHome) {
@@ -91,11 +92,15 @@ void Movable::updateLogic() {
         direction = Direction::Right;
     }
 
+    if (state != S_Working) {
+
+    }
+
     //go to office
     if (state == S_GoToOffice && currentWorkPlace) {
         if (isInWorkPlace()) {
             state = S_Working;
-
+            setDrawOrder(D_Characters_Wokring);
             worldCoordinates = currentWorkPlace->getWorldCoordinates();
             direction = Direction::Right;
         } else {
@@ -173,8 +178,8 @@ void Movable::updateLogic() {
         currentSpeed = defaultSpeed;
 
         if (!randomedCabinPosition) {
-            auto minCabinXPosition = cabin->getWorldCoordinates().x - cabin->getWidth() / 2;
-            auto maxCabinXPosition = cabin->getWorldCoordinates().x + cabin->getWidth() / 2;
+            auto minCabinXPosition = cabin->getWorldCoordinates().x - cabin->getWidth() / 2 + height / 2;
+            auto maxCabinXPosition = cabin->getWorldCoordinates().x + cabin->getWidth() / 2 - height / 2;
 
             randomedCabinPosition = System::getRandom(minCabinXPosition, maxCabinXPosition);
         }

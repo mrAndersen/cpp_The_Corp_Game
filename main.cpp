@@ -80,7 +80,7 @@ int main() {
             }
 
             if (e.type == sf::Event::MouseWheelScrolled) {
-                ViewHandler::handleViewZoomKeyPress(e);
+//                ViewHandler::handleViewZoomKeyPress(e);
             }
 
             if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::V) {
@@ -132,7 +132,7 @@ int main() {
                 auto count = 8;
 
                 for (int i = 0; i < count; ++i) {
-                    auto c = new Clerk({(float) 100 + (i * 90), 300.f});
+                    auto c = new Clerk({(float) 0 + (i * 72), 300.f});
                     c->spawn();
                 }
             }
