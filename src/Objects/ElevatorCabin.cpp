@@ -17,6 +17,14 @@ ElevatorCabin::ElevatorCabin(sf::Vector2f coordinates) {
     setDrawOrder(DrawOrder::D_ElevatorCabin);
     initEntity();
 
+    capacityIndicator.setFillColor(sf::Color::Green);
+    capacityIndicator.setFont(*System::debugFont);
+    capacityIndicator.setCharacterSize(10);
+
+    floorIndicator.setFillColor(sf::Color::Green);
+    floorIndicator.setFont(*System::debugFont);
+    floorIndicator.setCharacterSize(10);
+
     EntityContainer::add(this);
 }
 
@@ -54,6 +62,13 @@ void ElevatorCabin::updateLogic() {
     //update floor
     floor = ((int) worldCoordinates.y - ((int) worldCoordinates.y % System::gridSize)) / System::gridSize / 3;
 
+    if (!currentPeople.empty()) {
+        for (auto p:currentPeople) {
+            p->setWorldCoordinates({p->getWorldCoordinates().x, worldCoordinates.y - 15});
+        }
+    }
+
+    updateIndicators();
     Entity::updateLogic();
 }
 
@@ -86,7 +101,7 @@ void ElevatorCabin::spawn() {
         };
     }
 
-    elevator->addToQueue(3);
+    elevator->addToQueue(1);
     elevator->finish();
 
     Entity::spawn();
@@ -114,4 +129,50 @@ void ElevatorCabin::addMovable(Movable *movable) {
     if (std::find(currentPeople.begin(), currentPeople.end(), movable) == currentPeople.end()) {
         currentPeople.push_back(movable);
     }
+}
+
+void ElevatorCabin::updateIndicators() {
+    if (spawned) {
+        auto position = worldCoordinates;
+        position.x += 36;
+        position.y += 71.5;
+
+        if (currentPeople.size() < 10) {
+            capacityIndicator.setString("0" + std::to_string(currentPeople.size()) + "/" + std::to_string(capacity));
+        } else {
+            capacityIndicator.setString(currentPeople.size() + "/" + capacity);
+        }
+
+        capacityIndicator.setPosition(System::cToGl(position));
+        System::window->draw(capacityIndicator);
+
+        auto position2 = worldCoordinates;
+        position2.x -= 52;
+        position2.y += 71.5;
+
+        if (floor < 10) {
+            floorIndicator.setString("0" + std::to_string(floor));
+        } else {
+            floorIndicator.setString(std::to_string(floor));
+        }
+
+        floorIndicator.setPosition(System::cToGl(position2));
+        System::window->draw(floorIndicator);
+    }
+}
+
+void ElevatorCabin::removeMovable(Movable *movable) {
+    currentPeople.erase(std::remove(currentPeople.begin(), currentPeople.end(), movable), currentPeople.end());
+}
+
+int ElevatorCabin::getSpeed() const {
+    return speed;
+}
+
+void ElevatorCabin::setSpeed(int speed) {
+    ElevatorCabin::speed = speed;
+}
+
+bool ElevatorCabin::hasFreeSpace() {
+    return currentPeople.size() < capacity;
 }

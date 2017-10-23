@@ -3,6 +3,7 @@
 #include <Objects/ElevatorShaftMiddle.h>
 #include <Objects/ElevatorShaftTop.h>
 #include <Office/OfficeClerk.h>
+#include <Objects/Ground.h>
 #include "System/System.h"
 #include "System/ResourceLoader.h"
 #include "System/ViewHandler.h"
@@ -105,20 +106,39 @@ int main() {
 
                     if ((i % 150 == 0 || i == 0) && i != top) {
                         auto a = new ElevatorShaftMiddle({775, 175 + (float) i});
-                        auto o = new OfficeClerk({1150, 175 + (float) i});
-
-                        o->spawn();
+                        auto a2 = new ElevatorShaftMiddle({1525, 175 + (float) i});
                         a->spawn();
+                        a2->spawn();
+
+                        auto o = new OfficeClerk({1150, 175 + (float) i});
+                        o->spawn();
                     }
 
                     if (i == top) {
                         auto t = new ElevatorShaftTop({775, 175 + (float) i});
+                        auto t2 = new ElevatorShaftTop({1525, 175 + (float) i});
                         t->spawn();
+                        t2->spawn();
+
+                        auto c = new ElevatorCabin({775, 175 + (float) (900 - 150)});
+                        auto c2 = new ElevatorCabin({1525, 175 + (float) (900 - 150)});
+                        c->spawn();
+                        c2->spawn();
                     }
                 }
             }
 
-            if (
+            if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::G) {
+                auto count = 8;
+
+                for (int i = 0; i < count; ++i) {
+                    auto c = new Clerk({(float) 300 + (i * 90), 300.f});
+                    c->spawn();
+                }
+            }
+
+
+                if (
                     System::timeFactor < 10 &&
                     sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) &&
                     sf::Keyboard::isKeyPressed(sf::Keyboard::Add)) {

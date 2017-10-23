@@ -127,6 +127,8 @@ public:
 
     virtual void updateLogic();
 
+    void recalculateBoundaries();
+
     int getDrawOrder() const;
 
     void setDrawOrder(int drawOrder);

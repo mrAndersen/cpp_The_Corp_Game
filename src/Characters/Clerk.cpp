@@ -12,10 +12,15 @@ Clerk::Clerk(sf::Vector2f coordinates) : Movable() {
     setHeight(Clerk::height);
 
     addAnimation(S_None, Animation(this, S_None, 24, ResourceLoader::getTexture(E_Clerk, S_None)));
-    addAnimation(S_GoToOffice, Animation(this, S_GoToOffice, 24, ResourceLoader::getTexture(E_Clerk, S_GoToOffice)));
-    addAnimation(S_Working, Animation(this, S_Working, 24, ResourceLoader::getTexture(E_Clerk, S_Working)));
 
-    setDefaultSpeed(130);
+    addAnimation(S_GoToOffice, Animation(this, S_GoToOffice, 24, ResourceLoader::getTexture(E_Clerk, S_GoToOffice)));
+    addAnimation(S_GoToElevator, Animation(this, S_GoToElevator, 24, ResourceLoader::getTexture(E_Clerk, S_GoToElevator)));
+    addAnimation(S_GoToCabin, Animation(this, S_GoToCabin, 24, ResourceLoader::getTexture(E_Clerk, S_GoToCabin)));
+
+    addAnimation(S_Working, Animation(this, S_Working, 24, ResourceLoader::getTexture(E_Clerk, S_Working)));
+    addAnimation(S_Smoking, Animation(this, S_Smoking, 66, ResourceLoader::getTexture(E_Clerk, S_Smoking), 2750000));
+
+    setDefaultSpeed(150);
 
     setCost(500);
     setWorldCoordinates(coordinates);

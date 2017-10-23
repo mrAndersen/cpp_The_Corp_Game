@@ -3,6 +3,7 @@
 
 #include <Basic/Entity.h>
 #include <Basic/Movable.h>
+#include <Text/TextEntity.h>
 
 class Movable;
 class ElevatorCabin : public Entity {
@@ -10,17 +11,28 @@ class ElevatorCabin : public Entity {
     const static int height = 150;
 
     float cost = 0;
-    bool spawned = false;
     int capacity = 10;
     int floor = 1;
+    int speed = 250;
 
     std::vector<Movable *> currentPeople;
+
+    sf::Text floorIndicator;
+    sf::Text capacityIndicator;
 public:
     explicit ElevatorCabin(sf::Vector2f coordinates);
+
+    bool hasFreeSpace();
+
+    int getSpeed() const;
+
+    void setSpeed(int speed);
 
     const std::vector<Movable *> &getCurrentPeople() const;
 
     void addMovable(Movable *movable);
+
+    void removeMovable(Movable *movable);
 
     bool isMovableInside(Movable *movable);
 
@@ -39,6 +51,8 @@ public:
     bool isInsideShaftBoundaries();
 
     void updateLogic() override;
+
+    void updateIndicators();
 };
 
 

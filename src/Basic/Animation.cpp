@@ -66,7 +66,7 @@ void Animation::setTexture(sf::Texture *texture) {
     Animation::texture = texture;
 }
 
-Animation::Animation(Entity *entity, States state, int totalFrames, sf::Texture *texture) {
+Animation::Animation(Entity *entity, States state, int totalFrames, sf::Texture *texture, int animationDuration) {
     this->entity = entity;
     this->state = state;
     this->totalFrames = totalFrames;
@@ -82,7 +82,7 @@ Animation::Animation(Entity *entity, States state, int totalFrames, sf::Texture 
         frames.push_back(rect);
     }
 
-    animationResolution = 1000000 / totalFrames;
+    animationResolution = animationDuration / totalFrames;
     sprite.setTextureRect(frames[0]);
 }
 

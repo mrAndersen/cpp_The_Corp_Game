@@ -40,7 +40,7 @@ enum States {
     S_Stand = 1,
     S_Run = 2,
     S_Walk = 3,
-    S_Smoke = 4,
+    S_Smoking = 4,
     S_WaitForElevator = 5,
     S_RideInElevator = 6,
     S_Working = 7,
@@ -48,7 +48,8 @@ enum States {
     S_GoToOffice = 9,
     S_GoHome = 10,
     S_GoSmoke = 11,
-    S_GoToElevator = 12
+    S_GoToElevator = 12,
+    S_GoToCabin = 13
 };
 
 enum Entities {
