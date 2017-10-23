@@ -10,6 +10,7 @@
 
 void Movable::renderDebugInfo() {
     if (System::debug) {
+        debugInfo.setOutlineColor(sf::Color::White);
         debugInfo.setPosition(System::cToGl(worldCoordinates.x + width / 2, worldCoordinates.y + height / 2));
         debugInfo.setString(
                 "id: " + std::to_string(id) + "\n" +
@@ -115,55 +116,104 @@ void Movable::updateLogic() {
 
                 //go to nearest elevator
                 if (elevator) {
-                    auto waitPointLeft = elevator->getLeft() - width / 2;
-                    auto waitPointRight = elevator->getRight() + width / 2;
-
-                    if ((int) worldCoordinates.x == (int) waitPointLeft ||
-                        (int) worldCoordinates.x == (int) waitPointRight) {
-
-                        direction = Direction::None;
-                        state = S_None;
-
-                        //cabin here - go there
-                        if (elevator->getCabin()->getFloor() == floor) {
-                            std::cout << elevator->getCabin()->getFloor() << "\r";
-
-                            if (elevator->getCabin()->getWorldCoordinates().x <= worldCoordinates.x) {
-                                direction = Direction::Right;
-                            }
-
-                            if (elevator->getCabin()->getWorldCoordinates().x >= worldCoordinates.x) {
-                                direction = Direction::Left;
-                            }
-
-                            if (elevator->getCabin()->isMovableInside(this)) {
-                                direction = Direction::None;
-                                elevator->getCabin()->addMovable(this);
-                            }
-                        } else {
-                            //call cabin
-                            elevator->addToQueue(floor);
-                        }
-                    } else {
-                        if (worldCoordinates.x < waitPointLeft && worldCoordinates.x < elevator->getLeft()) {
-                            direction = Direction::Right;
-                        }
-
-                        if (worldCoordinates.x > waitPointRight && worldCoordinates.x > elevator->getRight()) {
-                            direction = Direction::Left;
-                        }
-                    }
+                    state = S_GoToElevator;
                 }
             }
+        }
+    }
+
+    //go to elevator wait position
+    if (state == S_GoToElevator) {
+        auto elevator = searchNearestElevator();
+        auto waitPointLeft = elevator->getLeft() - width / 2;
+        auto waitPointRight = elevator->getRight() + width / 2;
+
+        if (worldCoordinates.x < waitPointLeft && worldCoordinates.x < elevator->getLeft()) {
+            direction = Direction::Right;
+        }
+
+        if (worldCoordinates.x > waitPointRight && worldCoordinates.x > elevator->getRight()) {
+            direction = Direction::Left;
+        }
+
+        if ((int) worldCoordinates.x == (int) waitPointLeft ||
+            (int) worldCoordinates.x == (int) waitPointRight) {
+
+            if ((int) worldCoordinates.x == (int) waitPointLeft) {
+                direction = Direction::Right;
+            }
+
+            if ((int) worldCoordinates.x == (int) waitPointRight) {
+                direction = Direction::Left;
+            }
+
+            currentSpeed = 0;
+            state = S_WaitForElevator;
+            destinationFloor = currentWorkPlace->getParentOffice()->getFloor();
+        } else {
+            state = S_GoToElevator;
+        }
+    }
+
+    if (state == S_WaitForElevator) {
+        auto elevator = searchNearestElevator();
+
+        //cabin here - go there
+        if (elevator->getCabin()->getFloor() == floor && (int) elevator->getCabin()->getBottom() == (int) bottom) {
+            state = S_GoToCabin;
+        } else {
+            //call cabin
+            elevator->addToQueue(floor);
+        }
+    }
+
+    if (state == S_GoToCabin) {
+        auto elevator = searchNearestElevator();
+        currentSpeed = defaultSpeed;
+
+        if (elevator->getCabin()->getWorldCoordinates().x > worldCoordinates.x) {
+            direction = Direction::Right;
+        }
+
+        if (elevator->getCabin()->getWorldCoordinates().x < worldCoordinates.x) {
+            direction = Direction::Left;
+        }
+
+        if ((int) elevator->getCabin()->getWorldCoordinates().x == (int) worldCoordinates.x) {
+            currentSpeed = 0;
+            elevator->getCabin()->addMovable(this);
+
+            if (destinationFloor) {
+                elevator->addToQueue(destinationFloor);
+            }
+
+            state = S_RideInElevator;
+        }
+    }
+
+
+    //riding
+    if (state == S_RideInElevator) {
+        auto elevator = searchNearestElevator();
+
+        currentSpeed = 0;
+        direction = Direction::None;;
+
+        if (floor == destinationFloor) {
+            state = S_None;
+            destinationFloor = 0;
         }
     }
 
 
     //not working - but should
     if (
-            currentWorkPlace &&
-            System::gameTime.isWorkTime() &&
-            state != S_Working
+            currentWorkPlace && System::gameTime.isWorkTime() &&
+            state != S_Working &&
+            state != S_WaitForElevator &&
+            state != S_RideInElevator &&
+            state != S_GoToCabin &&
+            state != S_GoToElevator
             ) {
         state = S_GoToOffice;
         currentSpeed = defaultSpeed * System::timeFactor;
@@ -173,7 +223,6 @@ void Movable::updateLogic() {
     if (!currentWorkPlace && isOnTheGround() && workPlaceSearchResolution.getElapsedTime().asMilliseconds() >= 500) {
         searchWorkPlace();
     }
-
 
     //movement
     if (direction == Direction::Right) {
@@ -263,8 +312,6 @@ void Movable::setCost(float cost) {
 
 void Movable::spawn() {
     System::cash -= this->cost;
-    spawned = true;
-    liveClock.restart();
 
     auto *spent = new TextEntity(System::c_red, 30);
     auto position = worldCoordinates;
@@ -274,9 +321,14 @@ void Movable::spawn() {
     spent->setWorldCoordinates(position);
     spent->setString("-" + System::f_to_string(this->getCost()) + "$");
 
+    recalculateBoundaries();
+
     if (isAboveGround()) {
+        direction = Direction::Down;
         state = S_Falling;
     }
+
+    Entity::spawn();
 }
 
 void Movable::searchWorkPlace() {
@@ -345,6 +397,14 @@ Elevator *Movable::searchNearestElevator() {
     }
 
     return buffer.begin().operator*().second;
+}
+
+int Movable::getDestinationFloor() const {
+    return destinationFloor;
+}
+
+void Movable::setDestinationFloor(int destinationFloor) {
+    Movable::destinationFloor = destinationFloor;
 }
 
 

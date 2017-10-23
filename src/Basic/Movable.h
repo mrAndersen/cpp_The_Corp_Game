@@ -28,6 +28,7 @@ protected:
     float fallAcceleration = 980;
 
     WorkPlace *currentWorkPlace = nullptr;
+    int destinationFloor = 0;
     sf::Clock workPlaceSearchResolution;
 
     //relevant to game time
@@ -48,6 +49,10 @@ protected:
 
 public:
     Movable();
+
+    int getDestinationFloor() const;
+
+    void setDestinationFloor(int destinationFloor);
 
     Gender getGender() const;
 

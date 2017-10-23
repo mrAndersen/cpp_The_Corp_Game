@@ -13,6 +13,7 @@ void Elevator::finish() {
         top = topShaft->getTop();
     }
 
+    topShaft->setElevator(this);
     EntityContainer::addElevator(this);
 }
 
@@ -43,9 +44,7 @@ void Elevator::drawDebug() {
 void Elevator::update() {
 
     if (!queue.empty() && !waiting) {
-        float cabinSpeed = 250;
-        float delta = 5;
-
+        float cabinSpeed = cabin->getSpeed();
         float frameTimeSeconds = (float) System::frameTimeMcs / 1000000;
         float frameDistance = frameTimeSeconds * cabinSpeed * System::timeFactor;
 

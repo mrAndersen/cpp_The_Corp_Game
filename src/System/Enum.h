@@ -48,7 +48,8 @@ enum States {
     S_GoToOffice = 9,
     S_GoHome = 10,
     S_GoSmoke = 11,
-    S_GoToElevator = 12
+    S_GoToElevator = 12,
+    S_GoToCabin = 13
 };
 
 enum Entities {

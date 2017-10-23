@@ -93,6 +93,10 @@ void ElevatorShaftTop::setElevator(Elevator *elevator) {
 void ElevatorShaftTop::updateLogic() {
 
     if(elevator){
+        elevator->setTop(top);
+        elevator->setLeft(left);
+        elevator->setRight(right);
+
         elevator->update();
     }
 

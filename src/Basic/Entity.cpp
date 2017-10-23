@@ -68,16 +68,7 @@ void Entity::setInvalid() {
 
 void Entity::updateLogic() {
     selectAnimation(state);
-
-    top = worldCoordinates.y + height / 2;
-    bottom = worldCoordinates.y - height / 2;
-    left = worldCoordinates.x - width / 2;
-    right = worldCoordinates.x + width / 2;
-
-    rect.height = height;
-    rect.width = width;
-    rect.left = (int) left;
-    rect.top = (int) top;
+    recalculateBoundaries();
 }
 
 const std::string &Entity::getName() const {
@@ -336,6 +327,8 @@ bool Entity::isSpawned() {
 }
 
 void Entity::spawn() {
+    liveClock.restart();
+    recalculateBoundaries();
     spawned = true;
 }
 
@@ -359,4 +352,16 @@ Direction Entity::getDirection() const {
 
 void Entity::setDirection(Direction direction) {
     Entity::direction = direction;
+}
+
+void Entity::recalculateBoundaries() {
+    top = worldCoordinates.y + height / 2;
+    bottom = worldCoordinates.y - height / 2;
+    left = worldCoordinates.x - width / 2;
+    right = worldCoordinates.x + width / 2;
+
+    rect.height = height;
+    rect.width = width;
+    rect.left = (int) left;
+    rect.top = (int) top;
 }

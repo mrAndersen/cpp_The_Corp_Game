@@ -3,6 +3,7 @@
 #include <Objects/ElevatorShaftMiddle.h>
 #include <Objects/ElevatorShaftTop.h>
 #include <Office/OfficeClerk.h>
+#include <Objects/Ground.h>
 #include "System/System.h"
 #include "System/ResourceLoader.h"
 #include "System/ViewHandler.h"
@@ -114,11 +115,24 @@ int main() {
                     if (i == top) {
                         auto t = new ElevatorShaftTop({775, 175 + (float) i});
                         t->spawn();
+
+                        auto c = new ElevatorCabin({775, 175 + (float) (900 - 150)});
+                        c->spawn();
                     }
                 }
             }
 
-            if (
+            if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::G) {
+                auto count = 1;
+
+                for (int i = 0; i < count; ++i) {
+                    auto c = new Clerk({(float) 300 + (i * 20), 300.f});
+                    c->spawn();
+                }
+            }
+
+
+                if (
                     System::timeFactor < 10 &&
                     sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) &&
                     sf::Keyboard::isKeyPressed(sf::Keyboard::Add)) {
