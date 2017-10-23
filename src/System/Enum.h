@@ -7,8 +7,11 @@ enum Multiplier {
 
 enum DrawOrder {
     D_Offices = 98,
+    D_Characters_Wokring = 100,
+    D_Chair = 105,
     D_ElevatorShafts = 110,
-    D_ElevatorCabin = 120
+    D_ElevatorCabin = 120,
+    D_Characters = 200
 };
 
 enum Gender {
@@ -75,7 +78,11 @@ enum Entities {
             E_ElevatorShaftBottom = 51,
     E_ElevatorShaftMiddle = 52,
     E_ElevatorShaftTop = 53,
-    E_ElevatorCabin = 54
+    E_ElevatorCabin = 54,
+
+
+    //Other
+    E_Chair = 91,
 };
 
 #endif

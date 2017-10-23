@@ -33,6 +33,7 @@ namespace ResourceLoader {
 
     void loadTexturesFromFiles() {
         ResourceLoader::loadTexture(Entities::E_OfficeDefault, "resources/office/office.default.png");
+        ResourceLoader::loadTexture(Entities::E_Chair, "resources/office/chair.png");
 
 
         //----<<Clerk>>-----

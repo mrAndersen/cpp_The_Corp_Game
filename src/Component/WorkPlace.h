@@ -12,7 +12,7 @@ class WorkPlace {
     sf::Vector2f worldCoordinates;
     Office *parentOffice = nullptr;
     Movable *worker = nullptr;
-
+    Entity *chair = nullptr;
 public:
     WorkPlace(const sf::Vector2f &worldCoordinates, Office *parentOffice);
 
@@ -27,6 +27,8 @@ public:
     Movable *getWorker() const;
 
     void setWorker(Movable *worker);
+
+    void update();
 
     void drawDebug();
 };

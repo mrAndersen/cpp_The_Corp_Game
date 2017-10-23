@@ -1,4 +1,5 @@
 #include <System/System.h>
+#include <Office/Chair.h>
 #include "WorkPlace.h"
 
 const sf::Vector2f &WorkPlace::getWorldCoordinates() const {
@@ -36,11 +37,18 @@ void WorkPlace::drawDebug() {
     rect.setPosition(System::cToGl(worldCoordinates));
     rect.setSize({15, 15});
 
-    if(worker){
+    if (worker) {
         rect.setFillColor(sf::Color::Red);
-    }else{
+    } else {
         rect.setFillColor(sf::Color::Green);
     }
 
     System::window->draw(rect);
+}
+
+void WorkPlace::update() {
+
+    if (worker && !chair) {
+        chair = new Chair({worldCoordinates.x - 23, worldCoordinates.y - 16});
+    }
 }

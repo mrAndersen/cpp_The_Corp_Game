@@ -86,7 +86,7 @@ void Movable::updateLogic() {
         }
     }
 
-    if(state == S_Working){
+    if (state == S_Working) {
         currentSpeed = 0;
         direction = Direction::Right;
     }
@@ -403,8 +403,8 @@ Elevator *Movable::searchNearestElevator() {
     std::map<int, Elevator *> buffer;
 
     for (auto el:elevators) {
-        auto elevatorCenter = el->getRight() - el->getLeft();
-        int distance = std::abs(worldCoordinates.x - elevatorCenter);
+        auto elevatorCenter = el->getLeft() + el->getCabin()->getWidth() / 2;
+        int distance = std::abs((int) worldCoordinates.x - (int) elevatorCenter);
 
         buffer[distance] = el;
     }

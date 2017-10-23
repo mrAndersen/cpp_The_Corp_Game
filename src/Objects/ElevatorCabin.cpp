@@ -14,6 +14,7 @@ ElevatorCabin::ElevatorCabin(sf::Vector2f coordinates) {
     setWorldCoordinates(coordinates);
     addAnimation(S_None, Animation(this, S_None, 1, ResourceLoader::getTexture(E_ElevatorCabin)));
 
+    setSelectable(true);
     setDrawOrder(DrawOrder::D_ElevatorCabin);
     initEntity();
 
