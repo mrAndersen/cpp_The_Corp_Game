@@ -33,7 +33,7 @@ void MoneyIndicator::update() {
         currentAnimation->update();
     }
 
-    moneyString.setPosition(System::cToGl(ViewHandler::left + 20, ViewHandler::top - 8));
+    moneyString.setPosition(System::cToGl(ViewHandler::left + 20, ViewHandler::top - 1));
     moneyString.setString("$ " + System::f_to_string(System::cash));
     System::window->draw(moneyString);
 
