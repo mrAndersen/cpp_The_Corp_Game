@@ -98,7 +98,7 @@ namespace ViewHandler {
                     view->move(scrollSpeed, 0);
                 }
 
-                if (ViewHandler::bottom > System::groundLevel && ViewHandler::right < -System::worldWidth / 2) {
+                if (ViewHandler::bottom > System::groundLevel && ViewHandler::right < System::worldWidth / 2) {
                     view->move(scrollSpeed, scrollSpeed);
                 }
             }

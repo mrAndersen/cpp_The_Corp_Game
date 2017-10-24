@@ -29,7 +29,7 @@ add_executable(
         ${EXECUTABLE_NAME} WIN32
 
         main.cpp
-#        main.rc
+        main.rc
 
         src/System/EntityContainer.h
         src/System/EntityContainer.cpp

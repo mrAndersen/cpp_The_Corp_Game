@@ -152,7 +152,7 @@ namespace System {
             );
 
             debugPanelTextNodes["v_zoom"].setString("v_zoom: " + std::to_string(ViewHandler::zoom));
-            debugPanelTextNodes["p_cash"].setString("p_cash: " + std::to_string((int) System::cash));
+            debugPanelTextNodes["p_cash"].setString("p_cash: " + std::to_string(System::cash));
             debugPanelTextNodes["p_time"].setString("p_time:" + gameTime.get());
             debugPanelTextNodes["p_time_factor"].setString("p_time_factor:" + std::to_string(timeFactor));
 
