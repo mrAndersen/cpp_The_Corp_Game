@@ -35,7 +35,7 @@ namespace System {
     //utility
 
     //player
-    extern float cash;
+    extern double cash;
     extern bool spawningUnit;
     extern bool dayEndProcessed;
     extern bool dayStartProcessed;

@@ -2,25 +2,26 @@
 #include <cmath>
 #include "ControlButtonAddOffice.h"
 #include "System/EntityContainer.h"
-#include "System/ViewHandler.h"
 #include "System/System.h"
 #include "Office/OfficeClerk.h"
-#include "Text/TextEntity.h"
 
 ControlButtonAddOffice::ControlButtonAddOffice() {
     setName("button.add.office");
     setDrawOrder(INT_MAX);
 
-    setWidth(142);
-    setHeight(47);
+    setWidth(ControlButtonAddOffice::width);
+    setHeight(ControlButtonAddOffice::height);
 
-    addAnimation(S_None, Animation(this, S_None, 1, ResourceLoader::getTexture(E_ButtonAddOffice)));
+    addAnimation(S_Button_Normal, Animation(this, S_Button_Normal, 1, ResourceLoader::getTexture(E_ButtonAddOffice, S_Button_Normal)));
+    addAnimation(S_Button_Pressed, Animation(this, S_Button_Pressed, 1, ResourceLoader::getTexture(E_ButtonAddOffice, S_Button_Pressed)));
+
     initEntity();
-
     EntityContainer::add(this);
 }
 
-void ControlButtonAddOffice::updateLogic() {
+void ControlButtonAddOffice::update() {
+    selectAnimation(S_Button_Normal);
+
     bool spawnCondition = attachedOffice &&
                           System::cash >= attachedOffice->getCost() &&
                           !attachedOffice->isBelowGround() &&
@@ -51,6 +52,7 @@ void ControlButtonAddOffice::updateLogic() {
     if (attachedOffice) {
         System::spawningUnit = true;
         auto global = System::getGlobalMouse();
+        selectAnimation(S_Button_Pressed);
 
         float normalizedX = global.x - ((int) global.x % System::gridSize) + System::gridSize;
         float normalizedY = global.y - ((int) global.y % System::gridSize) + System::gridSize / 2;
@@ -79,5 +81,12 @@ void ControlButtonAddOffice::updateLogic() {
         } else {
             attachedOffice->setTransparent();
         }
+    }
+
+    worldCoordinates.x = ViewHandler::left + width / 2 + 6;
+    worldCoordinates.y = ViewHandler::top - 462;
+
+    if (currentAnimation) {
+        currentAnimation->update();
     }
 }

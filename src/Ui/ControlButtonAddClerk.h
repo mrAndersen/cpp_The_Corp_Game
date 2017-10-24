@@ -5,14 +5,14 @@
 
 class ControlButtonAddClerk : public Entity {
 public:
-    const static int width = 142;
-    const static int height = 47;
+    const static int width = 60;
+    const static int height = 62;
 
     Clerk *attachedClerk = nullptr;
 
     explicit ControlButtonAddClerk();
 
-    void updateLogic() override;
+    void update() override;
 };
 
 #endif //THE_CORP_GAME_CONTROLBUTTONADDCLERK_H

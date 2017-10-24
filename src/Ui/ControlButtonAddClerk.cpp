@@ -10,16 +10,19 @@ ControlButtonAddClerk::ControlButtonAddClerk() {
     setName("button.add.clerk");
     setDrawOrder(INT_MAX);
 
-    setWidth(142);
-    setHeight(47);
+    setWidth(ControlButtonAddClerk::width);
+    setHeight(ControlButtonAddClerk::height);
 
-    addAnimation(S_None, Animation(this, S_None, 1, ResourceLoader::getTexture(E_ButtonAddClerk, S_None)));
+    addAnimation(S_Button_Normal, Animation(this, S_Button_Normal, 1, ResourceLoader::getTexture(E_ButtonAddClerk, S_Button_Normal)));
+    addAnimation(S_Button_Pressed, Animation(this, S_Button_Pressed, 1, ResourceLoader::getTexture(E_ButtonAddClerk, S_Button_Pressed)));
 
     initEntity();
     EntityContainer::add(this);
 }
 
-void ControlButtonAddClerk::updateLogic() {
+void ControlButtonAddClerk::update() {
+    selectAnimation(S_Button_Normal);
+
     bool spawnCondition = attachedClerk &&
                           System::cash >= attachedClerk->getCost() &&
                           !attachedClerk->isBelowGround();
@@ -47,6 +50,7 @@ void ControlButtonAddClerk::updateLogic() {
     }
 
     if (attachedClerk) {
+        selectAnimation(S_Button_Pressed);
         System::spawningUnit = true;
         attachedClerk->setWorldCoordinates(System::getGlobalMouse());
 
@@ -66,5 +70,12 @@ void ControlButtonAddClerk::updateLogic() {
         } else {
             attachedClerk->setTransparent();
         }
+    }
+
+    worldCoordinates.x = ViewHandler::left + width / 2 + 6;
+    worldCoordinates.y = ViewHandler::top - 400;
+
+    if (currentAnimation) {
+        currentAnimation->update();
     }
 }

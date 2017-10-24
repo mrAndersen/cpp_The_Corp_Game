@@ -29,7 +29,7 @@ add_executable(
         ${EXECUTABLE_NAME} WIN32
 
         main.cpp
-#        main.rc
+        main.rc
 
         src/System/EntityContainer.h
         src/System/EntityContainer.cpp
@@ -60,11 +60,11 @@ add_executable(
         src/System/ControlPanel.h
         src/System/ControlPanel.cpp
 
-        src/Controls/ControlButtonAddClerk.h
-        src/Controls/ControlButtonAddClerk.cpp
+        src/Ui/ControlButtonAddClerk.h
+        src/Ui/ControlButtonAddClerk.cpp
 
-        src/Controls/ControlButtonAddOffice.h
-        src/Controls/ControlButtonAddOffice.cpp
+        src/Ui/ControlButtonAddOffice.h
+        src/Ui/ControlButtonAddOffice.cpp
 
         src/Office/OfficeClerk.h
         src/Office/OfficeClerk.cpp
@@ -83,18 +83,15 @@ add_executable(
         src/Text/TextEntity.cpp
         src/Text/TextEntity.h
 
-        src/Controls/ControlCashIndicator.cpp
-        src/Controls/ControlCashIndicator.h
+        src/Ui/ControlTimeIndicator.cpp
+        src/Ui/ControlTimeIndicator.h
 
-        src/Controls/ControlTimeIndicator.cpp
-        src/Controls/ControlTimeIndicator.h
+        src/Ui/ControlButtonAddElevatorShaftMiddle.cpp
+        src/Ui/ControlButtonAddElevatorShaftMiddle.h
 
-        src/Controls/ControlButtonAddElevatorShaftMiddle.cpp
-        src/Controls/ControlButtonAddElevatorShaftMiddle.h
-
-        src/Controls/ControlButtonAddElevatorShaftTop.cpp
-        src/Controls/ControlButtonAddElevatorShaftTop.h
-        src/Objects/ElevatorShaftTop.cpp src/Objects/ElevatorShaftTop.h src/Objects/ElevatorCabin.cpp src/Objects/ElevatorCabin.h src/Controls/ControlButtonAddElevatorCabin.cpp src/Controls/ControlButtonAddElevatorCabin.h src/Component/Elevator.cpp src/Component/Elevator.h src/Component/WorkPlace.cpp src/Component/WorkPlace.h src/Basic/Animation.cpp src/Basic/Animation.h src/Office/Chair.cpp src/Office/Chair.h)
+        src/Ui/ControlButtonAddElevatorShaftTop.cpp
+        src/Ui/ControlButtonAddElevatorShaftTop.h
+        src/Objects/ElevatorShaftTop.cpp src/Objects/ElevatorShaftTop.h src/Objects/ElevatorCabin.cpp src/Objects/ElevatorCabin.h src/Ui/ControlButtonAddElevatorCabin.cpp src/Ui/ControlButtonAddElevatorCabin.h src/Component/Elevator.cpp src/Component/Elevator.h src/Component/WorkPlace.cpp src/Component/WorkPlace.h src/Basic/Animation.cpp src/Basic/Animation.h src/Office/Chair.cpp src/Office/Chair.h src/Ui/MoneyIndicator.cpp src/Ui/MoneyIndicator.h)
 
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
