@@ -6,6 +6,7 @@
 #include <random>
 #include <chrono>
 #include <climits>
+#include <iostream>
 #include "System.h"
 #include "ViewHandler.h"
 #include "GameTime.h"
@@ -35,14 +36,14 @@ namespace System {
     //sys
 
     //utility
-    sf::Color c_background(244, 246, 249);
+    sf::Color c_background(220, 236, 237);
     sf::Color c_grey(236, 237, 227);
     sf::Color c_red(186, 24, 24);
     sf::Color c_green(92, 184, 92);
     //utility
 
     //player
-    float cash = 50000;
+    double cash = 50000;
     bool spawningUnit = false;
 
     bool dayEndProcessed = false;
@@ -160,7 +161,7 @@ namespace System {
 
             for (it = debugPanelTextNodes.begin(); it != debugPanelTextNodes.end(); it++) {
                 it->second.setPosition(
-                        cToGl(sf::Vector2f(ViewHandler::left + 12, ViewHandler::top - 200 - i * 12)));
+                        cToGl(sf::Vector2f(ViewHandler::left + 12, ViewHandler::top - 650 - i * 12)));
                 window->draw(it->second);
 
                 i++;
@@ -249,11 +250,20 @@ namespace System {
         return w_Desktop;
     }
 
+    struct f_punctuation : std::numpunct<char> {
+    protected :
+        char do_thousands_sep() const override { return ','; }
+        std::string do_grouping() const override { return "\03"; }
+    };
+
     std::string f_to_string(const float value, const int n) {
         std::ostringstream out;
-        out.imbue(std::locale(""));
 
-        out << std::setprecision(n) << std::fixed << value;
+        out.imbue(std::locale(out.getloc(), new f_punctuation));
+        out.precision(n);
+        out << std::fixed;
+        out << value;
+
         return out.str();
     }
 

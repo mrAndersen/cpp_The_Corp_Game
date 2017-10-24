@@ -11,7 +11,8 @@ enum DrawOrder {
     D_Chair = 105,
     D_ElevatorShafts = 110,
     D_ElevatorCabin = 120,
-    D_Characters = 200
+    D_Characters = 200,
+    D_Ui = 250
 };
 
 enum Gender {
@@ -83,6 +84,9 @@ enum Entities {
 
     //Other
     E_Chair = 91,
+
+    //Ui
+    E_Indicator_Money = 101
 };
 
 #endif

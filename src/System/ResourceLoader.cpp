@@ -32,6 +32,10 @@ namespace ResourceLoader {
     }
 
     void loadTexturesFromFiles() {
+        //----<<Ui>>-----
+        ResourceLoader::loadTexture(Entities::E_Indicator_Money, "resources/ui/indicator.money.png");
+
+
         ResourceLoader::loadTexture(Entities::E_OfficeDefault, "resources/office/office.default.png");
         ResourceLoader::loadTexture(Entities::E_Chair, "resources/office/chair.png");
 

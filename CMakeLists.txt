@@ -83,9 +83,6 @@ add_executable(
         src/Text/TextEntity.cpp
         src/Text/TextEntity.h
 
-        src/Controls/ControlCashIndicator.cpp
-        src/Controls/ControlCashIndicator.h
-
         src/Controls/ControlTimeIndicator.cpp
         src/Controls/ControlTimeIndicator.h
 
@@ -94,7 +91,7 @@ add_executable(
 
         src/Controls/ControlButtonAddElevatorShaftTop.cpp
         src/Controls/ControlButtonAddElevatorShaftTop.h
-        src/Objects/ElevatorShaftTop.cpp src/Objects/ElevatorShaftTop.h src/Objects/ElevatorCabin.cpp src/Objects/ElevatorCabin.h src/Controls/ControlButtonAddElevatorCabin.cpp src/Controls/ControlButtonAddElevatorCabin.h src/Component/Elevator.cpp src/Component/Elevator.h src/Component/WorkPlace.cpp src/Component/WorkPlace.h src/Basic/Animation.cpp src/Basic/Animation.h src/Office/Chair.cpp src/Office/Chair.h)
+        src/Objects/ElevatorShaftTop.cpp src/Objects/ElevatorShaftTop.h src/Objects/ElevatorCabin.cpp src/Objects/ElevatorCabin.h src/Controls/ControlButtonAddElevatorCabin.cpp src/Controls/ControlButtonAddElevatorCabin.h src/Component/Elevator.cpp src/Component/Elevator.h src/Component/WorkPlace.cpp src/Component/WorkPlace.h src/Basic/Animation.cpp src/Basic/Animation.h src/Office/Chair.cpp src/Office/Chair.h src/Ui/MoneyIndicator.cpp src/Ui/MoneyIndicator.h)
 
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})

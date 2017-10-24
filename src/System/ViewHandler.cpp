@@ -68,26 +68,38 @@ namespace ViewHandler {
             }
 
             if (viewDirectionMovement == Direction::DownLeft) {
-                if (ViewHandler::left <= (int) -System::worldWidth / 2) {
-                    view->move(0, -scrollSpeed);
-                } else {
-                    if (bottom > System::groundLevel) {
-                        view->move(-scrollSpeed, scrollSpeed);
-                    } else {
-                        view->move(-scrollSpeed, 0);
-                    }
+                if (ViewHandler::bottom <= System::groundLevel && ViewHandler::left <= -System::worldWidth / 2) {
+                    return;
+                }
+
+                if (ViewHandler::bottom > System::groundLevel && ViewHandler::left <= -System::worldWidth / 2) {
+                    view->move(0, scrollSpeed);
+                }
+
+                if (ViewHandler::bottom <= System::groundLevel && ViewHandler::left > -System::worldWidth / 2) {
+                    view->move(-scrollSpeed, 0);
+                }
+
+                if (ViewHandler::bottom > System::groundLevel && ViewHandler::left > -System::worldWidth / 2) {
+                    view->move(-scrollSpeed, scrollSpeed);
                 }
             }
 
             if (viewDirectionMovement == Direction::DownRight) {
-                if (ViewHandler::right >= (int) System::worldWidth / 2) {
+                if (ViewHandler::bottom <= System::groundLevel && ViewHandler::right >= System::worldWidth / 2) {
+                    return;
+                }
+
+                if (ViewHandler::bottom > System::groundLevel && ViewHandler::right >= System::worldWidth / 2) {
                     view->move(0, -scrollSpeed);
-                } else {
-                    if (bottom > System::groundLevel) {
-                        view->move(scrollSpeed, scrollSpeed);
-                    } else {
-                        view->move(scrollSpeed, 0);
-                    }
+                }
+
+                if (ViewHandler::bottom <= System::groundLevel && ViewHandler::right < System::worldWidth / 2) {
+                    view->move(scrollSpeed, 0);
+                }
+
+                if (ViewHandler::bottom > System::groundLevel && ViewHandler::right < -System::worldWidth / 2) {
+                    view->move(scrollSpeed, scrollSpeed);
                 }
             }
 
