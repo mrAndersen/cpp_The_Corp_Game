@@ -1,7 +1,3 @@
-//
-// Created by mrAndersen on 24.10.2017.
-//
-
 #include <System/ResourceLoader.h>
 #include <System/EntityContainer.h>
 #include <System/ViewHandler.h>

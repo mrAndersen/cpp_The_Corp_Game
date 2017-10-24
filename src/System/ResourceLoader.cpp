@@ -51,8 +51,11 @@ namespace ResourceLoader {
 
         ResourceLoader::loadTexture(Entities::E_StaticGround, "resources/ground.png");
 
-        ResourceLoader::loadTexture(Entities::E_ButtonAddClerk, "resources/control.panel/button.add.clerk.png");
-        ResourceLoader::loadTexture(Entities::E_ButtonAddOffice, "resources/control.panel/button.add.office.png");
+        ResourceLoader::loadTexture(Entities::E_ButtonAddClerk, "resources/ui/button.add.clerk.png", S_Button_Normal);
+        ResourceLoader::loadTexture(Entities::E_ButtonAddClerk, "resources/ui/button.add.clerk.pressed.png", S_Button_Pressed);
+
+        ResourceLoader::loadTexture(Entities::E_ButtonAddOffice, "resources/ui/button.add.office.png");
+
         ResourceLoader::loadTexture(Entities::E_ButtonAddElevatorShaftMiddle, "resources/control.panel/button.add.elevator.png");
         ResourceLoader::loadTexture(Entities::E_ButtonAddElevatorShaftTop, "resources/control.panel/button.add.elevator.png");
 

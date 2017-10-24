@@ -6,8 +6,8 @@
 
 class ControlButtonAddOffice : public Entity {
 public:
-    const static int width = 142;
-    const static int height = 47;
+    const static int width = 60;
+    const static int height = 62;
 
     Office *attachedOffice = nullptr;
 

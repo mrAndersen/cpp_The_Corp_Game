@@ -2,17 +2,15 @@
 #include <cmath>
 #include "ControlButtonAddOffice.h"
 #include "System/EntityContainer.h"
-#include "System/ViewHandler.h"
 #include "System/System.h"
 #include "Office/OfficeClerk.h"
-#include "Text/TextEntity.h"
 
 ControlButtonAddOffice::ControlButtonAddOffice() {
     setName("button.add.office");
     setDrawOrder(INT_MAX);
 
-    setWidth(142);
-    setHeight(47);
+    setWidth(ControlButtonAddOffice::width);
+    setHeight(ControlButtonAddOffice::height);
 
     addAnimation(S_None, Animation(this, S_None, 1, ResourceLoader::getTexture(E_ButtonAddOffice)));
     initEntity();
