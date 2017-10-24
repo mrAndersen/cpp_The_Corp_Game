@@ -5,8 +5,8 @@
 
 class MoneyIndicator : public Entity {
 
-    const static int width = 394;
-    const static int height = 156;
+    const static int width = 378;
+    const static int height = 136;
 
     sf::Text moneyString;
 public:

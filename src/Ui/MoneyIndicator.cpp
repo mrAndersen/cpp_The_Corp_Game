@@ -24,6 +24,8 @@ MoneyIndicator::MoneyIndicator(sf::Vector2f coordinates) {
 }
 
 void MoneyIndicator::update() {
+    selectAnimation(state);
+
     worldCoordinates.x = ViewHandler::left + width / 2;
     worldCoordinates.y = ViewHandler::top - height / 2;
 
@@ -34,4 +36,6 @@ void MoneyIndicator::update() {
     moneyString.setPosition(System::cToGl(ViewHandler::left + 20, ViewHandler::top - 8));
     moneyString.setString("$ " + System::f_to_string(System::cash));
     System::window->draw(moneyString);
+
+    recalculateBoundaries();
 }

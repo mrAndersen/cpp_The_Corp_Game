@@ -11,6 +11,8 @@ std::string Entity::serialize() {
 }
 
 void Entity::update() {
+    selectAnimation(state);
+
     if (currentAnimation) {
         currentAnimation->update();
     }
@@ -67,7 +69,6 @@ void Entity::setInvalid() {
 }
 
 void Entity::updateLogic() {
-    selectAnimation(state);
     recalculateBoundaries();
 }
 

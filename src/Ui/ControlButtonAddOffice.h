@@ -3,6 +3,7 @@
 
 #include <Basic/Entity.h>
 #include "Office/Office.h"
+#include <System/ViewHandler.h>
 
 class ControlButtonAddOffice : public Entity {
 public:
@@ -13,6 +14,6 @@ public:
 
     explicit ControlButtonAddOffice();
 
-    void updateLogic() override;
+    void update() override;
 };
 #endif //THE_CORP_GAME_CONTROLBUTTONADDOFFICE_H
