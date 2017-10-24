@@ -71,6 +71,12 @@ namespace EntityContainer {
         });
     }
 
+    void resort() {
+        std::sort(items.begin(), items.end(), [](Entity *a, Entity *b) -> bool {
+            return a->getDrawOrder() < b->getDrawOrder();
+        });
+    }
+
     void remove(Entity *item) {
         items.erase(std::remove(items.begin(), items.end(), item), items.end());
         delete item;

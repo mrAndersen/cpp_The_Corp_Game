@@ -36,10 +36,14 @@ void Office::updateLogic() {
     //update floor
     floor = ((int) worldCoordinates.y - ((int) worldCoordinates.y % System::gridSize)) / System::gridSize / 3;
 
-    workPlaces[0]->setWorldCoordinates({worldCoordinates.x - width / 2 + 70, worldCoordinates.y - 11});
-    workPlaces[1]->setWorldCoordinates({worldCoordinates.x - width / 2 + 220, worldCoordinates.y - 11});
-    workPlaces[2]->setWorldCoordinates({worldCoordinates.x - width / 2 + 372, worldCoordinates.y - 11});
-    workPlaces[3]->setWorldCoordinates({worldCoordinates.x - width / 2 + 516, worldCoordinates.y - 11});
+    workPlaces[0]->setWorldCoordinates({worldCoordinates.x - width / 2 + 68, worldCoordinates.y - 11});
+    workPlaces[1]->setWorldCoordinates({worldCoordinates.x - width / 2 + 218, worldCoordinates.y - 11});
+    workPlaces[2]->setWorldCoordinates({worldCoordinates.x - width / 2 + 370, worldCoordinates.y - 11});
+    workPlaces[3]->setWorldCoordinates({worldCoordinates.x - width / 2 + 514, worldCoordinates.y - 11});
+
+    for (auto w:workPlaces) {
+        w->update();
+    }
 
     Entity::updateLogic();
 }
@@ -99,10 +103,10 @@ void Office::spawn() {
 }
 
 Office::Office() {
-    workPlaces[0] = new WorkPlace({worldCoordinates.x - 300, worldCoordinates.y}, this);
-    workPlaces[1] = new WorkPlace({worldCoordinates.x - 150, worldCoordinates.y}, this);
-    workPlaces[2] = new WorkPlace({worldCoordinates.x + 150, worldCoordinates.y}, this);
-    workPlaces[3] = new WorkPlace({worldCoordinates.x + 300, worldCoordinates.y}, this);
+    workPlaces[0] = new WorkPlace(worldCoordinates, this);
+    workPlaces[1] = new WorkPlace(worldCoordinates, this);
+    workPlaces[2] = new WorkPlace(worldCoordinates, this);
+    workPlaces[3] = new WorkPlace(worldCoordinates, this);
 
     setSelectable(true);
 }

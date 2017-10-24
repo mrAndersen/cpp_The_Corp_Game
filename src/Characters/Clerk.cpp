@@ -27,7 +27,7 @@ Clerk::Clerk(sf::Vector2f coordinates) : Movable() {
     setSelectable(true);
 
 
-    setDrawOrder(1000);
+    setDrawOrder(D_Characters);
     initEntity();
 
     System::salaryTotal += dailySalary;
