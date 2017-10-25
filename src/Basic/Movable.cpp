@@ -279,7 +279,10 @@ std::string Movable::serialize() {
     return Entity::serialize();
 }
 
-Movable::Movable() : Entity() {
+Movable::Movable(Entities type, int width, int height) : Entity(type) {
+    this->width = width;
+    this->height = height;
+
     personName = ResourceLoader::getRandomName(gender);
 
     auto rnd = System::getRandom(1, 3);
@@ -310,6 +313,15 @@ Movable::Movable() : Entity() {
         default:
             gender = G_Male;
     }
+
+    gender = G_Male;
+
+    addAnimation(S_None, gender, race, 24);
+    addAnimation(S_GoToOffice, gender, race, 24);
+    addAnimation(S_GoToElevator, gender, race, 24);
+    addAnimation(S_GoToCabin, gender, race, 24);
+    addAnimation(S_Working, gender, race, 24);
+    addAnimation(S_Smoking, gender, race, 66, 2750000);
 }
 
 float Movable::getDefaultSpeed() const {
@@ -425,4 +437,8 @@ void Movable::setDestinationFloor(int destinationFloor) {
     Movable::destinationFloor = destinationFloor;
 }
 
+void Movable::addAnimation(States state, Gender gender, Race race, int frames, int duration) {
+    Animation animation(this, state, frames, ResourceLoader::getCharacterTexture(eType, state, gender, race), duration);
+    Entity::addAnimation(state, animation);
+}
 

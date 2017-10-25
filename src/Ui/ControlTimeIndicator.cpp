@@ -3,8 +3,6 @@
 #include "System/ViewHandler.h"
 
 ControlTimeIndicator::ControlTimeIndicator(const sf::Color &color, int size) : TextEntity(color, size) {
-    setName("time.indicator");
-
     setLiveTimeSeconds(0);
     setDirection(Direction::None);
 }

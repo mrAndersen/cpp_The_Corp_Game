@@ -4,6 +4,15 @@
 #include "System/EntityContainer.h"
 #include "System/System.h"
 
+Office::Office() {
+    workPlaces[0] = new WorkPlace(worldCoordinates, this);
+    workPlaces[1] = new WorkPlace(worldCoordinates, this);
+    workPlaces[2] = new WorkPlace(worldCoordinates, this);
+    workPlaces[3] = new WorkPlace(worldCoordinates, this);
+
+    setSelectable(true);
+}
+
 std::vector<Office *> Office::getNeighborOffices() {
     std::vector<Office *> result;
     std::vector<Office *> offices = EntityContainer::getOffices();
@@ -61,7 +70,7 @@ void Office::renderDebugInfo() {
         debugInfo.setPosition(System::cToGl(worldCoordinates.x + width / 2, worldCoordinates.y + height / 2));
         debugInfo.setString(
                 "id: " + std::to_string(id) + "\n" +
-                "name: " + name + "\n" +
+                "type: " + std::to_string(eType) + "\n" +
                 "pos: {" + std::to_string((int) worldCoordinates.x) + "," + std::to_string((int) worldCoordinates.y) +
                 "}\n" +
                 "left: " + std::to_string((int) left) + "," +
@@ -99,16 +108,7 @@ void Office::spawn() {
     spent->setWorldCoordinates(position);
     spent->setString("-" + System::f_to_string(cost) + "$");
 
-    spawned = true;
-}
-
-Office::Office() {
-    workPlaces[0] = new WorkPlace(worldCoordinates, this);
-    workPlaces[1] = new WorkPlace(worldCoordinates, this);
-    workPlaces[2] = new WorkPlace(worldCoordinates, this);
-    workPlaces[3] = new WorkPlace(worldCoordinates, this);
-
-    setSelectable(true);
+    Entity::spawn();
 }
 
 bool Office::hasFreeWorkPlaces() {

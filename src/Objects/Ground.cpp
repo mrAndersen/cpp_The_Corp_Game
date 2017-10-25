@@ -4,13 +4,12 @@
 #include "System/EntityContainer.h"
 
 Ground::Ground(sf::Vector2f coordinates) {
-    setName("ground");
-
+    setEType(E_StaticGround);
     setWidth(Ground::width);
     setHeight(Ground::height);
     setWorldCoordinates(coordinates);
 
-    addAnimation(S_None, Animation(this, S_None, 1, ResourceLoader::getTexture(E_StaticGround)));
+    addAnimation(S_None, Animation(this, S_None, 1, ResourceLoader::getTexture(eType)));
 
     initEntity();
 

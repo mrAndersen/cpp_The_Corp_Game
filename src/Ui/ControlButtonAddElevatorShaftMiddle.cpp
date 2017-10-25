@@ -8,13 +8,13 @@
 #include "Text/TextEntity.h"
 
 ControlButtonAddElevatorShaftMiddle::ControlButtonAddElevatorShaftMiddle() {
-    setName("button.add.elevator.shaft.middle");
+    setEType(E_ButtonAddElevatorShaftMiddle);
     setDrawOrder(INT_MAX);
 
     setWidth(142);
     setHeight(47);
 
-    addAnimation(S_None, Animation(this, S_None, 1, ResourceLoader::getTexture(E_ButtonAddElevatorShaftMiddle)));
+    addAnimation(S_None, Animation(this, S_None, 1, ResourceLoader::getTexture(eType)));
     initEntity();
 
     EntityContainer::add(this);

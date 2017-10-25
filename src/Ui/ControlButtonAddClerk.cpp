@@ -1,20 +1,19 @@
 #include <SFML/System.hpp>
-#include <climits>
 #include "ControlButtonAddClerk.h"
 #include "System/EntityContainer.h"
 #include "System/ViewHandler.h"
 #include "System/System.h"
-#include "Text/TextEntity.h"
+#include "Question.h"
 
-ControlButtonAddClerk::ControlButtonAddClerk() {
-    setName("button.add.clerk");
-    setDrawOrder(INT_MAX);
+ControlButtonAddClerk::ControlButtonAddClerk(float leftOffset, float topOffset) : BasicUi(leftOffset, topOffset) {
+    setEType(E_ButtonAddClerk);
+    setDrawOrder(D_Ui);
 
     setWidth(ControlButtonAddClerk::width);
     setHeight(ControlButtonAddClerk::height);
 
-    addAnimation(S_Button_Normal, Animation(this, S_Button_Normal, 1, ResourceLoader::getTexture(E_ButtonAddClerk, S_Button_Normal)));
-    addAnimation(S_Button_Pressed, Animation(this, S_Button_Pressed, 1, ResourceLoader::getTexture(E_ButtonAddClerk, S_Button_Pressed)));
+    addAnimation(S_Button_Normal, Animation(this, S_Button_Normal, 1, ResourceLoader::getTexture(eType, S_Button_Normal)));
+    addAnimation(S_Button_Pressed, Animation(this, S_Button_Pressed, 1, ResourceLoader::getTexture(eType, S_Button_Pressed)));
 
     initEntity();
     EntityContainer::add(this);
@@ -72,8 +71,8 @@ void ControlButtonAddClerk::update() {
         }
     }
 
-    worldCoordinates.x = ViewHandler::left + width / 2 + 6;
-    worldCoordinates.y = ViewHandler::top - 400;
+    worldCoordinates.x = ViewHandler::left + leftOffset;
+    worldCoordinates.y = ViewHandler::top - topOffset;
 
     if (currentAnimation) {
         currentAnimation->update();

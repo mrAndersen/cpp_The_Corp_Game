@@ -256,7 +256,7 @@ namespace System {
         std::string do_grouping() const override { return "\03"; }
     };
 
-    std::string f_to_string(const float value, const int n) {
+    std::string f_to_string(const double value, const int n) {
         std::ostringstream out;
 
         out.imbue(std::locale(out.getloc(), new f_punctuation));

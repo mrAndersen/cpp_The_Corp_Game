@@ -62,34 +62,27 @@ enum States {
 enum Entities {
     E_Entity = 0,
 
-    //Ground
-            E_StaticGround = 11,
+    E_StaticGround = 11,
 
-    //Characters
-            E_Clerk = 21,
+    E_Clerk = 21,
 
-    //Controls
-            E_ButtonAddClerk = 31,
+    E_ButtonAddClerk = 31,
     E_ButtonAddOffice = 32,
     E_ButtonAddElevatorShaftMiddle = 33,
     E_ButtonAddElevatorShaftTop = 33,
     E_ButtonAddElevatorCabin = 34,
 
-    //Office
-            E_OfficeDefault = 41,
+    E_OfficeDefault = 41,
 
-    //Elevator
-            E_ElevatorShaftBottom = 51,
+    E_ElevatorShaftBottom = 51,
     E_ElevatorShaftMiddle = 52,
     E_ElevatorShaftTop = 53,
     E_ElevatorCabin = 54,
 
-
-    //Other
     E_Chair = 91,
 
-    //Ui
-    E_Indicator_Money = 101
+    E_Indicator_Money = 101,
+    E_Question_Mark = 102,
 };
 
 #endif

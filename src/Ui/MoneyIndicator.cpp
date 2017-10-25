@@ -5,13 +5,13 @@
 #include "MoneyIndicator.h"
 
 MoneyIndicator::MoneyIndicator(sf::Vector2f coordinates) {
-    setName("indicator.money");
+    setEType(E_Indicator_Money);
 
     setWidth(MoneyIndicator::width);
     setHeight(MoneyIndicator::height);
 
     setWorldCoordinates(coordinates);
-    addAnimation(S_None, Animation(this, S_None, 1, ResourceLoader::getTexture(E_Indicator_Money)));
+    addAnimation(S_None, Animation(this, S_None, 1, ResourceLoader::getTexture(eType)));
 
     setDrawOrder(D_Ui);
     initEntity();

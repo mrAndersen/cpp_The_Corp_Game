@@ -4,16 +4,17 @@
 #include "System/EntityContainer.h"
 #include "System/System.h"
 #include "Office/OfficeClerk.h"
+#include "Question.h"
 
-ControlButtonAddOffice::ControlButtonAddOffice() {
-    setName("button.add.office");
+ControlButtonAddOffice::ControlButtonAddOffice(float leftOffset, float topOffset) : BasicUi(leftOffset, topOffset) {
+    setEType(E_ButtonAddOffice);
     setDrawOrder(INT_MAX);
 
     setWidth(ControlButtonAddOffice::width);
     setHeight(ControlButtonAddOffice::height);
 
-    addAnimation(S_Button_Normal, Animation(this, S_Button_Normal, 1, ResourceLoader::getTexture(E_ButtonAddOffice, S_Button_Normal)));
-    addAnimation(S_Button_Pressed, Animation(this, S_Button_Pressed, 1, ResourceLoader::getTexture(E_ButtonAddOffice, S_Button_Pressed)));
+    addAnimation(S_Button_Normal, Animation(this, S_Button_Normal, 1, ResourceLoader::getTexture(eType, S_Button_Normal)));
+    addAnimation(S_Button_Pressed, Animation(this, S_Button_Pressed, 1, ResourceLoader::getTexture(eType, S_Button_Pressed)));
 
     initEntity();
     EntityContainer::add(this);
@@ -83,8 +84,8 @@ void ControlButtonAddOffice::update() {
         }
     }
 
-    worldCoordinates.x = ViewHandler::left + width / 2 + 6;
-    worldCoordinates.y = ViewHandler::top - 462;
+    worldCoordinates.x = ViewHandler::left + leftOffset;
+    worldCoordinates.y = ViewHandler::top - topOffset;
 
     if (currentAnimation) {
         currentAnimation->update();

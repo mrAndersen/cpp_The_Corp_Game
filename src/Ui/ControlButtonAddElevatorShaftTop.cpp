@@ -3,19 +3,16 @@
 #include "System/ResourceLoader.h"
 #include "System/EntityContainer.h"
 #include "System/System.h"
-#include "Text/TextEntity.h"
 #include "ControlButtonAddElevatorShaftTop.h"
-#include "System/ViewHandler.h"
-#include "Objects/ElevatorShaftTop.h"
 
 ControlButtonAddElevatorShaftTop::ControlButtonAddElevatorShaftTop() {
-    setName("button.add.elevator.shaft.top");
+    setEType(E_ButtonAddElevatorShaftTop);
     setDrawOrder(INT_MAX);
 
     setWidth(142);
     setHeight(47);
 
-    addAnimation(S_None, Animation(this, S_None, 1, ResourceLoader::getTexture(E_ButtonAddElevatorShaftTop)));
+    addAnimation(S_None, Animation(this, S_None, 1, ResourceLoader::getTexture(eType)));
     initEntity();
 
     EntityContainer::add(this);
