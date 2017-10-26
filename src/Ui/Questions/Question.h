@@ -5,14 +5,14 @@
 #include <System/EntityContainer.h>
 #include <System/ViewHandler.h>
 #include <Basic/Entity.h>
-#include "BasicUi.h"
+#include "Ui/BasicUi.h"
 
 class Question : public BasicUi {
 public:
     const static int width = 26;
     const static int height = 62;
 
-    Question(float leftOffset, float topOffset);
+    Question(float leftOffset, float topOffset, Entities type);
 
     void update() override;
 };

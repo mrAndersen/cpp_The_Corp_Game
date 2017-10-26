@@ -30,6 +30,7 @@ namespace System {
     sf::Font *gameFont;
 
     sf::RenderWindow *window;
+    sf::Event event;
     int frameTimeMcs;
     sf::Uint32 screenMode = sf::Style::Default;
     float timeFactor = 1;
@@ -43,7 +44,7 @@ namespace System {
     //utility
 
     //player
-    double cash = 30000000000;
+    double cash = 2000000;
     bool spawningUnit = false;
 
     bool dayEndProcessed = false;

@@ -1,8 +1,8 @@
 #include <System/System.h>
 #include "Question.h"
 
-Question::Question(float leftOffset, float topOffset) : BasicUi(leftOffset, topOffset) {
-    setEType(E_Question_Mark);
+Question::Question(float leftOffset, float topOffset, Entities type) : BasicUi(leftOffset, topOffset) {
+    setEType(type);
     setDrawOrder(D_Ui);
 
     setWidth(Question::width);

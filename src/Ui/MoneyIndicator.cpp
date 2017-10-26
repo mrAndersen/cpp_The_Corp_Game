@@ -18,7 +18,7 @@ MoneyIndicator::MoneyIndicator(sf::Vector2f coordinates) {
 
     moneyString.setFont(*System::gameFont);
     moneyString.setCharacterSize(40);
-    moneyString.setFillColor(sf::Color(254, 221, 109));
+    moneyString.setFillColor(sf::Color(186, 170, 0));
 
     EntityContainer::add(this);
 }

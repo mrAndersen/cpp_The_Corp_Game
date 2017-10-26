@@ -5,6 +5,7 @@
 #include "ResourceLoader.h"
 #include "Characters/Clerk.h"
 #include "Office/Office.h"
+#include "EntityGroup.h"
 
 namespace EntityContainer {
     extern std::vector<Entity *> items;
@@ -17,13 +18,15 @@ namespace EntityContainer {
 
     std::vector<Entity *> getSaveable();
 
-    std::vector<Office *> getOffices();
+    Entity *searchSingleEntityByType(Entities type);
 
-    std::vector<Entity *> getElevatorShafts();
+    std::vector<Entity *> searchEntitiesByType(Entities type);
 
-    std::vector<Elevator *> getElevators();
+    std::vector<Entity *> searchEntitiesByGroup(EntityGroup group);
 
     void addElevator(Elevator * elevator);
+
+    std::vector<Elevator *> getElevators();
 
     void add(Entity *item);
 

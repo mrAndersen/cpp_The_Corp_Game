@@ -1,9 +1,7 @@
 #include <SFML/System.hpp>
 #include "ControlButtonAddClerk.h"
-#include "System/EntityContainer.h"
 #include "System/ViewHandler.h"
 #include "System/System.h"
-#include "Question.h"
 
 ControlButtonAddClerk::ControlButtonAddClerk(float leftOffset, float topOffset) : BasicUi(leftOffset, topOffset) {
     setEType(E_ButtonAddClerk);
