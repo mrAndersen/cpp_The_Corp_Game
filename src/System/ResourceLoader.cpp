@@ -69,8 +69,16 @@ namespace ResourceLoader {
         ResourceLoader::loadTexture(Entities::E_Question_Mark, "resources/ui/question.png", S_Button_Normal);
         ResourceLoader::loadTexture(Entities::E_Question_Mark, "resources/ui/question.pressed.png", S_Button_Pressed);
 
-        ResourceLoader::loadTexture(Entities::E_ButtonAddElevatorShaftMiddle, "resources/control.panel/button.add.elevator.png");
-        ResourceLoader::loadTexture(Entities::E_ButtonAddElevatorShaftTop, "resources/control.panel/button.add.elevator.png");
+        ResourceLoader::loadTexture(Entities::E_ButtonAddElevator, "resources/ui/button.elevator.create.png", S_Button_Normal);
+        ResourceLoader::loadTexture(Entities::E_ButtonAddElevator, "resources/ui/button.elevator.create.pressed.png", S_Button_Pressed);
+
+        ResourceLoader::loadTexture(Entities::E_ButtonAddElevatorCabin, "resources/ui/button.add.cabin.png", S_Button_Normal);
+        ResourceLoader::loadTexture(Entities::E_ButtonAddElevatorCabin, "resources/ui/button.add.cabin.pressed.png", S_Button_Pressed);
+
+        //----<<Elevator>>----
+        ResourceLoader::loadTexture(Entities::E_ElevatorCabin, "resources/elevator/cabin.l1.png");
+        ResourceLoader::loadTexture(Entities::E_ElevatorShaftMiddle, "resources/elevator/elevator.middle.l1.png");
+        ResourceLoader::loadTexture(Entities::E_ElevatorShaftTop, "resources/elevator/elevator.top.l1.png");
 
         //----<<Office>>----
         ResourceLoader::loadTexture(Entities::E_OfficeDefault, "resources/office/office.default.png");
@@ -124,18 +132,6 @@ namespace ResourceLoader {
 
 
         ResourceLoader::loadTexture(Entities::E_StaticGround, "resources/ground.png");
-
-
-
-
-
-
-
-
-//        ResourceLoader::loadTexture(Entities::E_ElevatorShaftBottom, "resources/elevator/elevator.middle.l1.png");
-        ResourceLoader::loadTexture(Entities::E_ElevatorShaftMiddle, "resources/elevator/elevator.middle.l1.png");
-        ResourceLoader::loadTexture(Entities::E_ElevatorShaftTop, "resources/elevator/elevator.top.l1.png");
-        ResourceLoader::loadTexture(Entities::E_ElevatorCabin, "resources/elevator/cabin.l1.png");
 
     }
 

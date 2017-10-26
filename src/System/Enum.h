@@ -1,10 +1,6 @@
 #ifndef CORP_GAME_ENUM
 #define CORP_GAME_ENUM
 
-enum Multiplier {
-    M_Race = 17,
-};
-
 enum DrawOrder {
     D_Offices = 98,
     D_Characters_Wokring = 100,
@@ -71,6 +67,7 @@ enum Entities {
     E_ButtonAddElevatorShaftMiddle = 33,
     E_ButtonAddElevatorShaftTop = 33,
     E_ButtonAddElevatorCabin = 34,
+    E_ButtonAddElevator = 35,
 
     E_OfficeDefault = 41,
 

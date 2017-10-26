@@ -114,7 +114,7 @@ add_executable(
         src/Office/Chair.h
 
         src/Ui/MoneyIndicator.cpp
-        src/Ui/MoneyIndicator.h src/Ui/Question.cpp src/Ui/Question.h src/Ui/BasicUi.cpp src/Ui/BasicUi.h)
+        src/Ui/MoneyIndicator.h src/Ui/Question.cpp src/Ui/Question.h src/Ui/BasicUi.cpp src/Ui/BasicUi.h src/Ui/ControlButtonAddElevator.cpp src/Ui/ControlButtonAddElevator.h src/System/EntityGroup.cpp src/System/EntityGroup.h)
 
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})

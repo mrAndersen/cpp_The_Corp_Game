@@ -4,6 +4,8 @@
 #include <Ui/ControlButtonAddOffice.h>
 #include <Ui/MoneyIndicator.h>
 #include <Ui/Question.h>
+#include <Ui/ControlButtonAddElevator.h>
+#include <Ui/ControlButtonAddElevatorCabin.h>
 #include "ControlPanel.h"
 
 namespace ControlPanel {
@@ -17,6 +19,13 @@ namespace ControlPanel {
 
         controls.push_back(new Question(4 + Question::width / 2, 362));
         controls.push_back(new ControlButtonAddOffice(4 + ControlButtonAddOffice::width / 2 + Question::width + 2, 362));
+
+        controls.push_back(new Question(4 + Question::width / 2, 424));
+        controls.push_back(new ControlButtonAddElevatorCabin(4 + Question::width + 2 + ControlButtonAddElevator::width +  ControlButtonAddElevatorCabin::width / 2 + 10, 424));
+
+        //last
+        controls.push_back(new ControlButtonAddElevator(4 + ControlButtonAddElevator::width / 2 + Question::width + 2, 424));
+
     }
 
     void refreshControlPanel() {

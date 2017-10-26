@@ -57,9 +57,11 @@ void ElevatorShaftTop::spawn() {
 
 std::vector<Office *> ElevatorShaftTop::getNeighborOffices() {
     std::vector<Office *> result;
-    std::vector<Office *> offices = EntityContainer::getOffices();
+    std::vector<Entity *> offices = EntityContainer::searchEntitiesByGroup({E_OfficeDefault});
 
-    for (auto target:offices) {
+    for (auto e:offices) {
+        auto target = dynamic_cast<Office *>(e);
+
         if ((int) target->getRight() == (int) this->left &&
             target->getWorldCoordinates().y == this->worldCoordinates.y && target->getFloor() == 1) {
             result.push_back(target);

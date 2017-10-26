@@ -2,25 +2,31 @@
 #include <System/ResourceLoader.h>
 #include <System/EntityContainer.h>
 #include <System/System.h>
-#include <Text/TextEntity.h>
 #include <cmath>
 #include "ControlButtonAddElevatorCabin.h"
 
-ControlButtonAddElevatorCabin::ControlButtonAddElevatorCabin() {
-    setEType(E_ButtonAddElevatorShaftMiddle);
-    setDrawOrder(INT_MAX);
+ControlButtonAddElevatorCabin::ControlButtonAddElevatorCabin(float leftOffset, float topOffset) : BasicUi(leftOffset, topOffset) {
+    setEType(E_ButtonAddElevatorCabin);
+    setDrawOrder(D_Ui);
 
-    setWidth(142);
-    setHeight(47);
+    setWidth(ControlButtonAddElevatorCabin::width);
+    setHeight(ControlButtonAddElevatorCabin::height);
 
-    addAnimation(S_None, Animation(this, S_None, 1, ResourceLoader::getTexture(eType)));
+    addAnimation(S_Button_Normal, Animation(this, S_Button_Normal, 1, ResourceLoader::getTexture(eType, S_Button_Normal)));
+    addAnimation(S_Button_Pressed, Animation(this, S_Button_Pressed, 1, ResourceLoader::getTexture(eType, S_Button_Pressed)));
+
+    setVisible(false);
     initEntity();
-
     EntityContainer::add(this);
-
 }
 
-void ControlButtonAddElevatorCabin::updateLogic() {
+void ControlButtonAddElevatorCabin::update() {
+    if (!visible) {
+        return;
+    }
+
+    selectAnimation(S_Button_Normal);
+
     bool spawnCondition = attachedCabin &&
                           System::cash >= attachedCabin->getCost() &&
                           attachedCabin->isInsideShaftBoundaries();
@@ -47,6 +53,7 @@ void ControlButtonAddElevatorCabin::updateLogic() {
     }
 
     if (attachedCabin) {
+        selectAnimation(S_Button_Pressed);
         System::spawningUnit = true;
         auto global = System::getGlobalMouse();
 
@@ -76,6 +83,13 @@ void ControlButtonAddElevatorCabin::updateLogic() {
         } else {
             attachedCabin->setTransparent();
         }
+    }
+
+    worldCoordinates.x = ViewHandler::left + leftOffset;
+    worldCoordinates.y = ViewHandler::top - topOffset;
+
+    if (currentAnimation && visible) {
+        currentAnimation->update();
     }
 }
 

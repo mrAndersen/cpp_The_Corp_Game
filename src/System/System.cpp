@@ -43,7 +43,7 @@ namespace System {
     //utility
 
     //player
-    double cash = 30000000000;
+    double cash = 2000000;
     bool spawningUnit = false;
 
     bool dayEndProcessed = false;

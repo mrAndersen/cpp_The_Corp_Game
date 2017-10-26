@@ -363,7 +363,9 @@ void Movable::spawn() {
 
 void Movable::searchWorkPlace() {
     if (!this->currentWorkPlace && this->isSpawned()) {
-        for (auto office:EntityContainer::getOffices()) {
+        for (auto e:EntityContainer::searchEntitiesByGroup({E_OfficeDefault})) {
+            auto office = dynamic_cast<Office *>(e);
+
             if (office->hasFreeWorkPlaces() && office->isSpawned()) {
 
                 currentWorkPlace = office->getNextFreeWorkPlace();

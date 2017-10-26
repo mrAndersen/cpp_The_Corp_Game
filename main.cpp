@@ -4,6 +4,7 @@
 #include <Objects/ElevatorShaftTop.h>
 #include <Office/OfficeClerk.h>
 #include <Objects/Ground.h>
+#include <System/EntityGroup.h>
 #include "System/System.h"
 #include "System/ResourceLoader.h"
 #include "System/ViewHandler.h"

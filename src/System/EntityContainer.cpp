@@ -62,6 +62,13 @@ namespace EntityContainer {
         return elevators;
     }
 
+    Entity *searchEntityByType(Entities type) {
+        for (auto e:items) {
+            if (e->getEType() == type) {
+                return e;
+            }
+        }
+    }
 
     void add(Entity *item) {
         items.push_back(item);
@@ -146,6 +153,30 @@ namespace EntityContainer {
         elevators.push_back(elevator);
     }
 
+    std::vector<Entity *> searchEntitiesByType(Entities type) {
+        std::vector<Entity *> buffer;
 
+        for (auto e:items) {
+            if (e->getEType() == type) {
+                buffer.push_back(e);
+            }
+        }
+
+        return buffer;
+    }
+
+    std::vector<Entity *> searchEntitiesByGroup(EntityGroup group) {
+        std::vector<Entity *> buffer;
+
+        for (auto e:items) {
+            for (auto g:group.get()) {
+                if (e->getEType() == g) {
+                    buffer.push_back(e);
+                }
+            }
+        }
+
+        return buffer;
+    }
 }
 

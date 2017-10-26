@@ -15,6 +15,7 @@ protected:
     int id;
     std::map<States, Animation> animations;
     Animation *currentAnimation = nullptr;
+    bool visible = true;
 
     float health = 100;
     bool valid = true;
@@ -50,6 +51,10 @@ protected:
 
 public:
     virtual void spawn();
+
+    bool isVisible() const;
+
+    void setVisible(bool visible);
 
     Entity(Entities type = E_Entity);
 

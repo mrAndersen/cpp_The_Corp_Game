@@ -3,18 +3,21 @@
 
 
 #include <Basic/Entity.h>
+#include <System/ViewHandler.h>
 #include <Objects/ElevatorCabin.h>
+#include "BasicUi.h"
 
-class ControlButtonAddElevatorCabin : public Entity {
-    const static int width = 142;
-    const static int height = 47;
+class ControlButtonAddElevatorCabin : public BasicUi {
+public:
+    const static int width = 60;
+    const static int height = 62;
 
     ElevatorCabin *attachedCabin = nullptr;
 
-public:
-    explicit ControlButtonAddElevatorCabin();
 
-    void updateLogic() override;
+    explicit ControlButtonAddElevatorCabin(float leftOffset, float topOffset);
+
+    void update() override;
 };
 
 
