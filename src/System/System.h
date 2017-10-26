@@ -22,6 +22,7 @@ namespace System {
     extern sf::Clock frameClock;
     extern sf::Clock timeSinceStart;
     extern sf::RenderWindow *window;
+    extern sf::Event event;
     extern int frameTimeMcs;
     extern sf::Uint32 screenMode;
     extern float timeFactor;

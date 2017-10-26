@@ -62,14 +62,6 @@ namespace EntityContainer {
         return elevators;
     }
 
-    Entity *searchEntityByType(Entities type) {
-        for (auto e:items) {
-            if (e->getEType() == type) {
-                return e;
-            }
-        }
-    }
-
     void add(Entity *item) {
         items.push_back(item);
 
@@ -177,6 +169,14 @@ namespace EntityContainer {
         }
 
         return buffer;
+    }
+
+    Entity *searchSingleEntityByType(Entities type) {
+        for (auto e:items) {
+            if (e->getEType() == type) {
+                return e;
+            }
+        }
     }
 }
 

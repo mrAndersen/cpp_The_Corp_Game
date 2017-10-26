@@ -42,6 +42,8 @@ int main() {
         sf::Event e{};
 
         while (System::window->pollEvent(e)) {
+            System::event = e;
+
             if (e.type == sf::Event::Closed) {
                 System::window->close();
             }

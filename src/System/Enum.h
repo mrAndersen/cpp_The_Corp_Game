@@ -63,11 +63,17 @@ enum Entities {
     E_Clerk = 21,
 
     E_ButtonAddClerk = 31,
+    E_Question_Mark_ButtonAddClerk = 311,
+
     E_ButtonAddOffice = 32,
+    E_Question_Mark_ButtonAddOffice = 321,
+
     E_ButtonAddElevatorShaftMiddle = 33,
     E_ButtonAddElevatorShaftTop = 33,
     E_ButtonAddElevatorCabin = 34,
+
     E_ButtonAddElevator = 35,
+    E_Question_Mark_ButtonAddElevator = 351,
 
     E_OfficeDefault = 41,
 
@@ -79,7 +85,6 @@ enum Entities {
     E_Chair = 91,
 
     E_Indicator_Money = 101,
-    E_Question_Mark = 102,
 };
 
 #endif

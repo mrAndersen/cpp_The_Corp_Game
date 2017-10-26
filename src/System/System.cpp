@@ -30,6 +30,7 @@ namespace System {
     sf::Font *gameFont;
 
     sf::RenderWindow *window;
+    sf::Event event;
     int frameTimeMcs;
     sf::Uint32 screenMode = sf::Style::Default;
     float timeFactor = 1;

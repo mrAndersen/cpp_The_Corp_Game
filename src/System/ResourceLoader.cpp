@@ -66,14 +66,21 @@ namespace ResourceLoader {
         ResourceLoader::loadTexture(Entities::E_ButtonAddOffice, "resources/ui/button.add.office.png", S_Button_Normal);
         ResourceLoader::loadTexture(Entities::E_ButtonAddOffice, "resources/ui/button.add.office.pressed.png", S_Button_Pressed);
 
-        ResourceLoader::loadTexture(Entities::E_Question_Mark, "resources/ui/question.png", S_Button_Normal);
-        ResourceLoader::loadTexture(Entities::E_Question_Mark, "resources/ui/question.pressed.png", S_Button_Pressed);
-
         ResourceLoader::loadTexture(Entities::E_ButtonAddElevator, "resources/ui/button.elevator.create.png", S_Button_Normal);
         ResourceLoader::loadTexture(Entities::E_ButtonAddElevator, "resources/ui/button.elevator.create.pressed.png", S_Button_Pressed);
 
         ResourceLoader::loadTexture(Entities::E_ButtonAddElevatorCabin, "resources/ui/button.add.cabin.png", S_Button_Normal);
         ResourceLoader::loadTexture(Entities::E_ButtonAddElevatorCabin, "resources/ui/button.add.cabin.pressed.png", S_Button_Pressed);
+
+        //----<<QuestionMarks>>----
+        ResourceLoader::loadTexture(Entities::E_Question_Mark_ButtonAddElevator, "resources/ui/question.png", S_Button_Normal);
+        ResourceLoader::loadTexture(Entities::E_Question_Mark_ButtonAddElevator, "resources/ui/question.pressed.png", S_Button_Pressed);
+
+        ResourceLoader::loadTexture(Entities::E_Question_Mark_ButtonAddOffice, "resources/ui/question.png", S_Button_Normal);
+        ResourceLoader::loadTexture(Entities::E_Question_Mark_ButtonAddOffice, "resources/ui/question.pressed.png", S_Button_Pressed);
+
+        ResourceLoader::loadTexture(Entities::E_Question_Mark_ButtonAddClerk, "resources/ui/question.png", S_Button_Normal);
+        ResourceLoader::loadTexture(Entities::E_Question_Mark_ButtonAddClerk, "resources/ui/question.pressed.png", S_Button_Pressed);
 
         //----<<Elevator>>----
         ResourceLoader::loadTexture(Entities::E_ElevatorCabin, "resources/elevator/cabin.l1.png");

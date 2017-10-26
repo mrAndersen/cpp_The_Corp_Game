@@ -1,3 +1,4 @@
+
 #include "ControlButtonAddElevator.h"
 
 ControlButtonAddElevator::ControlButtonAddElevator(float leftOffset, float topOffset) : BasicUi(leftOffset, topOffset) {
@@ -7,23 +8,31 @@ ControlButtonAddElevator::ControlButtonAddElevator(float leftOffset, float topOf
     setWidth(ControlButtonAddElevator::width);
     setHeight(ControlButtonAddElevator::height);
 
-    addAnimation(S_Button_Normal, Animation(this, S_Button_Normal, 1, ResourceLoader::getTexture(eType, S_Button_Normal)));
-    addAnimation(S_Button_Pressed, Animation(this, S_Button_Pressed, 1, ResourceLoader::getTexture(eType, S_Button_Pressed)));
+    addAnimation(S_Button_Normal,
+                 Animation(this, S_Button_Normal, 1, ResourceLoader::getTexture(eType, S_Button_Normal)));
+    addAnimation(S_Button_Pressed,
+                 Animation(this, S_Button_Pressed, 1, ResourceLoader::getTexture(eType, S_Button_Pressed)));
 
     initEntity();
     EntityContainer::add(this);
-
-
 }
 
 void ControlButtonAddElevator::update() {
-    selectAnimation(S_Button_Normal);
+    auto addCabin = ControlPanel::getControls()[E_ButtonAddElevatorCabin];
 
     worldCoordinates.x = ViewHandler::left + leftOffset;
     worldCoordinates.y = ViewHandler::top - topOffset;
 
     if (leftClicked() && !System::spawningUnit) {
+        pressed = !pressed;
+    }
+
+    if (pressed) {
         selectAnimation(S_Button_Pressed);
+        addCabin->setVisible(true);
+    } else {
+        selectAnimation(S_Button_Normal);
+        addCabin->setVisible(false);
     }
 
     if (currentAnimation) {

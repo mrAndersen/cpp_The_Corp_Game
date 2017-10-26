@@ -11,7 +11,7 @@ std::string Entity::serialize() {
 }
 
 void Entity::update() {
-    if(visible){
+    if (visible) {
         selectAnimation(state);
 
         if (currentAnimation) {
@@ -34,11 +34,15 @@ bool Entity::mouseIn() {
 
 
 bool Entity::leftClicked() {
-    return sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && mouseIn();
+    return System::event.type == sf::Event::MouseButtonPressed &&
+           System::event.mouseButton.button == sf::Mouse::Left &&
+           mouseIn();
 }
 
 bool Entity::rightClicked() {
-    return sf::Mouse::isButtonPressed(sf::Mouse::Button::Right) && mouseIn();
+    return System::event.type == sf::Event::MouseButtonPressed &&
+           System::event.mouseButton.button == sf::Mouse::Right &&
+           mouseIn();
 }
 
 bool Entity::leftClickedOutside() {
@@ -109,7 +113,8 @@ bool Entity::isOnTheGround() {
 bool Entity::intersectsWithObjects() {
     std::vector<Office *> result;
     std::vector<Entity *> offices = EntityContainer::searchEntitiesByGroup({E_OfficeDefault});
-    std::vector<Entity *> shafts = EntityContainer::searchEntitiesByGroup({E_ElevatorShaftTop, E_ElevatorShaftMiddle, E_ElevatorShaftBottom});
+    std::vector<Entity *> shafts = EntityContainer::searchEntitiesByGroup(
+            {E_ElevatorShaftTop, E_ElevatorShaftMiddle, E_ElevatorShaftBottom});
 
     for (auto target:offices) {
         if (this != target) {
