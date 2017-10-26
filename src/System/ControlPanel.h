@@ -2,9 +2,7 @@
 #define THE_CORP_GAME_CONTROLPANEL_H
 
 namespace ControlPanel {
-
-    extern Entity *newClerkButton;
-    extern Entity *newOfficeButton;
+    extern std::vector<Entity *> controls;
 
     void initControlPanel();
 

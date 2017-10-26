@@ -4,6 +4,7 @@
 #include <Basic/Movable.h>
 #include <Office/Office.h>
 #include "System/ResourceLoader.h"
+#include "System/EntityContainer.h"
 
 class Clerk : public Movable {
 public:

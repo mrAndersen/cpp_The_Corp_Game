@@ -11,11 +11,11 @@ class Entity {
 
 protected:
     //parameters
+    Entities eType = E_Entity;
     int id;
     std::map<States, Animation> animations;
     Animation *currentAnimation = nullptr;
 
-    std::string name = "";
     float health = 100;
     bool valid = true;
 
@@ -51,11 +51,17 @@ protected:
 public:
     virtual void spawn();
 
+    Entity(Entities type = E_Entity);
+
+    Entities getEType() const;
+
+    void setEType(Entities eType);
+
     Direction getDirection() const;
 
     void setDirection(Direction direction);
 
-    void addAnimation(States state, const Animation &animation);
+    virtual void addAnimation(States state, const Animation &animation);
 
     void selectAnimation(States state);
 
@@ -97,10 +103,6 @@ public:
 
     void setRight(float right);
 
-    std::vector<std::string> getTypeTree();
-
-    bool hasType(const std::string &typeName);
-
     virtual void update();
 
     bool isBelowGround();
@@ -133,10 +135,6 @@ public:
 
     void setDrawOrder(int drawOrder);
 
-    const std::string &getName() const;
-
-    void setName(const std::string &name);
-
     float getHealth() const;
 
     void setHealth(float health);
@@ -166,8 +164,6 @@ public:
     virtual void renderDebugInfo();
 
     virtual void renderErrorText();
-
-    Entity();
 
     sf::Text &getErrorString();
 

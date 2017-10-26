@@ -1,43 +1,27 @@
 #include <climits>
 #include <Basic/Entity.h>
 #include <Ui/ControlButtonAddClerk.h>
-#include <Ui/ControlButtonAddElevatorShaftMiddle.h>
-#include <Ui/ControlButtonAddElevatorShaftTop.h>
 #include <Ui/ControlButtonAddOffice.h>
-#include <Ui/ControlButtonAddElevatorCabin.h>
 #include <Ui/MoneyIndicator.h>
+#include <Ui/Question.h>
 #include "ControlPanel.h"
-#include "ViewHandler.h"
 
 namespace ControlPanel {
-    std::map<std::string, Entity *> controls;
+    std::vector<Entity *> controls;
 
     void initControlPanel() {
-        auto *b_add_clerk = new ControlButtonAddClerk();
-        auto *b_add_office = new ControlButtonAddOffice();
+        controls.push_back(new MoneyIndicator({0, 0}));
 
-        auto *b_add_elevator_middle = new ControlButtonAddElevatorShaftMiddle();
-        auto *b_add_elevator_top = new ControlButtonAddElevatorShaftTop();
-        auto *b_add_elevator_cabin = new ControlButtonAddElevatorCabin();
+        controls.push_back(new Question(4 + Question::width / 2, 300));
+        controls.push_back(new ControlButtonAddClerk(4 + ControlButtonAddClerk::width / 2 + Question::width + 2, 300));
 
-        auto *c_cash_indicator = new MoneyIndicator({0,0});
-//        auto *c_time_indicator = new ControlTimeIndicator(sf::Color::Black, 20);
-
-
-        controls[b_add_clerk->getName()] = b_add_clerk;
-        controls[b_add_office->getName()] = b_add_office;
-
-        controls[b_add_elevator_middle->getName()] = b_add_elevator_middle;
-        controls[b_add_elevator_top->getName()] = b_add_elevator_top;
-        controls[b_add_elevator_cabin->getName()] = b_add_elevator_cabin;
-
-        controls[c_cash_indicator->getName()] = c_cash_indicator;
-//        controls[c_time_indicator->getName()] = c_time_indicator;
+        controls.push_back(new Question(4 + Question::width / 2, 362));
+        controls.push_back(new ControlButtonAddOffice(4 + ControlButtonAddOffice::width / 2 + Question::width + 2, 362));
     }
 
     void refreshControlPanel() {
-        for (auto control : controls) {
-            control.second->update();
+        for (auto c:controls) {
+            c->update();
         }
     }
 }

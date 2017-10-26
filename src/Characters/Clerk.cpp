@@ -1,31 +1,14 @@
-#include <cmath>
 #include <iostream>
 #include "System/ResourceLoader.h"
 #include "Clerk.h"
-#include "System/EntityContainer.h"
 #include "System/System.h"
-#include "Text/TextEntity.h"
 
-Clerk::Clerk(sf::Vector2f coordinates) : Movable() {
-    setName("clerk");
-    setWidth(Clerk::width);
-    setHeight(Clerk::height);
-
-    addAnimation(S_None, Animation(this, S_None, 24, ResourceLoader::getTexture(E_Clerk, S_None)));
-
-    addAnimation(S_GoToOffice, Animation(this, S_GoToOffice, 24, ResourceLoader::getTexture(E_Clerk, S_GoToOffice)));
-    addAnimation(S_GoToElevator, Animation(this, S_GoToElevator, 24, ResourceLoader::getTexture(E_Clerk, S_GoToElevator)));
-    addAnimation(S_GoToCabin, Animation(this, S_GoToCabin, 24, ResourceLoader::getTexture(E_Clerk, S_GoToCabin)));
-
-    addAnimation(S_Working, Animation(this, S_Working, 24, ResourceLoader::getTexture(E_Clerk, S_Working)));
-    addAnimation(S_Smoking, Animation(this, S_Smoking, 66, ResourceLoader::getTexture(E_Clerk, S_Smoking), 2750000));
-
+Clerk::Clerk(sf::Vector2f coordinates) : Movable(E_Clerk, Clerk::width, Clerk::height) {
     setDefaultSpeed(150);
 
     setCost(500);
     setWorldCoordinates(coordinates);
     setSelectable(true);
-
 
     setDrawOrder(D_Characters);
     initEntity();

@@ -5,14 +5,14 @@
 #include "ElevatorCabin.h"
 
 ElevatorCabin::ElevatorCabin(sf::Vector2f coordinates) {
-    setName("elevator.cabin");
+    setEType(E_ElevatorCabin);
 
     setWidth(ElevatorCabin::width);
     setHeight(ElevatorCabin::height);
     setCost(500);
 
     setWorldCoordinates(coordinates);
-    addAnimation(S_None, Animation(this, S_None, 1, ResourceLoader::getTexture(E_ElevatorCabin)));
+    addAnimation(S_None, Animation(this, S_None, 1, ResourceLoader::getTexture(eType)));
 
     setSelectable(true);
     setDrawOrder(DrawOrder::D_ElevatorCabin);
@@ -45,12 +45,13 @@ bool ElevatorCabin::isInsideShaftBoundaries() {
     for (auto e:EntityContainer::getItems()) {
         if (e != this) {
             if (
-                    e->getName() == "elevator.shaft.middle" &&
+                    e->getEType() == E_ElevatorShaftMiddle &&
                     (int) e->getLeft() == (int) left &&
                     (int) e->getBottom() == (int) bottom &&
                     (int) e->getTop() == (int) top &&
                     (int) e->getRight() == (int) right
-                    ) {
+                    )
+            {
                 return true;
             }
         }

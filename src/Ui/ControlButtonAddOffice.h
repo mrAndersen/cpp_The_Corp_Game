@@ -3,16 +3,17 @@
 
 #include <Basic/Entity.h>
 #include "Office/Office.h"
+#include "BasicUi.h"
 #include <System/ViewHandler.h>
 
-class ControlButtonAddOffice : public Entity {
+class ControlButtonAddOffice : public BasicUi {
 public:
     const static int width = 60;
     const static int height = 62;
 
     Office *attachedOffice = nullptr;
 
-    explicit ControlButtonAddOffice();
+    explicit ControlButtonAddOffice(float leftOffset, float topOffset);
 
     void update() override;
 };

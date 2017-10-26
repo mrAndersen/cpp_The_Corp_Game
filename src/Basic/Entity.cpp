@@ -72,14 +72,6 @@ void Entity::updateLogic() {
     recalculateBoundaries();
 }
 
-const std::string &Entity::getName() const {
-    return name;
-}
-
-void Entity::setName(const std::string &name) {
-    Entity::name = name;
-}
-
 float Entity::getHealth() const {
     return health;
 }
@@ -166,7 +158,6 @@ int Entity::getDrawOrder() const {
 
 void Entity::setDrawOrder(int drawOrder) {
     Entity::drawOrder = drawOrder;
-    EntityContainer::resort();
 }
 
 void Entity::initEntity() {
@@ -187,29 +178,6 @@ sf::Text &Entity::getErrorString() {
 
 void Entity::setErrorString(sf::Text &errorString) {
     Entity::errorString = errorString;
-}
-
-std::vector<std::string> Entity::getTypeTree() {
-    std::vector<std::string> result;
-    std::istringstream iss(name);
-
-    for (std::string token; std::getline(iss, token, '.');) {
-        result.push_back(std::move(token));
-    }
-
-    return result;
-}
-
-bool Entity::hasType(const std::string &typeName) {
-    auto types = getTypeTree();
-
-    for (const auto &type:types) {
-        if (type == typeName) {
-            return true;
-        }
-    }
-
-    return false;
 }
 
 float Entity::getTop() const {
@@ -256,7 +224,7 @@ void Entity::renderDebugInfo() {
         debugInfo.setPosition(System::cToGl(worldCoordinates.x + width / 2, worldCoordinates.y + height / 2));
         debugInfo.setString(
                 "id: " + std::to_string(id) + "\n" +
-                "name: " + name + "\n" +
+                "type: " + std::to_string(eType) + "\n" +
                 "pos: {" + std::to_string(worldCoordinates.x) + "," + std::to_string(worldCoordinates.y) + "}\n" +
                 "left: " + std::to_string(left) + "\n" +
                 "right: " + std::to_string(right) + "\n" +
@@ -275,7 +243,9 @@ void Entity::setRect(const sf::IntRect &rect) {
     Entity::rect = rect;
 }
 
-Entity::Entity() {
+Entity::Entity(Entities type) {
+    eType = type;
+
     System::entitySequence++;
     id = System::entitySequence;
 
@@ -366,4 +336,12 @@ void Entity::recalculateBoundaries() {
     rect.width = width;
     rect.left = (int) left;
     rect.top = (int) top;
+}
+
+Entities Entity::getEType() const {
+    return eType;
+}
+
+void Entity::setEType(Entities eType) {
+    Entity::eType = eType;
 }

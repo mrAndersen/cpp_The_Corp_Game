@@ -91,7 +91,30 @@ add_executable(
 
         src/Ui/ControlButtonAddElevatorShaftTop.cpp
         src/Ui/ControlButtonAddElevatorShaftTop.h
-        src/Objects/ElevatorShaftTop.cpp src/Objects/ElevatorShaftTop.h src/Objects/ElevatorCabin.cpp src/Objects/ElevatorCabin.h src/Ui/ControlButtonAddElevatorCabin.cpp src/Ui/ControlButtonAddElevatorCabin.h src/Component/Elevator.cpp src/Component/Elevator.h src/Component/WorkPlace.cpp src/Component/WorkPlace.h src/Basic/Animation.cpp src/Basic/Animation.h src/Office/Chair.cpp src/Office/Chair.h src/Ui/MoneyIndicator.cpp src/Ui/MoneyIndicator.h)
+
+        src/Objects/ElevatorShaftTop.cpp
+        src/Objects/ElevatorShaftTop.h
+
+        src/Objects/ElevatorCabin.cpp
+        src/Objects/ElevatorCabin.h
+
+        src/Ui/ControlButtonAddElevatorCabin.cpp
+        src/Ui/ControlButtonAddElevatorCabin.h
+
+        src/Component/Elevator.cpp
+        src/Component/Elevator.h
+
+        src/Component/WorkPlace.cpp
+        src/Component/WorkPlace.h
+
+        src/Basic/Animation.cpp
+        src/Basic/Animation.h
+
+        src/Office/Chair.cpp
+        src/Office/Chair.h
+
+        src/Ui/MoneyIndicator.cpp
+        src/Ui/MoneyIndicator.h src/Ui/Question.cpp src/Ui/Question.h src/Ui/BasicUi.cpp src/Ui/BasicUi.h)
 
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})

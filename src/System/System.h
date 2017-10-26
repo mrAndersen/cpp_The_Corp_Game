@@ -74,7 +74,7 @@ namespace System {
 
     void initDebug();
 
-    std::string f_to_string(const float value, const int n = 2);
+    std::string f_to_string(const double value, const int n = 2);
 
     sf::Text createDebugString(const std::string &alias);
 

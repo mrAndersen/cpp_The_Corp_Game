@@ -3,16 +3,14 @@
 #include "ElevatorShaftMiddle.h"
 #include "System/EntityContainer.h"
 
-ElevatorShaftMiddle::ElevatorShaftMiddle(sf::Vector2f coordinates) {
-    setName("elevator.shaft.middle");
-
+ElevatorShaftMiddle::ElevatorShaftMiddle(sf::Vector2f coordinates) : Entity(E_ElevatorShaftMiddle) {
     setWidth(ElevatorShaftMiddle::width);
     setHeight(ElevatorShaftMiddle::height);
     setCost(1000);
 
     setWorldCoordinates(coordinates);
     setSelectable(false);
-    addAnimation(S_None, Animation(this, S_None, 1, ResourceLoader::getTexture(E_ElevatorShaftMiddle)));
+    addAnimation(S_None, Animation(this, S_None, 1, ResourceLoader::getTexture(eType)));
 
     setDrawOrder(DrawOrder::D_ElevatorShafts);
     initEntity();

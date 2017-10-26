@@ -7,13 +7,13 @@
 #include "ControlButtonAddElevatorCabin.h"
 
 ControlButtonAddElevatorCabin::ControlButtonAddElevatorCabin() {
-    setName("button.add.elevator.cabin");
+    setEType(E_ButtonAddElevatorShaftMiddle);
     setDrawOrder(INT_MAX);
 
     setWidth(142);
     setHeight(47);
 
-    addAnimation(S_None, Animation(this, S_None, 1, ResourceLoader::getTexture(E_ButtonAddElevatorShaftMiddle)));
+    addAnimation(S_None, Animation(this, S_None, 1, ResourceLoader::getTexture(eType)));
     initEntity();
 
     EntityContainer::add(this);

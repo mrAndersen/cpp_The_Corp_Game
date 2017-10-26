@@ -6,8 +6,7 @@
 
 
 ElevatorShaftTop::ElevatorShaftTop(sf::Vector2f coordinates) {
-    setName("elevator.shaft.top");
-
+    setEType(E_ElevatorShaftTop);
     setWidth(ElevatorShaftTop::width);
     setHeight(ElevatorShaftTop::height);
     setCost(1000);

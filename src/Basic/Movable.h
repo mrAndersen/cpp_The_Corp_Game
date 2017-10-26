@@ -50,7 +50,9 @@ protected:
     void updateLogic() override;
 
 public:
-    Movable();
+    Movable(Entities type, int width, int height);
+
+    void addAnimation(States state, Gender gender, Race race, int frames = 24, int duration = 1000000);
 
     int getDestinationFloor() const;
 
