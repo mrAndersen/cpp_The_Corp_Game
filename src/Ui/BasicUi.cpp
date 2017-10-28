@@ -13,3 +13,11 @@ void BasicUi::update() {
         currentAnimation->update();
     }
 }
+
+bool BasicUi::isPressed() const {
+    return pressed;
+}
+
+void BasicUi::setPressed(bool pressed) {
+    BasicUi::pressed = pressed;
+}

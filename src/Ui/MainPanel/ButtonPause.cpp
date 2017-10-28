@@ -1,3 +1,4 @@
+
 #include "ButtonPause.h"
 
 ButtonPause::ButtonPause(float leftOffset, float topOffset) : BasicUi(leftOffset, topOffset) {
@@ -15,10 +16,26 @@ ButtonPause::ButtonPause(float leftOffset, float topOffset) : BasicUi(leftOffset
 }
 
 void ButtonPause::update() {
-    selectAnimation(S_Button_Normal);
+    auto b1x = dynamic_cast<BasicUi *>(ControlPanel::getControls()[E_Button1x]);
+    auto b5x = dynamic_cast<BasicUi *>(ControlPanel::getControls()[E_Button5x]);
+    auto b10x = dynamic_cast<BasicUi *>(ControlPanel::getControls()[E_Button10x]);
 
-    if(leftClicked() && !System::spawningUnit){
+
+    if(pressed){
         selectAnimation(S_Button_Pressed);
+    }else{
+        selectAnimation(S_Button_Normal);
+    }
+
+    if(leftClicked() && !System::spawningUnit && liveClock.getElapsedTime().asMilliseconds() >= 500){
+        pressed = !pressed;
+        liveClock.restart();
+
+        b1x->setPressed(false);
+        b5x->setPressed(false);
+        b10x->setPressed(false);
+
+        System::timeFactor = 0;
     }
 
     BasicUi::update();

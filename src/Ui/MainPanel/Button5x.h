@@ -5,6 +5,7 @@
 #include <System/ResourceLoader.h>
 #include <System/EntityContainer.h>
 #include <System/System.h>
+#include <System/ControlPanel.h>
 
 class Button5x : public BasicUi {
 public:

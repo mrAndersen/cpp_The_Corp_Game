@@ -15,10 +15,25 @@ Button10x::Button10x(float leftOffset, float topOffset) : BasicUi(leftOffset, to
 }
 
 void Button10x::update() {
-    selectAnimation(S_Button_Normal);
+    auto pause = dynamic_cast<BasicUi *>(ControlPanel::getControls()[E_ButtonPause]);;
+    auto b1x = dynamic_cast<BasicUi *>(ControlPanel::getControls()[E_Button1x]);
+    auto b5x = dynamic_cast<BasicUi *>(ControlPanel::getControls()[E_Button5x]);
 
-    if(leftClicked() && !System::spawningUnit){
+    if(pressed){
         selectAnimation(S_Button_Pressed);
+    }else{
+        selectAnimation(S_Button_Normal);
+    }
+
+    if(leftClicked() && !System::spawningUnit && liveClock.getElapsedTime().asMilliseconds() >= 500){
+        pressed = !pressed;
+        liveClock.restart();
+
+        b1x->setPressed(false);
+        b5x->setPressed(false);
+        pause->setPressed(false);
+
+        System::timeFactor = 10;
     }
 
     BasicUi::update();

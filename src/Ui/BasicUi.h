@@ -15,6 +15,10 @@ public:
     BasicUi(float leftOffset, float topOffset);
 
     void update() override;
+
+    bool isPressed() const;
+
+    void setPressed(bool pressed);
 };
 
 
