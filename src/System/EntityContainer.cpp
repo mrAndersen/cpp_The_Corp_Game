@@ -91,8 +91,6 @@ namespace EntityContainer {
     }
 
     void initBackground() {
-
-
         for (int i = (int) -System::worldWidth / 2; i < (int) (System::worldWidth / 2); ++i) {
 
             //ground
@@ -112,7 +110,7 @@ namespace EntityContainer {
             }
 
             //ground artifacts
-            if (System::getRandom(0, 20000) <= 25 && i < System::worldWidth / 2 - Tree::width) {
+            if (System::getRandom(0, 20000) <= 15 && i < System::worldWidth / 2 - Tree::width) {
                 auto yrnd = System::getRandom((int) (System::groundLevel + 55 / 2),
                                               (int) (System::groundLevel + Ground::height - 55 / 2 - 35));
 
@@ -162,10 +160,10 @@ namespace EntityContainer {
             entity->update();
         }
 
-        for (auto entity:items) {
-            if (std::find(itemsToRemove.begin(), itemsToRemove.end(), entity) != itemsToRemove.end()) {
-                items.erase(std::remove(items.begin(), items.end(), entity), items.end());
-                delete entity;
+        for (auto d:itemsToRemove) {
+            if (std::find(items.begin(), items.end(), d) != items.end()) {
+                items.erase(std::remove(items.begin(), items.end(), d), items.end());
+                delete d;
             }
         }
 
