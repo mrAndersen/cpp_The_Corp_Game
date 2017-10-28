@@ -2,12 +2,20 @@
 #define CORP_GAME_ENUM
 
 enum DrawOrder {
+    D_Ground = 20,
+    D_Trees = 20,
+
+    D_GroundArtifacts = 21,
+
+
+
     D_Offices = 98,
     D_Characters_Wokring = 100,
     D_Chair = 105,
     D_ElevatorShafts = 110,
     D_ElevatorCabin = 120,
     D_Characters = 200,
+
     D_Ui = 250
 };
 
@@ -58,7 +66,11 @@ enum States {
 enum Entities {
     E_Entity = 0,
 
-    E_StaticGround = 11,
+    E_StaticGround_1 = 11,
+    E_StaticGround_2 = 12,
+
+    E_StaticTree_1 = 13,
+    E_StaticGroundArtifact_1 = 14,
 
     E_Clerk = 21,
 

@@ -57,6 +57,13 @@ namespace ResourceLoader {
 
 
     void loadTexturesFromFiles() {
+        //----<<Background>>----
+        ResourceLoader::loadTexture(Entities::E_StaticGround_1, "resources/background/ground1.png");
+        ResourceLoader::loadTexture(Entities::E_StaticGround_2, "resources/background/ground2.png");
+
+        ResourceLoader::loadTexture(Entities::E_StaticTree_1, "resources/background/tree1.png");
+        ResourceLoader::loadTexture(Entities::E_StaticGroundArtifact_1, "resources/background/ground.skeleton.png");
+
         //----<<Ui>>----
         ResourceLoader::loadTexture(Entities::E_Indicator_Money, "resources/ui/indicator.money.png");
 
@@ -136,9 +143,6 @@ namespace ResourceLoader {
                 }
             }
         }
-
-
-        ResourceLoader::loadTexture(Entities::E_StaticGround, "resources/ground.png");
 
     }
 

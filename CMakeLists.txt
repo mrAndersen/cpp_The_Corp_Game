@@ -55,8 +55,8 @@ add_executable(
         src/System/System.h
         src/System/System.cpp
 
-        src/Objects/Ground.h
-        src/Objects/Ground.cpp
+        src/Background/Ground.h
+        src/Background/Ground.cpp
         src/System/ControlPanel.h
         src/System/ControlPanel.cpp
 
@@ -118,7 +118,7 @@ add_executable(
 
         src/Ui/Questions/QAddClerk.cpp
         src/Ui/Questions/QAddClerk.h
-        src/Ui/Questions/QAddOffice.cpp src/Ui/Questions/QAddOffice.h src/Ui/Questions/QAddElevator.cpp src/Ui/Questions/QAddElevator.h)
+        src/Ui/Questions/QAddOffice.cpp src/Ui/Questions/QAddOffice.h src/Ui/Questions/QAddElevator.cpp src/Ui/Questions/QAddElevator.h src/Background/Tree.cpp src/Background/Tree.h src/Background/GroundArtifact.cpp src/Background/GroundArtifact.h)
 
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})

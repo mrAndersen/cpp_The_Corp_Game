@@ -1,13 +1,14 @@
 #include <Office/Office.h>
-#include <Objects/ElevatorShaftMiddle.h>
-#include <Objects/ElevatorShaftTop.h>
-#include <Component/Elevator.h>
+#include <Background/Tree.h>
+#include <Background/GroundArtifact.h>
 #include "EntityContainer.h"
-#include "Objects/Ground.h"
+#include "Background/Ground.h"
 #include "System.h"
 
 namespace EntityContainer {
     std::vector<Entity *> items = {};
+
+    std::vector<Entity *> itemsToRemove = {};
 
     std::vector<sf::VertexArray> verticies;
 
@@ -66,7 +67,12 @@ namespace EntityContainer {
         items.push_back(item);
 
         std::sort(items.begin(), items.end(), [](Entity *a, Entity *b) -> bool {
-            return a->getDrawOrder() < b->getDrawOrder();
+            if (a->getDrawOrder() == b->getDrawOrder()) {
+                return a->getDrawOrder() + a->getWorldCoordinates().x + a->getWorldCoordinates().y <
+                       b->getDrawOrder() + b->getWorldCoordinates().x + b->getWorldCoordinates().y;
+            } else {
+                return a->getDrawOrder() < b->getDrawOrder();
+            }
         });
     }
 
@@ -77,18 +83,41 @@ namespace EntityContainer {
     }
 
     void remove(Entity *item) {
-        items.erase(std::remove(items.begin(), items.end(), item), items.end());
-        delete item;
+        itemsToRemove.push_back(item);
     }
 
     int size() {
         return items.size();
     }
 
-    void initGround() {
-        for (int i = (int) -System::worldWidth / 2; (int) i < System::worldWidth / 2; ++i) {
+    void initBackground() {
+
+
+        for (int i = (int) -System::worldWidth / 2; i < (int) (System::worldWidth / 2); ++i) {
+
+            //ground
             if ((i % Ground::width) == 0) {
-                new Ground(sf::Vector2f(i, System::groundLevel + Ground::height / 2));
+                auto rnd = System::getRandom(0, 100);
+
+                if (rnd <= 50) {
+                    new Ground(sf::Vector2f(i, System::groundLevel + Ground::height / 2), E_StaticGround_1);
+                } else {
+                    new Ground(sf::Vector2f(i, System::groundLevel + Ground::height / 2), E_StaticGround_2);
+                }
+            }
+
+            //trees
+            if (System::getRandom(0, 20000) <= 75 && i < System::worldWidth / 2 - Tree::width) {
+                new Tree({(float) i, System::groundLevel + Ground::height + Tree::height / 2}, E_StaticTree_1);
+            }
+
+            //ground artifacts
+            if (System::getRandom(0, 20000) <= 25 && i < System::worldWidth / 2 - Tree::width) {
+                auto yrnd = System::getRandom((int) (System::groundLevel + 55 / 2),
+                                              (int) (System::groundLevel + Ground::height - 55 / 2 - 35));
+
+
+                new GroundArtifact({(float) i, (float) yrnd}, {81, 55}, E_StaticGroundArtifact_1);
             }
         }
     }
@@ -107,7 +136,6 @@ namespace EntityContainer {
 
                     verticies.push_back(lines);
                 }
-
             }
 
             for (int j = 8000; j > System::groundLevel; j--) {
@@ -130,15 +158,18 @@ namespace EntityContainer {
     }
 
     void refreshEntities() {
-        auto realSize = items.size();
         for (auto entity:items) {
             entity->update();
+        }
 
-            //invalidated iterator
-            if (items.size() != realSize) {
-                return;
+        for (auto entity:items) {
+            if (std::find(itemsToRemove.begin(), itemsToRemove.end(), entity) != itemsToRemove.end()) {
+                items.erase(std::remove(items.begin(), items.end(), entity), items.end());
+                delete entity;
             }
         }
+
+        itemsToRemove.clear();
     }
 
     void addElevator(Elevator *elevator) {

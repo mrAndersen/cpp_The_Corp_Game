@@ -1,10 +1,8 @@
 #include <sstream>
 #include <SFML/Window/Event.hpp>
 #include <Objects/ElevatorShaftMiddle.h>
-#include <Objects/ElevatorShaftTop.h>
 #include <Office/OfficeClerk.h>
-#include <Objects/Ground.h>
-#include <System/EntityGroup.h>
+#include <chrono>
 #include "System/System.h"
 #include "System/ResourceLoader.h"
 #include "System/ViewHandler.h"
@@ -13,7 +11,8 @@
 #include "System/SaveManager.h"
 
 int main() {
-    auto *saveManager = new SaveManager();
+    SaveManager saveManager;
+    System::seed = std::chrono::system_clock::now().time_since_epoch().count();
 
     //preload resources
     ResourceLoader::loadTexturesFromFiles();
@@ -24,7 +23,7 @@ int main() {
     System::initWindow();
     System::initDebug();
 
-    EntityContainer::initGround();
+    EntityContainer::initBackground();
     EntityContainer::initGrid();
 
     ControlPanel::initControlPanel();
@@ -79,7 +78,7 @@ int main() {
 
             if (e.type == sf::Event::KeyPressed || e.type == sf::Event::KeyReleased) {
                 ViewHandler::handleViewScrollKeyPress(e);
-                saveManager->handleSaveEvent();
+                saveManager.handleSaveEvent();
             }
 
             if (e.type == sf::Event::MouseWheelScrolled) {
