@@ -6,7 +6,7 @@
 #include "Movable.h"
 #include "System/System.h"
 #include "System/EntityContainer.h"
-#include "Objects/Ground.h"
+#include "Background/Ground.h"
 
 void Movable::renderDebugInfo() {
     if (System::debug) {

@@ -36,7 +36,7 @@ namespace EntityContainer {
 
     int size();
 
-    void initGround();
+    void initBackground();
 
     void initGrid();
 

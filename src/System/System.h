@@ -53,6 +53,7 @@ namespace System {
     extern std::map<std::string, sf::Text> debugPanelTextNodes;
     extern sf::Font *debugFont;
     extern sf::Font *gameFont;
+    extern unsigned int seed;
 
     extern float g_x;
     extern float g_y;

@@ -17,7 +17,7 @@ namespace System {
     unsigned int screenHeight = 900;
     std::string title = "New World";
     float groundLevel = 0;
-    float worldWidth = 10000;
+    float worldWidth = 9900;
     int gridSize = 50;
     int entitySequence = 1;
 
@@ -28,6 +28,7 @@ namespace System {
 
     sf::Font *debugFont;
     sf::Font *gameFont;
+    unsigned int seed = 0;
 
     sf::RenderWindow *window;
     sf::Event event;
@@ -66,7 +67,7 @@ namespace System {
     int framesPassed = 0;
     int entitiesOnScreen = 0;
     int fps = 0;
-    bool debug = true;
+    bool debug = false;
     //debug
 
     void refreshDayTime() {
@@ -269,11 +270,11 @@ namespace System {
     }
 
     int getRandom(int min, int max) {
-        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+        seed = fpsClock.getElapsedTime().asMicroseconds();
         std::mt19937 generator(seed);
 
         std::uniform_int_distribution<int> distribution(min, max);
-        return distribution.operator()(generator);
+        return distribution(generator);
     }
 }
 
