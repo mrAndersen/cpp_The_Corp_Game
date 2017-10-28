@@ -46,11 +46,15 @@ bool Entity::rightClicked() {
 }
 
 bool Entity::leftClickedOutside() {
-    return sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && !mouseIn();
+    return System::event.type == sf::Event::MouseButtonPressed &&
+           System::event.mouseButton.button == sf::Mouse::Left &&
+           !mouseIn();
 }
 
 bool Entity::rightClickedOutside() {
-    return sf::Mouse::isButtonPressed(sf::Mouse::Button::Right) && !mouseIn();
+    return System::event.type == sf::Event::MouseButtonPressed &&
+           System::event.mouseButton.button == sf::Mouse::Right &&
+           !mouseIn();
 }
 
 void Entity::setTransparent() {
