@@ -16,7 +16,8 @@ enum DrawOrder {
     D_ElevatorCabin = 120,
     D_Characters = 200,
 
-    D_Ui = 250
+    D_Ui = 250,
+    D_Ui_Over = 251
 };
 
 enum Gender {
@@ -83,8 +84,8 @@ enum Entities {
     E_ButtonAddElevatorShaftMiddle = 33,
     E_ButtonAddElevatorShaftTop = 33,
     E_ButtonAddElevatorCabin = 34,
-
     E_ButtonAddElevator = 35,
+
     E_Question_Mark_ButtonAddElevator = 351,
 
     E_OfficeDefault = 41,
@@ -97,6 +98,12 @@ enum Entities {
     E_Chair = 91,
 
     E_Indicator_Money = 101,
+    E_MainPanelOverlay = 102,
+
+    E_ButtonPause = 103,
+    E_Button1x = 104,
+    E_Button5x = 105,
+    E_Button10x = 106,
 };
 
 #endif

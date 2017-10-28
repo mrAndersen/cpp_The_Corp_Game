@@ -319,6 +319,7 @@ void Entity::addAnimation(States state, const Animation &animation) {
     animations.insert(std::pair<States, Animation>(state, animation));
 }
 
+
 void Entity::selectAnimation(States state) {
     if (!animations.empty()) {
         if (!animations.count(state)) {

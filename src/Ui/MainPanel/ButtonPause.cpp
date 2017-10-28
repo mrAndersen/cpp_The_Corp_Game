@@ -1,12 +1,11 @@
-#include <System/System.h>
-#include "Question.h"
+#include "ButtonPause.h"
 
-Question::Question(float leftOffset, float topOffset, Entities type) : BasicUi(leftOffset, topOffset) {
-    setEType(type);
-    setDrawOrder(D_Ui);
+ButtonPause::ButtonPause(float leftOffset, float topOffset) : BasicUi(leftOffset, topOffset) {
+    setEType(E_ButtonPause);
+    setDrawOrder(D_Ui_Over);
 
-    setWidth(Question::width);
-    setHeight(Question::height);
+    setWidth(ButtonPause::width);
+    setHeight(ButtonPause::height);
 
     addAnimation(S_Button_Normal, Animation(this, S_Button_Normal, 1, ResourceLoader::getTexture(eType, S_Button_Normal)));
     addAnimation(S_Button_Pressed, Animation(this, S_Button_Pressed, 1, ResourceLoader::getTexture(eType, S_Button_Pressed)));
@@ -15,10 +14,10 @@ Question::Question(float leftOffset, float topOffset, Entities type) : BasicUi(l
     EntityContainer::add(this);
 }
 
-void Question::update() {
+void ButtonPause::update() {
     selectAnimation(S_Button_Normal);
 
-    if (leftClicked() && !System::spawningUnit) {
+    if(leftClicked() && !System::spawningUnit){
         selectAnimation(S_Button_Pressed);
     }
 

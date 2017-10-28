@@ -20,9 +20,6 @@ ControlButtonAddElevator::ControlButtonAddElevator(float leftOffset, float topOf
 void ControlButtonAddElevator::update() {
     auto addCabin = ControlPanel::getControls()[E_ButtonAddElevatorCabin];
 
-    worldCoordinates.x = ViewHandler::left + leftOffset;
-    worldCoordinates.y = ViewHandler::top - topOffset;
-
     if (leftClicked() && !System::spawningUnit) {
         pressed = !pressed;
     }
@@ -35,7 +32,5 @@ void ControlButtonAddElevator::update() {
         addCabin->setVisible(false);
     }
 
-    if (currentAnimation) {
-        currentAnimation->update();
-    }
+    BasicUi::update();
 }

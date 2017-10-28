@@ -66,7 +66,7 @@ public:
 
     void setDirection(Direction direction);
 
-    virtual void addAnimation(States state, const Animation &animation);
+    void addAnimation(States state, const Animation &animation);
 
     void selectAnimation(States state);
 

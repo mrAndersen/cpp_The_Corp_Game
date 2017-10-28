@@ -1,12 +1,11 @@
-#include <System/System.h>
-#include "Question.h"
+#include "Button10x.h"
 
-Question::Question(float leftOffset, float topOffset, Entities type) : BasicUi(leftOffset, topOffset) {
-    setEType(type);
-    setDrawOrder(D_Ui);
+Button10x::Button10x(float leftOffset, float topOffset) : BasicUi(leftOffset, topOffset) {
+    setEType(E_Button10x);
+    setDrawOrder(D_Ui_Over);
 
-    setWidth(Question::width);
-    setHeight(Question::height);
+    setWidth(Button10x::width);
+    setHeight(Button10x::height);
 
     addAnimation(S_Button_Normal, Animation(this, S_Button_Normal, 1, ResourceLoader::getTexture(eType, S_Button_Normal)));
     addAnimation(S_Button_Pressed, Animation(this, S_Button_Pressed, 1, ResourceLoader::getTexture(eType, S_Button_Pressed)));
@@ -15,10 +14,10 @@ Question::Question(float leftOffset, float topOffset, Entities type) : BasicUi(l
     EntityContainer::add(this);
 }
 
-void Question::update() {
+void Button10x::update() {
     selectAnimation(S_Button_Normal);
 
-    if (leftClicked() && !System::spawningUnit) {
+    if(leftClicked() && !System::spawningUnit){
         selectAnimation(S_Button_Pressed);
     }
 

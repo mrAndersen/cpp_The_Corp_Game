@@ -4,38 +4,26 @@
 #include <System/System.h>
 #include "MoneyIndicator.h"
 
-MoneyIndicator::MoneyIndicator(sf::Vector2f coordinates) {
+MoneyIndicator::MoneyIndicator(float leftOffset, float topOffset) : BasicUi(leftOffset, topOffset) {
     setEType(E_Indicator_Money);
-
+    setDrawOrder(D_Ui);
     setWidth(MoneyIndicator::width);
     setHeight(MoneyIndicator::height);
 
-    setWorldCoordinates(coordinates);
     addAnimation(S_None, Animation(this, S_None, 1, ResourceLoader::getTexture(eType)));
-
-    setDrawOrder(D_Ui);
     initEntity();
 
     moneyString.setFont(*System::gameFont);
     moneyString.setCharacterSize(40);
-    moneyString.setFillColor(sf::Color(186, 170, 0));
+    moneyString.setFillColor(sf::Color::White);
 
     EntityContainer::add(this);
 }
 
 void MoneyIndicator::update() {
-    selectAnimation(state);
-
-    worldCoordinates.x = ViewHandler::left + width / 2;
-    worldCoordinates.y = ViewHandler::top - height / 2;
-
-    if (currentAnimation) {
-        currentAnimation->update();
-    }
+    BasicUi::update();
 
     moneyString.setPosition(System::cToGl(ViewHandler::left + 20, ViewHandler::top - 1));
     moneyString.setString("$ " + System::f_to_string(System::cash));
     System::window->draw(moneyString);
-
-    recalculateBoundaries();
 }

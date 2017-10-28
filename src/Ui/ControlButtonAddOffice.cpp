@@ -8,7 +8,7 @@
 
 ControlButtonAddOffice::ControlButtonAddOffice(float leftOffset, float topOffset) : BasicUi(leftOffset, topOffset) {
     setEType(E_ButtonAddOffice);
-    setDrawOrder(INT_MAX);
+    setDrawOrder(D_Ui);
 
     setWidth(ControlButtonAddOffice::width);
     setHeight(ControlButtonAddOffice::height);
@@ -84,10 +84,5 @@ void ControlButtonAddOffice::update() {
         }
     }
 
-    worldCoordinates.x = ViewHandler::left + leftOffset;
-    worldCoordinates.y = ViewHandler::top - topOffset;
-
-    if (currentAnimation) {
-        currentAnimation->update();
-    }
+    BasicUi::update();
 }

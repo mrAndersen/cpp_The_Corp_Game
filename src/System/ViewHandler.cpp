@@ -115,6 +115,12 @@ namespace ViewHandler {
             top = top * zoom;
             bottom = bottom * zoom;
 
+            auto mousePosition = sf::Mouse::getPosition(*System::window);
+            auto coordMap = System::window->mapPixelToCoords(mousePosition);
+
+            System::g_x = coordMap.x;
+            System::g_y = System::screenHeight - coordMap.y;
+
             System::window->setView(*view);
         }
     }

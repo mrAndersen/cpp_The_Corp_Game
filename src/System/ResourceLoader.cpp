@@ -66,6 +66,19 @@ namespace ResourceLoader {
 
         //----<<Ui>>----
         ResourceLoader::loadTexture(Entities::E_Indicator_Money, "resources/ui/indicator.money.png");
+        ResourceLoader::loadTexture(Entities::E_MainPanelOverlay, "resources/ui/main.panel.png");
+
+        ResourceLoader::loadTexture(Entities::E_ButtonPause, "resources/ui/button.pause.png", S_Button_Normal);
+        ResourceLoader::loadTexture(Entities::E_ButtonPause, "resources/ui/button.pause.pressed.png", S_Button_Pressed);
+
+        ResourceLoader::loadTexture(Entities::E_Button1x, "resources/ui/button.1x.png", S_Button_Normal);
+        ResourceLoader::loadTexture(Entities::E_Button1x, "resources/ui/button.1x.pressed.png", S_Button_Pressed);
+
+        ResourceLoader::loadTexture(Entities::E_Button5x, "resources/ui/button.5x.png", S_Button_Normal);
+        ResourceLoader::loadTexture(Entities::E_Button5x, "resources/ui/button.5x.pressed.png", S_Button_Pressed);
+
+        ResourceLoader::loadTexture(Entities::E_Button10x, "resources/ui/button.10x.png", S_Button_Normal);
+        ResourceLoader::loadTexture(Entities::E_Button10x, "resources/ui/button.10x.pressed.png", S_Button_Pressed);
 
         ResourceLoader::loadTexture(Entities::E_ButtonAddClerk, "resources/ui/button.add.clerk.png", S_Button_Normal);
         ResourceLoader::loadTexture(Entities::E_ButtonAddClerk, "resources/ui/button.add.clerk.pressed.png", S_Button_Pressed);
