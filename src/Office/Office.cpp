@@ -150,3 +150,7 @@ WorkPlace *Office::getNextFreeWorkPlace() {
     }
 }
 
+WorkPlace *const *Office::getWorkPlaces() const {
+    return workPlaces;
+}
+

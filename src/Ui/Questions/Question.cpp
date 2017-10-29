@@ -18,14 +18,9 @@ Question::Question(float leftOffset, float topOffset, Entities type) : BasicUi(l
 void Question::update() {
     selectAnimation(S_Button_Normal);
 
-    worldCoordinates.x = ViewHandler::left + leftOffset;
-    worldCoordinates.y = ViewHandler::top - topOffset;
-
     if (leftClicked() && !System::spawningUnit) {
         selectAnimation(S_Button_Pressed);
     }
 
-    if (currentAnimation) {
-        currentAnimation->update();
-    }
+    BasicUi::update();
 }

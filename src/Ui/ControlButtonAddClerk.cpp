@@ -69,10 +69,5 @@ void ControlButtonAddClerk::update() {
         }
     }
 
-    worldCoordinates.x = ViewHandler::left + leftOffset;
-    worldCoordinates.y = ViewHandler::top - topOffset;
-
-    if (currentAnimation) {
-        currentAnimation->update();
-    }
+    BasicUi::update();
 }

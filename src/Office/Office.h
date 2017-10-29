@@ -17,6 +17,8 @@ protected:
 public:
     Office();
 
+    WorkPlace *const *getWorkPlaces() const;
+
     std::vector<Office *> getNeighborOffices();
 
     float getCost() const;

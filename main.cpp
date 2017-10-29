@@ -139,21 +139,6 @@ int main() {
                 }
             }
 
-
-                if (
-                    System::timeFactor < 10 &&
-                    sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) &&
-                    sf::Keyboard::isKeyPressed(sf::Keyboard::Add)) {
-                System::timeFactor++;
-            }
-
-            if (
-                    System::timeFactor > 0 &&
-                    sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) &&
-                    sf::Keyboard::isKeyPressed(sf::Keyboard::Subtract)) {
-                System::timeFactor--;
-            }
-
             if (e.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::LAlt) &&
                 sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
                 auto boundaries = System::getScreenBoundaries();

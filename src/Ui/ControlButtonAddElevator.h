@@ -15,8 +15,6 @@ public:
 
     ControlButtonAddElevator(float leftOffset, float topOffset);
 
-    bool pressed = false;
-
     void update() override;
 };
 

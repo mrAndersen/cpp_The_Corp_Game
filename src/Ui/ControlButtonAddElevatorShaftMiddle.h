@@ -3,17 +3,23 @@
 
 #include <Basic/Entity.h>
 #include "Objects/ElevatorShaftMiddle.h"
+#include "BasicUi.h"
+#include <climits>
+#include <cmath>
+#include "System/ResourceLoader.h"
+#include "System/EntityContainer.h"
+#include "System/System.h"
 
-class ControlButtonAddElevatorShaftMiddle : public Entity {
-    const static int width = 142;
-    const static int height = 47;
+class ControlButtonAddElevatorShaftMiddle : public BasicUi {
+    const static int width = 60;
+    const static int height = 62;
 
     ElevatorShaftMiddle *attachedShaft = nullptr;
 
 public:
-    explicit ControlButtonAddElevatorShaftMiddle();
+    explicit ControlButtonAddElevatorShaftMiddle(float leftOffset, float topOffset);
 
-    void updateLogic() override;
+    void update() override;
 };
 
 

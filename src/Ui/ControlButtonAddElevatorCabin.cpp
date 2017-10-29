@@ -85,12 +85,7 @@ void ControlButtonAddElevatorCabin::update() {
         }
     }
 
-    worldCoordinates.x = ViewHandler::left + leftOffset;
-    worldCoordinates.y = ViewHandler::top - topOffset;
-
-    if (currentAnimation && visible) {
-        currentAnimation->update();
-    }
+    BasicUi::update();
 }
 
 

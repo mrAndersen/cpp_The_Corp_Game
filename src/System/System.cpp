@@ -52,6 +52,7 @@ namespace System {
     bool dayStartProcessed = false;
 
     float salaryTotal = 0;
+    int buttonReload = 250;
 
     sf::Clock dayClock = {};
     GameTime gameTime(10, 30);
@@ -101,9 +102,6 @@ namespace System {
     }
 
     void refreshSystem() {
-        auto mousePosition = sf::Mouse::getPosition(*window);
-        auto coordMap = window->mapPixelToCoords(mousePosition);
-
         window->setTitle("Incorporated ~ [" + std::to_string(fps) + " FPS]");
 
         frameTimeMcs = frameClock.restart().asMicroseconds();
@@ -115,9 +113,6 @@ namespace System {
             framesPassed = 0;
             fpsClock.restart();
         }
-
-        g_x = coordMap.x;
-        g_y = System::screenHeight - coordMap.y;
     }
 
     void refreshDebugPanel() {

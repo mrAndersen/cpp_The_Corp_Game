@@ -35,8 +35,8 @@ void Clerk::updateLogic() {
             auto position = worldCoordinates;
             position.y += height / 2;
 
-            earningHint->setSpeed(100 * System::timeFactor);
-            earningHint->setLiveTimeSeconds(2 / System::timeFactor);
+            earningHint->setSpeed(100);
+            earningHint->setLiveTimeSeconds(2);
             earningHint->setWorldCoordinates(position);
             earningHint->setString("+" + System::f_to_string(hourEarning) + "$");
 
