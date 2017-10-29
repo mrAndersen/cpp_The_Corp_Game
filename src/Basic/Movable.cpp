@@ -40,10 +40,6 @@ void Movable::updateLogic() {
     //update floor
     floor = ((int) worldCoordinates.y - ((int) worldCoordinates.y % System::gridSize)) / System::gridSize / 3;
 
-//    if(isOnTheGround()){
-//        EntityContainer::remove(this);
-//    }
-
     //no work place
     if (!currentWorkPlace && isOnTheGround() && errorString.getString().isEmpty()) {
         valid = false;
@@ -78,8 +74,9 @@ void Movable::updateLogic() {
     if (isOnTheGround() && state == S_Falling) {
         //normalize
         worldCoordinates.y = System::groundLevel + Ground::height + height / 2;
-
         direction = Direction::None;
+        currentSpeed = defaultSpeed;
+
         if (currentWorkPlace) {
             state = S_GoToOffice;
         } else {
@@ -90,10 +87,6 @@ void Movable::updateLogic() {
     if (state == S_Working) {
         currentSpeed = 0;
         direction = Direction::Right;
-    }
-
-    if (state != S_Working) {
-
     }
 
     //go to office
@@ -227,6 +220,7 @@ void Movable::updateLogic() {
     //not working - but should
     if (
             currentWorkPlace && System::gameTime.isWorkTime() &&
+            (isOnTheGround() || currentWorkPlace->getParentOffice()->getFloor() == floor) &&
             state != S_Working &&
             state != S_WaitForElevator &&
             state != S_RideInElevator &&
@@ -238,7 +232,7 @@ void Movable::updateLogic() {
     }
 
     //search workplace every 500ms
-    if (!currentWorkPlace && isOnTheGround() && workPlaceSearchResolution.getElapsedTime().asMilliseconds() >= 500) {
+    if (!currentWorkPlace && workPlaceSearchResolution.getElapsedTime().asMilliseconds() >= 500) {
         searchWorkPlace();
     }
 
@@ -363,16 +357,29 @@ void Movable::spawn() {
 
 void Movable::searchWorkPlace() {
     if (!this->currentWorkPlace && this->isSpawned()) {
-        for (auto e:EntityContainer::searchEntitiesByGroup({E_OfficeDefault})) {
+        auto offices = EntityContainer::searchEntitiesByGroup({E_OfficeDefault});
+        std::map<float, WorkPlace *> buffer;
+
+        for (auto e:offices) {
             auto office = dynamic_cast<Office *>(e);
 
             if (office->hasFreeWorkPlaces() && office->isSpawned()) {
 
-                currentWorkPlace = office->getNextFreeWorkPlace();
-                currentWorkPlace->setWorker(this);
+                for (int i = 0; i < 4; ++i) {
+                    auto wc = office->getWorkPlaces()[i]->getWorldCoordinates();
 
-                return;
+                    auto distance = std::fabs(std::sqrt(
+                            std::pow(worldCoordinates.x - wc.x, 2) +
+                            std::pow(worldCoordinates.y - wc.y, 2)));
+
+                    buffer[distance] = office->getWorkPlaces()[i];
+                }
             }
+        }
+
+        if(!buffer.empty()){
+            currentWorkPlace = buffer.begin()->second->getParentOffice()->getNextFreeWorkPlace();
+            currentWorkPlace->setWorker(this);
         }
     }
 }

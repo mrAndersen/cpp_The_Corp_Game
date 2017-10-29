@@ -26,7 +26,7 @@ void Button1x::update() {
         selectAnimation(S_Button_Normal);
     }
 
-    if(leftClicked() && !System::spawningUnit && liveClock.getElapsedTime().asMilliseconds() >= 500){
+    if(leftClicked() && !System::spawningUnit && liveClock.getElapsedTime().asMilliseconds() >= System::buttonReload){
         pressed = !pressed;
         liveClock.restart();
 

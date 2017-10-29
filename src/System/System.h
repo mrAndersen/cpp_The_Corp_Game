@@ -41,6 +41,7 @@ namespace System {
     extern bool dayEndProcessed;
     extern bool dayStartProcessed;
     extern float salaryTotal;
+    extern int buttonReload;
 
     extern sf::Clock dayClock;
     extern GameTime gameTime;

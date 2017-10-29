@@ -5,20 +5,28 @@
 #include "System/System.h"
 #include "ControlButtonAddElevatorShaftTop.h"
 
-ControlButtonAddElevatorShaftTop::ControlButtonAddElevatorShaftTop() {
+ControlButtonAddElevatorShaftTop::ControlButtonAddElevatorShaftTop(float leftOffset, float topOffset) : BasicUi(leftOffset, topOffset) {
     setEType(E_ButtonAddElevatorShaftTop);
-    setDrawOrder(INT_MAX);
+    setDrawOrder(D_Ui);
 
-    setWidth(142);
-    setHeight(47);
+    setWidth(ControlButtonAddElevatorShaftTop::width);
+    setHeight(ControlButtonAddElevatorShaftTop::height);
 
-    addAnimation(S_None, Animation(this, S_None, 1, ResourceLoader::getTexture(eType)));
+    addAnimation(S_Button_Normal, Animation(this, S_Button_Normal, 1, ResourceLoader::getTexture(eType, S_Button_Normal)));
+    addAnimation(S_Button_Pressed, Animation(this, S_Button_Pressed, 1, ResourceLoader::getTexture(eType, S_Button_Pressed)));
+
+    setVisible(false);
     initEntity();
-
     EntityContainer::add(this);
 }
 
-void ControlButtonAddElevatorShaftTop::updateLogic() {
+void ControlButtonAddElevatorShaftTop::update() {
+    if (!visible) {
+        return;
+    }
+
+    selectAnimation(S_Button_Normal);
+
     bool spawnCondition = attachedShaft &&
                           System::cash >= attachedShaft->getCost() &&
                           !attachedShaft->isBelowGround() &&
@@ -81,6 +89,8 @@ void ControlButtonAddElevatorShaftTop::updateLogic() {
             attachedShaft->setTransparent();
         }
     }
+
+    BasicUi::update();
 }
 
 

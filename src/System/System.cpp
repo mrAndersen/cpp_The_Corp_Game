@@ -52,6 +52,7 @@ namespace System {
     bool dayStartProcessed = false;
 
     float salaryTotal = 0;
+    int buttonReload = 250;
 
     sf::Clock dayClock = {};
     GameTime gameTime(10, 30);

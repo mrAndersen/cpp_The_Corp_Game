@@ -81,12 +81,12 @@ enum Entities {
     E_ButtonAddOffice = 32,
     E_Question_Mark_ButtonAddOffice = 321,
 
-    E_ButtonAddElevatorShaftMiddle = 33,
-    E_ButtonAddElevatorShaftTop = 33,
-    E_ButtonAddElevatorCabin = 34,
     E_ButtonAddElevator = 35,
+    E_ButtonAddElevatorShaftMiddle = 351,
+    E_ButtonAddElevatorShaftTop = 352,
+    E_ButtonAddElevatorCabin = 353,
+    E_Question_Mark_ButtonAddElevator = 354,
 
-    E_Question_Mark_ButtonAddElevator = 351,
 
     E_OfficeDefault = 41,
 

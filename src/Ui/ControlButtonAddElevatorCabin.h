@@ -14,7 +14,6 @@ public:
 
     ElevatorCabin *attachedCabin = nullptr;
 
-
     explicit ControlButtonAddElevatorCabin(float leftOffset, float topOffset);
 
     void update() override;
