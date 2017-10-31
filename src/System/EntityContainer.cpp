@@ -106,7 +106,13 @@ namespace EntityContainer {
 
             //trees
             if (System::getRandom(0, 20000) <= 75 && i < System::worldWidth / 2 - Tree::width) {
-                new Tree({(float) i, System::groundLevel + Ground::height + Tree::height / 2}, E_StaticTree_1);
+                auto treeIndex = System::getRandom(0, 100);
+
+                if(treeIndex <= 50){
+                    new Tree({(float) i, System::groundLevel + Ground::height + Tree::height / 2}, E_StaticTree_1);
+                }else{
+                    new Tree({(float) i, System::groundLevel + Ground::height + Tree::height / 2}, E_StaticTree_2);
+                }
             }
 
             //ground artifacts

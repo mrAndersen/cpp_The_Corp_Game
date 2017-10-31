@@ -2,250 +2,219 @@
 #include <iostream>
 #include <fstream>
 #include <Text/TextEntity.h>
-#include "System/Enum.h"
-#include "Movable.h"
-#include "System/System.h"
+#include <Background/Ground.h>
 #include "System/EntityContainer.h"
-#include "Background/Ground.h"
+#include "Movable.h"
+
 
 void Movable::renderDebugInfo() {
     if (System::debug) {
         debugInfo.setOutlineColor(sf::Color::White);
         debugInfo.setPosition(System::cToGl(worldCoordinates.x + width / 2, worldCoordinates.y + height / 2));
         debugInfo.setString(
-                "id: " + std::to_string(id) + "\n" +
-                "name: " + personName + "\n" +
-                "pos: {" + std::to_string((int) worldCoordinates.x) + "," + std::to_string((int) worldCoordinates.y) +
-                "}\n" +
-                "left: " + std::to_string((int) left) + "," +
-                "right: " + std::to_string((int) right) + "," +
-                "top: " + std::to_string((int) top) + "," +
-                "bottom: " + std::to_string((int) bottom) + "\n" +
-                "office: " + std::to_string(currentWorkPlace ? currentWorkPlace->getParentOffice()->getId() : 0) +
-                "\n" +
-                "state: " + std::to_string(state) + "\n" +
-                "floor: " + std::to_string(floor) + "\n" +
-                "speed: " + std::to_string((int) currentSpeed) + "p/s\n" +
-                "selected: " + std::to_string((int) selected) + "\n"
-                        "race: " + std::to_string((int) race) + " gender: " + std::to_string((int) gender)
+                "s: " + std::to_string(state) + "\n" +
+                "dests: " + std::to_string(destinations.size()) + "\n" +
+                "speed: " + std::to_string(currentSpeed) + "\n" +
+                "mv: " + std::to_string(moving) + "\n"
         );
+
+        if (!destinations.empty()) {
+            sf::Vertex line[destinations.size() + 1];
+
+            line[0].position = System::cToGl(worldCoordinates);
+            line[0].color = sf::Color::Yellow;
+
+            int i = 1;
+            for (auto d:destinations) {
+                sf::RectangleShape shape;
+                shape.setPosition(System::cToGl(d.getCoordinates()));
+                shape.setFillColor(sf::Color::Yellow);
+                shape.setOrigin({5, 5});
+                shape.setSize({10, 10});
+
+                line[i].position = System::cToGl(d.getCoordinates());
+                line[i].color = sf::Color::Yellow;
+                i++;
+
+                System::window->draw(shape);
+            }
+
+            System::window->draw(line, destinations.size() + 1, sf::Lines);
+        }
+
+
         System::window->draw(debugInfo);
     }
 }
 
-void Movable::updateLogic() {
-    float frameTimeSeconds = (float) System::frameTimeMcs / 1000000;
+void Movable::processStateTriggers() {
+    if (isSpawned()) {
+        if (isAboveGround() && state == S_None) {
+            state = S_Falling;
+        }
+
+        if (moving) {
+            state = !destinations.empty() ? S_Walk : S_None;
+        }
+
+        if (isInWorkPlace() && moving) {
+            state = S_Working;
+            direction = Right;
+
+            destinations.clear();
+            worldCoordinates.y = currentWorkPlace->getWorldCoordinates().y;
+            moving = false;
+        }
+    }
+}
+
+void Movable::processStates() {
     float frameDistance = frameTimeSeconds * currentSpeed * System::timeFactor;
 
-    //update floor
-    floor = ((int) worldCoordinates.y - ((int) worldCoordinates.y % System::gridSize)) / System::gridSize / 3;
-
-    //no work place
-    if (!currentWorkPlace && isOnTheGround() && errorString.getString().isEmpty()) {
-        valid = false;
-
-        errorString.setString("No free work places");
-        state = S_None;
-    } else {
-        valid = true;
-    }
-
-    //end of work day
-    if (!System::gameTime.isWorkTime()) {
-        state = S_GoHome;
-        setDrawOrder(D_Characters);
-    }
-
-    if (state == S_GoHome) {
-
-    }
-
-    //falling
-    if (!isOnTheGround() && isAboveGround() && direction == Direction::Down) {
-        state = S_Falling;
-    }
-
-    if (state == S_Falling) {
-        worldCoordinates.y -= frameDistance;
-        currentSpeed = currentSpeed + fallAcceleration * frameTimeSeconds;
-    }
-
-    //stop falling
-    if (isOnTheGround() && state == S_Falling) {
-        //normalize
-        worldCoordinates.y = System::groundLevel + Ground::height + height / 2;
-        direction = Direction::None;
-        currentSpeed = defaultSpeed;
-
-        if (currentWorkPlace) {
-            state = S_GoToOffice;
-        } else {
-            state = S_None;
+    if (isSpawned()) {
+        if (state == S_None) {
+            currentSpeed = 0;
         }
-    }
 
-    if (state == S_Working) {
-        currentSpeed = 0;
-        direction = Direction::Right;
-    }
+        if (state == S_Falling) {
+            worldCoordinates.y -= frameDistance;
+            currentSpeed = currentSpeed + fallAcceleration * frameTimeSeconds;
 
-    //go to office
-    if (state == S_GoToOffice && currentWorkPlace) {
-        if (isInWorkPlace()) {
-            state = S_Working;
-            setDrawOrder(D_Characters_Wokring);
-            worldCoordinates = currentWorkPlace->getWorldCoordinates();
-            direction = Direction::Right;
-        } else {
+            if (isOnTheGround() || isBelowGround()) {
+                worldCoordinates.y = System::groundLevel + Ground::height + height / 2;
+                currentSpeed = 0;
+                state = S_None;
+            }
+        }
 
-            //office is on the same floor
-            if (currentWorkPlace->getParentOffice()->getFloor() == this->floor) {
-                if (currentWorkPlace->getWorldCoordinates().x < this->worldCoordinates.x) {
-                    direction = Direction::Left;
-                } else {
-                    direction = Direction::Right;
-                }
+        if (state == S_Working) {
+
+        }
+
+        if (state == S_Walk) {
+            currentSpeed = defaultSpeed;
+            auto local = destinations.front();
+
+            if ((int) worldCoordinates.y != (int) local.getCoordinates().y) {
+                stop();
             } else {
-                auto elevator = searchNearestElevator();
+                if (worldCoordinates.x < local.getCoordinates().x) {
+                    direction = Right;
+                }
 
-                //go to nearest elevator
-                if (elevator) {
-                    state = S_GoToElevator;
+                if (worldCoordinates.x > local.getCoordinates().x) {
+                    direction = Left;
+                }
+
+                if ((int) worldCoordinates.x == (int) local.getCoordinates().x) {
+                    auto elevator = searchNearestElevator();
+
+                    if (local.getType() == DST_Elevator_Waiting) {
+                        elevator->addToQueue(floor);
+
+                        if (elevator->getCabin()->getBottom() == bottom && elevator->getCabin()->hasFreeSpace()) {
+                            destinations.pop_front();
+                        } else {
+                            stop();
+                        }
+                    }
+
+                    if (local.getType() == DST_Elevator_Inside_Cabin) {
+                        auto final = destinations.back();
+
+                        elevator->getCabin()->addMovable(this);
+                        elevator->addToQueue(final.getFloor());
+                        destinations.pop_front();
+                    }
+
+                    if (local.getType() == DST_Workplace) {
+                        destinations.pop_front();
+                    }
+
+                    if (local.getType() == DST_Elevator_Exiting) {
+                        elevator->getCabin()->removeMovable(this);
+                        destinations.pop_front();
+                    }
+
+                    if (local.getType() == DST_Unknown) {
+                        destinations.pop_front();
+                    }
+                }
+
+                if (direction == Right) {
+                    worldCoordinates.x += frameDistance;
+                }
+
+                if (direction == Left) {
+                    worldCoordinates.x -= frameDistance;
                 }
             }
         }
     }
+}
 
-    //go to elevator wait position
-    if (state == S_GoToElevator) {
-        auto elevator = searchNearestElevator();
-        auto waitPointLeft = elevator->getLeft() - width / 2;
-        auto waitPointRight = elevator->getRight() + width / 2;
-
-        if (worldCoordinates.x < waitPointLeft && worldCoordinates.x < elevator->getLeft()) {
-            direction = Direction::Right;
-        }
-
-        if (worldCoordinates.x > waitPointRight && worldCoordinates.x > elevator->getRight()) {
-            direction = Direction::Left;
-        }
-
-        if ((int) worldCoordinates.x == (int) waitPointLeft ||
-            (int) worldCoordinates.x == (int) waitPointRight) {
-
-            if ((int) worldCoordinates.x == (int) waitPointLeft) {
-                direction = Direction::Right;
-            }
-
-            if ((int) worldCoordinates.x == (int) waitPointRight) {
-                direction = Direction::Left;
-            }
-
-            currentSpeed = 0;
-            state = S_WaitForElevator;
-            destinationFloor = currentWorkPlace->getParentOffice()->getFloor();
-        } else {
-            state = S_GoToElevator;
-        }
-    }
-
-    if (state == S_WaitForElevator) {
-        auto elevator = searchNearestElevator();
-
-        //cabin here and has space - go there
-        if (
-                elevator->getCabin()->getFloor() == floor &&
-                (int) elevator->getCabin()->getBottom() == (int) bottom &&
-                elevator->getCabin()->hasFreeSpace()
-                ) {
-            state = S_GoToCabin;
-        } else {
-            //call cabin
-            elevator->addToQueue(floor);
-        }
-    }
-
-    if (state == S_GoToCabin) {
-        auto elevator = searchNearestElevator();
-        auto cabin = elevator->getCabin();
-        currentSpeed = defaultSpeed;
-
-        if (!randomedCabinPosition) {
-            auto minCabinXPosition = cabin->getWorldCoordinates().x - cabin->getWidth() / 2 + height / 2;
-            auto maxCabinXPosition = cabin->getWorldCoordinates().x + cabin->getWidth() / 2 - height / 2;
-
-            randomedCabinPosition = System::getRandom(minCabinXPosition, maxCabinXPosition);
-        }
-
-        if (randomedCabinPosition > worldCoordinates.x) {
-            direction = Direction::Right;
-        }
-
-        if (randomedCabinPosition < worldCoordinates.x) {
-            direction = Direction::Left;
-        }
-
-        if (randomedCabinPosition == (int) worldCoordinates.x) {
-            currentSpeed = 0;
-            elevator->getCabin()->addMovable(this);
-
-            if (destinationFloor) {
-                elevator->addToQueue(destinationFloor);
-            }
-
-            state = S_RideInElevator;
-        }
-    }
-
-
-    //riding
-    if (state == S_RideInElevator) {
-        auto elevator = searchNearestElevator();
-
-        currentSpeed = 0;
-        direction = Direction::None;
-
-        //end of ride
-        if (floor == destinationFloor && elevator->isWaiting()) {
-            elevator->getCabin()->removeMovable(this);
-            worldCoordinates.y = 100 + (System::gridSize * 3 * (destinationFloor - 1)) + height / 2;
-            randomedCabinPosition = 0;
-
-            state = S_None;
-            destinationFloor = 0;
-        }
-    }
-
-
-    //not working - but should
-    if (
-            currentWorkPlace && System::gameTime.isWorkTime() &&
-            (isOnTheGround() || currentWorkPlace->getParentOffice()->getFloor() == floor) &&
-            state != S_Working &&
-            state != S_WaitForElevator &&
-            state != S_RideInElevator &&
-            state != S_GoToCabin &&
-            state != S_GoToElevator
-            ) {
-        state = S_GoToOffice;
-        currentSpeed = defaultSpeed * System::timeFactor;
-    }
-
+void Movable::processOther() {
     //search workplace every 500ms
     if (!currentWorkPlace && workPlaceSearchResolution.getElapsedTime().asMilliseconds() >= 500) {
         searchWorkPlace();
     }
 
-    //movement
-    if (direction == Direction::Right) {
-        worldCoordinates.x += frameDistance;
-    }
+    //not working but should
+    if (
+            System::gameTime.isWorkTime() &&
+            !isInWorkPlace() &&
+            currentWorkPlace &&
+            state != S_Working &&
+            state != S_Smoking &&
+            state != S_Falling &&
+            !moving
+            ) {
 
-    if (direction == Direction::Left) {
-        worldCoordinates.x -= frameDistance;
-    }
+        moving = true;
 
+        if (floor == currentWorkPlace->getParentOffice()->getFloor()) {
+            destinations.push_back({{currentWorkPlace->getWorldCoordinates().x,
+                                     currentWorkPlace->getParentOffice()->getBottom() + height / 2},
+                                    DST_Workplace});
+        } else {
+            //elevator riding
+            auto elevator = searchNearestElevator();
+
+            if (elevator) {
+                destinations.push_back({{elevator->getLeft() - 50, worldCoordinates.y}, DST_Elevator_Waiting});
+                destinations.push_back({{elevator->getCabin()->getWorldCoordinates().x, worldCoordinates.y},
+                                        DST_Elevator_Inside_Cabin});
+
+
+                if (currentWorkPlace->getWorldCoordinates().x > elevator->getRight()) {
+                    destinations.push_back({{elevator->getRight() + 50, elevator->getFloorBottom(
+                            currentWorkPlace->getParentOffice()->getFloor()) + height / 2},
+                                            DST_Elevator_Exiting});
+                }
+
+                if (currentWorkPlace->getWorldCoordinates().x < elevator->getLeft()) {
+                    destinations.push_back({{elevator->getLeft() - 50, elevator->getFloorBottom(
+                            currentWorkPlace->getParentOffice()->getFloor()) + height / 2},
+                                            DST_Elevator_Exiting});
+                }
+
+
+                destinations.push_back({{currentWorkPlace->getWorldCoordinates().x,
+                                         currentWorkPlace->getParentOffice()->getBottom() + height / 2},
+                                        DST_Workplace});
+            }
+        }
+    }
+}
+
+void Movable::updateLogic() {
     Entity::updateLogic();
+
+    updateFloor();
+
+    processStateTriggers();
+    processStates();
+    processOther();
 }
 
 bool Movable::hasReachedWorldEdges() {
@@ -311,9 +280,7 @@ Movable::Movable(Entities type, int width, int height) : Entity(type) {
     gender = G_Male;
 
     addAnimation(S_None, gender, race, 24);
-    addAnimation(S_GoToOffice, gender, race, 24);
-    addAnimation(S_GoToElevator, gender, race, 24);
-    addAnimation(S_GoToCabin, gender, race, 24);
+    addAnimation(S_Walk, gender, race, 24);
     addAnimation(S_Working, gender, race, 24);
     addAnimation(S_Smoking, gender, race, 66, 2750000);
 }
@@ -377,7 +344,7 @@ void Movable::searchWorkPlace() {
             }
         }
 
-        if(!buffer.empty()){
+        if (!buffer.empty()) {
             currentWorkPlace = buffer.begin()->second->getParentOffice()->getNextFreeWorkPlace();
             currentWorkPlace->setWorker(this);
         }
@@ -435,19 +402,20 @@ Elevator *Movable::searchNearestElevator() {
         buffer[distance] = el;
     }
 
-    return buffer.begin().operator*().second;
-}
-
-int Movable::getDestinationFloor() const {
-    return destinationFloor;
-}
-
-void Movable::setDestinationFloor(int destinationFloor) {
-    Movable::destinationFloor = destinationFloor;
+    return buffer.begin()->second;
 }
 
 void Movable::addAnimation(States state, Gender gender, Race race, int frames, int duration) {
     Animation animation(this, state, frames, ResourceLoader::getCharacterTexture(eType, state, gender, race), duration);
     Entity::addAnimation(state, animation);
+}
+
+void Movable::updateFloor() {
+    floor = ((int) worldCoordinates.y - ((int) worldCoordinates.y % System::gridSize)) / System::gridSize / 3;
+}
+
+void Movable::stop() {
+    state = S_None;
+    direction = None;
 }
 

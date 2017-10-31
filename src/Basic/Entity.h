@@ -41,6 +41,7 @@ protected:
     Direction direction = Direction::None;
 
     sf::Clock liveClock;
+    float frameTimeSeconds;
 
     //property map
     std::map<std::string, int> properties;

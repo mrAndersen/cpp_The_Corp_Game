@@ -102,7 +102,7 @@ int main() {
             }
 
             if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::F) {
-                auto top = 900;
+                auto top = 600;
 
                 for (int i = 0; i <= top; ++i) {
 
@@ -131,7 +131,7 @@ int main() {
             }
 
             if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::G) {
-                auto count = 8;
+                auto count = 4;
 
                 for (int i = 0; i < count; ++i) {
                     auto c = new Clerk({(float) 0 + (i * 72), 300.f});

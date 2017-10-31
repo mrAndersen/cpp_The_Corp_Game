@@ -103,7 +103,7 @@ void ElevatorCabin::spawn() {
         };
     }
 
-    elevator->addToQueue(1);
+    elevator->addToQueue(2);
     elevator->finish();
 
     Entity::spawn();

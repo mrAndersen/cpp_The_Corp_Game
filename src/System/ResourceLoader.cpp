@@ -62,6 +62,7 @@ namespace ResourceLoader {
         ResourceLoader::loadTexture(Entities::E_StaticGround_2, "resources/background/ground2.png");
 
         ResourceLoader::loadTexture(Entities::E_StaticTree_1, "resources/background/tree1.png");
+        ResourceLoader::loadTexture(Entities::E_StaticTree_2, "resources/background/tree2.png");
         ResourceLoader::loadTexture(Entities::E_StaticGroundArtifact_1, "resources/background/ground.skeleton.png");
 
         //----<<Ui>>----
@@ -125,19 +126,12 @@ namespace ResourceLoader {
         std::string levels[] = {"l1"};
         States states[] = {
                 S_None,
-                S_Stand,
+                S_Play,
                 S_Run,
                 S_Walk,
                 S_Smoking,
-                S_WaitForElevator,
-                S_RideInElevator,
                 S_Working,
                 S_Falling,
-                S_GoToOffice,
-                S_GoHome,
-                S_GoSmoke,
-                S_GoToElevator,
-                S_GoToCabin,
         };
 
         for (auto gender:genders) {
@@ -217,11 +211,11 @@ namespace ResourceLoader {
     }
 
     std::string getStateTextNotation(States state) {
-        if ( state == S_Walk || state == S_GoToOffice || state == S_GoToCabin || state == S_GoToElevator || state == S_GoHome || state == S_GoSmoke){
+        if ( state == S_Walk){
             return "walk";
         }
 
-        if(state == S_WaitForElevator || state == S_RideInElevator || state == S_Stand || state == S_None){
+        if(state == S_None){
             return "wait";
         }
 
