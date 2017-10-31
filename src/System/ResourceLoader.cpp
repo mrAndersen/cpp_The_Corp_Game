@@ -63,6 +63,8 @@ namespace ResourceLoader {
 
         ResourceLoader::loadTexture(Entities::E_StaticTree_1, "resources/background/tree1.png");
         ResourceLoader::loadTexture(Entities::E_StaticTree_2, "resources/background/tree2.png");
+        ResourceLoader::loadTexture(Entities::E_StaticTree_3, "resources/background/tree3.png");
+        ResourceLoader::loadTexture(Entities::E_StaticTree_4, "resources/background/tree4.png");
         ResourceLoader::loadTexture(Entities::E_StaticGroundArtifact_1, "resources/background/ground.skeleton.png");
 
         //----<<Ui>>----

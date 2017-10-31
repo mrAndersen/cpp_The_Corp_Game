@@ -108,10 +108,20 @@ namespace EntityContainer {
             if (System::getRandom(0, 20000) <= 75 && i < System::worldWidth / 2 - Tree::width) {
                 auto treeIndex = System::getRandom(0, 100);
 
-                if(treeIndex <= 50){
+                if(treeIndex <= 25){
                     new Tree({(float) i, System::groundLevel + Ground::height + Tree::height / 2}, E_StaticTree_1);
-                }else{
+                }
+
+                if(treeIndex > 25 && treeIndex <= 50){
                     new Tree({(float) i, System::groundLevel + Ground::height + Tree::height / 2}, E_StaticTree_2);
+                }
+
+                if(treeIndex > 50 && treeIndex <= 75){
+                    new Tree({(float) i, System::groundLevel + Ground::height + 449 / 2}, E_StaticTree_3, {361, 449});
+                }
+
+                if(treeIndex > 75){
+                    new Tree({(float) i, System::groundLevel + Ground::height + 162 / 2}, E_StaticTree_4, {308, 162});
                 }
             }
 
