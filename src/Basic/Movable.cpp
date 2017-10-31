@@ -47,174 +47,190 @@ void Movable::renderDebugInfo() {
     }
 }
 
-void Movable::processStateTriggers() {
-    if (isSpawned()) {
-        if (isAboveGround() && state == S_None) {
-            state = S_Falling;
-        }
-
-        if (moving) {
-            state = !destinations.empty() ? S_Walk : S_None;
-        }
-
-        if (isInWorkPlace() && moving) {
-            state = S_Working;
-            direction = Right;
-
-            destinations.clear();
-            worldCoordinates.y = currentWorkPlace->getWorldCoordinates().y;
-            moving = false;
-        }
-    }
-}
-
-void Movable::processStates() {
-    float frameDistance = frameTimeSeconds * currentSpeed * System::timeFactor;
-
-    if (isSpawned()) {
-        if (state == S_None) {
-            currentSpeed = 0;
-        }
-
-        if (state == S_Falling) {
-            worldCoordinates.y -= frameDistance;
-            currentSpeed = currentSpeed + fallAcceleration * frameTimeSeconds;
-
-            if (isOnTheGround() || isBelowGround()) {
-                worldCoordinates.y = System::groundLevel + Ground::height + height / 2;
-                currentSpeed = 0;
-                state = S_None;
-            }
-        }
-
-        if (state == S_Working) {
-
-        }
-
-        if (state == S_Walk) {
-            currentSpeed = defaultSpeed;
-            auto local = destinations.front();
-
-            if ((int) worldCoordinates.y != (int) local.getCoordinates().y) {
-                stop();
-            } else {
-                if (worldCoordinates.x < local.getCoordinates().x) {
-                    direction = Right;
-                }
-
-                if (worldCoordinates.x > local.getCoordinates().x) {
-                    direction = Left;
-                }
-
-                if ((int) worldCoordinates.x == (int) local.getCoordinates().x) {
-                    auto elevator = searchNearestElevator();
-
-                    if (local.getType() == DST_Elevator_Waiting) {
-                        elevator->addToQueue(floor);
-
-                        if (elevator->getCabin()->getBottom() == bottom && elevator->getCabin()->hasFreeSpace()) {
-                            destinations.pop_front();
-                        } else {
-                            stop();
-                        }
-                    }
-
-                    if (local.getType() == DST_Elevator_Inside_Cabin) {
-                        auto final = destinations.back();
-
-                        elevator->getCabin()->addMovable(this);
-                        elevator->addToQueue(final.getFloor());
-                        destinations.pop_front();
-                    }
-
-                    if (local.getType() == DST_Workplace) {
-                        destinations.pop_front();
-                    }
-
-                    if (local.getType() == DST_Elevator_Exiting) {
-                        elevator->getCabin()->removeMovable(this);
-                        destinations.pop_front();
-                    }
-
-                    if (local.getType() == DST_Unknown) {
-                        destinations.pop_front();
-                    }
-                }
-
-                if (direction == Right) {
-                    worldCoordinates.x += frameDistance;
-                }
-
-                if (direction == Left) {
-                    worldCoordinates.x -= frameDistance;
-                }
-            }
-        }
-    }
-}
-
-void Movable::processOther() {
-    //search workplace every 500ms
-    if (!currentWorkPlace && workPlaceSearchResolution.getElapsedTime().asMilliseconds() >= 500) {
-        searchWorkPlace();
-    }
-
-    //not working but should
-    if (
-            System::gameTime.isWorkTime() &&
-            !isInWorkPlace() &&
-            currentWorkPlace &&
-            state != S_Working &&
-            state != S_Smoking &&
-            state != S_Falling &&
-            !moving
-            ) {
-
-        moving = true;
-
-        if (floor == currentWorkPlace->getParentOffice()->getFloor()) {
-            destinations.push_back({{currentWorkPlace->getWorldCoordinates().x,
-                                     currentWorkPlace->getParentOffice()->getBottom() + height / 2},
-                                    DST_Workplace});
-        } else {
-            //elevator riding
-            auto elevator = searchNearestElevator();
-
-            if (elevator) {
-                destinations.push_back({{elevator->getLeft() - 50, worldCoordinates.y}, DST_Elevator_Waiting});
-                destinations.push_back({{elevator->getCabin()->getWorldCoordinates().x, worldCoordinates.y},
-                                        DST_Elevator_Inside_Cabin});
-
-
-                if (currentWorkPlace->getWorldCoordinates().x > elevator->getRight()) {
-                    destinations.push_back({{elevator->getRight() + 50, elevator->getFloorBottom(
-                            currentWorkPlace->getParentOffice()->getFloor()) + height / 2},
-                                            DST_Elevator_Exiting});
-                }
-
-                if (currentWorkPlace->getWorldCoordinates().x < elevator->getLeft()) {
-                    destinations.push_back({{elevator->getLeft() - 50, elevator->getFloorBottom(
-                            currentWorkPlace->getParentOffice()->getFloor()) + height / 2},
-                                            DST_Elevator_Exiting});
-                }
-
-
-                destinations.push_back({{currentWorkPlace->getWorldCoordinates().x,
-                                         currentWorkPlace->getParentOffice()->getBottom() + height / 2},
-                                        DST_Workplace});
-            }
-        }
-    }
-}
-
 void Movable::updateLogic() {
     Entity::updateLogic();
 
     updateFloor();
 
-    processStateTriggers();
-    processStates();
-    processOther();
+    float frameDistance = frameTimeSeconds * currentSpeed * System::timeFactor;
+
+    if(!spawned){
+        return;
+    }
+
+    if (isAboveGround() && state == S_None) {
+        state = S_Falling;
+    }
+
+    if (moving) {
+        state = !destinations.empty() ? S_Walk : S_None;
+    }
+
+    if (state == S_None) {
+        currentSpeed = 0;
+    }
+
+    if (state == S_Falling) {
+        worldCoordinates.y -= frameDistance;
+        currentSpeed = currentSpeed + fallAcceleration * frameTimeSeconds;
+
+        if (isOnTheGround() || isBelowGround()) {
+            worldCoordinates.y = System::groundLevel + Ground::height + height / 2;
+            currentSpeed = 0;
+            state = S_None;
+        }
+    }
+
+    if (state == S_Walk) {
+        currentSpeed = defaultSpeed;
+        auto local = destinations.front();
+
+        if ((int) worldCoordinates.y != (int) local.getCoordinates().y) {
+            stop();
+        } else {
+            if (worldCoordinates.x < local.getCoordinates().x) {
+                direction = Right;
+            }
+
+            if (worldCoordinates.x > local.getCoordinates().x) {
+                direction = Left;
+            }
+
+            if ((int) worldCoordinates.x == (int) local.getCoordinates().x) {
+                auto elevator = searchNearestElevator();
+
+                if (local.getType() == DST_Elevator_Waiting) {
+                    elevator->addToQueue(floor);
+
+                    if (elevator->getCabin()->getBottom() == bottom && elevator->getCabin()->hasFreeSpace()) {
+                        destinations.pop_front();
+                    } else {
+                        stop();
+                    }
+                }
+
+                if (local.getType() == DST_Elevator_Inside_Cabin) {
+                    auto final = destinations.back();
+
+                    elevator->getCabin()->addMovable(this);
+                    elevator->addToQueue(final.getFloor());
+                    destinations.pop_front();
+                }
+
+                if (local.getType() == DST_Workplace || local.getType() == DST_SmokeArea) {
+                    destinations.pop_front();
+                }
+
+                if (local.getType() == DST_Elevator_Exiting) {
+                    elevator->getCabin()->removeMovable(this);
+                    destinations.pop_front();
+                }
+
+                if (local.getType() == DST_Unknown) {
+                    destinations.pop_front();
+                }
+            }
+
+            if (direction == Right) {
+                worldCoordinates.x += frameDistance;
+            }
+
+            if (direction == Left) {
+                worldCoordinates.x -= frameDistance;
+            }
+        }
+    }
+
+    //sit and work
+    if (isInWorkPlace() && moving) {
+        state = S_Working;
+        direction = Right;
+
+        destinations.clear();
+        worldCoordinates.y = currentWorkPlace->getWorldCoordinates().y;
+        moving = false;
+    }
+
+    //search workplace every 500ms
+    if (!currentWorkPlace && workPlaceSearchResolution.getElapsedTime().asMilliseconds() >= 500) {
+        searchWorkPlace();
+    }
+
+    //ONE TIME EXEC
+    //go smoke
+    if (isInWorkPlace() && state == S_Working && !moving && System::gameTime.getHour() == 12) {
+        moving = true;
+        auto smokeArea = findNearestOutside();
+
+        if (floor == 1) {
+            destinations.push_back({{smokeArea.x, System::groundLevel + Ground::height + height / 2}, DST_SmokeArea});
+        } else {
+            //elevator riding
+            auto elevator = searchNearestElevator();
+
+            if(worldCoordinates.x < elevator->getLeft()){
+                destinations.push_back({{elevator->getLeft() - 50, worldCoordinates.y}, DST_Elevator_Waiting});
+
+                //some motion from the chair
+                worldCoordinates.x += 1;
+            }
+
+            if(worldCoordinates.x > elevator->getRight()){
+                destinations.push_back({{elevator->getRight() + 50, worldCoordinates.y}, DST_Elevator_Waiting});
+
+                //some motion from the chair
+                worldCoordinates.x -= 1;
+            }
+
+            destinations.push_back({{elevator->getCabin()->getWorldCoordinates().x, worldCoordinates.y}, DST_Elevator_Inside_Cabin});
+
+            if (smokeArea.x > elevator->getRight()) {
+                destinations.push_back({{elevator->getRight() + 50, System::groundLevel + Ground::height + height / 2}, DST_Elevator_Exiting});
+            }
+
+            if (smokeArea.x < elevator->getLeft()) {
+                destinations.push_back({{elevator->getLeft() - 50, System::groundLevel + Ground::height + height / 2}, DST_Elevator_Exiting});
+            }
+
+            destinations.push_back({{smokeArea.x, System::groundLevel + Ground::height + height / 2}, DST_SmokeArea});
+        }
+    }
+
+    //ONE TIME EXEC
+    //not working but should
+    if (System::gameTime.isWorkTime() && !isInWorkPlace() && currentWorkPlace && state != S_Working && state != S_Smoking && state != S_Falling && !moving) {
+        moving = true;
+
+        if (floor == currentWorkPlace->getParentOffice()->getFloor()) {
+            destinations.push_back({{currentWorkPlace->getWorldCoordinates().x, currentWorkPlace->getParentOffice()->getBottom() + height / 2}, DST_Workplace});
+        } else {
+            //elevator riding
+            auto elevator = searchNearestElevator();
+
+            if (elevator) {
+                if(worldCoordinates.x < elevator->getLeft()){
+                    destinations.push_back({{elevator->getLeft() - 50, worldCoordinates.y}, DST_Elevator_Waiting});
+                }
+
+                if(worldCoordinates.x > elevator->getRight()){
+                    destinations.push_back({{elevator->getRight() + 50, worldCoordinates.y}, DST_Elevator_Waiting});
+                }
+
+                destinations.push_back({{elevator->getCabin()->getWorldCoordinates().x, worldCoordinates.y}, DST_Elevator_Inside_Cabin});
+
+                if (currentWorkPlace->getWorldCoordinates().x > elevator->getRight()) {
+                    destinations.push_back({{elevator->getRight() + 50, elevator->getFloorBottom(currentWorkPlace->getParentOffice()->getFloor()) + height / 2}, DST_Elevator_Exiting});
+                }
+
+                if (currentWorkPlace->getWorldCoordinates().x < elevator->getLeft()) {
+                    destinations.push_back({{elevator->getLeft() - 50, elevator->getFloorBottom(currentWorkPlace->getParentOffice()->getFloor()) + height / 2}, DST_Elevator_Exiting});
+                }
+
+                destinations.push_back({{currentWorkPlace->getWorldCoordinates().x, currentWorkPlace->getParentOffice()->getBottom() + height / 2}, DST_Workplace});
+            }
+        }
+    }
+
 }
 
 bool Movable::hasReachedWorldEdges() {
@@ -324,7 +340,7 @@ void Movable::spawn() {
 
 void Movable::searchWorkPlace() {
     if (!this->currentWorkPlace && this->isSpawned()) {
-        auto offices = EntityContainer::searchEntitiesByGroup({E_OfficeDefault});
+        auto offices = EntityContainer::searchEntitiesByGroup(System::officeGroup);
         std::map<float, WorkPlace *> buffer;
 
         for (auto e:offices) {
@@ -418,4 +434,68 @@ void Movable::stop() {
     state = S_None;
     direction = None;
 }
+
+sf::Vector2f Movable::findNearestOutside() {
+    auto offices = EntityContainer::searchEntitiesByGroup(System::officeGroup);
+    auto shafts = EntityContainer::searchEntitiesByGroup(System::elevatorShafts);
+    std::vector<Entity *> objects;
+
+    objects.reserve(offices.size() + shafts.size());
+    objects.insert(objects.end(), offices.begin(), offices.end());
+    objects.insert(objects.end(), shafts.begin(), shafts.end());
+
+    std::map<int, Entity *> lefts;
+    std::map<int, Entity *> rights;
+
+    for (auto e:objects) {
+        auto distance = std::fabs(e->getLeft() - worldCoordinates.x);
+        lefts[distance] = e;
+    }
+
+    for (auto e:objects) {
+        auto distance = std::fabs(e->getRight() - worldCoordinates.x);
+        rights[distance] = e;
+    }
+
+    auto l = lefts.begin()->second;
+    auto r = lefts.begin()->second;
+
+
+    return {-100, 150};
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

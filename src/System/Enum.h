@@ -25,7 +25,8 @@ enum DestinationType {
     DST_Elevator_Waiting = 1,
     DST_Elevator_Exiting = 4,
     DST_Elevator_Inside_Cabin = 2,
-    DST_Workplace = 3
+    DST_Workplace = 3,
+    DST_SmokeArea = 5
 };
 
 enum Gender {

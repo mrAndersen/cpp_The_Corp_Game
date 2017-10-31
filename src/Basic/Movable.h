@@ -60,13 +60,9 @@ public:
 
     void updateFloor();
 
-    void processStateTriggers();
-
-    void processStates();
-
-    void processOther();
-
     void stop();
+
+    sf::Vector2f findNearestOutside();
 
     void addAnimation(States state, Gender gender, Race race, int frames = 24, int duration = 1000000);
 
