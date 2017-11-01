@@ -10,7 +10,7 @@ public:
     const static int width = 267;
     const static int height = 517;
 
-    explicit Tree(sf::Vector2f coordinates, Entities type);
+    explicit Tree(sf::Vector2f coordinates, Entities type, sf::Vector2f size = {width, height});
 };
 
 

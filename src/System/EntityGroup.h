@@ -9,8 +9,7 @@ class EntityGroup {
     std::vector<Entities> list;
 
 public:
-
-    EntityGroup(std::initializer_list<Entities> types);
+    EntityGroup(std::initializer_list<Entities> types = {});
 
     std::vector<Entities> get();
 

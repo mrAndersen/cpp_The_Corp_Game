@@ -1,5 +1,6 @@
 #include <System/EntityContainer.h>
 #include <System/System.h>
+#include <Background/Ground.h>
 #include "Elevator.h"
 
 void Elevator::finish() {
@@ -128,4 +129,8 @@ bool Elevator::isWaiting() const {
 
 void Elevator::setWaiting(bool waiting) {
     Elevator::waiting = waiting;
+}
+
+float Elevator::getFloorBottom(int floor) {
+    return System::groundLevel + Ground::height + (floor - 1) * 150;
 }

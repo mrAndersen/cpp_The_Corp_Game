@@ -118,7 +118,7 @@ add_executable(
 
         src/Ui/Questions/QAddClerk.cpp
         src/Ui/Questions/QAddClerk.h
-        src/Ui/Questions/QAddOffice.cpp src/Ui/Questions/QAddOffice.h src/Ui/Questions/QAddElevator.cpp src/Ui/Questions/QAddElevator.h src/Background/Tree.cpp src/Background/Tree.h src/Background/GroundArtifact.cpp src/Background/GroundArtifact.h src/Ui/MainPanel/MainPanelOverlay.cpp src/Ui/MainPanel/MainPanelOverlay.h src/Ui/MainPanel/ButtonPause.cpp src/Ui/MainPanel/ButtonPause.h src/Ui/MainPanel/Button1x.cpp src/Ui/MainPanel/Button1x.h src/Ui/MainPanel/Button5x.cpp src/Ui/MainPanel/Button5x.h src/Ui/MainPanel/Button10x.cpp src/Ui/MainPanel/Button10x.h)
+        src/Ui/Questions/QAddOffice.cpp src/Ui/Questions/QAddOffice.h src/Ui/Questions/QAddElevator.cpp src/Ui/Questions/QAddElevator.h src/Background/Tree.cpp src/Background/Tree.h src/Background/GroundArtifact.cpp src/Background/GroundArtifact.h src/Ui/MainPanel/MainPanelOverlay.cpp src/Ui/MainPanel/MainPanelOverlay.h src/Ui/MainPanel/ButtonPause.cpp src/Ui/MainPanel/ButtonPause.h src/Ui/MainPanel/Button1x.cpp src/Ui/MainPanel/Button1x.h src/Ui/MainPanel/Button5x.cpp src/Ui/MainPanel/Button5x.h src/Ui/MainPanel/Button10x.cpp src/Ui/MainPanel/Button10x.h src/Component/Destination.cpp src/Component/Destination.h)
 
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})

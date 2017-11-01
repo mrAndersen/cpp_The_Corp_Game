@@ -20,6 +20,15 @@ enum DrawOrder {
     D_Ui_Over = 251
 };
 
+enum DestinationType {
+    DST_Unknown = 0,
+    DST_Elevator_Waiting = 1,
+    DST_Elevator_Exiting = 4,
+    DST_Elevator_Inside_Cabin = 2,
+    DST_Workplace = 3,
+    DST_SmokeArea = 5
+};
+
 enum Gender {
     G_Male = 1,
     G_Female = 2
@@ -46,19 +55,12 @@ enum Direction {
 
 enum States {
     S_None = 0,
-    S_Stand = 1,
+    S_Play = 1,
     S_Run = 2,
     S_Walk = 3,
     S_Smoking = 4,
-    S_WaitForElevator = 5,
-    S_RideInElevator = 6,
     S_Working = 7,
     S_Falling = 8,
-    S_GoToOffice = 9,
-    S_GoHome = 10,
-    S_GoSmoke = 11,
-    S_GoToElevator = 12,
-    S_GoToCabin = 13,
 
     S_Button_Normal = 101,
     S_Button_Pressed = 102,
@@ -71,7 +73,10 @@ enum Entities {
     E_StaticGround_2 = 12,
 
     E_StaticTree_1 = 13,
-    E_StaticGroundArtifact_1 = 14,
+    E_StaticTree_2 = 14,
+    E_StaticGroundArtifact_1 = 15,
+    E_StaticTree_3 = 16,
+    E_StaticTree_4 = 17,
 
     E_Clerk = 21,
 

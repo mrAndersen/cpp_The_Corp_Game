@@ -10,12 +10,15 @@
 #include "System/GameTime.h"
 #include <Component/WorkPlace.h>
 #include <Component/Elevator.h>
+#include <Component/Destination.h>
 
 class Office;
 
 class WorkPlace;
 
 class Elevator;
+
+class Destination;
 
 class Movable : public Entity {
 
@@ -28,7 +31,10 @@ protected:
     float fallAcceleration = 980;
 
     WorkPlace *currentWorkPlace = nullptr;
-    int destinationFloor = 0;
+
+    std::deque<Destination> destinations;
+    bool moving = false;
+
     int randomedCabinPosition = 0;
 
     sf::Clock workPlaceSearchResolution;
@@ -52,11 +58,13 @@ protected:
 public:
     Movable(Entities type, int width, int height);
 
+    void updateFloor();
+
+    void stop();
+
+    sf::Vector2f findNearestOutside();
+
     void addAnimation(States state, Gender gender, Race race, int frames = 24, int duration = 1000000);
-
-    int getDestinationFloor() const;
-
-    void setDestinationFloor(int destinationFloor);
 
     Gender getGender() const;
 

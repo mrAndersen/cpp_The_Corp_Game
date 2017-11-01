@@ -39,7 +39,7 @@ bool ElevatorShaftMiddle::hasMiddleShaftOnTheBottom() {
 
 std::vector<Office *> ElevatorShaftMiddle::getNeighborOffices() {
     std::vector<Office *> result;
-    std::vector<Entity *> offices = EntityContainer::searchEntitiesByGroup({E_OfficeDefault});
+    std::vector<Entity *> offices = EntityContainer::searchEntitiesByGroup(System::officeGroup);
 
     for (auto e:offices) {
         auto target = dynamic_cast<Office *>(e);

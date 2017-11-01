@@ -37,6 +37,11 @@ namespace System {
     float timeFactor = 1;
     //sys
 
+    //group
+    EntityGroup officeGroup({E_OfficeDefault});
+    EntityGroup elevatorShafts({E_ElevatorShaftTop, E_ElevatorShaftMiddle, E_ElevatorShaftBottom});
+    //group
+
     //utility
     sf::Color c_background(220, 236, 237);
     sf::Color c_grey(236, 237, 227);
@@ -68,7 +73,7 @@ namespace System {
     int framesPassed = 0;
     int entitiesOnScreen = 0;
     int fps = 0;
-    bool debug = false;
+    bool debug = true;
     //debug
 
     void refreshDayTime() {

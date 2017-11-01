@@ -7,6 +7,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include "GameTime.h"
+#include "EntityGroup.h"
 
 namespace System {
     extern unsigned int screenWidth;
@@ -27,6 +28,13 @@ namespace System {
     extern sf::Uint32 screenMode;
     extern float timeFactor;
     //sys
+
+
+    //group
+    extern EntityGroup officeGroup;
+    extern EntityGroup elevatorShafts;
+
+    //group
 
     //utility
     extern sf::Color c_background;
