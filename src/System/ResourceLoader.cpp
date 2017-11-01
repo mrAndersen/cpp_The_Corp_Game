@@ -60,6 +60,7 @@ namespace ResourceLoader {
         //----<<Background>>----
         ResourceLoader::loadTexture(Entities::E_StaticGround_1, "resources/background/ground1.png");
         ResourceLoader::loadTexture(Entities::E_StaticGround_2, "resources/background/ground2.png");
+        ResourceLoader::loadTexture(Entities::E_StaticGround_3, "resources/background/ground3.png");
 
         ResourceLoader::loadTexture(Entities::E_StaticTree_1, "resources/background/tree1.png");
         ResourceLoader::loadTexture(Entities::E_StaticTree_2, "resources/background/tree2.png");

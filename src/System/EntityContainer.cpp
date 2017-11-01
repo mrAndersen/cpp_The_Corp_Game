@@ -97,10 +97,16 @@ namespace EntityContainer {
             if ((i % Ground::width) == 0) {
                 auto rnd = System::getRandom(0, 100);
 
-                if (rnd <= 50) {
+                if(rnd <= 33){
                     new Ground(sf::Vector2f(i, System::groundLevel + Ground::height / 2), E_StaticGround_1);
-                } else {
+                }
+
+                if(rnd > 33 && rnd <= 66){
                     new Ground(sf::Vector2f(i, System::groundLevel + Ground::height / 2), E_StaticGround_2);
+                }
+
+                if(rnd > 66){
+                    new Ground(sf::Vector2f(i, System::groundLevel + Ground::height / 2), E_StaticGround_3);
                 }
             }
 

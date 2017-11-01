@@ -71,12 +71,14 @@ enum Entities {
 
     E_StaticGround_1 = 11,
     E_StaticGround_2 = 12,
-
+    E_StaticGround_3 = 18,
     E_StaticTree_1 = 13,
     E_StaticTree_2 = 14,
     E_StaticGroundArtifact_1 = 15,
     E_StaticTree_3 = 16,
     E_StaticTree_4 = 17,
+
+
 
     E_Clerk = 21,
 

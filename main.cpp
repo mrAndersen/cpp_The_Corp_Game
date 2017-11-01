@@ -102,7 +102,7 @@ int main() {
             }
 
             if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::F) {
-                auto top = 600;
+                auto top = 900;
 
                 for (int i = 0; i <= top; ++i) {
 

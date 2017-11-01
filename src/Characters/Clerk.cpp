@@ -43,7 +43,6 @@ void Clerk::updateLogic() {
             earningProcessed = true;
         }
 
-
         //reset earning processing
         if (System::gameTime.getMinute() == 1) {
             earningProcessed = false;

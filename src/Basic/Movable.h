@@ -34,13 +34,12 @@ protected:
 
     std::deque<Destination> destinations;
     bool moving = false;
-
-    int randomedCabinPosition = 0;
+    Elevator *targetElevator = nullptr;
 
     sf::Clock workPlaceSearchResolution;
 
     //relevant to game time
-    int smokePeriodMinutes = 5;
+    int smokePeriodMinutes = 15;
     GameTime smokeStarted;
 
     //attr
@@ -51,16 +50,26 @@ protected:
     Gender gender = Gender::G_Male;
     Race race = Race::R_White;
 
-    bool hasReachedWorldEdges();
-
     void updateLogic() override;
 
 public:
     Movable(Entities type, int width, int height);
 
+    WorkPlace *getCurrentWorkPlace() const;
+
+    void setCurrentWorkPlace(WorkPlace *currentWorkPlace);
+
     void updateFloor();
 
+    float getFloorBottom(int floor);
+
+    float getFloorBottom(sf::Vector2f coordinates);
+
     void stop();
+
+    void createWorkPlaceRoute();
+
+    void createSmokeAreaRoute();
 
     sf::Vector2f findNearestOutside();
 

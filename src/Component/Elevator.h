@@ -25,8 +25,6 @@ class Elevator {
 public:
     ElevatorCabin *getCabin() const;
 
-    float getFloorBottom(int floor);
-
     bool isWaiting() const;
 
     void setWaiting(bool waiting);
