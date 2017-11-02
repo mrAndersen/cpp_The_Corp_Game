@@ -19,10 +19,6 @@ void Destination::setType(DestinationType type) {
     Destination::type = type;
 }
 
-bool Destination::reached(Movable *movable) {
-    return movable->getWorldCoordinates() == coordinates;
-}
-
 int Destination::getFloor() {
     return ((int) coordinates.y - ((int) coordinates.y % System::gridSize)) / System::gridSize / 3;
 }

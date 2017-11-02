@@ -13,7 +13,7 @@ class Destination {
     sf::Vector2f coordinates;
     DestinationType type;
 public:
-    explicit Destination(const sf::Vector2f &coordinates, DestinationType type = DST_Unknown);
+    Destination(const sf::Vector2f &coordinates, DestinationType type = DST_Unknown);
 
     const sf::Vector2f &getCoordinates() const;
 
@@ -22,8 +22,6 @@ public:
     DestinationType getType() const;
 
     void setType(DestinationType type);
-
-    bool reached(Movable *movable);
 
     int getFloor();
 
