@@ -11,10 +11,10 @@ public:
     const static int width = 70;
     const static int height = 120;
 
-    float hourEarning = 10.f;
+    float dailyEarning = 80;
     bool earningProcessed = false;
 
-    float dailySalary = 64.f;
+    float dailySalary = 64;
     bool salaryProcessed = false;
 
     explicit Clerk(sf::Vector2f coordinates);

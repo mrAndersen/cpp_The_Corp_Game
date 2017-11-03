@@ -179,7 +179,9 @@ namespace EntityContainer {
 
     void refreshEntities() {
         for (auto entity:items) {
-            entity->update();
+            if(entity){
+                entity->update();
+            }
         }
 
         for (auto d:itemsToRemove) {

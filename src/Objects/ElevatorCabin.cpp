@@ -103,7 +103,7 @@ void ElevatorCabin::spawn() {
         };
     }
 
-    elevator->addToQueue(2);
+    elevator->addToQueue(1);
     elevator->finish();
 
     Entity::spawn();
@@ -142,7 +142,7 @@ void ElevatorCabin::updateIndicators() {
         if (currentPeople.size() < 10) {
             capacityIndicator.setString("0" + std::to_string(currentPeople.size()) + "/" + std::to_string(capacity));
         } else {
-            capacityIndicator.setString(currentPeople.size() + "/" + capacity);
+            capacityIndicator.setString(std::to_string(currentPeople.size()) + "/" + std::to_string(capacity));
         }
 
         capacityIndicator.setPosition(System::cToGl(position));

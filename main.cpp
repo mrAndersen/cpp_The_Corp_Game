@@ -89,19 +89,9 @@ int main() {
                 System::debug = !System::debug;
             }
 
-            if (System::debug) {
-                if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::Numpad0 &&
-                    sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) {
-                    System::cash = 0;
-                }
+            //debug logic
 
-                if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::Numpad5 &&
-                    sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) {
-                    System::cash = 50000;
-                }
-            }
-
-            if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::F) {
+            if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::Numpad1) {
                 auto top = 900;
 
                 for (int i = 0; i <= top; ++i) {
@@ -114,6 +104,9 @@ int main() {
 
                         auto o = new OfficeClerk({1150, 175 + (float) i});
                         o->spawn();
+
+                        auto o2 = new OfficeClerk({400, 175 + (float) i});
+                        o2->spawn();
                     }
 
                     if (i == top) {
@@ -130,11 +123,13 @@ int main() {
                 }
             }
 
+            //debug logic
+
             if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::G) {
                 auto count = 4;
 
                 for (int i = 0; i < count; ++i) {
-                    auto c = new Clerk({(float) 0 + (i * 72), 300.f});
+                    auto c = new Clerk({System::g_x + (i * 72), 300.f});
                     c->spawn();
                 }
             }

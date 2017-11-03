@@ -25,11 +25,11 @@ void Clerk::updateLogic() {
         hourEarningHint.setCharacterSize(30);
         hourEarningHint.setFillColor(System::c_green);
         hourEarningHint.setFont(*System::gameFont);
-        hourEarningHint.setString("+" + System::f_to_string(hourEarning) + "$");
+        hourEarningHint.setString("+" + System::f_to_string(dailyEarning / 8 / 2) + "$");
 
-        //earning every hour
+        //earning every half hour
         if (System::gameTime.isEarningHour() && !earningProcessed) {
-            System::cash = System::cash + hourEarning;
+            System::cash = System::cash + dailyEarning / 8 / 2;
 
             auto *earningHint = new TextEntity(System::c_green, 25);
             auto position = worldCoordinates;
@@ -38,13 +38,13 @@ void Clerk::updateLogic() {
             earningHint->setSpeed(100);
             earningHint->setLiveTimeSeconds(2);
             earningHint->setWorldCoordinates(position);
-            earningHint->setString("+" + System::f_to_string(hourEarning) + "$");
+            earningHint->setString("+" + System::f_to_string(dailyEarning / 8 / 2) + "$");
 
             earningProcessed = true;
         }
 
         //reset earning processing
-        if (System::gameTime.getMinute() == 1) {
+        if (System::gameTime.getMinute() == 1 || System::gameTime.getMinute() == 31) {
             earningProcessed = false;
         }
 

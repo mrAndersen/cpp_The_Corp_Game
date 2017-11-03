@@ -79,14 +79,13 @@ namespace System {
     void refreshDayTime() {
         auto localTimeFactor = 1000 / timeFactor;
 
-        if (dayClock.getElapsedTime().asMilliseconds() >= localTimeFactor / 5) {
+        if (dayClock.getElapsedTime().asMilliseconds() >= localTimeFactor / 2) {
             dayClock.restart();
 
             gameTime = gameTime + 1;
         }
 
         if (gameTime.isDayEndHour() && !dayEndProcessed) {
-
             auto *salarySpent = new TextEntity(System::c_red, 40);
             salarySpent->setFixed(true);
             salarySpent->setString("Salaries: -" + System::f_to_string(salaryTotal) + "$");

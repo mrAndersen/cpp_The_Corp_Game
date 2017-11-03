@@ -19,7 +19,7 @@ class Elevator {
     std::vector<ElevatorShaftMiddle *> middleShafts;
     ElevatorShaftTop *topShaft = nullptr;
 
-    std::vector<int> queue;
+    std::deque<int> queue;
     sf::Clock waitTimer;
     bool waiting = false;
 public:

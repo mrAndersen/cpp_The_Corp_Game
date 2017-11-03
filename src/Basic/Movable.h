@@ -33,8 +33,10 @@ protected:
     WorkPlace *currentWorkPlace = nullptr;
 
     std::deque<Destination> destinations;
+    DestinationType currentDST = DST_Unknown;
     bool moving = false;
     Elevator *targetElevator = nullptr;
+    bool smoking = false;
 
     sf::Clock workPlaceSearchResolution;
 
@@ -70,6 +72,8 @@ public:
     void createWorkPlaceRoute();
 
     void createSmokeAreaRoute();
+
+    void createHomeRoute();
 
     sf::Vector2f findNearestOutside();
 

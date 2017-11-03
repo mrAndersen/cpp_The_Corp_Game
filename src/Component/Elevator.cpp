@@ -51,9 +51,7 @@ void Elevator::update() {
 
         auto next = queue.front();
         auto current = cabin->getWorldCoordinates();
-        auto nextCoord = sf::Vector2f(cabin->getWorldCoordinates().x,
-                                      next * System::gridSize * 3 + System::gridSize / 2);
-
+        auto nextCoord = sf::Vector2f(cabin->getWorldCoordinates().x, next * System::gridSize * 3 + System::gridSize / 2);
 
         if (current.y < nextCoord.y) {
             if (current.y + 100 >= nextCoord.y) {
@@ -81,13 +79,29 @@ void Elevator::update() {
     }
 
     if (waiting && waitTimer.getElapsedTime().asSeconds() >= 1 / System::timeFactor) {
-        waiting = false;
+        auto people = cabin->getCurrentPeople();
+        auto finishedEntering = 0;
+
+        for(auto p:people){
+            if(p->getState() == S_None){
+                finishedEntering++;
+            }
+        }
+
+        if(finishedEntering == people.size()){
+            waiting = false;
+        }
     }
 }
 
 void Elevator::addToQueue(int floor) {
-    if (std::find(queue.begin(), queue.end(), floor) == queue.end()) {
+    if(floor == 1 && !queue.empty()){
+        return;
+    }
+
+    if (std::find(queue.begin(), queue.end(), floor) == queue.end() && this->cabin->getFloor() != floor) {
         queue.push_back(floor);
+        std::sort(queue.begin(), queue.end());
     }
 }
 

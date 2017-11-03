@@ -16,6 +16,7 @@ void Movable::renderDebugInfo() {
                 "dests: " + std::to_string(destinations.size()) + "\n" +
                 "speed: " + std::to_string(currentSpeed) + "\n" +
                 "mv: " + std::to_string(moving) + "\n"
+                "cdst: " + std::to_string(currentDST)
         );
 
         if (!destinations.empty()) {
@@ -41,7 +42,6 @@ void Movable::renderDebugInfo() {
 
             System::window->draw(line, destinations.size() + 1, sf::Lines);
         }
-
 
         System::window->draw(debugInfo);
     }
@@ -104,6 +104,8 @@ void Movable::updateLogic() {
                 targetElevator = !targetElevator ? searchNearestElevator() : targetElevator;
 
                 if (local.getType() == DST_Elevator_Waiting) {
+                    currentDST = DST_Elevator_Waiting;
+
                     targetElevator->addToQueue(floor);
 
                     if (targetElevator->getCabin()->getBottom() == bottom &&
@@ -117,6 +119,7 @@ void Movable::updateLogic() {
                 }
 
                 if (local.getType() == DST_Elevator_Inside_Cabin) {
+                    currentDST = DST_Elevator_Inside_Cabin;
                     auto final = destinations.back();
 
                     targetElevator->addToQueue(final.getFloor());
@@ -124,6 +127,7 @@ void Movable::updateLogic() {
                 }
 
                 if (local.getType() == DST_Workplace) {
+                    currentDST = DST_Workplace;
                     destinations.pop_front();
 
                     state = S_Working;
@@ -136,6 +140,7 @@ void Movable::updateLogic() {
                 }
 
                 if (local.getType() == DST_SmokeArea) {
+                    currentDST = DST_SmokeArea;
                     state = S_Smoking;
                     smokeStarted = System::gameTime;
 
@@ -143,7 +148,17 @@ void Movable::updateLogic() {
                     destinations.pop_front();
                 }
 
+                if(local.getType() == DST_Home){
+                    currentDST = DST_Home;
+                    state = S_None;
+                    visible = false;
+
+                    moving = false;
+                    destinations.pop_front();
+                }
+
                 if (local.getType() == DST_Elevator_Exiting) {
+                    currentDST = DST_Elevator_Exiting;
                     targetElevator->getCabin()->removeMovable(this);
                     targetElevator = nullptr;
 
@@ -151,6 +166,7 @@ void Movable::updateLogic() {
                 }
 
                 if (local.getType() == DST_Unknown) {
+                    currentDST = DST_Unknown;
                     destinations.pop_front();
                 }
             }
@@ -172,10 +188,11 @@ void Movable::updateLogic() {
         searchWorkPlace();
     }
 
+//    if(moving && currentDST == DST_Elevator_Waiting && )
+
     //ONE TIME EXEC
     //go smoke
-
-    if (isInWorkPlace() && state == S_Working && !moving && System::gameTime.getHour() == 12) {
+    if (isInWorkPlace() && smoking && state == S_Working && !moving && (System::gameTime.getHour() == 12 || System::gameTime.getHour() == 16)) {
         moving = true;
 
         //denormalize character
@@ -187,8 +204,37 @@ void Movable::updateLogic() {
     //not working but should
     if (System::gameTime.isWorkTime() && !isInWorkPlace() && currentWorkPlace && state != S_Working &&
         state != S_Smoking && state != S_Falling && !moving) {
+        visible = true;
         moving = true;
         createWorkPlaceRoute();
+    }
+
+    //ONE TIME EXEC
+    //time to go home
+    if (System::gameTime.isDayEndHour() && !moving) {
+        moving = true;
+
+        //denormalize character
+        worldCoordinates.y = getFloorBottom(floor) + height / 2;
+        createHomeRoute();
+    }
+}
+
+void Movable::createHomeRoute() {
+    auto home = findNearestOutside();
+
+    if (floor == 1) {
+        destinations.push_back(Destination::createHomeDST(this, home));
+    } else {
+        //elevator riding
+        targetElevator = !targetElevator ? searchNearestElevator() : targetElevator;
+
+        if(targetElevator){
+            destinations.push_back(Destination::createElevatorWaitingDST(targetElevator, this));
+            destinations.push_back(Destination::createElevatorCabinDST(targetElevator, this));
+            destinations.push_back(Destination::createElevatorExitingDST(targetElevator, this, home));
+            destinations.push_back(Destination::createHomeDST(this, home));
+        }
     }
 }
 
@@ -214,7 +260,6 @@ void Movable::createSmokeAreaRoute() {
     if (floor == 1) {
         destinations.push_back(Destination::createSmokeAreaDST(this, smokeArea));
     } else {
-        //elevator riding
         targetElevator = !targetElevator ? searchNearestElevator() : targetElevator;
 
         destinations.push_back(Destination::createElevatorWaitingDST(targetElevator, this));
@@ -435,7 +480,6 @@ void Movable::stop() {
 }
 
 sf::Vector2f Movable::findNearestOutside() {
-    auto scatter = 300;
     auto offices = EntityContainer::searchEntitiesByGroup(System::officeGroup);
     auto shafts = EntityContainer::searchEntitiesByGroup(System::elevatorShafts);
     std::vector<Entity *> objects;
@@ -461,7 +505,7 @@ sf::Vector2f Movable::findNearestOutside() {
     auto r = lefts.begin()->second;
 
 
-    return {-100 - (float) System::getRandom(0, scatter), 150};
+    return {-100, 150};
 }
 
 float Movable::getFloorBottom(int floor) {

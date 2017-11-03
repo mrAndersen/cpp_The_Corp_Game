@@ -83,9 +83,6 @@ add_executable(
         src/Text/TextEntity.cpp
         src/Text/TextEntity.h
 
-        src/Ui/ControlTimeIndicator.cpp
-        src/Ui/ControlTimeIndicator.h
-
         src/Ui/ControlButtonAddElevatorShaftMiddle.cpp
         src/Ui/ControlButtonAddElevatorShaftMiddle.h
 
