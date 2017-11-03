@@ -18,6 +18,7 @@ Clerk::Clerk(sf::Vector2f coordinates) : Movable(E_Clerk, Clerk::width, Clerk::h
 }
 
 void Clerk::updateLogic() {
+    Movable::updateLogic();
 
     if (state == S_Working) {
         sf::Text hourEarningHint;
@@ -61,5 +62,5 @@ void Clerk::updateLogic() {
         }
     }
 
-    Movable::updateLogic();
+
 }

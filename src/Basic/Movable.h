@@ -20,6 +20,8 @@ class Elevator;
 
 class Destination;
 
+class optional;
+
 class Movable : public Entity {
 
 protected:
@@ -39,6 +41,9 @@ protected:
     bool smoking = false;
 
     sf::Clock workPlaceSearchResolution;
+
+    int routeRefreshIntervalSeconds = 5;
+    sf::Clock lastRouteCreation;
 
     //relevant to game time
     int smokePeriodMinutes = 15;

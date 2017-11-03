@@ -21,7 +21,10 @@ class Elevator {
 
     std::deque<int> queue;
     sf::Clock waitTimer;
+
     bool waiting = false;
+    Direction direction = Up;
+
 public:
     ElevatorCabin *getCabin() const;
 

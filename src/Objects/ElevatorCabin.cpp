@@ -178,3 +178,11 @@ void ElevatorCabin::setSpeed(int speed) {
 bool ElevatorCabin::hasFreeSpace() {
     return currentPeople.size() < capacity;
 }
+
+int ElevatorCabin::getCapacity() const {
+    return capacity;
+}
+
+void ElevatorCabin::setCapacity(int capacity) {
+    ElevatorCabin::capacity = capacity;
+}

@@ -13,7 +13,7 @@ class ElevatorCabin : public Entity {
     float cost = 0;
     int capacity = 10;
     int floor = 1;
-    int speed = 500;
+    int speed = 250;
 
     std::vector<Movable *> currentPeople;
 
@@ -27,6 +27,10 @@ public:
     int getSpeed() const;
 
     void setSpeed(int speed);
+
+    int getCapacity() const;
+
+    void setCapacity(int capacity);
 
     const std::vector<Movable *> &getCurrentPeople() const;
 

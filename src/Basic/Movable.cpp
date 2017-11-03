@@ -88,6 +88,7 @@ void Movable::updateLogic() {
     if (state == S_Walk) {
         currentSpeed = defaultSpeed;
         auto local = destinations.front();
+        auto final = destinations.back();
 
         if ((int) worldCoordinates.y != (int) local.getCoordinates().y) {
             stop();
@@ -110,17 +111,30 @@ void Movable::updateLogic() {
 
                     if (targetElevator->getCabin()->getBottom() == bottom &&
                         targetElevator->getCabin()->hasFreeSpace()) {
+
                         targetElevator->getCabin()->addMovable(this);
 
                         destinations.pop_front();
                     } else {
                         stop();
+
+//                        targetElevator = searchNearestElevator();
+//                        destinations.clear();
+//
+//                        switch(final.getType()){
+//                            case DST_Home: createHomeRoute();
+//                                break;
+//                            case DST_Workplace: createWorkPlaceRoute();
+//                                break;
+//                            case DST_SmokeArea: createSmokeAreaRoute();
+//                                break;
+//                            default: createHomeRoute();
+//                        }
                     }
                 }
 
                 if (local.getType() == DST_Elevator_Inside_Cabin) {
                     currentDST = DST_Elevator_Inside_Cabin;
-                    auto final = destinations.back();
 
                     targetElevator->addToQueue(final.getFloor());
                     destinations.pop_front();
@@ -211,8 +225,9 @@ void Movable::updateLogic() {
 
     //ONE TIME EXEC
     //time to go home
-    if (System::gameTime.isDayEndHour() && !moving) {
+    if (System::gameTime.isDayEndHour()) {
         moving = true;
+        destinations.clear();
 
         //denormalize character
         worldCoordinates.y = getFloorBottom(floor) + height / 2;
@@ -463,6 +478,8 @@ Elevator *Movable::searchNearestElevator() {
             return e.second;
         }
     }
+
+    return buffer.begin()->second;
 }
 
 void Movable::addAnimation(States state, Gender gender, Race race, int frames, int duration) {

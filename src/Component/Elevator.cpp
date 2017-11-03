@@ -45,13 +45,13 @@ void Elevator::drawDebug() {
 void Elevator::update() {
 
     if (!queue.empty() && !waiting) {
-        float cabinSpeed = cabin->getSpeed();
         float frameTimeSeconds = (float) System::frameTimeMcs / 1000000;
-        float frameDistance = frameTimeSeconds * cabinSpeed * System::timeFactor;
+        float frameDistance = frameTimeSeconds * cabin->getSpeed() * System::timeFactor;
 
         auto next = queue.front();
         auto current = cabin->getWorldCoordinates();
-        auto nextCoord = sf::Vector2f(cabin->getWorldCoordinates().x, next * System::gridSize * 3 + System::gridSize / 2);
+        auto nextCoord = sf::Vector2f(cabin->getWorldCoordinates().x,
+                                      next * System::gridSize * 3 + System::gridSize / 2);
 
         if (current.y < nextCoord.y) {
             if (current.y + 100 >= nextCoord.y) {
@@ -82,26 +82,47 @@ void Elevator::update() {
         auto people = cabin->getCurrentPeople();
         auto finishedEntering = 0;
 
-        for(auto p:people){
-            if(p->getState() == S_None){
+        for (auto p:people) {
+            if (p->getState() == S_None) {
                 finishedEntering++;
             }
         }
 
-        if(finishedEntering == people.size()){
+        if (finishedEntering == people.size()) {
             waiting = false;
         }
+    }
+
+    if(queue.empty()){
+        direction = None;
     }
 }
 
 void Elevator::addToQueue(int floor) {
-    if(floor == 1 && !queue.empty()){
+    if(direction == Up && cabin->getFloor() <= floor){
         return;
+    }
+
+    if(direction == Down && cabin->getFloor() >= floor){
+        return;
+    }
+
+    if (queue.empty() && floor > cabin->getFloor() && direction == None) {
+        direction = Up;
+    }
+
+    if (queue.empty() && floor < cabin->getFloor() && direction == None) {
+        direction = Down;
     }
 
     if (std::find(queue.begin(), queue.end(), floor) == queue.end() && this->cabin->getFloor() != floor) {
         queue.push_back(floor);
-        std::sort(queue.begin(), queue.end());
+
+//        if (direction == Up) {
+//            std::sort(queue.begin(), queue.end());
+//        } else {
+//            std::sort(queue.begin(), queue.end(), std::greater<>());
+//        }
     }
 }
 
