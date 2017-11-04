@@ -187,9 +187,13 @@ namespace System {
             screenHeight = (unsigned int) boundaries.bottom;
         }
 
+        sf::Image icon;
+        icon.loadFromFile("resources/app/icon.png");
+
         window = new sf::RenderWindow(sf::VideoMode(screenWidth, screenHeight), title, screenMode);
         window->clear(c_background);
-        window->setFramerateLimit(1000);
+        window->setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+        window->setVerticalSyncEnabled(true);
 
         ViewHandler::view = new sf::View();
         ViewHandler::view->reset(sf::FloatRect(0, 0, screenWidth, screenHeight));
@@ -254,6 +258,7 @@ namespace System {
     struct f_punctuation : std::numpunct<char> {
     protected :
         char do_thousands_sep() const override { return ','; }
+
         std::string do_grouping() const override { return "\03"; }
     };
 
