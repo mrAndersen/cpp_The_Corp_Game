@@ -12,6 +12,10 @@ public:
     const static int width = 26;
     const static int height = 62;
 
+    sf::Text helpText;
+    std::string helpTextString = "This is your warhorse, main unit - clerk. He works from 9:00 AM to 6:00 PM. Daily salary is 80$";
+    sf::Vertex popup[4];
+
     Question(float leftOffset, float topOffset, Entities type);
 
     void update() override;

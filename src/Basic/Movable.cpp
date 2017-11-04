@@ -40,7 +40,7 @@ void Movable::renderDebugInfo() {
                 System::window->draw(shape);
             }
 
-            System::window->draw(line, destinations.size() + 1, sf::Lines);
+            System::window->draw(line, destinations.size() + 1, sf::LineStrip);
         }
 
         System::window->draw(debugInfo);
