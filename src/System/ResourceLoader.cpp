@@ -87,6 +87,9 @@ namespace ResourceLoader {
         ResourceLoader::loadTexture(Entities::E_ButtonAddClerk, "resources/ui/button.add.clerk.png", S_Button_Normal);
         ResourceLoader::loadTexture(Entities::E_ButtonAddClerk, "resources/ui/button.add.clerk.pressed.png", S_Button_Pressed);
 
+        ResourceLoader::loadTexture(Entities::E_ButtonAddManager, "resources/ui/button.add.manager.png", S_Button_Normal);
+        ResourceLoader::loadTexture(Entities::E_ButtonAddManager, "resources/ui/button.add.manager.pressed.png", S_Button_Pressed);
+
         ResourceLoader::loadTexture(Entities::E_ButtonAddOffice, "resources/ui/button.add.office.png", S_Button_Normal);
         ResourceLoader::loadTexture(Entities::E_ButtonAddOffice, "resources/ui/button.add.office.pressed.png", S_Button_Pressed);
 
@@ -105,6 +108,9 @@ namespace ResourceLoader {
         //----<<QuestionMarks>>----
         ResourceLoader::loadTexture(Entities::E_Question_Mark_ButtonAddElevator, "resources/ui/question.png", S_Button_Normal);
         ResourceLoader::loadTexture(Entities::E_Question_Mark_ButtonAddElevator, "resources/ui/question.pressed.png", S_Button_Pressed);
+
+        ResourceLoader::loadTexture(Entities::E_Question_Mark_ButtonAddManager, "resources/ui/question.png", S_Button_Normal);
+        ResourceLoader::loadTexture(Entities::E_Question_Mark_ButtonAddManager, "resources/ui/question.pressed.png", S_Button_Pressed);
 
         ResourceLoader::loadTexture(Entities::E_Question_Mark_ButtonAddOffice, "resources/ui/question.png", S_Button_Normal);
         ResourceLoader::loadTexture(Entities::E_Question_Mark_ButtonAddOffice, "resources/ui/question.pressed.png", S_Button_Pressed);

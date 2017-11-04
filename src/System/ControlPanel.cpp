@@ -16,6 +16,8 @@
 #include <Ui/MainPanel/Button10x.h>
 #include <Ui/ControlButtonAddElevatorShaftMiddle.h>
 #include <Ui/ControlButtonAddElevatorShaftTop.h>
+#include <Ui/ControlButtonAddManager.h>
+#include <Ui/Questions/QAddManager.h>
 #include "ControlPanel.h"
 
 namespace ControlPanel {
@@ -43,6 +45,9 @@ namespace ControlPanel {
         controls[E_ButtonAddElevatorShaftTop] = new ControlButtonAddElevatorShaftTop(286, 424);
 
         controls[E_ButtonAddElevator] = new ControlButtonAddElevator(4 + ControlButtonAddElevator::width / 2 + Question::width + 2, 424);
+
+        controls[E_Question_Mark_ButtonAddManager] = new QAddManager(4 + Question::width / 2, 486);
+        controls[E_ButtonAddManager] = new ControlButtonAddManager(4 + ControlButtonAddManager::width / 2 + Question::width + 2, 486);
     }
 
     void refreshControlPanel() {

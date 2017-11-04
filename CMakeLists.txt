@@ -7,6 +7,7 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 project(the_corp_game)
+set(CMAKE_CXX_STANDARD 17)
 
 set(SFML_ROOT "${PROJECT_SOURCE_DIR}/vendor/mingw_sfml-2.4.2")
 include_directories("${PROJECT_SOURCE_DIR}/src")
@@ -115,7 +116,7 @@ add_executable(
 
         src/Ui/Questions/QAddClerk.cpp
         src/Ui/Questions/QAddClerk.h
-        src/Ui/Questions/QAddOffice.cpp src/Ui/Questions/QAddOffice.h src/Ui/Questions/QAddElevator.cpp src/Ui/Questions/QAddElevator.h src/Background/Tree.cpp src/Background/Tree.h src/Background/GroundArtifact.cpp src/Background/GroundArtifact.h src/Ui/MainPanel/MainPanelOverlay.cpp src/Ui/MainPanel/MainPanelOverlay.h src/Ui/MainPanel/ButtonPause.cpp src/Ui/MainPanel/ButtonPause.h src/Ui/MainPanel/Button1x.cpp src/Ui/MainPanel/Button1x.h src/Ui/MainPanel/Button5x.cpp src/Ui/MainPanel/Button5x.h src/Ui/MainPanel/Button10x.cpp src/Ui/MainPanel/Button10x.h src/Component/Destination.cpp src/Component/Destination.h)
+        src/Ui/Questions/QAddOffice.cpp src/Ui/Questions/QAddOffice.h src/Ui/Questions/QAddElevator.cpp src/Ui/Questions/QAddElevator.h src/Background/Tree.cpp src/Background/Tree.h src/Background/GroundArtifact.cpp src/Background/GroundArtifact.h src/Ui/MainPanel/MainPanelOverlay.cpp src/Ui/MainPanel/MainPanelOverlay.h src/Ui/MainPanel/ButtonPause.cpp src/Ui/MainPanel/ButtonPause.h src/Ui/MainPanel/Button1x.cpp src/Ui/MainPanel/Button1x.h src/Ui/MainPanel/Button5x.cpp src/Ui/MainPanel/Button5x.h src/Ui/MainPanel/Button10x.cpp src/Ui/MainPanel/Button10x.h src/Component/Destination.cpp src/Component/Destination.h src/Ui/ControlButtonAddManager.cpp src/Ui/ControlButtonAddManager.h src/Characters/Manager.cpp src/Characters/Manager.h src/Ui/Questions/QAddManager.cpp src/Ui/Questions/QAddManager.h)
 
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})

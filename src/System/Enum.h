@@ -95,6 +95,9 @@ enum Entities {
     E_ButtonAddElevatorCabin = 353,
     E_Question_Mark_ButtonAddElevator = 354,
 
+    E_ButtonAddManager = 36,
+    E_Question_Mark_ButtonAddManager = 361,
+
 
     E_OfficeDefault = 41,
 
