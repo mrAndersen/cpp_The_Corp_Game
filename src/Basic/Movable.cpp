@@ -72,7 +72,7 @@ void Movable::updateLogic() {
 
     if (state == S_Falling) {
         worldCoordinates.y -= frameDistance;
-        currentSpeed = currentSpeed + fallAcceleration * frameTimeSeconds;
+        currentSpeed = currentSpeed + fallAcceleration * frameTimeSeconds * System::timeFactor;
 
         if (isOnTheGround() || isBelowGround()) {
             worldCoordinates.y = System::groundLevel + Ground::height + height / 2;

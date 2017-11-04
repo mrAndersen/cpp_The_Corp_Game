@@ -99,11 +99,7 @@ void Elevator::update() {
 }
 
 void Elevator::addToQueue(int floor) {
-    if(direction == Up && cabin->getFloor() <= floor){
-        return;
-    }
-
-    if(direction == Down && cabin->getFloor() >= floor){
+    if(queue.size() == cabin->getCapacity()){
         return;
     }
 
@@ -115,14 +111,22 @@ void Elevator::addToQueue(int floor) {
         direction = Down;
     }
 
+    if(direction == Up && floor < cabin->getFloor()){
+        return;
+    }
+
+    if(direction == Down && floor > cabin->getFloor()){
+        return;
+    }
+
     if (std::find(queue.begin(), queue.end(), floor) == queue.end() && this->cabin->getFloor() != floor) {
         queue.push_back(floor);
 
-//        if (direction == Up) {
-//            std::sort(queue.begin(), queue.end());
-//        } else {
-//            std::sort(queue.begin(), queue.end(), std::greater<>());
-//        }
+        if (direction == Up) {
+            std::sort(queue.begin(), queue.end());
+        } else {
+            std::sort(queue.begin(), queue.end(), std::greater<>());
+        }
     }
 }
 
