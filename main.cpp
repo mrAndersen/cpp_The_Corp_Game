@@ -3,12 +3,13 @@
 #include <Objects/ElevatorShaftMiddle.h>
 #include <Office/OfficeClerk.h>
 #include <chrono>
-#include "System/System.h"
 #include "System/ResourceLoader.h"
 #include "System/ViewHandler.h"
 #include "System/EntityContainer.h"
 #include "System/ControlPanel.h"
 #include "System/SaveManager.h"
+#include "System/mingw.thread.h"
+#include "System/mingw.mutex.h"
 
 int main() {
     SaveManager saveManager;
@@ -25,13 +26,10 @@ int main() {
 
     EntityContainer::initBackground();
     EntityContainer::initGrid();
-
     ControlPanel::initControlPanel();
 
-    //frame loop
     while (System::window && System::window->isOpen()) {
         System::window->clear(System::c_background);
-
         System::entitiesOnScreen = EntityContainer::size();
 
         System::refreshDebugPanel();
@@ -42,6 +40,12 @@ int main() {
 
         while (System::window->pollEvent(e)) {
             System::event = e;
+
+            System::eventDeque.push_front(e);
+
+            if(System::eventDeque.size() >= 5){
+                System::eventDeque.pop_back();
+            }
 
             if (e.type == sf::Event::Closed) {
                 System::window->close();
@@ -56,7 +60,6 @@ int main() {
 
             //entity selection
             if (e.type == sf::Event::MouseButtonPressed && e.mouseButton.button == sf::Mouse::Left) {
-
                 for (auto ex:EntityContainer::getItems()) {
                     if (
                             !System::spawningUnit &&
@@ -65,6 +68,7 @@ int main() {
                             ex->isSpawned() &&
                             ex->getLiveClock().getElapsedTime().asSeconds() >= 1
                             ) {
+
                         for (auto ei:EntityContainer::getItems()) {
                             if (ei != ex) {
                                 ei->setSelected(false);
@@ -92,15 +96,18 @@ int main() {
             //debug logic
 
             if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::Numpad1) {
-                auto top = 900;
+                auto top = 9000;
 
                 for (int i = 0; i <= top; ++i) {
 
                     if ((i % 150 == 0 || i == 0) && i != top) {
-                        auto a = new ElevatorShaftMiddle({775, 175 + (float) i});
-                        auto a2 = new ElevatorShaftMiddle({1525, 175 + (float) i});
+                        auto a = new ElevatorShaftMiddle({25, 175 + (float) i});
+                        auto a2 = new ElevatorShaftMiddle({775, 175 + (float) i});
+                        auto a3 = new ElevatorShaftMiddle({1525, 175 + (float) i});
+
                         a->spawn();
                         a2->spawn();
+                        a3->spawn();
 
                         auto o = new OfficeClerk({1150, 175 + (float) i});
                         o->spawn();
@@ -110,15 +117,19 @@ int main() {
                     }
 
                     if (i == top) {
-                        auto t = new ElevatorShaftTop({775, 175 + (float) i});
-                        auto t2 = new ElevatorShaftTop({1525, 175 + (float) i});
+                        auto t = new ElevatorShaftTop({25, 175 + (float) i});
+                        auto t2 = new ElevatorShaftTop({775, 175 + (float) i});
+                        auto t3 = new ElevatorShaftTop({1525, 175 + (float) i});
                         t->spawn();
                         t2->spawn();
+                        t3->spawn();
 
-                        auto c = new ElevatorCabin({775, 175 + (float) (900 - 150)});
-                        auto c2 = new ElevatorCabin({1525, 175 + (float) (900 - 150)});
+                        auto c = new ElevatorCabin({25, 175 + (float) (900 - 150)});
+                        auto c2 = new ElevatorCabin({775, 175 + (float) (900 - 150)});
+                        auto c3 = new ElevatorCabin({1525, 175 + (float) (900 - 150)});
                         c->spawn();
                         c2->spawn();
+                        c3->spawn();
                     }
                 }
             }

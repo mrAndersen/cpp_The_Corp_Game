@@ -1,4 +1,5 @@
 #include <sstream>
+#include <iostream>
 #include "Entity.h"
 #include "System/System.h"
 #include "System/Enum.h"
@@ -34,27 +35,19 @@ bool Entity::mouseIn() {
 
 
 bool Entity::leftClicked() {
-    return System::event.type == sf::Event::MouseButtonPressed &&
-           System::event.mouseButton.button == sf::Mouse::Left &&
-           mouseIn();
+    return sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && mouseIn();
 }
 
 bool Entity::rightClicked() {
-    return System::event.type == sf::Event::MouseButtonPressed &&
-           System::event.mouseButton.button == sf::Mouse::Right &&
-           mouseIn();
+    return sf::Mouse::isButtonPressed(sf::Mouse::Button::Right) && mouseIn();
 }
 
 bool Entity::leftClickedOutside() {
-    return System::event.type == sf::Event::MouseButtonPressed &&
-           System::event.mouseButton.button == sf::Mouse::Left &&
-           !mouseIn();
+    return sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && !mouseIn();
 }
 
 bool Entity::rightClickedOutside() {
-    return System::event.type == sf::Event::MouseButtonPressed &&
-           System::event.mouseButton.button == sf::Mouse::Right &&
-           !mouseIn();
+    return sf::Mouse::isButtonPressed(sf::Mouse::Button::Right) && !mouseIn();
 }
 
 void Entity::setTransparent() {
@@ -65,11 +58,6 @@ void Entity::setTransparent() {
     }
 }
 
-void Entity::setNormal() {
-    if (currentAnimation) {
-        currentAnimation->getSprite().setColor(sf::Color(255, 255, 255, 255));
-    }
-}
 
 void Entity::setInvalid() {
     valid = false;
@@ -167,8 +155,11 @@ int Entity::getDrawOrder() const {
     return drawOrder;
 }
 
-void Entity::setDrawOrder(int drawOrder) {
+void Entity::setDrawOrder(int drawOrder, bool resort) {
     Entity::drawOrder = drawOrder;
+//    if (resort) {
+//        EntityContainer::sort();
+//    }
 }
 
 void Entity::initEntity() {
@@ -297,6 +288,12 @@ void Entity::setSelected(bool selected) {
     }
 }
 
+void Entity::setNormal() {
+    if (currentAnimation) {
+        currentAnimation->getSprite().setColor(sf::Color(255, 255, 255, 255));
+    }
+}
+
 bool Entity::isSelectable() const {
     return selectable;
 }
@@ -364,4 +361,12 @@ bool Entity::isVisible() const {
 
 void Entity::setVisible(bool visible) {
     Entity::visible = visible;
+}
+
+bool Entity::isUpdated() const {
+    return updated;
+}
+
+void Entity::setUpdated(bool updated) {
+    Entity::updated = updated;
 }

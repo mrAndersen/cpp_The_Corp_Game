@@ -31,7 +31,6 @@ void ControlButtonAddClerk::update() {
     if (rightClickedOutside() && attachedClerk) {
         EntityContainer::remove(attachedClerk);
 
-
         System::spawningUnit = false;
         attachedClerk = nullptr;
     }

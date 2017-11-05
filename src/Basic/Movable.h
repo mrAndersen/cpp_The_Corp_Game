@@ -38,12 +38,11 @@ protected:
     DestinationType currentDST = DST_Unknown;
     bool moving = false;
     Elevator *targetElevator = nullptr;
+    sf::Clock lastElevatorSearch;
+    int elevatorSearchResolutionSeconds = 5;
     bool smoking = false;
-
     sf::Clock workPlaceSearchResolution;
-
     int routeRefreshIntervalSeconds = 5;
-    sf::Clock lastRouteCreation;
 
     //relevant to game time
     int smokePeriodMinutes = 15;
@@ -64,6 +63,8 @@ public:
 
     WorkPlace *getCurrentWorkPlace() const;
 
+    bool isCrossingShafts();
+
     void setCurrentWorkPlace(WorkPlace *currentWorkPlace);
 
     void updateFloor();
@@ -71,8 +72,6 @@ public:
     float getFloorBottom(int floor);
 
     float getFloorBottom(sf::Vector2f coordinates);
-
-    void stop();
 
     void createWorkPlaceRoute();
 

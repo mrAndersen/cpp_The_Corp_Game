@@ -30,7 +30,7 @@ namespace EntityContainer {
 
     void add(Entity *item);
 
-    void resort();
+    void sort();
 
     void remove(Entity *item);
 

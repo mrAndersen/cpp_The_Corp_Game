@@ -69,6 +69,14 @@ void Elevator::update() {
             cabin->setWorldCoordinates({current.x, current.y - frameDistance});
         }
 
+        if(current.y > nextCoord.y && direction == Up){
+            cabin->setWorldCoordinates({current.x, nextCoord.y});
+        }
+
+        if(current.y < nextCoord.y && direction == Down){
+            cabin->setWorldCoordinates({current.x, nextCoord.y});
+        }
+
         if ((int) current.y == (int) nextCoord.y) {
             cabin->setWorldCoordinates(nextCoord);
             queue.erase(queue.begin());

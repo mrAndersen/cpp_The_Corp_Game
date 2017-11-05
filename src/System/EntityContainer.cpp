@@ -4,6 +4,7 @@
 #include "EntityContainer.h"
 #include "Background/Ground.h"
 #include "System.h"
+#include "mingw.mutex.h"
 
 namespace EntityContainer {
     std::vector<Entity *> items = {};
@@ -33,31 +34,6 @@ namespace EntityContainer {
         return buffer;
     }
 
-    std::vector<Office *> getOffices() {
-        std::vector<Office *> buffer;
-
-        for (Entity *entity:items) {
-            if (auto d = dynamic_cast<Office *>(entity)) {
-                buffer.push_back(d);
-            }
-        }
-
-        return buffer;
-    }
-
-    std::vector<Entity *> getElevatorShafts() {
-        std::vector<Entity *> buffer;
-
-        for (Entity *entity:items) {
-            if (
-                    dynamic_cast<ElevatorShaftMiddle *>(entity) ||
-                    dynamic_cast<ElevatorShaftTop *>(entity)) {
-                buffer.push_back(entity);
-            }
-        }
-
-        return buffer;
-    }
 
     std::vector<Elevator *> getElevators() {
         return elevators;
@@ -65,13 +41,20 @@ namespace EntityContainer {
 
     void add(Entity *item) {
         items.push_back(item);
+        sort();
+    }
 
+    void sort() {
         std::sort(items.begin(), items.end(), [](Entity *a, Entity *b) -> bool {
-            if (a->getDrawOrder() == b->getDrawOrder()) {
-                return a->getDrawOrder() + a->getWorldCoordinates().x + a->getWorldCoordinates().y <
-                       b->getDrawOrder() + b->getWorldCoordinates().x + b->getWorldCoordinates().y;
+            if (a && b) {
+                if (a->getDrawOrder() == b->getDrawOrder()) {
+                    return a->getDrawOrder() + a->getWorldCoordinates().x + a->getWorldCoordinates().y <
+                           b->getDrawOrder() + b->getWorldCoordinates().x + b->getWorldCoordinates().y;
+                } else {
+                    return a->getDrawOrder() < b->getDrawOrder();
+                }
             } else {
-                return a->getDrawOrder() < b->getDrawOrder();
+                return false;
             }
         });
     }
@@ -97,15 +80,15 @@ namespace EntityContainer {
             if ((i % Ground::width) == 0) {
                 auto rnd = System::getRandom(0, 100);
 
-                if(rnd <= 33){
+                if (rnd <= 33) {
                     new Ground(sf::Vector2f(i, System::groundLevel + Ground::height / 2), E_StaticGround_1);
                 }
 
-                if(rnd > 33 && rnd <= 66){
+                if (rnd > 33 && rnd <= 66) {
                     new Ground(sf::Vector2f(i, System::groundLevel + Ground::height / 2), E_StaticGround_2);
                 }
 
-                if(rnd > 66){
+                if (rnd > 66) {
                     new Ground(sf::Vector2f(i, System::groundLevel + Ground::height / 2), E_StaticGround_3);
                 }
             }
@@ -114,19 +97,19 @@ namespace EntityContainer {
             if (System::getRandom(0, 20000) <= 75 && i < System::worldWidth / 2 - Tree::width) {
                 auto treeIndex = System::getRandom(0, 100);
 
-                if(treeIndex <= 25){
+                if (treeIndex <= 25) {
                     new Tree({(float) i, System::groundLevel + Ground::height + Tree::height / 2}, E_StaticTree_1);
                 }
 
-                if(treeIndex > 25 && treeIndex <= 50){
+                if (treeIndex > 25 && treeIndex <= 50) {
                     new Tree({(float) i, System::groundLevel + Ground::height + Tree::height / 2}, E_StaticTree_2);
                 }
 
-                if(treeIndex > 50 && treeIndex <= 75){
+                if (treeIndex > 50 && treeIndex <= 75) {
                     new Tree({(float) i, System::groundLevel + Ground::height + 449 / 2}, E_StaticTree_3, {361, 449});
                 }
 
-                if(treeIndex > 75){
+                if (treeIndex > 75) {
                     new Tree({(float) i, System::groundLevel + Ground::height + 162 / 2}, E_StaticTree_4, {308, 162});
                 }
             }
@@ -177,9 +160,11 @@ namespace EntityContainer {
         }
     }
 
+
+
     void refreshEntities() {
         for (auto entity:items) {
-            if(entity){
+            if (entity) {
                 entity->update();
             }
         }
@@ -190,7 +175,6 @@ namespace EntityContainer {
                 delete d;
             }
         }
-
         itemsToRemove.clear();
     }
 

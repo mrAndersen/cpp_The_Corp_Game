@@ -32,7 +32,8 @@ namespace System {
 
     sf::RenderWindow *window;
     sf::Event event;
-    int frameTimeMcs;
+    std::deque<sf::Event> eventDeque;
+    long long int frameTimeMcs;
     sf::Uint32 screenMode = sf::Style::Default;
     float timeFactor = 1;
     //sys
@@ -57,13 +58,13 @@ namespace System {
     bool dayStartProcessed = false;
 
     float salaryTotal = 0;
-    int buttonReload = 250;
+    int buttonReload = 150;
 
     sf::Clock dayClock = {};
-    GameTime gameTime(16, 30);
+    GameTime gameTime(10, 15);
 
-    int startWorkHour = 9;
-    int endWorkHour = 18;
+    int startWorkHour = 10;
+    int endWorkHour = 19;
     //player
 
     //debug
@@ -131,17 +132,12 @@ namespace System {
             g_x = coordMap.x;
             g_y = System::screenHeight - coordMap.y;
 
-            debugPanelTextNodes["g_coordinates"].setString(
-                    "global: {" + std::to_string((int) g_x) + "," + std::to_string((int) g_y) + "}");
+            debugPanelTextNodes["g_coordinates"].setString("global: {" + std::to_string((int) g_x) + "," + std::to_string((int) g_y) + "}");
             debugPanelTextNodes["fps"].setString("fps: " + std::to_string(fps));
-            debugPanelTextNodes["mouse"].setString(
-                    "mouse: {" + std::to_string(mousePosition.x) + "," + std::to_string(mousePosition.y) + "}");
+            debugPanelTextNodes["mouse"].setString("mouse: {" + std::to_string(mousePosition.x) + "," + std::to_string(mousePosition.y) + "}");
             debugPanelTextNodes["entity_count"].setString("entities: " + std::to_string(entitiesOnScreen));
-            debugPanelTextNodes["v_direction"].setString(
-                    "v_direction: " + std::to_string(ViewHandler::viewDirectionMovement));
-            debugPanelTextNodes["mem"].setString(
-                    "mem:" + std::to_string((int) mem / 1024 / 1024) + "mb"
-            );
+            debugPanelTextNodes["v_direction"].setString("v_direction: " + std::to_string(ViewHandler::viewDirectionMovement));
+            debugPanelTextNodes["mem"].setString("mem:" + std::to_string((int) mem / 1024 / 1024) + "mb");
 
 
             debugPanelTextNodes["v_boundaries"].setString(
@@ -156,22 +152,19 @@ namespace System {
             debugPanelTextNodes["p_cash"].setString("p_cash: " + std::to_string(System::cash));
             debugPanelTextNodes["p_time"].setString("p_time:" + gameTime.get());
             debugPanelTextNodes["p_time_factor"].setString("p_time_factor:" + std::to_string(timeFactor));
+            debugPanelTextNodes["e"].setString("e:" + std::to_string(System::event.type) + "(" + std::to_string(System::eventDeque.size()) + ")");
 
-            std::map<std::string, sf::Text>::iterator it;
+
             int i = 1;
-
-            for (it = debugPanelTextNodes.begin(); it != debugPanelTextNodes.end(); it++) {
-                it->second.setPosition(
-                        cToGl(sf::Vector2f(ViewHandler::left + 12, ViewHandler::top - 650 - i * 12)));
-                window->draw(it->second);
-
+            for(auto n:debugPanelTextNodes){
+                n.second.setPosition(cToGl(sf::Vector2f(ViewHandler::left + 12, ViewHandler::top - 600 - i * 12)));
+                System::window->draw(n.second);
                 i++;
             }
         }
     }
 
     void initWindow() {
-
         if (window) {
             delete window;
             window = nullptr;
@@ -191,9 +184,10 @@ namespace System {
         icon.loadFromFile("resources/app/icon.png");
 
         window = new sf::RenderWindow(sf::VideoMode(screenWidth, screenHeight), title, screenMode);
+
         window->clear(c_background);
         window->setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
-        window->setVerticalSyncEnabled(true);
+//        window->setVerticalSyncEnabled(true);
 
         ViewHandler::view = new sf::View();
         ViewHandler::view->reset(sf::FloatRect(0, 0, screenWidth, screenHeight));
@@ -224,6 +218,7 @@ namespace System {
         createDebugString("p_cash");
         createDebugString("p_time");
         createDebugString("p_time_factor");
+        createDebugString("e");
     }
 
     sf::Vector2f cToGl(sf::Vector2f worldCoordinates) {

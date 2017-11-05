@@ -50,6 +50,7 @@ protected:
     sf::Text debugInfo;
     sf::Text errorString;
 
+    bool updated = false;
 public:
     virtual void spawn();
 
@@ -72,6 +73,10 @@ public:
     void selectAnimation(States state);
 
     bool isSpawned();
+
+    bool isUpdated() const;
+
+    void setUpdated(bool updated);
 
     bool isSelectable() const;
 
@@ -139,7 +144,7 @@ public:
 
     int getDrawOrder() const;
 
-    void setDrawOrder(int drawOrder);
+    void setDrawOrder(int drawOrder, bool resort = false);
 
     float getHealth() const;
 
