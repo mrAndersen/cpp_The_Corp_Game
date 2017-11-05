@@ -6,6 +6,8 @@
 #include "System/ResourceLoader.h"
 #include "System/EntityContainer.h"
 
+class Movable;
+
 class Clerk : public Movable {
 public:
     const static int width = 70;

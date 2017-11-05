@@ -1,7 +1,4 @@
 #include <System/EntityContainer.h>
-#include <System/System.h>
-#include <Background/Ground.h>
-#include "Elevator.h"
 
 void Elevator::finish() {
     if (!topShaft) {

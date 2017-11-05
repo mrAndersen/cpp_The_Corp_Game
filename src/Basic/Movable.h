@@ -20,8 +20,6 @@ class Elevator;
 
 class Destination;
 
-class optional;
-
 class Movable : public Entity {
 
 protected:

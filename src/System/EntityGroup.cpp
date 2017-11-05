@@ -6,7 +6,7 @@ bool EntityGroup::hasType(Entities type) {
     return std::find(list.begin(), list.end(), type) != list.end();
 }
 
-bool EntityGroup::addType(Entities type) {
+void EntityGroup::addType(Entities type) {
     list.push_back(type);
 }
 

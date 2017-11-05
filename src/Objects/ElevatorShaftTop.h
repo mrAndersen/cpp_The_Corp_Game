@@ -6,6 +6,9 @@
 #include "Office/Office.h"
 
 class Elevator;
+
+class Office;
+
 class ElevatorShaftTop : public Entity {
 
 protected:

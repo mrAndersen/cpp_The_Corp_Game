@@ -5,6 +5,7 @@
 #include "Objects/ElevatorCabin.h"
 #include "Objects/ElevatorShaftTop.h"
 #include "Objects/ElevatorShaftMiddle.h"
+#include "functional"
 
 class ElevatorShaftTop;
 class ElevatorShaftMiddle;

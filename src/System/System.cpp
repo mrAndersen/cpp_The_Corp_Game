@@ -1,5 +1,5 @@
 #include <SFML/Window/Mouse.hpp>
-#include <afxres.h>
+#include <windows.h>
 #include <psapi.h>
 #include <sstream>
 #include <iomanip>

@@ -3,7 +3,6 @@
 
 #include <SFML/System/Vector2.hpp>
 #include <System/Enum.h>
-#include <Basic/Movable.h>
 #include <Component/Elevator.h>
 #include <System/System.h>
 
@@ -24,7 +23,6 @@ public:
     void setType(DestinationType type);
 
     int getFloor();
-
 
     static Destination createElevatorWaitingDST(Elevator *elevator, Movable *movable);
 

@@ -1,7 +1,7 @@
 #ifndef THE_CORP_GAME_SYSTEM_H
 #define THE_CORP_GAME_SYSTEM_H
 
-#include <afxres.h>
+#include <windows.h>
 #include <psapi.h>
 #include <SFML/System/Clock.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>

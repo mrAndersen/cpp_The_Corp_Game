@@ -20,10 +20,11 @@ void Movable::renderDebugInfo() {
         );
 
         if (!destinations.empty()) {
-            sf::Vertex line[destinations.size() + 1];
+            sf::VertexArray lines;
+            lines.resize(destinations.size() + 1);
 
-            line[0].position = System::cToGl(worldCoordinates);
-            line[0].color = selected ? sf::Color::Green : sf::Color::Yellow;
+            lines[0].position = System::cToGl(worldCoordinates);
+            lines[0].color = selected ? sf::Color::Green : sf::Color::Yellow;
 
             int i = 1;
             for (auto d:destinations) {
@@ -33,14 +34,14 @@ void Movable::renderDebugInfo() {
                 shape.setOrigin({5, 5});
                 shape.setSize({10, 10});
 
-                line[i].position = System::cToGl(d.getCoordinates());
-                line[i].color = sf::Color::Yellow;
+                lines[i].position = System::cToGl(d.getCoordinates());
+                lines[i].color = sf::Color::Yellow;
                 i++;
 
                 System::window->draw(shape);
             }
 
-            System::window->draw(line, destinations.size() + 1, sf::LineStrip);
+            System::window->draw(lines);
         }
 
         System::window->draw(debugInfo);

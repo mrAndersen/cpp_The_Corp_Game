@@ -8,8 +8,9 @@ endif()
 
 project(the_corp_game)
 set(CMAKE_CXX_STANDARD 17)
+#set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -DCMAKE_C_FLAGS=-pg -DCMAKE_CXX_FLAGS=-pg)
 
-set(SFML_ROOT "${PROJECT_SOURCE_DIR}/vendor/mingw_sfml-2.4.2")
+set(SFML_ROOT "${PROJECT_SOURCE_DIR}/vendor/sfml-2.4.2-windows")
 include_directories("${PROJECT_SOURCE_DIR}/src")
 
 file(COPY "resources" DESTINATION "${CMAKE_BINARY_DIR}")
@@ -54,12 +55,12 @@ add_executable(
         src/System/ViewHandler.h
         src/System/ViewHandler.cpp
 
-
         src/System/System.h
         src/System/System.cpp
 
         src/Background/Ground.h
         src/Background/Ground.cpp
+
         src/System/ControlPanel.h
         src/System/ControlPanel.cpp
 
@@ -114,11 +115,61 @@ add_executable(
         src/Office/Chair.h
 
         src/Ui/MoneyIndicator.cpp
-        src/Ui/MoneyIndicator.h src/Ui/Questions/Question.cpp src/Ui/Questions/Question.h src/Ui/BasicUi.cpp src/Ui/BasicUi.h src/Ui/ControlButtonAddElevator.cpp src/Ui/ControlButtonAddElevator.h src/System/EntityGroup.cpp src/System/EntityGroup.h
+        src/Ui/MoneyIndicator.h
+
+        src/Ui/Questions/Question.cpp
+        src/Ui/Questions/Question.h
+
+        src/Ui/BasicUi.cpp
+        src/Ui/BasicUi.h
+
+        src/Ui/ControlButtonAddElevator.cpp
+        src/Ui/ControlButtonAddElevator.h
+
+        src/System/EntityGroup.cpp
+        src/System/EntityGroup.h
 
         src/Ui/Questions/QAddClerk.cpp
         src/Ui/Questions/QAddClerk.h
-        src/Ui/Questions/QAddOffice.cpp src/Ui/Questions/QAddOffice.h src/Ui/Questions/QAddElevator.cpp src/Ui/Questions/QAddElevator.h src/Background/Tree.cpp src/Background/Tree.h src/Background/GroundArtifact.cpp src/Background/GroundArtifact.h src/Ui/MainPanel/MainPanelOverlay.cpp src/Ui/MainPanel/MainPanelOverlay.h src/Ui/MainPanel/ButtonPause.cpp src/Ui/MainPanel/ButtonPause.h src/Ui/MainPanel/Button1x.cpp src/Ui/MainPanel/Button1x.h src/Ui/MainPanel/Button5x.cpp src/Ui/MainPanel/Button5x.h src/Ui/MainPanel/Button10x.cpp src/Ui/MainPanel/Button10x.h src/Component/Destination.cpp src/Component/Destination.h src/Ui/ControlButtonAddManager.cpp src/Ui/ControlButtonAddManager.h src/Characters/Manager.cpp src/Characters/Manager.h src/Ui/Questions/QAddManager.cpp src/Ui/Questions/QAddManager.h)
+
+        src/Ui/Questions/QAddOffice.cpp
+        src/Ui/Questions/QAddOffice.h
+
+        src/Ui/Questions/QAddElevator.cpp
+        src/Ui/Questions/QAddElevator.h
+
+        src/Background/Tree.cpp
+        src/Background/Tree.h
+
+        src/Background/GroundArtifact.cpp
+        src/Background/GroundArtifact.h
+
+        src/Ui/MainPanel/MainPanelOverlay.cpp
+        src/Ui/MainPanel/MainPanelOverlay.h
+
+        src/Ui/MainPanel/ButtonPause.cpp
+        src/Ui/MainPanel/ButtonPause.h
+
+        src/Ui/MainPanel/Button1x.cpp
+        src/Ui/MainPanel/Button1x.h
+
+        src/Ui/MainPanel/Button5x.cpp
+        src/Ui/MainPanel/Button5x.h
+
+        src/Ui/MainPanel/Button10x.cpp
+        src/Ui/MainPanel/Button10x.h
+
+        src/Component/Destination.cpp
+        src/Component/Destination.h
+
+        src/Ui/ControlButtonAddManager.cpp
+        src/Ui/ControlButtonAddManager.h
+
+        src/Characters/Manager.cpp
+        src/Characters/Manager.h
+
+        src/Ui/Questions/QAddManager.cpp
+        src/Ui/Questions/QAddManager.h)
 
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})

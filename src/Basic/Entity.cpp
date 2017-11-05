@@ -7,8 +7,7 @@
 #include "Background/Ground.h"
 
 std::string Entity::serialize() {
-
-
+    return "";
 }
 
 void Entity::update() {

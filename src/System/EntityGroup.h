@@ -15,7 +15,7 @@ public:
 
     bool hasType(Entities type);
 
-    bool addType(Entities type);
+    void addType(Entities type);
 };
 
 
