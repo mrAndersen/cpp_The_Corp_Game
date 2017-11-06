@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{4BEF8ECE-C258-4147-AF52-4E5878769217}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>SFML_STATIC;WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>C:\Projects\cpp_The_Corp_Game_VC\vendor\sfml-2.4.2-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalLibraryDirectories>C:\Projects\cpp_The_Corp_Game_VC\vendor\sfml-2.4.2-windows\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;winmm.lib;glu32.lib;sfml-main.lib;sfml-system-s-d.lib;sfml-window-s-d.lib;sfml-graphics-s-d.lib;sfml-network-s-d.lib;sfml-audio-s-d.lib;vorbis.lib;vorbisenc.lib;vorbisfile.lib;openal32.lib;ogg.lib;jpeg.lib;freetype.lib;flac.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\background\Ground.cpp" />
+    <ClCompile Include="src\background\GroundArtifact.cpp" />
+    <ClCompile Include="src\background\Tree.cpp" />
+    <ClCompile Include="src\basic\Animation.cpp" />
+    <ClCompile Include="src\basic\Entity.cpp" />
+    <ClCompile Include="src\basic\Movable.cpp" />
+    <ClCompile Include="src\characters\Clerk.cpp" />
+    <ClCompile Include="src\characters\Manager.cpp" />
+    <ClCompile Include="src\component\Destination.cpp" />
+    <ClCompile Include="src\component\Elevator.cpp" />
+    <ClCompile Include="src\component\WorkPlace.cpp" />
+    <ClCompile Include="src\objects\ElevatorCabin.cpp" />
+    <ClCompile Include="src\objects\ElevatorShaftMiddle.cpp" />
+    <ClCompile Include="src\objects\ElevatorShaftTop.cpp" />
+    <ClCompile Include="src\office\Chair.cpp" />
+    <ClCompile Include="src\office\Office.cpp" />
+    <ClCompile Include="src\office\OfficeClerk.cpp" />
+    <ClCompile Include="src\system\ControlPanel.cpp" />
+    <ClCompile Include="src\system\EntityContainer.cpp" />
+    <ClCompile Include="src\system\EntityGroup.cpp" />
+    <ClCompile Include="src\system\GameTime.cpp" />
+    <ClCompile Include="src\system\ResourceLoader.cpp" />
+    <ClCompile Include="src\system\SaveManager.cpp" />
+    <ClCompile Include="src\system\System.cpp" />
+    <ClCompile Include="src\system\ViewHandler.cpp" />
+    <ClCompile Include="src\text\TextEntity.cpp" />
+    <ClCompile Include="src\ui\BasicUi.cpp" />
+    <ClCompile Include="src\ui\ControlButtonAddClerk.cpp" />
+    <ClCompile Include="src\ui\ControlButtonAddElevator.cpp" />
+    <ClCompile Include="src\ui\ControlButtonAddElevatorCabin.cpp" />
+    <ClCompile Include="src\ui\ControlButtonAddElevatorShaftMiddle.cpp" />
+    <ClCompile Include="src\ui\ControlButtonAddElevatorShaftTop.cpp" />
+    <ClCompile Include="src\ui\ControlButtonAddManager.cpp" />
+    <ClCompile Include="src\ui\ControlButtonAddOffice.cpp" />
+    <ClCompile Include="src\ui\mainpanel\Button10x.cpp" />
+    <ClCompile Include="src\ui\mainpanel\Button1x.cpp" />
+    <ClCompile Include="src\ui\mainpanel\Button5x.cpp" />
+    <ClCompile Include="src\ui\mainpanel\ButtonPause.cpp" />
+    <ClCompile Include="src\ui\mainpanel\MainPanelOverlay.cpp" />
+    <ClCompile Include="src\ui\MoneyIndicator.cpp" />
+    <ClCompile Include="src\ui\questions\QAddClerk.cpp" />
+    <ClCompile Include="src\ui\questions\QAddElevator.cpp" />
+    <ClCompile Include="src\ui\questions\QAddManager.cpp" />
+    <ClCompile Include="src\ui\questions\QAddOffice.cpp" />
+    <ClCompile Include="src\ui\questions\Question.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\background\Ground.h" />
+    <ClInclude Include="src\background\GroundArtifact.h" />
+    <ClInclude Include="src\background\Tree.h" />
+    <ClInclude Include="src\basic\Animation.h" />
+    <ClInclude Include="src\basic\Entity.h" />
+    <ClInclude Include="src\basic\Movable.h" />
+    <ClInclude Include="src\characters\Clerk.h" />
+    <ClInclude Include="src\characters\Manager.h" />
+    <ClInclude Include="src\component\Destination.h" />
+    <ClInclude Include="src\component\Elevator.h" />
+    <ClInclude Include="src\component\WorkPlace.h" />
+    <ClInclude Include="src\objects\ElevatorCabin.h" />
+    <ClInclude Include="src\objects\ElevatorShaftMiddle.h" />
+    <ClInclude Include="src\objects\ElevatorShaftTop.h" />
+    <ClInclude Include="src\office\Chair.h" />
+    <ClInclude Include="src\office\Office.h" />
+    <ClInclude Include="src\office\OfficeClerk.h" />
+    <ClInclude Include="src\system\ControlPanel.h" />
+    <ClInclude Include="src\system\EntityContainer.h" />
+    <ClInclude Include="src\system\EntityGroup.h" />
+    <ClInclude Include="src\system\Enum.h" />
+    <ClInclude Include="src\system\GameTime.h" />
+    <ClInclude Include="src\system\ResourceLoader.h" />
+    <ClInclude Include="src\system\SaveManager.h" />
+    <ClInclude Include="src\system\System.h" />
+    <ClInclude Include="src\system\ViewHandler.h" />
+    <ClInclude Include="src\text\TextEntity.h" />
+    <ClInclude Include="src\ui\BasicUi.h" />
+    <ClInclude Include="src\ui\ControlButtonAddClerk.h" />
+    <ClInclude Include="src\ui\ControlButtonAddElevator.h" />
+    <ClInclude Include="src\ui\ControlButtonAddElevatorCabin.h" />
+    <ClInclude Include="src\ui\ControlButtonAddElevatorShaftMiddle.h" />
+    <ClInclude Include="src\ui\ControlButtonAddElevatorShaftTop.h" />
+    <ClInclude Include="src\ui\ControlButtonAddManager.h" />
+    <ClInclude Include="src\ui\ControlButtonAddOffice.h" />
+    <ClInclude Include="src\ui\mainpanel\Button10x.h" />
+    <ClInclude Include="src\ui\mainpanel\Button1x.h" />
+    <ClInclude Include="src\ui\mainpanel\Button5x.h" />
+    <ClInclude Include="src\ui\mainpanel\ButtonPause.h" />
+    <ClInclude Include="src\ui\mainpanel\MainPanelOverlay.h" />
+    <ClInclude Include="src\ui\MoneyIndicator.h" />
+    <ClInclude Include="src\ui\questions\QAddClerk.h" />
+    <ClInclude Include="src\ui\questions\QAddElevator.h" />
+    <ClInclude Include="src\ui\questions\QAddManager.h" />
+    <ClInclude Include="src\ui\questions\QAddOffice.h" />
+    <ClInclude Include="src\ui\questions\Question.h" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\Audio.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\audio\AlResource.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\audio\Export.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\audio\InputSoundFile.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\audio\Listener.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\audio\Music.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\audio\OutputSoundFile.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\audio\Sound.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\audio\SoundBuffer.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\audio\SoundBufferRecorder.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\audio\SoundFileFactory.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\audio\SoundFileReader.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\audio\SoundFileWriter.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\audio\SoundRecorder.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\audio\SoundSource.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\audio\SoundStream.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\Config.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\Graphics.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\BlendMode.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\CircleShape.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\Color.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\ConvexShape.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\Drawable.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\Export.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\Font.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\Glsl.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\Glyph.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\Image.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\PrimitiveType.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\Rect.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\RectangleShape.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\RenderStates.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\RenderTarget.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\RenderTexture.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\RenderWindow.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\Shader.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\Shape.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\Sprite.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\Text.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\Texture.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\Transform.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\Transformable.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\Vertex.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\VertexArray.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\View.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\Main.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\Network.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\network\Export.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\network\Ftp.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\network\Http.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\network\IpAddress.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\network\Packet.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\network\Socket.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\network\SocketHandle.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\network\SocketSelector.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\network\TcpListener.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\network\TcpSocket.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\network\UdpSocket.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\OpenGL.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\System.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\system\Clock.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\system\Err.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\system\Export.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\system\FileInputStream.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\system\InputStream.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\system\Lock.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\system\MemoryInputStream.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\system\Mutex.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\system\NativeActivity.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\system\NonCopyable.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\system\Sleep.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\system\String.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\system\Thread.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\system\ThreadLocal.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\system\ThreadLocalPtr.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\system\Time.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\system\Utf.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\system\Vector2.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\system\Vector3.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\Window.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\window\Context.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\window\ContextSettings.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\window\Event.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\window\Export.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\window\GlResource.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\window\Joystick.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\window\Keyboard.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\window\Mouse.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\window\Sensor.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\window\Touch.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\window\VideoMode.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\window\Window.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\window\WindowHandle.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\window\WindowStyle.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\Audio.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\audio\AlResource.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\audio\Export.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\audio\InputSoundFile.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\audio\Listener.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\audio\Music.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\audio\OutputSoundFile.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\audio\Sound.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\audio\SoundBuffer.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\audio\SoundBufferRecorder.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\audio\SoundFileFactory.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\audio\SoundFileReader.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\audio\SoundFileWriter.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\audio\SoundRecorder.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\audio\SoundSource.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\audio\SoundStream.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\Config.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\Graphics.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\graphics\BlendMode.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\graphics\CircleShape.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\graphics\Color.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\graphics\ConvexShape.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\graphics\Drawable.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\graphics\Export.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\graphics\Font.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\graphics\Glsl.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\graphics\Glyph.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\graphics\Image.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\graphics\PrimitiveType.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\graphics\Rect.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\graphics\RectangleShape.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\graphics\RenderStates.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\graphics\RenderTarget.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\graphics\RenderTexture.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\graphics\RenderWindow.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\graphics\Shader.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\graphics\Shape.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\graphics\Sprite.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\graphics\Text.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\graphics\Texture.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\graphics\Transform.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\graphics\Transformable.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\graphics\Vertex.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\graphics\VertexArray.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\graphics\View.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\Main.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\Network.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\network\Export.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\network\Ftp.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\network\Http.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\network\IpAddress.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\network\Packet.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\network\Socket.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\network\SocketHandle.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\network\SocketSelector.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\network\TcpListener.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\network\TcpSocket.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\network\UdpSocket.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\OpenGL.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\System.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\system\Clock.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\system\Err.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\system\Export.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\system\FileInputStream.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\system\InputStream.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\system\Lock.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\system\MemoryInputStream.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\system\Mutex.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\system\NativeActivity.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\system\NonCopyable.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\system\Sleep.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\system\String.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\system\Thread.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\system\ThreadLocal.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\system\ThreadLocalPtr.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\system\Time.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\system\Utf.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\system\Vector2.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\system\Vector3.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\Window.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\window\Context.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\window\ContextSettings.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\window\Event.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\window\Export.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\window\GlResource.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\window\Joystick.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\window\Keyboard.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\window\Mouse.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\window\Sensor.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\window\Touch.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\window\VideoMode.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\window\Window.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\window\WindowHandle.hpp" />
+    <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\window\WindowStyle.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="vendor\mingw_sfml-2.4.2\include\sfml\audio\SoundFileFactory.inl" />
+    <None Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\Glsl.inl" />
+    <None Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\Rect.inl" />
+    <None Include="vendor\mingw_sfml-2.4.2\include\sfml\system\String.inl" />
+    <None Include="vendor\mingw_sfml-2.4.2\include\sfml\system\Thread.inl" />
+    <None Include="vendor\mingw_sfml-2.4.2\include\sfml\system\ThreadLocalPtr.inl" />
+    <None Include="vendor\mingw_sfml-2.4.2\include\sfml\system\Utf.inl" />
+    <None Include="vendor\mingw_sfml-2.4.2\include\sfml\system\Vector2.inl" />
+    <None Include="vendor\mingw_sfml-2.4.2\include\sfml\system\Vector3.inl" />
+    <None Include="vendor\sfml-2.4.2-windows\include\sfml\audio\SoundFileFactory.inl" />
+    <None Include="vendor\sfml-2.4.2-windows\include\sfml\graphics\Glsl.inl" />
+    <None Include="vendor\sfml-2.4.2-windows\include\sfml\graphics\Rect.inl" />
+    <None Include="vendor\sfml-2.4.2-windows\include\sfml\system\String.inl" />
+    <None Include="vendor\sfml-2.4.2-windows\include\sfml\system\Thread.inl" />
+    <None Include="vendor\sfml-2.4.2-windows\include\sfml\system\ThreadLocalPtr.inl" />
+    <None Include="vendor\sfml-2.4.2-windows\include\sfml\system\Utf.inl" />
+    <None Include="vendor\sfml-2.4.2-windows\include\sfml\system\Vector2.inl" />
+    <None Include="vendor\sfml-2.4.2-windows\include\sfml\system\Vector3.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="main.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
