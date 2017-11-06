@@ -91,7 +91,6 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
             if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::V) {
                 System::debug = !System::debug;
             }
-
             //debug logic
 
             if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::Numpad1) {

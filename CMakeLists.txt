@@ -180,7 +180,6 @@ find_package(SFML 2 REQUIRED graphics network audio window system)
 if(SFML_FOUND)
     FIND_LIBRARY (PSAPI Psapi)
 
-#	link_directories("${PROJECT_SOURCE_DIR}/vendor/sfml-2.4.2-windows/lib")
     include_directories(${SFML_INCLUDE_DIR})
     target_link_libraries(${EXECUTABLE_NAME} ${PSAPI} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
 endif()
