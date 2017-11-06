@@ -1,10 +1,9 @@
-#include <Office/Office.h>
-#include <Background/Tree.h>
-#include <Background/GroundArtifact.h>
+#include "..\Office\Office.h"
+#include "..\Background\Tree.h"
+#include "..\Background\GroundArtifact.h"
 #include "EntityContainer.h"
-#include "Background/Ground.h"
+#include "..\Background\Ground.h"
 #include "System.h"
-#include "mingw.mutex.h"
 
 namespace EntityContainer {
     std::vector<Entity *> items = {};

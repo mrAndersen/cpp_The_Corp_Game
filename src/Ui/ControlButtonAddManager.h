@@ -2,11 +2,11 @@
 #define THE_CORP_GAME_CONTROLBUTTONADDMANAGER_H
 
 
-#include <Characters/Manager.h>
+#include "..\Characters\Manager.h"
 #include "BasicUi.h"
-#include "System/System.h"
-#include "System/ResourceLoader.h"
-#include "System/EntityContainer.h"
+#include "..\System\System.h"
+#include "..\System\ResourceLoader.h"
+#include "..\System\EntityContainer.h"
 
 class ControlButtonAddManager : public BasicUi {
 public:

@@ -1,7 +1,7 @@
 #include <SFML/System.hpp>
 #include "Ground.h"
-#include "System/ResourceLoader.h"
-#include "System/EntityContainer.h"
+#include "..\System\ResourceLoader.h"
+#include "..\System/EntityContainer.h"
 
 Ground::Ground(sf::Vector2f coordinates, Entities type) {
     setEType(type);

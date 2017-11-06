@@ -1,8 +1,8 @@
 #include <climits>
 #include <cmath>
-#include "System/ResourceLoader.h"
-#include "System/EntityContainer.h"
-#include "System/System.h"
+#include "..\System\ResourceLoader.h"
+#include "..\System\EntityContainer.h"
+#include "..\System\System.h"
 #include "ControlButtonAddElevatorShaftTop.h"
 
 ControlButtonAddElevatorShaftTop::ControlButtonAddElevatorShaftTop(float leftOffset, float topOffset) : BasicUi(leftOffset, topOffset) {

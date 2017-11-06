@@ -1,10 +1,11 @@
 #include <cmath>
 #include <iostream>
 #include <fstream>
-#include <Text/TextEntity.h>
-#include <Background/Ground.h>
-#include "System/EntityContainer.h"
+#include "..\Text\TextEntity.h"
+#include "..\Background\Ground.h"
+#include "..\System\EntityContainer.h"
 #include "Movable.h"
+#include "..\System\System.h"
 
 
 void Movable::renderDebugInfo() {
@@ -141,7 +142,8 @@ void Movable::updateLogic() {
 
                         targetElevator->getCabin()->addMovable(this);
 
-                        destinations.pop_front();
+                        destinations.erase(destinations.begin());
+//                        destinations.pop_front();
                     } else {
                         state = S_None;
 
@@ -181,12 +183,14 @@ void Movable::updateLogic() {
                     currentDST = DST_Elevator_Inside_Cabin;
 
                     targetElevator->addToQueue(final.getFloor());
-                    destinations.pop_front();
+                    destinations.erase(destinations.begin());
+//                    destinations.pop_front();
                 }
 
                 if (local.getType() == DST_Workplace) {
                     currentDST = DST_Workplace;
-                    destinations.pop_front();
+                    destinations.erase(destinations.begin());
+//                    destinations.pop_front();
 
                     state = S_Working;
                     direction = Right;
@@ -203,7 +207,8 @@ void Movable::updateLogic() {
                     smokeStarted = System::gameTime;
 
                     moving = false;
-                    destinations.pop_front();
+                    destinations.erase(destinations.begin());
+//                    destinations.pop_front();
                 }
 
                 if (local.getType() == DST_Home) {
@@ -212,7 +217,8 @@ void Movable::updateLogic() {
                     visible = false;
 
                     moving = false;
-                    destinations.pop_front();
+                    destinations.erase(destinations.begin());
+//                    destinations.pop_front();
                 }
 
                 if (local.getType() == DST_Elevator_Exiting) {
@@ -220,12 +226,14 @@ void Movable::updateLogic() {
                     targetElevator->getCabin()->removeMovable(this);
                     targetElevator = nullptr;
 
-                    destinations.pop_front();
+                    destinations.erase(destinations.begin());
+//                    destinations.pop_front();
                 }
 
                 if (local.getType() == DST_Unknown) {
                     currentDST = DST_Unknown;
-                    destinations.pop_front();
+                    destinations.erase(destinations.begin());
+//                    destinations.pop_front();
                 }
             }
         }

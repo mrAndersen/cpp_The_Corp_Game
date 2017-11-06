@@ -1,14 +1,15 @@
 #include <sstream>
+#include "src\Component\Destination.h"
 #include <SFML/Window/Event.hpp>
-#include <Objects/ElevatorShaftMiddle.h>
-#include <Office/OfficeClerk.h>
-#include "System/ResourceLoader.h"
-#include "System/ViewHandler.h"
-#include "System/EntityContainer.h"
-#include "System/ControlPanel.h"
-#include "System/SaveManager.h"
+#include "src\Objects\ElevatorShaftMiddle.h"
+#include "src\Office\OfficeClerk.h"
+#include "src\System\ResourceLoader.h"
+#include "src\System\ViewHandler.h"
+#include "src\System\EntityContainer.h"
+#include "src\System\ControlPanel.h"
+#include "src\System\SaveManager.h"
 
-int main() {
+int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow) {
     SaveManager saveManager;
 //    System::seed = std::chrono::system_clock::now().time_since_epoch().count();
 

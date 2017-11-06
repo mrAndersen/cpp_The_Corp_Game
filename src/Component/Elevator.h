@@ -2,10 +2,10 @@
 #define THE_CORP_GAME_ELEVATOR_H
 
 #include <stack>
-#include "Objects/ElevatorCabin.h"
-#include "Objects/ElevatorShaftTop.h"
-#include "Objects/ElevatorShaftMiddle.h"
 #include "functional"
+#include "..\Objects\ElevatorCabin.h"
+#include "..\Objects\ElevatorShaftTop.h"
+#include "..\Objects\ElevatorShaftMiddle.h"
 
 class ElevatorShaftTop;
 class ElevatorShaftMiddle;

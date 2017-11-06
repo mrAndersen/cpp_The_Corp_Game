@@ -1,4 +1,4 @@
-#include <System/System.h>
+#include "..\..\System\System.h"
 #include "Question.h"
 
 Question::Question(float leftOffset, float topOffset, Entities type) : BasicUi(leftOffset, topOffset) {
@@ -8,10 +8,8 @@ Question::Question(float leftOffset, float topOffset, Entities type) : BasicUi(l
     setWidth(Question::width);
     setHeight(Question::height);
 
-    addAnimation(S_Button_Normal,
-                 Animation(this, S_Button_Normal, 1, ResourceLoader::getTexture(eType, S_Button_Normal)));
-    addAnimation(S_Button_Pressed,
-                 Animation(this, S_Button_Pressed, 1, ResourceLoader::getTexture(eType, S_Button_Pressed)));
+    addAnimation(S_Button_Normal, Animation(this, S_Button_Normal, 1, ResourceLoader::getTexture(eType, S_Button_Normal)));
+    addAnimation(S_Button_Pressed, Animation(this, S_Button_Pressed, 1, ResourceLoader::getTexture(eType, S_Button_Pressed)));
 
     helpText.setFont(*System::gameFont);
     helpText.setCharacterSize(26);

@@ -130,7 +130,7 @@ namespace ResourceLoader {
 
         //----<<Clerk>>-----
         std::string alias = "clerk";
-        Gender genders[] = {G_Male, G_Female};
+        Gender genders[] = {G_Male};
         Race races[] = {R_White, R_Black, R_Asian};
         std::string levels[] = {"l1"};
         States states[] = {
@@ -143,10 +143,10 @@ namespace ResourceLoader {
                 S_Falling,
         };
 
-        for (auto gender:genders) {
-            for (auto race:races) {
-                for (auto level:levels) {
-                    for (auto state:states) {
+        for (auto &gender:genders) {
+            for (auto &race:races) {
+                for (auto &level:levels) {
+                    for (auto &state:states) {
                         std::string path =
                                 "resources/characters/" + alias + "/"
                                 + getGenderTextNotation(gender) + "."
@@ -154,13 +154,15 @@ namespace ResourceLoader {
                                 + level + "."
                                 + getStateTextNotation(state) + ".png";
 
-                        ResourceLoader::loadCharacterTexture(
-                                E_Clerk,
-                                path,
-                                state,
-                                gender,
-                                race
-                        );
+                        if(std::ifstream(path)){
+                            ResourceLoader::loadCharacterTexture(
+                                    E_Clerk,
+                                    path,
+                                    state,
+                                    gender,
+                                    race
+                            );
+                        }
                     }
                 }
             }

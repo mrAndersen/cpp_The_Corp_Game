@@ -1,10 +1,10 @@
 #include <climits>
 #include <cmath>
 #include "ControlButtonAddOffice.h"
-#include "System/EntityContainer.h"
-#include "System/System.h"
-#include "Office/OfficeClerk.h"
-#include "Ui/Questions/Question.h"
+#include "..\System\EntityContainer.h"
+#include "..\System\ViewHandler.h"
+#include "..\System\System.h"
+#include "..\Office\OfficeClerk.h"
 
 ControlButtonAddOffice::ControlButtonAddOffice(float leftOffset, float topOffset) : BasicUi(leftOffset, topOffset) {
     setEType(E_ButtonAddOffice);

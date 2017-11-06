@@ -11,6 +11,8 @@ set(CMAKE_CXX_STANDARD 17)
 #set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -DCMAKE_C_FLAGS=-pg -DCMAKE_CXX_FLAGS=-pg)
 
 set(SFML_ROOT "${PROJECT_SOURCE_DIR}/vendor/sfml-2.4.2-windows")
+set(SFML_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/vendor/sfml-2.4.2-windows/include")
+
 include_directories("${PROJECT_SOURCE_DIR}/src")
 
 file(COPY "resources" DESTINATION "${CMAKE_BINARY_DIR}")
@@ -176,13 +178,15 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 
 #Find any version 2.X of SFML
 #See the FindSFML.cmake file for additional details and instructions
+message(STATUS "Library (SFML_LIBRARIES): ${SFML_LIBRARIES}")
 set(SFML_STATIC_LIBRARIES TRUE)
 find_package(SFML 2 REQUIRED graphics network audio window system)
 if(SFML_FOUND)
     FIND_LIBRARY (PSAPI Psapi)
 
+#	link_directories("${PROJECT_SOURCE_DIR}/vendor/sfml-2.4.2-windows/lib")
     include_directories(${SFML_INCLUDE_DIR})
-    target_link_libraries(${EXECUTABLE_NAME} ${PSAPI} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES} -static-libgcc -static-libstdc++ -std=c++17)
+    target_link_libraries(${EXECUTABLE_NAME} ${PSAPI} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
 endif()
 
 

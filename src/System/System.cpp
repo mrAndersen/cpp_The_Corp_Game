@@ -10,7 +10,7 @@
 #include "System.h"
 #include "ViewHandler.h"
 #include "GameTime.h"
-#include "Text/TextEntity.h"
+#include "..\Text\TextEntity.h"
 
 namespace System {
     unsigned int screenWidth = 1850;

@@ -1,10 +1,10 @@
 #ifndef THE_CORP_GAME_ENTITYCONTAINER_H
 #define THE_CORP_GAME_ENTITYCONTAINER_H
 
-#include "Component/Elevator.h"
+#include "..\Component\Elevator.h"
 #include "ResourceLoader.h"
-#include "Characters/Clerk.h"
-#include "Office/Office.h"
+#include "..\Characters\Clerk.h"
+#include "..\Office\Office.h"
 #include "EntityGroup.h"
 
 namespace EntityContainer {

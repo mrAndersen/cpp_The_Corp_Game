@@ -1,7 +1,7 @@
 #include <climits>
-#include <System/ResourceLoader.h>
-#include <System/EntityContainer.h>
-#include <System/System.h>
+#include "..\System\ResourceLoader.h"
+#include "..\System\EntityContainer.h"
+#include "..\System\System.h"
 #include <cmath>
 #include "ControlButtonAddElevatorCabin.h"
 

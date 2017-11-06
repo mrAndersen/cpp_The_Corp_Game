@@ -2,15 +2,15 @@
 #define THE_CORP_GAME_MOVABLE_H
 
 #include "Entity.h"
+#include "..\Component\Destination.h"
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Clock.hpp>
-#include "System/Enum.h"
-#include "System/GameTime.h"
-#include <Component/WorkPlace.h>
-#include <Component/Elevator.h>
-#include <Component/Destination.h>
+#include "..\System\Enum.h"
+#include "..\System\GameTime.h"
+#include "..\Component\WorkPlace.h"
+#include "..\Component\Elevator.h"
 
 class Office;
 
@@ -32,7 +32,7 @@ protected:
 
     WorkPlace *currentWorkPlace = nullptr;
 
-    std::deque<Destination> destinations;
+    std::vector<Destination> destinations;
     DestinationType currentDST = DST_Unknown;
     bool moving = false;
     Elevator *targetElevator = nullptr;

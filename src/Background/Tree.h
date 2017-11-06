@@ -2,7 +2,8 @@
 #define THE_CORP_GAME_TREE_H
 
 
-#include <System/Enum.h>
+#include "..\System\Enum.h"
+#include "..\Basic\Entity.h"
 #include <SFML/Window.hpp>
 
 class Tree : public Entity {
