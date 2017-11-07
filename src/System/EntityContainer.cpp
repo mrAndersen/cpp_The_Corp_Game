@@ -81,15 +81,15 @@ namespace EntityContainer {
                 auto rnd = System::getRandom(0, 100);
 
                 if (rnd <= 33) {
-                    new Ground(sf::Vector2f(i, System::groundLevel + Ground::height / 2), E_StaticGround_1);
+                    new Ground(sf::Vector2f((float) i, System::groundLevel + Ground::height / 2), E_StaticGround_1);
                 }
 
                 if (rnd > 33 && rnd <= 66) {
-                    new Ground(sf::Vector2f(i, System::groundLevel + Ground::height / 2), E_StaticGround_2);
+                    new Ground(sf::Vector2f((float) i, System::groundLevel + Ground::height / 2), E_StaticGround_2);
                 }
 
                 if (rnd > 66) {
-                    new Ground(sf::Vector2f(i, System::groundLevel + Ground::height / 2), E_StaticGround_3);
+                    new Ground(sf::Vector2f((float) i, System::groundLevel + Ground::height / 2), E_StaticGround_3);
                 }
             }
 
@@ -134,8 +134,8 @@ namespace EntityContainer {
 
                     sf::VertexArray lines;
                     lines.setPrimitiveType(sf::Lines);
-                    lines.append(sf::Vertex(System::cToGl(i, 5000), transparentBlack));
-                    lines.append(sf::Vertex(System::cToGl(i, System::groundLevel), transparentBlack));
+                    lines.append(sf::Vertex(System::cToGl((float) i, 5000), transparentBlack));
+                    lines.append(sf::Vertex(System::cToGl((float) i, System::groundLevel), transparentBlack));
 
                     verticies.push_back(lines);
                 }
@@ -145,8 +145,8 @@ namespace EntityContainer {
                 if ((j % System::gridSize) == 0) {
                     sf::VertexArray lines;
                     lines.setPrimitiveType(sf::Lines);
-                    lines.append(sf::Vertex(System::cToGl(-System::worldWidth / 2, j), transparentBlack));
-                    lines.append(sf::Vertex(System::cToGl(System::worldWidth / 2, j), transparentBlack));
+                    lines.append(sf::Vertex(System::cToGl(-System::worldWidth / 2, (float) j), transparentBlack));
+                    lines.append(sf::Vertex(System::cToGl(System::worldWidth / 2, (float) j), transparentBlack));
 
                     verticies.push_back(lines);
                 }
@@ -214,6 +214,8 @@ namespace EntityContainer {
                 return e;
             }
         }
+
+        return nullptr;
     }
 }
 
