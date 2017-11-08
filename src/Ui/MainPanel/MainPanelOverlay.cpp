@@ -10,7 +10,6 @@ MainPanelOverlay::MainPanelOverlay(float leftOffset, float topOffset) : BasicUi(
 
     addAnimation(S_None, Animation(this, S_None, 1, ResourceLoader::getTexture(eType)));
 
-
     time.setCharacterSize(40);
     time.setFont(*System::gameFont);
     time.setFillColor(sf::Color::White);

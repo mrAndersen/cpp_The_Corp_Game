@@ -14,7 +14,7 @@ namespace EntityContainer {
 
     std::vector<Elevator *> elevators;
 
-    std::vector<Entity *> getItems() {
+    const std::vector<Entity *> & getItems() {
         return items;
     }
 
@@ -39,7 +39,6 @@ namespace EntityContainer {
     }
 
     void add(Entity *item) {
-		items.reserve(items.capacity() + 1);
         items.push_back(item);
         sort();
     }
@@ -67,6 +66,10 @@ namespace EntityContainer {
 
     void remove(Entity *item) {
         itemsToRemove.push_back(item);
+    }
+
+	void deallocate(Entity *item) {
+		items.erase(std::remove(items.begin(), items.end(), item), items.end());
     }
 
     int size() {

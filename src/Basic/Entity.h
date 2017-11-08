@@ -60,6 +60,8 @@ public:
 
     Entity(Entities type = E_Entity);
 
+    virtual ~Entity();
+
     Entities getEType() const;
 
     void setEType(Entities eType);

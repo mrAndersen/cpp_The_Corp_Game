@@ -253,6 +253,10 @@ Entity::Entity(Entities type) {
     selectAnimation(S_None);
 }
 
+Entity::~Entity() {
+	EntityContainer::deallocate(this);
+}
+
 States Entity::getState() const {
     return state;
 }

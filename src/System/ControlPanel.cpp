@@ -25,12 +25,12 @@ namespace ControlPanel {
 
     void initControlPanel() {
         controls[E_Indicator_Money] = new MoneyIndicator(MoneyIndicator::width / 2, MoneyIndicator::height / 2);
-        controls[E_MainPanelOverlay] = new MainPanelOverlay({(float) System::screenWidth - MainPanelOverlay::width / 2, MainPanelOverlay::height / 2});
+        controls[E_MainPanelOverlay] = new MainPanelOverlay((float) System::screenWidth - MainPanelOverlay::width / 2, MainPanelOverlay::height / 2);
 
-        controls[E_ButtonPause] = new ButtonPause({(float) System::screenWidth - 345, 26});
-        controls[E_Button1x] = new Button1x({(float) System::screenWidth - 293, 26});
-        controls[E_Button5x] = new Button5x({(float) System::screenWidth - 241, 26});
-        controls[E_Button10x] = new Button10x({(float) System::screenWidth - 189, 26});
+		controls[E_ButtonPause] = new ButtonPause((float)System::screenWidth - 345, 26);
+        controls[E_Button1x] = new Button1x((float) System::screenWidth - 293, 26);
+        controls[E_Button5x] = new Button5x((float) System::screenWidth - 241, 26);
+        controls[E_Button10x] = new Button10x((float) System::screenWidth - 189, 26);
 
         controls[E_Question_Mark_ButtonAddClerk] = new QAddClerk(4 + Question::width / 2, 300);
         controls[E_ButtonAddClerk] = new ControlButtonAddClerk(4 + ControlButtonAddClerk::width / 2 + Question::width + 2, 300);

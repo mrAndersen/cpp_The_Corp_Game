@@ -12,7 +12,7 @@ namespace EntityContainer {
 
     extern std::vector<Elevator *> elevators;
 
-    std::vector<Entity *> getItems();
+    const std::vector<Entity *> &getItems();
 
     std::vector<Entity *> getSaveable();
 
@@ -30,7 +30,9 @@ namespace EntityContainer {
 
     void sort();
 
-    void remove(Entity *item);
+	void remove(Entity *item);
+
+	void deallocate(Entity *item);
 
     int size();
 
