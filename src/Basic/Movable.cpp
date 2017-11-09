@@ -22,8 +22,7 @@ void Movable::renderDebugInfo() {
         );
 
         if (!destinations.empty()) {
-            sf::VertexArray lines;
-            lines.resize(destinations.size() + 1);
+            sf::Vertex lines[destinations.size() + 1];
 
             lines[0].position = System::cToGl(worldCoordinates);
             lines[0].color = selected ? sf::Color::Green : sf::Color::Yellow;
@@ -43,7 +42,7 @@ void Movable::renderDebugInfo() {
                 System::window->draw(shape);
             }
 
-            System::window->draw(lines);
+            System::window->draw(lines, destinations.size() + 1, sf::LineStrip);
         }
 
         System::window->draw(debugInfo);

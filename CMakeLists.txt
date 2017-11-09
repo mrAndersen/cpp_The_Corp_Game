@@ -10,10 +10,10 @@ project(the_corp_game)
 set(CMAKE_CXX_STANDARD 17)
 #set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -DCMAKE_C_FLAGS=-pg -DCMAKE_CXX_FLAGS=-pg)
 
-#set(SFML_ROOT "${PROJECT_SOURCE_DIR}/vendor/mingw_sfml-2.4.2")
-set(SFML_ROOT "${PROJECT_SOURCE_DIR}/vendor/sfml-2.4.2-windows")
-#set(SFML_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/vendor/mingw_sfml-2.4.2/include")
-set(SFML_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/vendor/sfml-2.4.2-windows/include")
+set(SFML_ROOT "${PROJECT_SOURCE_DIR}/vendor/mingw_sfml-2.4.2")
+#set(SFML_ROOT "${PROJECT_SOURCE_DIR}/vendor/sfml-2.4.2-windows")
+set(SFML_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/vendor/mingw_sfml-2.4.2/include")
+#set(SFML_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/vendor/sfml-2.4.2-windows/include")
 
 include_directories("${PROJECT_SOURCE_DIR}/src")
 
