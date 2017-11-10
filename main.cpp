@@ -89,21 +89,8 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
 //                ViewHandler::handleViewZoomKeyPress(e);
             }
 
-            if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::V) {
-                int debugMax = 2;
-                System::debug = System::debug == debugMax ? 0 : System::debug + 1;
-            }
-
             DebugPattern::process();
 
-            if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::G) {
-                auto count = 4;
-
-                for (int i = 0; i < count; ++i) {
-                    auto c = new Clerk({System::g_x + (i * 72), 300.f});
-                    c->spawn();
-                }
-            }
 
             if (e.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::LAlt) &&
                 sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {

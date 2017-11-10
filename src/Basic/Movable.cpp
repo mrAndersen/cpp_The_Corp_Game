@@ -67,11 +67,6 @@ void Movable::updateLogic() {
 
     if (moving) {
         state = !destinations.empty() ? S_Walk : S_None;
-
-        //draw mechanics
-        if (isCrossingShafts() && destinations.size() < 2) {
-            setDrawOrder(D_ElevatorShafts - 1, true);
-        }
     }
 
     if (state == S_None) {
@@ -197,12 +192,20 @@ void Movable::updateLogic() {
                     currentDST = DST_Elevator_Exiting;
                     targetElevator->getCabin()->removeMovable(this);
                     targetElevator = nullptr;
+
+                    //to proceed behind shafts
+                    setDrawOrder(D_ElevatorShafts - 1, true);
                     destinations.pop_front();
                 }
 
                 if (local.getType() == DST_Unknown) {
                     currentDST = DST_Unknown;
                     destinations.pop_front();
+                }
+
+                if (local.getCoordinates() == final.getCoordinates()) {
+                    //revert draw order
+                    setDrawOrder(D_Characters, true);
                 }
             }
         }
@@ -221,8 +224,7 @@ void Movable::updateLogic() {
             isInWorkPlace() && state == S_Working &&
             System::gameTime.getHour() >= 12 && System::gameTime.isHourStart() &&
             System::getRandom(0, 100) <= 33
-            )
-    {
+            ) {
 
         moving = true;
         setDrawOrder(D_Characters, true);

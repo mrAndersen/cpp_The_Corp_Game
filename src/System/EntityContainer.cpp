@@ -65,12 +65,6 @@ namespace EntityContainer {
         });
     }
 
-    void resort() {
-        std::sort(items.begin(), items.end(), [](Entity *a, Entity *b) -> bool {
-            return a->getDrawOrder() < b->getDrawOrder();
-        });
-    }
-
     void remove(Entity *item) {
         itemsToRemove.push_back(item);
     }
@@ -173,9 +167,7 @@ namespace EntityContainer {
 
     void refreshEntities() {
         for (auto entity:items) {
-            if (entity) {
-                entity->update();
-            }
+            entity->update();
         }
 
         for (auto d:itemsToRemove) {
