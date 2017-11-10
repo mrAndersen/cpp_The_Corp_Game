@@ -11,11 +11,16 @@ Office::Office() {
     workPlaces[3] = new WorkPlace(worldCoordinates, this);
 
     setSelectable(true);
+    EntityContainer::addToGroup("offices", this);
+}
+
+Office::~Office() {
+    EntityContainer::removeFromGroup("offices", this);
 }
 
 std::vector<Office *> Office::getNeighborOffices() {
     std::vector<Office *> result;
-    std::vector<Entity *> offices = EntityContainer::searchEntitiesByGroup(System::officeGroup);
+    std::vector<Entity *> offices = EntityContainer::getGroupItems("offices");
 
     for (auto e:offices) {
         auto target = dynamic_cast<Office *>(e);

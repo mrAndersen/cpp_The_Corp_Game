@@ -15,6 +15,8 @@ protected:
 public:
     explicit ElevatorShaftMiddle(sf::Vector2f coordinates);
 
+    virtual ~ElevatorShaftMiddle();
+
     float getCost() const;
 
     void setCost(float cost);

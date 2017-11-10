@@ -42,7 +42,7 @@ bool ElevatorCabin::isSpawned() const {
 }
 
 bool ElevatorCabin::isInsideShaftBoundaries() {
-    for (auto e:EntityContainer::getItems()) {
+    for (auto e:EntityContainer::items) {
         if (e != this) {
             if (
                     e->getEType() == E_ElevatorShaftMiddle &&
@@ -87,7 +87,7 @@ void ElevatorCabin::spawn() {
     auto elevator = new Elevator();
     elevator->addCabin(this);
 
-    for (auto e:EntityContainer::getItems()) {
+    for (auto e:EntityContainer::items) {
 
         if (auto d = dynamic_cast<ElevatorShaftMiddle *>(e)) {
             if (d->getWorldCoordinates().x == worldCoordinates.x) {

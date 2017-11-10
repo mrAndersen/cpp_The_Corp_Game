@@ -104,8 +104,8 @@ bool Entity::isOnTheGround() {
 
 bool Entity::intersectsWithObjects() {
     std::vector<Office *> result;
-    std::vector<Entity *> offices = EntityContainer::searchEntitiesByGroup(System::officeGroup);
-    std::vector<Entity *> shafts = EntityContainer::searchEntitiesByGroup(System::elevatorShafts);
+    std::vector<Entity *> offices = EntityContainer::getGroupItems("offices");
+    std::vector<Entity *> shafts = EntityContainer::getGroupItems("shafts");
 
     for (auto target:offices) {
         if (this != target) {

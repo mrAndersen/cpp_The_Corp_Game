@@ -3,36 +3,46 @@
 
 #include "..\Component\Elevator.h"
 #include "..\Office\Office.h"
-#include "EntityGroup.h"
 
 namespace EntityContainer {
-    extern std::vector<Entity *> items;
 
     extern std::vector<sf::VertexArray> verticies;
-
     extern std::vector<Elevator *> elevators;
 
-    const std::vector<Entity *> &getItems();
 
-    std::vector<Entity *> getSaveable();
+    //groups
+    extern std::map<std::string, std::vector<Entity *>> itemsByGroup;
 
-    Entity *searchSingleEntityByType(Entities type);
+    void addToGroup(const std::string &groupName, Entity *target);
 
-    std::vector<Entity *> searchEntitiesByType(Entities type);
+    void removeFromGroup(const std::string &groupName, Entity *target);
 
-    std::vector<Entity *> searchEntitiesByGroup(EntityGroup group);
+    std::vector<Entity *> getGroupItems(const std::string &groupName);
+    //groups
 
-    void addElevator(Elevator * elevator);
 
-    std::vector<Elevator *> getElevators();
+    //items
+    extern std::vector<Entity *> items;
 
     void add(Entity *item);
 
+    void remove(Entity *item);
+
+    void deallocate(Entity *item);
+
     void sort();
+    //items
 
-	void remove(Entity *item);
 
-	void deallocate(Entity *item);
+
+
+
+    std::vector<Entity *> getSaveable();
+
+    void addElevator(Elevator *elevator);
+
+    std::vector<Elevator *> getElevators();
+
 
     int size();
 

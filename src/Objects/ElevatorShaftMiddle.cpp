@@ -17,6 +17,11 @@ ElevatorShaftMiddle::ElevatorShaftMiddle(sf::Vector2f coordinates) : Entity(E_El
     initEntity();
 
     EntityContainer::add(this);
+    EntityContainer::addToGroup("shafts", this);
+}
+
+ElevatorShaftMiddle::~ElevatorShaftMiddle() {
+    EntityContainer::removeFromGroup("shafts", this);
 }
 
 float ElevatorShaftMiddle::getCost() const {
@@ -28,7 +33,7 @@ void ElevatorShaftMiddle::setCost(float cost) {
 }
 
 bool ElevatorShaftMiddle::hasMiddleShaftOnTheBottom() {
-    for (auto e:EntityContainer::getItems()) {
+    for (auto e:EntityContainer::items) {
 
         if (auto d = dynamic_cast<ElevatorShaftMiddle *>(e) && e->getTop() == bottom) {
             return true;
@@ -40,7 +45,7 @@ bool ElevatorShaftMiddle::hasMiddleShaftOnTheBottom() {
 
 std::vector<Office *> ElevatorShaftMiddle::getNeighborOffices() {
     std::vector<Office *> result;
-    std::vector<Entity *> offices = EntityContainer::searchEntitiesByGroup(System::officeGroup);
+    std::vector<Entity *> offices = EntityContainer::getGroupItems("offices");
 
     for (auto e:offices) {
         auto target = dynamic_cast<Office *>(e);
@@ -81,3 +86,5 @@ void ElevatorShaftMiddle::spawn() {
 
     spawned = true;
 }
+
+

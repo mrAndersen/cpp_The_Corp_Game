@@ -21,6 +21,8 @@ protected:
 public:
     explicit ElevatorShaftTop(sf::Vector2f coordinates);
 
+    virtual ~ElevatorShaftTop();
+
     Elevator *getElevator() const;
 
     void setElevator(Elevator *elevator);

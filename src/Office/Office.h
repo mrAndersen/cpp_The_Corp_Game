@@ -17,6 +17,8 @@ protected:
 public:
     Office();
 
+    virtual ~Office();
+
     WorkPlace *const *getWorkPlaces() const;
 
     std::vector<Office *> getNeighborOffices();

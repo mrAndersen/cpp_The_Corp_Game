@@ -59,7 +59,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
 
             //entity selection
             if (e.type == sf::Event::MouseButtonPressed && e.mouseButton.button == sf::Mouse::Left) {
-                for (auto ex:EntityContainer::getItems()) {
+                for (auto ex:EntityContainer::items) {
                     if (
                             !System::spawningUnit &&
                             ex->mouseIn() &&
@@ -68,7 +68,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
                             ex->getLiveClock().getElapsedTime().asSeconds() >= 1
                             ) {
 
-                        for (auto ei:EntityContainer::getItems()) {
+                        for (auto ei:EntityContainer::items) {
                             if (ei != ex) {
                                 ei->setSelected(false);
                             }

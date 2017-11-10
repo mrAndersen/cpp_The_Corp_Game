@@ -8,14 +8,21 @@
 namespace EntityContainer {
     std::vector<Entity *> items = {};
 
+    std::map<std::string, std::vector<Entity *>> itemsByGroup;
+
     std::vector<Entity *> itemsToRemove = {};
 
     std::vector<sf::VertexArray> verticies;
 
     std::vector<Elevator *> elevators;
 
-    const std::vector<Entity *> & getItems() {
-        return items;
+    void addToGroup(const std::string &groupName, Entity *target) {
+        itemsByGroup[groupName].push_back(target);
+    }
+
+    void removeFromGroup(const std::string &groupName, Entity *target){
+        auto vector = itemsByGroup[groupName];
+        vector.erase(std::remove(vector.begin(), vector.end(), target), vector.end());
     }
 
     std::vector<Entity *> getSaveable() {
@@ -68,8 +75,8 @@ namespace EntityContainer {
         itemsToRemove.push_back(item);
     }
 
-	void deallocate(Entity *item) {
-		items.erase(std::remove(items.begin(), items.end(), item), items.end());
+    void deallocate(Entity *item) {
+        items.erase(std::remove(items.begin(), items.end(), item), items.end());
     }
 
     int size() {
@@ -164,7 +171,6 @@ namespace EntityContainer {
     }
 
 
-
     void refreshEntities() {
         for (auto entity:items) {
             if (entity) {
@@ -185,40 +191,9 @@ namespace EntityContainer {
         elevators.push_back(elevator);
     }
 
-    std::vector<Entity *> searchEntitiesByType(Entities type) {
-        std::vector<Entity *> buffer;
-
-        for (auto e:items) {
-            if (e->getEType() == type) {
-                buffer.push_back(e);
-            }
-        }
-
-        return buffer;
+    std::vector<Entity *> getGroupItems(const std::string &groupName) {
+        return itemsByGroup[groupName];
     }
 
-    std::vector<Entity *> searchEntitiesByGroup(EntityGroup group) {
-        std::vector<Entity *> buffer;
-
-        for (auto e:items) {
-            for (auto g:group.get()) {
-                if (e->getEType() == g) {
-                    buffer.push_back(e);
-                }
-            }
-        }
-
-        return buffer;
-    }
-
-    Entity *searchSingleEntityByType(Entities type) {
-        for (auto e:items) {
-            if (e->getEType() == type) {
-                return e;
-            }
-        }
-
-        return nullptr;
-    }
 }
 

@@ -313,8 +313,7 @@ void Movable::createWorkPlaceRoute() {
         if (targetElevator) {
             destinations.push_back(Destination::createElevatorWaitingDST(targetElevator, this));
             destinations.push_back(Destination::createElevatorCabinDST(targetElevator, this));
-            destinations.push_back(Destination::createElevatorExitingDST(targetElevator, this,
-                                                                         currentWorkPlace->getWorldCoordinates()));
+            destinations.push_back(Destination::createElevatorExitingDST(targetElevator, this, currentWorkPlace->getWorldCoordinates()));
             destinations.push_back(Destination::createWorkplaceDST(this));
         }
     }
@@ -446,7 +445,7 @@ void Movable::spawn() {
 
 void Movable::searchWorkPlace() {
     if (!this->currentWorkPlace && this->isSpawned()) {
-        auto offices = EntityContainer::searchEntitiesByGroup(System::officeGroup);
+        auto offices = EntityContainer::getGroupItems("offices");
         std::map<float, WorkPlace *> buffer;
 
         for (auto e:offices) {
@@ -543,8 +542,8 @@ void Movable::updateFloor() {
 }
 
 sf::Vector2f Movable::findNearestOutside() {
-    auto offices = EntityContainer::searchEntitiesByGroup(System::officeGroup);
-    auto shafts = EntityContainer::searchEntitiesByGroup(System::elevatorShafts);
+    auto offices = EntityContainer::getGroupItems("offices");
+    auto shafts = EntityContainer::getGroupItems("shafts");
     std::vector<Entity *> objects;
 
     objects.reserve(offices.size() + shafts.size());
@@ -590,7 +589,7 @@ float Movable::getFloorBottom(sf::Vector2f coordinates) {
 
 //@todo optimize for only local shafts
 bool Movable::isCrossingShafts() {
-    auto shafts = EntityContainer::searchEntitiesByGroup(System::elevatorShafts);
+    auto shafts = EntityContainer::getGroupItems("shafts");
 
     for (auto shaft:shafts) {
         if (rect.intersects(shaft->getRect())) {

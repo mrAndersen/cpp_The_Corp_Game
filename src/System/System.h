@@ -8,7 +8,6 @@
 #include <SFML/Graphics/Text.hpp>
 #include <deque>
 #include "GameTime.h"
-#include "EntityGroup.h"
 
 namespace System {
     extern unsigned int screenWidth;
@@ -31,10 +30,6 @@ namespace System {
     extern float timeFactor;
     //sys
 
-
-    //group
-    extern EntityGroup officeGroup;
-    extern EntityGroup elevatorShafts;
 
     //group
 

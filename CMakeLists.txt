@@ -8,7 +8,6 @@ endif()
 
 project(the_corp_game)
 set(CMAKE_CXX_STANDARD 17)
-#set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -DCMAKE_C_FLAGS=-pg -DCMAKE_CXX_FLAGS=-pg)
 
 set(SFML_ROOT "${PROJECT_SOURCE_DIR}/vendor/mingw_sfml-2.4.2")
 #set(SFML_ROOT "${PROJECT_SOURCE_DIR}/vendor/sfml-2.4.2-windows")
@@ -126,9 +125,6 @@ add_executable(
         src/Ui/ControlButtonAddElevator.cpp
         src/Ui/ControlButtonAddElevator.h
 
-        src/System/EntityGroup.cpp
-        src/System/EntityGroup.h
-
         src/Ui/Questions/QAddClerk.cpp
         src/Ui/Questions/QAddClerk.h
 
@@ -183,7 +179,7 @@ if(SFML_FOUND)
     FIND_LIBRARY (PSAPI Psapi)
 
     include_directories(${SFML_INCLUDE_DIR})
-    target_link_libraries(${EXECUTABLE_NAME} ${PSAPI} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
+    target_link_libraries(${EXECUTABLE_NAME} ${PSAPI} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES} -static-libgcc -static-libstdc++ -pg)
 endif()
 
 
