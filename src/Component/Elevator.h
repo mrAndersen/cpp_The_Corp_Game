@@ -11,6 +11,7 @@ class ElevatorShaftTop;
 class ElevatorShaftMiddle;
 class ElevatorCabin;
 class Elevator {
+    int boarding = 0;
 
     float top = 0;
     float left = 0;
@@ -28,6 +29,12 @@ class Elevator {
 
 public:
     ElevatorCabin *getCabin() const;
+
+    int getBoarding() const;
+
+    void incBoarding();
+
+    void decBoarding();
 
     bool isWaiting() const;
 

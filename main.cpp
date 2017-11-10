@@ -94,7 +94,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
             //debug logic
 
             if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::Numpad1) {
-                auto top = 9000;
+                auto top = 900;
 
                 for (int i = 0; i <= top; ++i) {
 

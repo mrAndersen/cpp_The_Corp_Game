@@ -28,15 +28,22 @@ void Elevator::addMiddleSection(ElevatorShaftMiddle *shaft) {
 }
 
 void Elevator::drawDebug() {
-
+    sf::Text text;
     sf::RectangleShape rect;
     sf::Vector2f position(left, top);
 
     rect.setPosition(System::cToGl(position));
     rect.setSize({20, 20});
-
     rect.setFillColor(sf::Color::Green);
+
+    text.setFillColor(sf::Color::Black);
+    text.setFont(*System::debugFont);
+    text.setCharacterSize(26);
+    text.setPosition(System::cToGl(position));
+    text.setString(std::to_string(boarding));
+
     System::window->draw(rect);
+    System::window->draw(text);
 }
 
 void Elevator::update() {
@@ -66,11 +73,11 @@ void Elevator::update() {
             cabin->setWorldCoordinates({current.x, current.y - frameDistance});
         }
 
-        if(current.y > nextCoord.y && direction == Up){
+        if (current.y > nextCoord.y && direction == Up) {
             cabin->setWorldCoordinates({current.x, nextCoord.y});
         }
 
-        if(current.y < nextCoord.y && direction == Down){
+        if (current.y < nextCoord.y && direction == Down) {
             cabin->setWorldCoordinates({current.x, nextCoord.y});
         }
 
@@ -98,13 +105,13 @@ void Elevator::update() {
         }
     }
 
-    if(queue.empty()){
+    if (queue.empty()) {
         direction = None;
     }
 }
 
 void Elevator::addToQueue(int floor) {
-    if(queue.size() == cabin->getCapacity()){
+    if (queue.size() == cabin->getCapacity()) {
         return;
     }
 
@@ -116,11 +123,11 @@ void Elevator::addToQueue(int floor) {
         direction = Down;
     }
 
-    if(direction == Up && floor < cabin->getFloor()){
+    if (direction == Up && floor < cabin->getFloor()) {
         return;
     }
 
-    if(direction == Down && floor > cabin->getFloor()){
+    if (direction == Down && floor > cabin->getFloor()) {
         return;
     }
 
@@ -173,4 +180,16 @@ bool Elevator::isWaiting() const {
 
 void Elevator::setWaiting(bool waiting) {
     Elevator::waiting = waiting;
+}
+
+int Elevator::getBoarding() const {
+    return boarding;
+}
+
+void Elevator::decBoarding() {
+    boarding--;
+}
+
+void Elevator::incBoarding() {
+    boarding++;
 }

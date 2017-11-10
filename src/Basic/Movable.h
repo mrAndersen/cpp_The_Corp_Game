@@ -32,7 +32,7 @@ protected:
 
     WorkPlace *currentWorkPlace = nullptr;
 
-    std::vector<Destination> destinations;
+    std::deque<Destination> destinations;
     DestinationType currentDST = DST_Unknown;
     bool moving = false;
     Elevator *targetElevator = nullptr;
