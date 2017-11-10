@@ -67,7 +67,7 @@ namespace System {
     extern int framesPassed;
     extern int entitiesOnScreen;
     extern int fps;
-    extern bool debug;
+    extern int debug;
     //debug
 
     RECT getScreenBoundaries();

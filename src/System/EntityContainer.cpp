@@ -184,6 +184,7 @@ namespace EntityContainer {
                 delete d;
             }
         }
+
         itemsToRemove.clear();
     }
 

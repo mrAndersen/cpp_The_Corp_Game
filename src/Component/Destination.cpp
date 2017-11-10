@@ -35,6 +35,8 @@ Destination Destination::createElevatorWaitingDST(Elevator *elevator, Movable *m
         return {{elevator->getRight() + movable->getWidth() / 2 + System::getRandom(0, scatter),
                  movable->getWorldCoordinates().y}, DST_Elevator_Waiting};
     }
+
+    throw EXCEPTION_NONCONTINUABLE;
 }
 
 Destination Destination::createElevatorCabinDST(Elevator *elevator, Movable *movable) {
@@ -54,6 +56,8 @@ Destination Destination::createElevatorExitingDST(Elevator *elevator, Movable *m
         return {{elevator->getLeft(), movable->getFloorBottom(finalDestination) + movable->getHeight() / 2},
                 DST_Elevator_Exiting};
     }
+
+    throw EXCEPTION_NONCONTINUABLE;
 }
 
 Destination Destination::createWorkplaceDST(Movable *movable) {

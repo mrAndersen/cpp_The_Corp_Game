@@ -69,7 +69,7 @@ namespace System {
     int framesPassed = 0;
     int entitiesOnScreen = 0;
     int fps = 0;
-    bool debug = true;
+    int debug = 1;
     //debug
 
     void refreshDayTime() {
@@ -147,7 +147,7 @@ namespace System {
             debugPanelTextNodes["p_cash"].setString("p_cash: " + std::to_string(System::cash));
             debugPanelTextNodes["p_time"].setString("p_time:" + gameTime.get());
             debugPanelTextNodes["p_time_factor"].setString("p_time_factor:" + std::to_string(timeFactor));
-            debugPanelTextNodes["e"].setString("e:" + std::to_string(System::event.type) + "(" + std::to_string(System::eventDeque.size()) + ")");
+            debugPanelTextNodes["d_level"].setString("d_level:" + std::to_string(System::debug));
 
 
             int i = 1;
@@ -212,7 +212,7 @@ namespace System {
         createDebugString("p_cash");
         createDebugString("p_time");
         createDebugString("p_time_factor");
-        createDebugString("e");
+        createDebugString("d_level");
     }
 
     sf::Vector2f cToGl(sf::Vector2f worldCoordinates) {

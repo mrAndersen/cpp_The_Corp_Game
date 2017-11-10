@@ -29,9 +29,8 @@ ElevatorShaftTop::~ElevatorShaftTop() {
 }
 
 bool ElevatorShaftTop::hasMiddleShaftOnTheBottom() {
-    for (auto e:EntityContainer::items) {
-
-        if (auto d = dynamic_cast<ElevatorShaftMiddle *>(e) && e->getTop() == bottom) {
+    for (auto e:EntityContainer::getGroupItems("shafts")) {
+        if (dynamic_cast<ElevatorShaftMiddle *>(e) && e->getTop() == bottom) {
             return true;
         }
     }

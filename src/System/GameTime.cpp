@@ -69,3 +69,7 @@ int GameTime::getHour() const {
 int GameTime::getMinute() const {
     return minute;
 }
+
+bool GameTime::isHourStart() {
+    return minute == 0;
+}

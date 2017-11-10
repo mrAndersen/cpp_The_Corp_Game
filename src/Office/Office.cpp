@@ -153,6 +153,8 @@ WorkPlace *Office::getNextFreeWorkPlace() {
             return workPlace;
         }
     }
+
+    return nullptr;
 }
 
 WorkPlace *const *Office::getWorkPlaces() const {

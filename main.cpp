@@ -8,6 +8,7 @@
 #include "src\System\EntityContainer.h"
 #include "src\System\ControlPanel.h"
 #include "src\System\SaveManager.h"
+#include "src\System\DebugPattern.h"
 #include "src/Characters/Clerk.h"
 
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow) {
@@ -89,50 +90,11 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
             }
 
             if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::V) {
-                System::debug = !System::debug;
-            }
-            //debug logic
-
-            if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::Numpad1) {
-                auto top = 900;
-
-                for (int i = 0; i <= top; ++i) {
-
-                    if ((i % 150 == 0 || i == 0) && i != top) {
-                        auto a = new ElevatorShaftMiddle({25, 175 + (float) i});
-                        auto a2 = new ElevatorShaftMiddle({775, 175 + (float) i});
-                        auto a3 = new ElevatorShaftMiddle({1525, 175 + (float) i});
-
-                        a->spawn();
-                        a2->spawn();
-                        a3->spawn();
-
-                        auto o = new OfficeClerk({1150, 175 + (float) i});
-                        o->spawn();
-
-                        auto o2 = new OfficeClerk({400, 175 + (float) i});
-                        o2->spawn();
-                    }
-
-                    if (i == top) {
-                        auto t = new ElevatorShaftTop({25, 175 + (float) i});
-                        auto t2 = new ElevatorShaftTop({775, 175 + (float) i});
-                        auto t3 = new ElevatorShaftTop({1525, 175 + (float) i});
-                        t->spawn();
-                        t2->spawn();
-                        t3->spawn();
-
-                        auto c = new ElevatorCabin({25, 175 + (float) (900 - 150)});
-                        auto c2 = new ElevatorCabin({775, 175 + (float) (900 - 150)});
-                        auto c3 = new ElevatorCabin({1525, 175 + (float) (900 - 150)});
-                        c->spawn();
-                        c2->spawn();
-                        c3->spawn();
-                    }
-                }
+                int debugMax = 2;
+                System::debug = System::debug == debugMax ? 0 : System::debug + 1;
             }
 
-            //debug logic
+            DebugPattern::process();
 
             if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::G) {
                 auto count = 4;
@@ -173,5 +135,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
 
         System::window->display();
     }
+
+    return 0;
 }
 

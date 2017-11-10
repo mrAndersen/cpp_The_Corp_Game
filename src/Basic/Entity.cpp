@@ -156,9 +156,9 @@ int Entity::getDrawOrder() const {
 
 void Entity::setDrawOrder(int drawOrder, bool resort) {
     Entity::drawOrder = drawOrder;
-//    if (resort) {
-//        EntityContainer::sort();
-//    }
+    if (resort) {
+        EntityContainer::sort();
+    }
 }
 
 void Entity::initEntity() {
@@ -223,15 +223,6 @@ void Entity::renderErrorText() {
 void Entity::renderDebugInfo() {
     if (System::debug) {
         debugInfo.setPosition(System::cToGl(worldCoordinates.x + width / 2, worldCoordinates.y + height / 2));
-//        debugInfo.setString(
-//                "id: " + std::to_string(id) + "\n" +
-//                "type: " + std::to_string(eType) + "\n" +
-//                "pos: {" + std::to_string(worldCoordinates.x) + "," + std::to_string(worldCoordinates.y) + "}\n" +
-//                "left: " + std::to_string(left) + "\n" +
-//                "right: " + std::to_string(right) + "\n" +
-//                "top: " + std::to_string(top) + "\n" +
-//                "bottom: " + std::to_string(bottom) + "\n"
-//        );
         System::window->draw(debugInfo);
     }
 }
@@ -254,7 +245,7 @@ Entity::Entity(Entities type) {
 }
 
 Entity::~Entity() {
-	EntityContainer::deallocate(this);
+    EntityContainer::deallocate(this);
 }
 
 States Entity::getState() const {
@@ -322,13 +313,13 @@ void Entity::addAnimation(States state, const Animation &animation) {
 void Entity::selectAnimation(States state) {
     if (!animations.empty()) {
         if (!animations.count(state)) {
-			if (!animations.count(S_None)) {
-				currentAnimation = &animations.at(S_Button_Normal);
-			}else {
-				currentAnimation = &animations.at(S_None);
-			}
+            if (!animations.count(S_None)) {
+                currentAnimation = &animations.at(S_Button_Normal);
+            } else {
+                currentAnimation = &animations.at(S_None);
+            }
         } else {
-			currentAnimation = &animations.at(state);
+            currentAnimation = &animations.at(state);
         }
     }
 }

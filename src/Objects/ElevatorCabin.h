@@ -6,16 +6,20 @@
 #include "..\Text\TextEntity.h"
 
 class Movable;
+
+class Elevator;
+
 class ElevatorCabin : public Entity {
     const static int width = 150;
     const static int height = 150;
 
     float cost = 0;
-    int capacity = 10;
-    int floor = 1;
-    int speed = 250;
+    int capacity = 20;
+    int floor = 0;
+    int speed = 500;
 
     std::vector<Movable *> currentPeople;
+    Elevator *elevator;
 
     sf::Text floorIndicator;
     sf::Text capacityIndicator;

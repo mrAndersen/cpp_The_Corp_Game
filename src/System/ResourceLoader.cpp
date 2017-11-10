@@ -196,7 +196,6 @@ namespace ResourceLoader {
     }
 
     std::string getRandomName(Gender gender) {
-
         if (gender == Gender::G_Male) {
             return maleNames[System::getRandom(0, maleNames.size())];
         }
@@ -204,6 +203,8 @@ namespace ResourceLoader {
         if (gender == Gender::G_Female) {
             return femaleNames[System::getRandom(0, femaleNames.size())];
         }
+
+        return "Unknown";
     }
 
     States getStateEnumNotation(const std::string &title) {
@@ -213,12 +214,16 @@ namespace ResourceLoader {
     Gender getGenderEnumNotation(const std::string &title) {
         if (title == "m") { return G_Male; }
         if (title == "f") { return G_Female; }
+
+        return G_Male;
     }
 
     Race getRaceEnumNotation(const std::string &title) {
         if (title == "w") { return R_White; }
         if (title == "b") { return R_Black; }
         if (title == "a") { return R_Asian; }
+
+        return R_White;
     }
 
     std::string getStateTextNotation(States state) {
@@ -244,12 +249,16 @@ namespace ResourceLoader {
     std::string getGenderTextNotation(Gender gender) {
         if (gender == G_Male) { return "m"; }
         if (gender == G_Female) { return "f"; }
+
+        return "m";
     }
 
     std::string getRaceTextNotation(Race race) {
         if (race == R_White) { return "w"; }
         if (race == R_Black) { return "b"; }
         if (race == R_Asian) { return "a"; }
+
+        return "w";
     }
 
 

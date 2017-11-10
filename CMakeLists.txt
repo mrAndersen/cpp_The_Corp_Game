@@ -8,6 +8,7 @@ endif()
 
 project(the_corp_game)
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_FLAGS "-static-libgcc -static-libstdc++")
 
 set(SFML_ROOT "${PROJECT_SOURCE_DIR}/vendor/mingw_sfml-2.4.2")
 #set(SFML_ROOT "${PROJECT_SOURCE_DIR}/vendor/sfml-2.4.2-windows")
@@ -165,7 +166,7 @@ add_executable(
         src/Characters/Manager.h
 
         src/Ui/Questions/QAddManager.cpp
-        src/Ui/Questions/QAddManager.h)
+        src/Ui/Questions/QAddManager.h src/System/DebugPattern.cpp src/System/DebugPattern.h)
 
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}" ${CMAKE_MODULE_PATH})
@@ -179,7 +180,7 @@ if(SFML_FOUND)
     FIND_LIBRARY (PSAPI Psapi)
 
     include_directories(${SFML_INCLUDE_DIR})
-    target_link_libraries(${EXECUTABLE_NAME} ${PSAPI} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES} -static-libgcc -static-libstdc++ -pg)
+    target_link_libraries(${EXECUTABLE_NAME} ${PSAPI} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
 endif()
 
 

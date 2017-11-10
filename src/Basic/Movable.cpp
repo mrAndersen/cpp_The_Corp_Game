@@ -22,7 +22,8 @@ void Movable::renderDebugInfo() {
         );
 
         if (!destinations.empty()) {
-            sf::Vertex lines[destinations.size() + 1];
+            auto size = destinations.size() + 1;
+            sf::Vertex lines[size];
 
             lines[0].position = System::cToGl(worldCoordinates);
             lines[0].color = selected ? sf::Color::Green : sf::Color::Yellow;
@@ -212,12 +213,16 @@ void Movable::updateLogic() {
         searchWorkPlace();
     }
 
-//    if(moving && currentDST == DST_Elevator_Waiting && )
 
     //ONE TIME EXEC
     //go smoke
-    if (isInWorkPlace() && smoking && state == S_Working && !moving &&
-        (System::gameTime.getHour() == 12 || System::gameTime.getHour() == 16)) {
+    if (
+            smoking && !moving &&
+            isInWorkPlace() && state == S_Working &&
+            System::gameTime.getHour() >= 12 && System::gameTime.isHourStart() &&
+            System::getRandom(0, 100) <= 33
+            )
+    {
 
         moving = true;
         setDrawOrder(D_Characters, true);
@@ -254,7 +259,7 @@ void Movable::updateLogic() {
 }
 
 void Movable::createHomeRoute() {
-    auto home = findNearestOutside();
+    auto home = searchNearestOutside();
 
     if (floor == 1) {
         destinations.push_back(Destination::createHomeDST(this, home));
@@ -281,14 +286,15 @@ void Movable::createWorkPlaceRoute() {
         if (targetElevator) {
             destinations.push_back(Destination::createElevatorWaitingDST(targetElevator, this));
             destinations.push_back(Destination::createElevatorCabinDST(targetElevator, this));
-            destinations.push_back(Destination::createElevatorExitingDST(targetElevator, this, currentWorkPlace->getWorldCoordinates()));
+            destinations.push_back(Destination::createElevatorExitingDST(targetElevator, this,
+                                                                         currentWorkPlace->getWorldCoordinates()));
             destinations.push_back(Destination::createWorkplaceDST(this));
         }
     }
 }
 
 void Movable::createSmokeAreaRoute() {
-    auto smokeArea = findNearestOutside();
+    auto smokeArea = searchNearestOutside();
 
     if (floor == 1) {
         destinations.push_back(Destination::createSmokeAreaDST(this, smokeArea));
@@ -338,9 +344,12 @@ Movable::Movable(Entities type, int width, int height) : Entity(type) {
 
     personName = ResourceLoader::getRandomName(gender);
 
-    auto rnd = System::getRandom(1, 3);
+    //40% smoking people
+    if (System::getRandom(0, 100) <= 40) {
+        smoking = true;
+    }
 
-    switch (rnd) {
+    switch (System::getRandom(1, 3)) {
         case 1:
             race = R_White;
             break;
@@ -354,9 +363,7 @@ Movable::Movable(Entities type, int width, int height) : Entity(type) {
             race = R_White;
     }
 
-    auto rnd2 = System::getRandom(1, 2);
-
-    switch (rnd2) {
+    switch (System::getRandom(1, 2)) {
         case 1:
             gender = G_Male;
             break;
@@ -505,33 +512,10 @@ void Movable::updateFloor() {
     floor = ((int) worldCoordinates.y - ((int) worldCoordinates.y % System::gridSize)) / System::gridSize / 3;
 }
 
-sf::Vector2f Movable::findNearestOutside() {
-    auto offices = EntityContainer::getGroupItems("offices");
-    auto shafts = EntityContainer::getGroupItems("shafts");
-    std::vector<Entity *> objects;
-
-    objects.reserve(offices.size() + shafts.size());
-    objects.insert(objects.end(), offices.begin(), offices.end());
-    objects.insert(objects.end(), shafts.begin(), shafts.end());
-
-    std::map<int, Entity *> lefts;
-    std::map<int, Entity *> rights;
-
-    for (auto e:objects) {
-        auto distance = std::fabs(e->getLeft() - worldCoordinates.x);
-        lefts[distance] = e;
-    }
-
-    for (auto e:objects) {
-        auto distance = std::fabs(e->getRight() - worldCoordinates.x);
-        rights[distance] = e;
-    }
-
-    auto l = lefts.begin()->second;
-    auto r = lefts.begin()->second;
+sf::Vector2f Movable::searchNearestOutside() {
 
 
-    return {-100, 150};
+    return {-450, 150};
 }
 
 float Movable::getFloorBottom(int floor) {

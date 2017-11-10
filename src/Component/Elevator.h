@@ -34,6 +34,8 @@ public:
 
     void incBoarding();
 
+    const std::deque<int> &getQueue() const;
+
     void decBoarding();
 
     bool isWaiting() const;

@@ -77,7 +77,7 @@ public:
 
     void createHomeRoute();
 
-    sf::Vector2f findNearestOutside();
+    sf::Vector2f searchNearestOutside();
 
     void addAnimation(States state, Gender gender, Race race, int frames = 24, int duration = 1000000);
 

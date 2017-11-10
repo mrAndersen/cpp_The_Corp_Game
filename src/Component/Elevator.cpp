@@ -28,26 +28,36 @@ void Elevator::addMiddleSection(ElevatorShaftMiddle *shaft) {
 }
 
 void Elevator::drawDebug() {
-    sf::Text text;
+
     sf::RectangleShape rect;
     sf::Vector2f position(left, top);
 
     rect.setPosition(System::cToGl(position));
     rect.setSize({20, 20});
     rect.setFillColor(sf::Color::Green);
-
-    text.setFillColor(sf::Color::Black);
-    text.setFont(*System::debugFont);
-    text.setCharacterSize(26);
-    text.setPosition(System::cToGl(position));
-    text.setString(std::to_string(boarding));
-
     System::window->draw(rect);
-    System::window->draw(text);
+
+
+    if (System::debug > 0) {
+        sf::Text text;
+        std::string ds;
+
+        text.setFillColor(sf::Color::Black);
+        text.setFont(*System::debugFont);
+        text.setCharacterSize(20);
+        text.setPosition(System::cToGl(position));
+        ds = "b:" + std::to_string(boarding) + "d:" + std::to_string(direction) + "q:";
+
+        for (auto i:queue) {
+            ds += std::to_string(i) + ",";
+        }
+
+        text.setString(ds);
+        System::window->draw(text);
+    }
 }
 
 void Elevator::update() {
-
     if (!queue.empty() && !waiting) {
         float frameTimeSeconds = (float) System::frameTimeMcs / 1000000;
         float frameDistance = frameTimeSeconds * cabin->getSpeed() * System::timeFactor;
@@ -57,7 +67,7 @@ void Elevator::update() {
         auto nextCoord = sf::Vector2f(cabin->getWorldCoordinates().x,
                                       next * System::gridSize * 3 + System::gridSize / 2);
 
-        if (current.y < nextCoord.y) {
+        if (direction == Up) {
             if (current.y + 100 >= nextCoord.y) {
                 frameDistance = frameDistance / 2;
             }
@@ -65,7 +75,7 @@ void Elevator::update() {
             cabin->setWorldCoordinates({current.x, current.y + frameDistance});
         }
 
-        if (current.y > nextCoord.y) {
+        if (direction == Down) {
             if (current.y - 100 <= nextCoord.y) {
                 frameDistance = frameDistance / 2;
             }
@@ -85,17 +95,16 @@ void Elevator::update() {
             cabin->setWorldCoordinates(nextCoord);
             queue.erase(queue.begin());
 
-            waitTimer.restart();
             waiting = true;
         }
     }
 
-    if (waiting && waitTimer.getElapsedTime().asSeconds() >= 1 / System::timeFactor) {
+    if (waiting && !cabin->getCurrentPeople().empty()) {
         auto people = cabin->getCurrentPeople();
         auto finishedEntering = 0;
 
         for (auto p:people) {
-            if (p->getState() == S_None) {
+            if (p->getState() == S_None && cabin->getRect().intersects(p->getRect())) {
                 finishedEntering++;
             }
         }
@@ -192,4 +201,8 @@ void Elevator::decBoarding() {
 
 void Elevator::incBoarding() {
     boarding++;
+}
+
+const std::deque<int> &Elevator::getQueue() const {
+    return queue;
 }

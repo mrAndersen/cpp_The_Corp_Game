@@ -42,18 +42,14 @@ bool ElevatorCabin::isSpawned() const {
 }
 
 bool ElevatorCabin::isInsideShaftBoundaries() {
-    for (auto e:EntityContainer::items) {
-        if (e != this) {
-            if (
-                    e->getEType() == E_ElevatorShaftMiddle &&
-                    (int) e->getLeft() == (int) left &&
-                    (int) e->getBottom() == (int) bottom &&
-                    (int) e->getTop() == (int) top &&
-                    (int) e->getRight() == (int) right
-                    )
-            {
-                return true;
-            }
+    for (auto e:EntityContainer::getGroupItems("shafts")) {
+        if (
+                (int) e->getLeft() == (int) left &&
+                (int) e->getBottom() == (int) bottom &&
+                (int) e->getTop() == (int) top &&
+                (int) e->getRight() == (int) right
+                ) {
+            return true;
         }
     }
 
@@ -105,6 +101,7 @@ void ElevatorCabin::spawn() {
 
     elevator->addToQueue(1);
     elevator->finish();
+    this->elevator = elevator;
 
 
     Entity::spawn();
