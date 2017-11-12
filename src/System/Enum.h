@@ -80,6 +80,7 @@ enum Entities {
 
 
     E_Clerk = 21,
+    E_Manager = 22,
 
     E_ButtonAddClerk = 31,
     E_Question_Mark_ButtonAddClerk = 311,

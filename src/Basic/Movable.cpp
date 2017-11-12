@@ -504,8 +504,15 @@ Elevator *Movable::searchNearestElevator() {
 }
 
 void Movable::addAnimation(States state, Gender gender, Race race, int frames, int duration) {
-    Animation animation(this, state, frames, ResourceLoader::getCharacterTexture(eType, state, gender, race), duration);
-    Entity::addAnimation(state, animation);
+    auto texture = ResourceLoader::getCharacterTexture(eType, state, gender, race);
+
+    if (texture) {
+        auto animation = Animation(this, state, frames, texture, duration);
+        Entity::addAnimation(state, animation);
+    } else {
+        auto animation = Animation(this, state, frames, ResourceLoader::getCharacterTexture(eType, state, G_Male, R_White), duration);
+        Entity::addAnimation(state, animation);
+    }
 }
 
 void Movable::updateFloor() {

@@ -24,6 +24,9 @@ namespace ResourceLoader {
 
     void loadNames();
 
+    std::string getCharacterTextNotation(Entities character);
+
+
     std::string getStateTextNotation(States state);
 
     States getStateEnumNotation(const std::string &title);
