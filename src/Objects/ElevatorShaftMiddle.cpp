@@ -8,6 +8,7 @@ ElevatorShaftMiddle::ElevatorShaftMiddle(sf::Vector2f coordinates) : Entity(E_El
     setWidth(ElevatorShaftMiddle::width);
     setHeight(ElevatorShaftMiddle::height);
     setCost(1000);
+    setGroupName("shafts");
 
     setWorldCoordinates(coordinates);
     setSelectable(false);
@@ -17,12 +18,9 @@ ElevatorShaftMiddle::ElevatorShaftMiddle(sf::Vector2f coordinates) : Entity(E_El
     initEntity();
 
     EntityContainer::add(this);
-    EntityContainer::addToGroup("shafts", this);
+    EntityContainer::addToGroup(groupName, this);
 }
 
-ElevatorShaftMiddle::~ElevatorShaftMiddle() {
-    EntityContainer::removeFromGroup("shafts", this);
-}
 
 float ElevatorShaftMiddle::getCost() const {
     return cost;

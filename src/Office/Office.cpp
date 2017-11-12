@@ -5,18 +5,17 @@
 #include "..\System\System.h"
 
 Office::Office() {
+    setGroupName("offices");
+
     workPlaces[0] = new WorkPlace(worldCoordinates, this);
     workPlaces[1] = new WorkPlace(worldCoordinates, this);
     workPlaces[2] = new WorkPlace(worldCoordinates, this);
     workPlaces[3] = new WorkPlace(worldCoordinates, this);
 
     setSelectable(true);
-    EntityContainer::addToGroup("offices", this);
+    EntityContainer::addToGroup(groupName, this);
 }
 
-Office::~Office() {
-    EntityContainer::removeFromGroup("offices", this);
-}
 
 std::vector<Office *> Office::getNeighborOffices() {
     std::vector<Office *> result;

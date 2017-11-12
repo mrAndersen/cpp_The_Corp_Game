@@ -24,7 +24,8 @@ class Elevator {
     std::deque<int> queue;
     sf::Clock waitTimer;
 
-    bool waiting = false;
+    bool waiting = true;
+    sf::Clock waitClock;
     Direction direction = Up;
 
 public:

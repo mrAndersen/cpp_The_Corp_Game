@@ -12,6 +12,7 @@ class Entity {
 protected:
     //parameters
     Entities eType = E_Entity;
+    std::string groupName = "~";
     int id;
     std::map<States, Animation> animations;
     Animation *currentAnimation = nullptr;
@@ -41,7 +42,6 @@ protected:
     Direction direction = Direction::None;
 
     sf::Clock liveClock;
-    float frameTimeSeconds;
 
     //property map
     std::map<std::string, int> properties;
@@ -54,13 +54,15 @@ protected:
 public:
     virtual void spawn();
 
+    const std::string &getGroupName() const;
+
+    void setGroupName(const std::string &groupName);
+
     bool isVisible() const;
 
     void setVisible(bool visible);
 
     Entity(Entities type = E_Entity);
-
-    virtual ~Entity();
 
     Entities getEType() const;
 

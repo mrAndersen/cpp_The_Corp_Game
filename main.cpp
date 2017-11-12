@@ -24,7 +24,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
     System::initWindow();
     System::initDebug();
 
-    EntityContainer::initBackground();
+//    EntityContainer::initBackground();
     EntityContainer::initGrid();
     ControlPanel::initControlPanel();
 
@@ -90,7 +90,6 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
             }
 
             DebugPattern::process();
-
 
             if (e.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::LAlt) &&
                 sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {

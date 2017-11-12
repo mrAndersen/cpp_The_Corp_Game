@@ -24,11 +24,11 @@ namespace EntityContainer {
     //items
     extern std::vector<Entity *> items;
 
+    extern std::vector<Entity *> itemsToRemove;
+
     void add(Entity *item);
 
     void remove(Entity *item);
-
-    void deallocate(Entity *item);
 
     void sort();
     //items

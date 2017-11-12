@@ -16,7 +16,7 @@ class ElevatorCabin : public Entity {
     float cost = 0;
     int capacity = 20;
     int floor = 0;
-    int speed = 500;
+    int speed = 300;
 
     std::vector<Movable *> currentPeople;
     Elevator *elevator;

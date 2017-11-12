@@ -7,8 +7,9 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 project(the_corp_game)
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_FLAGS "-static-libgcc -static-libstdc++")
+
 
 set(SFML_ROOT "${PROJECT_SOURCE_DIR}/vendor/mingw_sfml-2.4.2")
 #set(SFML_ROOT "${PROJECT_SOURCE_DIR}/vendor/sfml-2.4.2-windows")

@@ -11,6 +11,7 @@ ElevatorShaftTop::ElevatorShaftTop(sf::Vector2f coordinates) {
     setWidth(ElevatorShaftTop::width);
     setHeight(ElevatorShaftTop::height);
     setCost(1000);
+    setGroupName("shafts");
 
     setWorldCoordinates(coordinates);
     setSelectable(true);
@@ -21,11 +22,7 @@ ElevatorShaftTop::ElevatorShaftTop(sf::Vector2f coordinates) {
     initEntity();
 
     EntityContainer::add(this);
-    EntityContainer::addToGroup("shafts", this);
-}
-
-ElevatorShaftTop::~ElevatorShaftTop() {
-    EntityContainer::removeFromGroup("shafts", this);
+    EntityContainer::addToGroup(groupName, this);
 }
 
 bool ElevatorShaftTop::hasMiddleShaftOnTheBottom() {

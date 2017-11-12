@@ -26,7 +26,7 @@ int Destination::getFloor() {
 Destination Destination::createElevatorWaitingDST(Elevator *elevator, Movable *movable) {
     auto scatter = 100;
 
-    if (movable->getWorldCoordinates().x < elevator->getLeft()) {
+    if (movable->getWorldCoordinates().x <= elevator->getLeft()) {
         return {{elevator->getLeft() - movable->getWidth() / 2 - System::getRandom(0, scatter),
                  movable->getWorldCoordinates().y}, DST_Elevator_Waiting};
     }
@@ -35,8 +35,6 @@ Destination Destination::createElevatorWaitingDST(Elevator *elevator, Movable *m
         return {{elevator->getRight() + movable->getWidth() / 2 + System::getRandom(0, scatter),
                  movable->getWorldCoordinates().y}, DST_Elevator_Waiting};
     }
-
-    throw EXCEPTION_NONCONTINUABLE;
 }
 
 Destination Destination::createElevatorCabinDST(Elevator *elevator, Movable *movable) {
@@ -47,17 +45,15 @@ Destination Destination::createElevatorCabinDST(Elevator *elevator, Movable *mov
 }
 
 Destination Destination::createElevatorExitingDST(Elevator *elevator, Movable *movable, sf::Vector2f finalDestination) {
-    if (finalDestination.x > elevator->getRight()) {
-        return {{elevator->getRight(), movable->getFloorBottom(finalDestination) + movable->getHeight() / 2},
-                DST_Elevator_Exiting};
-    }
-
-    if (finalDestination.x < elevator->getLeft()) {
+    if (finalDestination.x <= elevator->getLeft()) {
         return {{elevator->getLeft(), movable->getFloorBottom(finalDestination) + movable->getHeight() / 2},
                 DST_Elevator_Exiting};
     }
 
-    throw EXCEPTION_NONCONTINUABLE;
+    if (finalDestination.x > elevator->getRight()) {
+        return {{elevator->getRight(), movable->getFloorBottom(finalDestination) + movable->getHeight() / 2},
+                DST_Elevator_Exiting};
+    }
 }
 
 Destination Destination::createWorkplaceDST(Movable *movable) {

@@ -55,6 +55,7 @@ void Movable::updateLogic() {
 
     updateFloor();
 
+    float frameTimeSeconds = (float) System::frameTimeMcs / 1000000;
     float frameDistance = frameTimeSeconds * currentSpeed * System::timeFactor;
 
     if (!spawned) {
@@ -128,11 +129,9 @@ void Movable::updateLogic() {
             if ((int) worldCoordinates.x == (int) local.getCoordinates().x) {
                 if (local.getType() == DST_Elevator_Waiting) {
                     currentDST = DST_Elevator_Waiting;
-
                     targetElevator->addToQueue(floor);
 
-                    if (targetElevator->getCabin()->getBottom() == bottom &&
-                        targetElevator->getCabin()->hasFreeSpace()) {
+                    if (targetElevator->getCabin()->getBottom() == bottom && targetElevator->getCabin()->hasFreeSpace() && targetElevator->isWaiting()) {
 
                         targetElevator->getCabin()->addMovable(this);
                         destinations.pop_front();
@@ -222,8 +221,8 @@ void Movable::updateLogic() {
     if (
             smoking && !moving &&
             isInWorkPlace() && state == S_Working &&
-            System::gameTime.getHour() >= 12 && System::gameTime.isHourStart() &&
-            System::getRandom(0, 100) <= 33
+            System::gameTime.getHour() >= 12 &&
+            System::getRandom(0, System::fps * 1000) <= 50
             ) {
 
         moving = true;
@@ -248,7 +247,7 @@ void Movable::updateLogic() {
 
     //ONE TIME EXEC
     //time to go home
-    if (System::gameTime.isDayEndHour()) {
+    if (System::gameTime.isDayEndHour() && !moving) {
 
         moving = true;
         setDrawOrder(D_Characters, true);
@@ -288,8 +287,7 @@ void Movable::createWorkPlaceRoute() {
         if (targetElevator) {
             destinations.push_back(Destination::createElevatorWaitingDST(targetElevator, this));
             destinations.push_back(Destination::createElevatorCabinDST(targetElevator, this));
-            destinations.push_back(Destination::createElevatorExitingDST(targetElevator, this,
-                                                                         currentWorkPlace->getWorldCoordinates()));
+            destinations.push_back(Destination::createElevatorExitingDST(targetElevator, this, currentWorkPlace->getWorldCoordinates()));
             destinations.push_back(Destination::createWorkplaceDST(this));
         }
     }

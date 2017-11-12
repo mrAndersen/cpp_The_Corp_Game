@@ -66,7 +66,6 @@ void Entity::setInvalid() {
 }
 
 void Entity::updateLogic() {
-    frameTimeSeconds = (float) System::frameTimeMcs / 1000000;
     recalculateBoundaries();
 }
 
@@ -244,10 +243,6 @@ Entity::Entity(Entities type) {
     selectAnimation(S_None);
 }
 
-Entity::~Entity() {
-    EntityContainer::deallocate(this);
-}
-
 States Entity::getState() const {
     return state;
 }
@@ -366,4 +361,12 @@ bool Entity::isUpdated() const {
 
 void Entity::setUpdated(bool updated) {
     Entity::updated = updated;
+}
+
+const std::string &Entity::getGroupName() const {
+    return groupName;
+}
+
+void Entity::setGroupName(const std::string &groupName) {
+    Entity::groupName = groupName;
 }

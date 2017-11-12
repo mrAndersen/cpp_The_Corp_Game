@@ -65,8 +65,7 @@ void ControlButtonAddOffice::update() {
             attachedOffice->setInvalid();
 
             //placement error
-            if (attachedOffice && (attachedOffice->intersectsWithObjects() || attachedOffice->getNeighborOffices().empty() ||
-                                   !attachedOffice->isOnTheGround())) {
+            if (attachedOffice && (attachedOffice->intersectsWithObjects() || attachedOffice->getNeighborOffices().empty() || !attachedOffice->isOnTheGround())) {
                 attachedOffice->getErrorString().setString("Invalid placement position");
             }
 

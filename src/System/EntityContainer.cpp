@@ -17,10 +17,12 @@ namespace EntityContainer {
     std::vector<Elevator *> elevators;
 
     void addToGroup(const std::string &groupName, Entity *target) {
-        itemsByGroup[groupName].push_back(target);
+        if (groupName != "~") {
+            itemsByGroup[groupName].push_back(target);
+        }
     }
 
-    void removeFromGroup(const std::string &groupName, Entity *target){
+    void removeFromGroup(const std::string &groupName, Entity *target) {
         auto vector = itemsByGroup[groupName];
         vector.erase(std::remove(vector.begin(), vector.end(), target), vector.end());
     }
@@ -67,10 +69,6 @@ namespace EntityContainer {
 
     void remove(Entity *item) {
         itemsToRemove.push_back(item);
-    }
-
-    void deallocate(Entity *item) {
-        items.erase(std::remove(items.begin(), items.end(), item), items.end());
     }
 
     int size() {
@@ -166,18 +164,27 @@ namespace EntityContainer {
 
 
     void refreshEntities() {
-        for (auto entity:items) {
+        for (auto &entity:items) {
             entity->update();
         }
 
-        for (auto d:itemsToRemove) {
-            if (std::find(items.begin(), items.end(), d) != items.end()) {
-                items.erase(std::remove(items.begin(), items.end(), d), items.end());
-                delete d;
-            }
-        }
+        if (!itemsToRemove.empty()) {
+            for (auto &e:itemsToRemove) {
+                //remove if item presents in group
+                if (e->getGroupName() != "~") {
+                    auto targetGroup = itemsByGroup[e->getGroupName()];
+                    targetGroup.erase(std::remove(targetGroup.begin(), targetGroup.end(), e), targetGroup.end());
+                }
 
-        itemsToRemove.clear();
+                //remove from actual vector
+                items.erase(std::remove(items.begin(), items.end(), e), items.end());
+
+                //free object
+                delete e;
+            }
+
+            itemsToRemove.clear();
+        }
     }
 
     void addElevator(Elevator *elevator) {
