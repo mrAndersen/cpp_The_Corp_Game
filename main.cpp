@@ -24,7 +24,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
     System::initWindow();
     System::initDebug();
 
-//    EntityContainer::initBackground();
+    EntityContainer::initBackground();
     EntityContainer::initGrid();
     ControlPanel::initControlPanel();
 
