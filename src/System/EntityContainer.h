@@ -48,10 +48,6 @@ namespace EntityContainer {
 
     void initBackground();
 
-    void initGrid();
-
-    void refreshVertices();
-
     void refreshEntities();
 }
 

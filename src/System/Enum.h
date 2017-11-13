@@ -8,6 +8,8 @@ enum DrawOrder {
     D_GroundArtifacts = 21,
 
     D_Offices = 98,
+    D_Offices_Spawning = 99,
+
     D_Characters_Wokring = 100,
     D_Chair = 105,
     D_ElevatorShafts = 110,

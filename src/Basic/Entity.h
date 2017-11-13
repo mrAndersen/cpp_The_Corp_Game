@@ -54,6 +54,8 @@ protected:
 public:
     virtual void spawn();
 
+    virtual ~Entity();
+
     const std::string &getGroupName() const;
 
     void setGroupName(const std::string &groupName);

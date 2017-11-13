@@ -9,7 +9,9 @@ void Destination::setCoordinates(const sf::Vector2f &coordinates) {
     Destination::coordinates = coordinates;
 }
 
-Destination::Destination(const sf::Vector2f &coordinates, DestinationType type) : coordinates(coordinates), type(type) {}
+Destination::Destination(const sf::Vector2f &coordinates, DestinationType type) : coordinates(coordinates), type(type) {
+
+}
 
 DestinationType Destination::getType() const {
     return type;

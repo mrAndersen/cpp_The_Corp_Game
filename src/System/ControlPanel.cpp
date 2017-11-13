@@ -52,12 +52,6 @@ namespace ControlPanel {
 
     }
 
-    void refreshControlPanel() {
-        for (auto c:controls) {
-            c.second->update();
-        }
-    }
-
     std::map<Entities, Entity *> getControls() {
         return controls;
     }

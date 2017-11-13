@@ -370,3 +370,7 @@ const std::string &Entity::getGroupName() const {
 void Entity::setGroupName(const std::string &groupName) {
     Entity::groupName = groupName;
 }
+
+Entity::~Entity() {
+    System::debugCounters["e_dtor_calls"]++;
+}

@@ -64,6 +64,7 @@ namespace System {
 
     //debug
     std::map<std::string, sf::Text> debugPanelTextNodes;
+    std::map<std::string, int> debugCounters;
     float g_x = 0;
     float g_y = 0;
     int framesPassed = 0;
@@ -149,6 +150,11 @@ namespace System {
             debugPanelTextNodes["p_time_factor"].setString("p_time_factor:" + std::to_string(timeFactor));
             debugPanelTextNodes["d_level"].setString("d_level:" + std::to_string(System::debug));
 
+            std::string dcs = "d_counters:";
+            for(auto e:debugCounters){
+                dcs += e.first + "->" + std::to_string(e.second) + ";";
+            }
+            debugPanelTextNodes["d_counters"].setString(dcs);
 
             int i = 1;
             for(auto n:debugPanelTextNodes){
@@ -213,6 +219,7 @@ namespace System {
         createDebugString("p_time");
         createDebugString("p_time_factor");
         createDebugString("d_level");
+        createDebugString("d_counters");
     }
 
     sf::Vector2f cToGl(sf::Vector2f worldCoordinates) {

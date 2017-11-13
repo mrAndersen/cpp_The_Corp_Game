@@ -23,8 +23,9 @@ namespace EntityContainer {
     }
 
     void removeFromGroup(const std::string &groupName, Entity *target) {
-        auto vector = itemsByGroup[groupName];
-        vector.erase(std::remove(vector.begin(), vector.end(), target), vector.end());
+        itemsByGroup[groupName].erase(
+                std::remove(itemsByGroup[groupName].begin(), itemsByGroup[groupName].end(), target),
+                itemsByGroup[groupName].end());
     }
 
     std::vector<Entity *> getSaveable() {
@@ -127,43 +128,9 @@ namespace EntityContainer {
         }
     }
 
-    void initGrid() {
-        if (System::debug) {
-            sf::Color transparentBlack(0, 0, 0, 25);
-
-            for (int i = (int) -System::worldWidth / 2; i < System::worldWidth / 2; i++) {
-                if ((i % System::gridSize) == 0) {
-
-                    sf::VertexArray lines;
-                    lines.setPrimitiveType(sf::Lines);
-                    lines.append(sf::Vertex(System::cToGl((float) i, 5000), transparentBlack));
-                    lines.append(sf::Vertex(System::cToGl((float) i, System::groundLevel), transparentBlack));
-
-                    verticies.push_back(lines);
-                }
-            }
-
-            for (int j = 8000; j > System::groundLevel; j--) {
-                if ((j % System::gridSize) == 0) {
-                    sf::VertexArray lines;
-                    lines.setPrimitiveType(sf::Lines);
-                    lines.append(sf::Vertex(System::cToGl(-System::worldWidth / 2, (float) j), transparentBlack));
-                    lines.append(sf::Vertex(System::cToGl(System::worldWidth / 2, (float) j), transparentBlack));
-
-                    verticies.push_back(lines);
-                }
-            }
-        }
-    }
-
-    void refreshVertices() {
-        for (const auto &v_array:verticies) {
-            System::window->draw(v_array);
-        }
-    }
-
-
     void refreshEntities() {
+        System::window->clear(System::c_background);
+
         for (auto &entity:items) {
             entity->update();
         }
@@ -172,8 +139,7 @@ namespace EntityContainer {
             for (auto &e:itemsToRemove) {
                 //remove if item presents in group
                 if (e->getGroupName() != "~") {
-                    auto targetGroup = itemsByGroup[e->getGroupName()];
-                    targetGroup.erase(std::remove(targetGroup.begin(), targetGroup.end(), e), targetGroup.end());
+                    removeFromGroup(e->getGroupName(), e);
                 }
 
                 //remove from actual vector
@@ -185,6 +151,22 @@ namespace EntityContainer {
 
             itemsToRemove.clear();
         }
+
+        //@todo debug logic - to remove
+        System::debugCounters["empty"] = 0;
+        for (auto &e:items) {
+            System::debugCounters["empty"] = e->getEType() == E_Entity ? System::debugCounters["empty"]++ : System::debugCounters["empty"];
+        }
+
+        auto group = EntityContainer::getGroupItems("offices");
+        System::debugCounters["free_offices"] = 0;
+
+        for (auto &e:group) {
+            auto office = dynamic_cast<Office *>(e);
+            System::debugCounters["free_offices"] += (4 - office->getBusyWorkPlaces());
+        }
+
+        //@todo debug logic - to remove
     }
 
     void addElevator(Elevator *elevator) {

@@ -1,10 +1,6 @@
 #include "..\System\EntityContainer.h"
 
 void Elevator::finish() {
-    if (!topShaft) {
-        throw std::invalid_argument("Invalid elevator, top shaft unset");
-    }
-
     if (topShaft) {
         left = topShaft->getLeft();
         right = topShaft->getRight();
@@ -85,10 +81,12 @@ void Elevator::update() {
 
         if (current.y > nextCoord.y && direction == Up) {
             cabin->setWorldCoordinates({current.x, nextCoord.y});
+            waiting = true;
         }
 
         if (current.y < nextCoord.y && direction == Down) {
             cabin->setWorldCoordinates({current.x, nextCoord.y});
+            waiting = true;
         }
 
         if ((int) current.y == (int) nextCoord.y) {
@@ -99,16 +97,11 @@ void Elevator::update() {
             }
 
             waiting = true;
-//            waitClock.restart();
         }
     }
 
-//    if (waitClock.getElapsedTime().asMilliseconds() >= 500) {
-//
-//    }
-
-    if (cabin->getCurrentPeople().empty()) {
-        waiting = false;
+    if (cabin->getCurrentPeople().empty() && queue.empty()) {
+        waiting = true;
     } else {
         auto people = cabin->getCurrentPeople();
         auto finishedEntering = 0;
@@ -152,7 +145,7 @@ void Elevator::addToQueue(int floor) {
         queue.push_back(floor);
 
         if (direction == Up) {
-            std::sort(queue.begin(), queue.end());
+            std::sort(queue.begin(), queue.end(), std::less<int>());
         } else {
             std::sort(queue.begin(), queue.end(), std::greater<int>());
         }

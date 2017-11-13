@@ -5,7 +5,6 @@
 #include "../System/Enum.h"
 #include "../Component/Elevator.h"
 #include "../System/System.h"
-#include "../Basic/Movable.h"
 
 class Elevator;
 

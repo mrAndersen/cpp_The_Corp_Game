@@ -25,14 +25,10 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
     System::initDebug();
 
     EntityContainer::initBackground();
-    EntityContainer::initGrid();
     ControlPanel::initControlPanel();
 
     while (System::window && System::window->isOpen()) {
-        System::window->clear(System::c_background);
         System::entitiesOnScreen = EntityContainer::size();
-
-        System::refreshDebugPanel();
         System::refreshSystem();
         System::refreshDayTime();
 
@@ -114,11 +110,9 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
         }
 
         ViewHandler::handleViewScroll();
-        ControlPanel::refreshControlPanel();
-
-        EntityContainer::refreshVertices();
         EntityContainer::refreshEntities();
 
+        System::refreshDebugPanel();
         System::window->display();
     }
 
