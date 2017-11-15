@@ -1,3 +1,4 @@
+#include "..\Basic\Movable.h"
 #include "..\Office\Office.h"
 #include "..\Background\Tree.h"
 #include "..\Background\GroundArtifact.h"
@@ -23,9 +24,7 @@ namespace EntityContainer {
     }
 
     void removeFromGroup(const std::string &groupName, Entity *target) {
-        itemsByGroup[groupName].erase(
-                std::remove(itemsByGroup[groupName].begin(), itemsByGroup[groupName].end(), target),
-                itemsByGroup[groupName].end());
+        itemsByGroup[groupName].erase(std::remove(itemsByGroup[groupName].begin(), itemsByGroup[groupName].end(), target), itemsByGroup[groupName].end());
     }
 
     std::vector<Entity *> getSaveable() {

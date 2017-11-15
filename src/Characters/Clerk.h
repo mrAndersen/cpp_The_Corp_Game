@@ -6,8 +6,6 @@
 #include "..\System\ResourceLoader.h"
 #include "..\System\EntityContainer.h"
 
-class Movable;
-
 class Clerk : public Movable {
 public:
     const static int width = 70;
@@ -19,9 +17,22 @@ public:
     float dailySalary = 64;
     bool salaryProcessed = false;
 
+    WorkPlace *currentWorkPlace = nullptr;
+    sf::Clock workPlaceSearchResolution;
+
     explicit Clerk(sf::Vector2f coordinates);
 
     void updateLogic() override;
+
+    WorkPlace *getCurrentWorkPlace() const;
+
+    void setCurrentWorkPlace(WorkPlace *currentWorkPlace);
+
+    bool isInWorkPlace();
+
+    void searchWorkPlace();
+
+    void createWorkPlaceRoute();
 };
 
 #endif //THE_CORP_GAME_CLERK_H

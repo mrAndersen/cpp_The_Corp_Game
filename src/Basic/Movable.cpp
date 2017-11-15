@@ -163,8 +163,8 @@ void Movable::updateLogic() {
                     state = S_Working;
                     direction = Right;
 
-                    worldCoordinates.y = currentWorkPlace->getWorldCoordinates().y;
-                    worldCoordinates.x = currentWorkPlace->getWorldCoordinates().x;
+                    worldCoordinates.y = final.getCoordinates().y;
+                    worldCoordinates.x = final.getCoordinates().x;
 
                     moving = false;
                 }
@@ -210,41 +210,6 @@ void Movable::updateLogic() {
         }
     }
 
-    //search workplace every 500ms
-    if (!currentWorkPlace && workPlaceSearchResolution.getElapsedTime().asMilliseconds() >= 500) {
-        searchWorkPlace();
-    }
-
-
-    //ONE TIME EXEC
-    //go smoke
-    if (
-            smoking && !moving &&
-            isInWorkPlace() && state == S_Working &&
-            System::gameTime.getHour() >= 12 &&
-            System::getRandom(0, System::fps * 1000) <= 50
-            ) {
-
-        moving = true;
-        setDrawOrder(D_Characters, true);
-
-        //denormalize character
-        worldCoordinates.y = getFloorBottom(floor) + height / 2;
-        createSmokeAreaRoute();
-    }
-
-    //ONE TIME EXEC
-    //not working but should
-    if (System::gameTime.isWorkTime() && !isInWorkPlace() && currentWorkPlace && state != S_Working &&
-        state != S_Smoking && state != S_Falling && !moving) {
-
-        visible = true;
-        moving = true;
-        setDrawOrder(D_Characters, true);
-
-        createWorkPlaceRoute();
-    }
-
     //ONE TIME EXEC
     //time to go home
     if (System::gameTime.isDayEndHour() && !moving) {
@@ -273,22 +238,6 @@ void Movable::createHomeRoute() {
             destinations.push_back(Destination::createElevatorCabinDST(targetElevator, this));
             destinations.push_back(Destination::createElevatorExitingDST(targetElevator, this, home));
             destinations.push_back(Destination::createHomeDST(this, home));
-        }
-    }
-}
-
-void Movable::createWorkPlaceRoute() {
-    if (floor == currentWorkPlace->getParentOffice()->getFloor()) {
-        destinations.push_back(Destination::createWorkplaceDST(this));
-    } else {
-        targetElevator = searchNearestElevator();
-        targetElevator->incBoarding();
-
-        if (targetElevator) {
-            destinations.push_back(Destination::createElevatorWaitingDST(targetElevator, this));
-            destinations.push_back(Destination::createElevatorCabinDST(targetElevator, this));
-            destinations.push_back(Destination::createElevatorExitingDST(targetElevator, this, currentWorkPlace->getWorldCoordinates()));
-            destinations.push_back(Destination::createWorkplaceDST(this));
         }
     }
 }
@@ -419,35 +368,6 @@ void Movable::spawn() {
     Entity::spawn();
 }
 
-void Movable::searchWorkPlace() {
-    if (!this->currentWorkPlace && this->isSpawned()) {
-        auto offices = EntityContainer::getGroupItems("offices");
-        std::map<float, WorkPlace *> buffer;
-
-        for (auto e:offices) {
-            auto office = dynamic_cast<Office *>(e);
-
-            if (office->hasFreeWorkPlaces() && office->isSpawned()) {
-
-                for (int i = 0; i < 4; ++i) {
-                    auto wc = office->getWorkPlaces()[i]->getWorldCoordinates();
-
-                    auto distance = std::fabs(std::sqrt(
-                            std::pow(worldCoordinates.x - wc.x, 2) +
-                            std::pow(worldCoordinates.y - wc.y, 2)));
-
-                    buffer[distance] = office->getWorkPlaces()[i];
-                }
-            }
-        }
-
-        if (!buffer.empty()) {
-            currentWorkPlace = buffer.begin()->second->getParentOffice()->getNextFreeWorkPlace();
-            currentWorkPlace->setWorker(this);
-        }
-    }
-}
-
 bool Movable::isSpawned() const {
     return spawned;
 }
@@ -458,13 +378,6 @@ int Movable::getFloor() const {
 
 void Movable::setFloor(int floor) {
     Movable::floor = floor;
-}
-
-bool Movable::isInWorkPlace() {
-    return
-            currentWorkPlace &&
-            floor == currentWorkPlace->getParentOffice()->getFloor() &&
-            (int) worldCoordinates.x == (int) currentWorkPlace->getWorldCoordinates().x;
 }
 
 const std::string &Movable::getPersonName() const {
@@ -527,14 +440,6 @@ sf::Vector2f Movable::searchNearestOutside() {
 
 float Movable::getFloorBottom(int floor) {
     return System::groundLevel + Ground::height + (floor - 1) * 150;
-}
-
-WorkPlace *Movable::getCurrentWorkPlace() const {
-    return currentWorkPlace;
-}
-
-void Movable::setCurrentWorkPlace(WorkPlace *currentWorkPlace) {
-    Movable::currentWorkPlace = currentWorkPlace;
 }
 
 float Movable::getFloorBottom(sf::Vector2f coordinates) {

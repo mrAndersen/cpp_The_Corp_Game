@@ -2,9 +2,14 @@
 #define THE_CORP_GAME_DESTINATION_H
 
 #include <SFML/System/Vector2.hpp>
+#include "../Characters/Clerk.h"
 #include "../System/Enum.h"
 #include "../Component/Elevator.h"
 #include "../System/System.h"
+#include "../Characters/Manager.h"
+#include "../Characters/Clerk.h"
+#include "../Background/Ground.h"
+#include "../Basic/Movable.h"
 
 class Elevator;
 
@@ -32,7 +37,7 @@ public:
 
     static Destination createElevatorCabinDST(Elevator *elevator, Movable *movable);
 
-    static Destination createWorkplaceDST(Movable *movable);
+    static Destination createWorkplaceDST(Clerk *movable);
 
     static Destination createSmokeAreaDST(Movable *movable, sf::Vector2f &smokeArea);
 

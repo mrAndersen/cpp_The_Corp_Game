@@ -6,7 +6,7 @@
 #include <SFML/System/Vector2.hpp>
 
 class Office;
-class Movable;
+
 class WorkPlace {
 
     sf::Vector2f worldCoordinates;

@@ -3,6 +3,7 @@
 
 #include "..\Component\Elevator.h"
 #include "..\Office\Office.h"
+#include "../Basic/Movable.h"
 
 namespace EntityContainer {
 

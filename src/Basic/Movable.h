@@ -30,8 +30,6 @@ protected:
     float currentSpeed = 130;
     float fallAcceleration = 980;
 
-    WorkPlace *currentWorkPlace = nullptr;
-
     std::deque<Destination> destinations;
     DestinationType currentDST = DST_Unknown;
     bool moving = false;
@@ -39,7 +37,7 @@ protected:
     sf::Clock lastElevatorSearch;
     int elevatorSearchResolutionSeconds = 5;
     bool smoking = false;
-    sf::Clock workPlaceSearchResolution;
+
     int routeRefreshIntervalSeconds = 5;
 
     //relevant to game time
@@ -59,19 +57,13 @@ protected:
 public:
     Movable(Entities type, int width, int height);
 
-    WorkPlace *getCurrentWorkPlace() const;
-
     bool isCrossingShafts();
-
-    void setCurrentWorkPlace(WorkPlace *currentWorkPlace);
 
     void updateFloor();
 
     float getFloorBottom(int floor);
 
     float getFloorBottom(sf::Vector2f coordinates);
-
-    void createWorkPlaceRoute();
 
     void createSmokeAreaRoute();
 
@@ -105,11 +97,7 @@ public:
 
     void setFallAcceleration(float fallAcceleration);
 
-    void searchWorkPlace();
-
     Elevator *searchNearestElevator();
-
-    bool isInWorkPlace();
 
     std::string serialize() override;
 
