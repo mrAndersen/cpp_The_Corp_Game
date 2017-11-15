@@ -1,13 +1,13 @@
 #include <sstream>
+#include <iostream>
 #include "Entity.h"
-#include "System/System.h"
-#include "System/Enum.h"
-#include "System/EntityContainer.h"
-#include "Background/Ground.h"
+#include "..\System\System.h"
+#include "..\System\Enum.h"
+#include "..\System\EntityContainer.h"
+#include "..\Background\Ground.h"
 
 std::string Entity::serialize() {
-
-
+    return "";
 }
 
 void Entity::update() {
@@ -34,27 +34,19 @@ bool Entity::mouseIn() {
 
 
 bool Entity::leftClicked() {
-    return System::event.type == sf::Event::MouseButtonPressed &&
-           System::event.mouseButton.button == sf::Mouse::Left &&
-           mouseIn();
+    return sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && mouseIn();
 }
 
 bool Entity::rightClicked() {
-    return System::event.type == sf::Event::MouseButtonPressed &&
-           System::event.mouseButton.button == sf::Mouse::Right &&
-           mouseIn();
+    return sf::Mouse::isButtonPressed(sf::Mouse::Button::Right) && mouseIn();
 }
 
 bool Entity::leftClickedOutside() {
-    return System::event.type == sf::Event::MouseButtonPressed &&
-           System::event.mouseButton.button == sf::Mouse::Left &&
-           !mouseIn();
+    return sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && !mouseIn();
 }
 
 bool Entity::rightClickedOutside() {
-    return System::event.type == sf::Event::MouseButtonPressed &&
-           System::event.mouseButton.button == sf::Mouse::Right &&
-           !mouseIn();
+    return sf::Mouse::isButtonPressed(sf::Mouse::Button::Right) && !mouseIn();
 }
 
 void Entity::setTransparent() {
@@ -65,11 +57,6 @@ void Entity::setTransparent() {
     }
 }
 
-void Entity::setNormal() {
-    if (currentAnimation) {
-        currentAnimation->getSprite().setColor(sf::Color(255, 255, 255, 255));
-    }
-}
 
 void Entity::setInvalid() {
     valid = false;
@@ -79,7 +66,6 @@ void Entity::setInvalid() {
 }
 
 void Entity::updateLogic() {
-    frameTimeSeconds = (float) System::frameTimeMcs / 1000000;
     recalculateBoundaries();
 }
 
@@ -117,8 +103,8 @@ bool Entity::isOnTheGround() {
 
 bool Entity::intersectsWithObjects() {
     std::vector<Office *> result;
-    std::vector<Entity *> offices = EntityContainer::searchEntitiesByGroup(System::officeGroup);
-    std::vector<Entity *> shafts = EntityContainer::searchEntitiesByGroup(System::elevatorShafts);
+    std::vector<Entity *> offices = EntityContainer::getGroupItems("offices");
+    std::vector<Entity *> shafts = EntityContainer::getGroupItems("shafts");
 
     for (auto target:offices) {
         if (this != target) {
@@ -167,8 +153,11 @@ int Entity::getDrawOrder() const {
     return drawOrder;
 }
 
-void Entity::setDrawOrder(int drawOrder) {
+void Entity::setDrawOrder(int drawOrder, bool resort) {
     Entity::drawOrder = drawOrder;
+    if (resort) {
+        EntityContainer::sort();
+    }
 }
 
 void Entity::initEntity() {
@@ -233,15 +222,6 @@ void Entity::renderErrorText() {
 void Entity::renderDebugInfo() {
     if (System::debug) {
         debugInfo.setPosition(System::cToGl(worldCoordinates.x + width / 2, worldCoordinates.y + height / 2));
-//        debugInfo.setString(
-//                "id: " + std::to_string(id) + "\n" +
-//                "type: " + std::to_string(eType) + "\n" +
-//                "pos: {" + std::to_string(worldCoordinates.x) + "," + std::to_string(worldCoordinates.y) + "}\n" +
-//                "left: " + std::to_string(left) + "\n" +
-//                "right: " + std::to_string(right) + "\n" +
-//                "top: " + std::to_string(top) + "\n" +
-//                "bottom: " + std::to_string(bottom) + "\n"
-//        );
         System::window->draw(debugInfo);
     }
 }
@@ -297,6 +277,12 @@ void Entity::setSelected(bool selected) {
     }
 }
 
+void Entity::setNormal() {
+    if (currentAnimation) {
+        currentAnimation->getSprite().setColor(sf::Color(255, 255, 255, 255));
+    }
+}
+
 bool Entity::isSelectable() const {
     return selectable;
 }
@@ -319,13 +305,16 @@ void Entity::addAnimation(States state, const Animation &animation) {
     animations.insert(std::pair<States, Animation>(state, animation));
 }
 
-
 void Entity::selectAnimation(States state) {
     if (!animations.empty()) {
         if (!animations.count(state)) {
-            currentAnimation = &animations.find(S_None).operator*().second;
+            if (!animations.count(S_None)) {
+                currentAnimation = &animations.at(S_Button_Normal);
+            } else {
+                currentAnimation = &animations.at(S_None);
+            }
         } else {
-            currentAnimation = &animations.find(state).operator*().second;
+            currentAnimation = &animations.at(state);
         }
     }
 }
@@ -364,4 +353,24 @@ bool Entity::isVisible() const {
 
 void Entity::setVisible(bool visible) {
     Entity::visible = visible;
+}
+
+bool Entity::isUpdated() const {
+    return updated;
+}
+
+void Entity::setUpdated(bool updated) {
+    Entity::updated = updated;
+}
+
+const std::string &Entity::getGroupName() const {
+    return groupName;
+}
+
+void Entity::setGroupName(const std::string &groupName) {
+    Entity::groupName = groupName;
+}
+
+Entity::~Entity() {
+    System::debugCounters["e_dtor_calls"]++;
 }

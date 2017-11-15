@@ -1,21 +1,25 @@
 #include <cmath>
-#include <Text/TextEntity.h>
+#include "..\Text\TextEntity.h"
 #include "OfficeClerk.h"
-#include "System/EntityContainer.h"
-#include "System/System.h"
+#include "..\System\EntityContainer.h"
+#include "..\System\System.h"
 
 Office::Office() {
+    setGroupName("offices");
+
     workPlaces[0] = new WorkPlace(worldCoordinates, this);
     workPlaces[1] = new WorkPlace(worldCoordinates, this);
     workPlaces[2] = new WorkPlace(worldCoordinates, this);
     workPlaces[3] = new WorkPlace(worldCoordinates, this);
 
     setSelectable(true);
+    EntityContainer::addToGroup(groupName, this);
 }
+
 
 std::vector<Office *> Office::getNeighborOffices() {
     std::vector<Office *> result;
-    std::vector<Entity *> offices = EntityContainer::searchEntitiesByGroup(System::officeGroup);
+    std::vector<Entity *> offices = EntityContainer::getGroupItems("offices");
 
     for (auto e:offices) {
         auto target = dynamic_cast<Office *>(e);
@@ -148,6 +152,8 @@ WorkPlace *Office::getNextFreeWorkPlace() {
             return workPlace;
         }
     }
+
+    return nullptr;
 }
 
 WorkPlace *const *Office::getWorkPlaces() const {

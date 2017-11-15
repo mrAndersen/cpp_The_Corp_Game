@@ -6,8 +6,6 @@ namespace ControlPanel {
 
     void initControlPanel();
 
-    void refreshControlPanel();
-
     std::map<Entities , Entity *> getControls();
 }
 

@@ -2,10 +2,14 @@
 #define THE_CORP_GAME_VIEWHANDLER_H
 
 #include "Enum.h"
+#include <SFML/Graphics/View.hpp>
+#include <SFML/System/Clock.hpp>
+#include <SFML/System.hpp>
+#include <SFML/Window/Event.hpp>
 
 namespace ViewHandler {
     extern Direction viewDirectionMovement;
-    extern sf::View* view;
+    extern sf::View *view;
     extern sf::Clock viewClock;
 
     extern float top;

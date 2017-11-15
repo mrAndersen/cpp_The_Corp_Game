@@ -2,7 +2,7 @@
 #include <fstream>
 #include "SaveManager.h"
 #include "EntityContainer.h"
-#include "Office/OfficeClerk.h"
+#include "..\Office\OfficeClerk.h"
 
 int SaveManager::saveCurrentState(const std::string &fileName) {
     std::ofstream saveFile(fileName, std::ofstream::binary);

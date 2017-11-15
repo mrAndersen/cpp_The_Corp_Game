@@ -1,11 +1,14 @@
 #ifndef THE_CORP_GAME_ELEVATORSHAFTTOP_H
 #define THE_CORP_GAME_ELEVATORSHAFTTOP_H
 
-#include <Basic/Entity.h>
-#include <Component/Elevator.h>
-#include "Office/Office.h"
+#include "..\Basic\Entity.h"
+#include "..\Component\Elevator.h"
+#include "..\Office\Office.h"
 
 class Elevator;
+
+class Office;
+
 class ElevatorShaftTop : public Entity {
 
 protected:

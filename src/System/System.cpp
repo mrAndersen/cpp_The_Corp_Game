@@ -1,5 +1,5 @@
 #include <SFML/Window/Mouse.hpp>
-#include <afxres.h>
+#include <windows.h>
 #include <psapi.h>
 #include <sstream>
 #include <iomanip>
@@ -10,7 +10,7 @@
 #include "System.h"
 #include "ViewHandler.h"
 #include "GameTime.h"
-#include "Text/TextEntity.h"
+#include "..\Text\TextEntity.h"
 
 namespace System {
     unsigned int screenWidth = 1850;
@@ -32,15 +32,11 @@ namespace System {
 
     sf::RenderWindow *window;
     sf::Event event;
-    int frameTimeMcs;
+    std::deque<sf::Event> eventDeque;
+    long long int frameTimeMcs;
     sf::Uint32 screenMode = sf::Style::Default;
     float timeFactor = 1;
     //sys
-
-    //group
-    EntityGroup officeGroup({E_OfficeDefault});
-    EntityGroup elevatorShafts({E_ElevatorShaftTop, E_ElevatorShaftMiddle, E_ElevatorShaftBottom});
-    //group
 
     //utility
     sf::Color c_background(220, 236, 237);
@@ -57,36 +53,36 @@ namespace System {
     bool dayStartProcessed = false;
 
     float salaryTotal = 0;
-    int buttonReload = 250;
+    int buttonReload = 150;
 
     sf::Clock dayClock = {};
-    GameTime gameTime(10, 30);
+    GameTime gameTime(10, 15);
 
-    int startWorkHour = 9;
-    int endWorkHour = 18;
+    int startWorkHour = 10;
+    int endWorkHour = 19;
     //player
 
     //debug
     std::map<std::string, sf::Text> debugPanelTextNodes;
+    std::map<std::string, int> debugCounters;
     float g_x = 0;
     float g_y = 0;
     int framesPassed = 0;
     int entitiesOnScreen = 0;
     int fps = 0;
-    bool debug = true;
+    int debug = 1;
     //debug
 
     void refreshDayTime() {
         auto localTimeFactor = 1000 / timeFactor;
 
-        if (dayClock.getElapsedTime().asMilliseconds() >= localTimeFactor / 5) {
+        if (dayClock.getElapsedTime().asMilliseconds() >= localTimeFactor / 2) {
             dayClock.restart();
 
             gameTime = gameTime + 1;
         }
 
         if (gameTime.isDayEndHour() && !dayEndProcessed) {
-
             auto *salarySpent = new TextEntity(System::c_red, 40);
             salarySpent->setFixed(true);
             salarySpent->setString("Salaries: -" + System::f_to_string(salaryTotal) + "$");
@@ -132,17 +128,12 @@ namespace System {
             g_x = coordMap.x;
             g_y = System::screenHeight - coordMap.y;
 
-            debugPanelTextNodes["g_coordinates"].setString(
-                    "global: {" + std::to_string((int) g_x) + "," + std::to_string((int) g_y) + "}");
+            debugPanelTextNodes["g_coordinates"].setString("global: {" + std::to_string((int) g_x) + "," + std::to_string((int) g_y) + "}");
             debugPanelTextNodes["fps"].setString("fps: " + std::to_string(fps));
-            debugPanelTextNodes["mouse"].setString(
-                    "mouse: {" + std::to_string(mousePosition.x) + "," + std::to_string(mousePosition.y) + "}");
+            debugPanelTextNodes["mouse"].setString("mouse: {" + std::to_string(mousePosition.x) + "," + std::to_string(mousePosition.y) + "}");
             debugPanelTextNodes["entity_count"].setString("entities: " + std::to_string(entitiesOnScreen));
-            debugPanelTextNodes["v_direction"].setString(
-                    "v_direction: " + std::to_string(ViewHandler::viewDirectionMovement));
-            debugPanelTextNodes["mem"].setString(
-                    "mem:" + std::to_string((int) mem / 1024 / 1024) + "mb"
-            );
+            debugPanelTextNodes["v_direction"].setString("v_direction: " + std::to_string(ViewHandler::viewDirectionMovement));
+            debugPanelTextNodes["mem"].setString("mem:" + std::to_string((int) mem / 1024 / 1024) + "mb");
 
 
             debugPanelTextNodes["v_boundaries"].setString(
@@ -157,22 +148,24 @@ namespace System {
             debugPanelTextNodes["p_cash"].setString("p_cash: " + std::to_string(System::cash));
             debugPanelTextNodes["p_time"].setString("p_time:" + gameTime.get());
             debugPanelTextNodes["p_time_factor"].setString("p_time_factor:" + std::to_string(timeFactor));
+            debugPanelTextNodes["d_level"].setString("d_level:" + std::to_string(System::debug));
 
-            std::map<std::string, sf::Text>::iterator it;
+            std::string dcs = "d_counters:";
+            for(auto e:debugCounters){
+                dcs += e.first + "->" + std::to_string(e.second) + ";";
+            }
+            debugPanelTextNodes["d_counters"].setString(dcs);
+
             int i = 1;
-
-            for (it = debugPanelTextNodes.begin(); it != debugPanelTextNodes.end(); it++) {
-                it->second.setPosition(
-                        cToGl(sf::Vector2f(ViewHandler::left + 12, ViewHandler::top - 650 - i * 12)));
-                window->draw(it->second);
-
+            for(auto n:debugPanelTextNodes){
+                n.second.setPosition(cToGl(sf::Vector2f(ViewHandler::left + 12, ViewHandler::top - 600 - i * 12)));
+                System::window->draw(n.second);
                 i++;
             }
         }
     }
 
     void initWindow() {
-
         if (window) {
             delete window;
             window = nullptr;
@@ -188,9 +181,13 @@ namespace System {
             screenHeight = (unsigned int) boundaries.bottom;
         }
 
+        sf::Image icon;
+        icon.loadFromFile("resources/app/icon.png");
+
         window = new sf::RenderWindow(sf::VideoMode(screenWidth, screenHeight), title, screenMode);
+
         window->clear(c_background);
-        window->setFramerateLimit(1000);
+//        window->setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
         ViewHandler::view = new sf::View();
         ViewHandler::view->reset(sf::FloatRect(0, 0, screenWidth, screenHeight));
@@ -221,6 +218,8 @@ namespace System {
         createDebugString("p_cash");
         createDebugString("p_time");
         createDebugString("p_time_factor");
+        createDebugString("d_level");
+        createDebugString("d_counters");
     }
 
     sf::Vector2f cToGl(sf::Vector2f worldCoordinates) {
@@ -255,6 +254,7 @@ namespace System {
     struct f_punctuation : std::numpunct<char> {
     protected :
         char do_thousands_sep() const override { return ','; }
+
         std::string do_grouping() const override { return "\03"; }
     };
 

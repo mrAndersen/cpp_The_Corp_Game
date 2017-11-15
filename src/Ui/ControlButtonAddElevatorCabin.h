@@ -2,9 +2,9 @@
 #define THE_CORP_GAME_CONTROLBUTTONADDELEVATORCABIN_H
 
 
-#include <Basic/Entity.h>
-#include <System/ViewHandler.h>
-#include <Objects/ElevatorCabin.h>
+#include "..\Basic\Entity.h"
+#include "..\System\ViewHandler.h"
+#include "..\System\System.h"
 #include "BasicUi.h"
 
 class ControlButtonAddElevatorCabin : public BasicUi {

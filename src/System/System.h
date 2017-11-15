@@ -1,13 +1,13 @@
 #ifndef THE_CORP_GAME_SYSTEM_H
 #define THE_CORP_GAME_SYSTEM_H
 
-#include <afxres.h>
+#include <windows.h>
 #include <psapi.h>
 #include <SFML/System/Clock.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Text.hpp>
+#include <deque>
 #include "GameTime.h"
-#include "EntityGroup.h"
 
 namespace System {
     extern unsigned int screenWidth;
@@ -24,15 +24,12 @@ namespace System {
     extern sf::Clock timeSinceStart;
     extern sf::RenderWindow *window;
     extern sf::Event event;
-    extern int frameTimeMcs;
+    extern std::deque<sf::Event> eventDeque;
+    extern long long int frameTimeMcs;
     extern sf::Uint32 screenMode;
     extern float timeFactor;
     //sys
 
-
-    //group
-    extern EntityGroup officeGroup;
-    extern EntityGroup elevatorShafts;
 
     //group
 
@@ -60,6 +57,7 @@ namespace System {
 
     //debug
     extern std::map<std::string, sf::Text> debugPanelTextNodes;
+    extern std::map<std::string, int> debugCounters;
     extern sf::Font *debugFont;
     extern sf::Font *gameFont;
     extern unsigned int seed;
@@ -70,7 +68,7 @@ namespace System {
     extern int framesPassed;
     extern int entitiesOnScreen;
     extern int fps;
-    extern bool debug;
+    extern int debug;
     //debug
 
     RECT getScreenBoundaries();

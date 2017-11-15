@@ -1,13 +1,6 @@
-#include <System/EntityContainer.h>
-#include <System/System.h>
-#include <Background/Ground.h>
-#include "Elevator.h"
+#include "..\System\EntityContainer.h"
 
 void Elevator::finish() {
-    if (!topShaft) {
-        throw std::invalid_argument("Invalid elevator, top shaft unset");
-    }
-
     if (topShaft) {
         left = topShaft->getLeft();
         right = topShaft->getRight();
@@ -37,25 +30,40 @@ void Elevator::drawDebug() {
 
     rect.setPosition(System::cToGl(position));
     rect.setSize({20, 20});
-
     rect.setFillColor(sf::Color::Green);
     System::window->draw(rect);
+
+
+    if (System::debug > 0) {
+        sf::Text text;
+        std::string ds;
+
+        text.setFillColor(sf::Color::Black);
+        text.setFont(*System::debugFont);
+        text.setCharacterSize(20);
+        text.setPosition(System::cToGl(position));
+        ds = "b:" + std::to_string(boarding) + "d:" + std::to_string(direction) + "q:";
+
+        for (auto i:queue) {
+            ds += std::to_string(i) + ",";
+        }
+
+        text.setString(ds);
+        System::window->draw(text);
+    }
 }
 
 void Elevator::update() {
-
-    if (!queue.empty() && !waiting) {
-        float cabinSpeed = cabin->getSpeed();
+    if (!waiting) {
         float frameTimeSeconds = (float) System::frameTimeMcs / 1000000;
-        float frameDistance = frameTimeSeconds * cabinSpeed * System::timeFactor;
+        float frameDistance = frameTimeSeconds * cabin->getSpeed() * System::timeFactor;
 
         auto next = queue.front();
         auto current = cabin->getWorldCoordinates();
         auto nextCoord = sf::Vector2f(cabin->getWorldCoordinates().x,
                                       next * System::gridSize * 3 + System::gridSize / 2);
 
-
-        if (current.y < nextCoord.y) {
+        if (direction == Up) {
             if (current.y + 100 >= nextCoord.y) {
                 frameDistance = frameDistance / 2;
             }
@@ -63,7 +71,7 @@ void Elevator::update() {
             cabin->setWorldCoordinates({current.x, current.y + frameDistance});
         }
 
-        if (current.y > nextCoord.y) {
+        if (direction == Down) {
             if (current.y - 100 <= nextCoord.y) {
                 frameDistance = frameDistance / 2;
             }
@@ -71,23 +79,76 @@ void Elevator::update() {
             cabin->setWorldCoordinates({current.x, current.y - frameDistance});
         }
 
+        if (current.y > nextCoord.y && direction == Up) {
+            cabin->setWorldCoordinates({current.x, nextCoord.y});
+            waiting = true;
+        }
+
+        if (current.y < nextCoord.y && direction == Down) {
+            cabin->setWorldCoordinates({current.x, nextCoord.y});
+            waiting = true;
+        }
+
         if ((int) current.y == (int) nextCoord.y) {
             cabin->setWorldCoordinates(nextCoord);
-            queue.erase(queue.begin());
 
-            waitTimer.restart();
+            if (!queue.empty()) {
+                queue.erase(queue.begin());
+            }
+
             waiting = true;
         }
     }
 
-    if (waiting && waitTimer.getElapsedTime().asSeconds() >= 1 / System::timeFactor) {
-        waiting = false;
+    if (cabin->getCurrentPeople().empty() && queue.empty()) {
+        waiting = true;
+    } else {
+        auto people = cabin->getCurrentPeople();
+        auto finishedEntering = 0;
+
+        for (auto p:people) {
+            if (p->getState() == S_None && p->getLeft() >= cabin->getLeft() && p->getRight() <= cabin->getRight()) {
+                finishedEntering++;
+            }
+        }
+
+        waiting = finishedEntering != people.size();
+    }
+
+    if (queue.empty()) {
+        direction = None;
     }
 }
 
 void Elevator::addToQueue(int floor) {
-    if (std::find(queue.begin(), queue.end(), floor) == queue.end()) {
+    if (queue.size() == cabin->getCapacity()) {
+        return;
+    }
+
+    if (queue.empty() && floor > cabin->getFloor() && direction == None) {
+        direction = Up;
+    }
+
+    if (queue.empty() && floor < cabin->getFloor() && direction == None) {
+        direction = Down;
+    }
+
+    if (direction == Up && floor < cabin->getFloor()) {
+        return;
+    }
+
+    if (direction == Down && floor > cabin->getFloor()) {
+        return;
+    }
+
+    if (std::find(queue.begin(), queue.end(), floor) == queue.end() && this->cabin->getFloor() != floor) {
         queue.push_back(floor);
+
+        if (direction == Up) {
+            std::sort(queue.begin(), queue.end(), std::less<int>());
+        } else {
+            std::sort(queue.begin(), queue.end(), std::greater<int>());
+        }
     }
 }
 
@@ -131,6 +192,18 @@ void Elevator::setWaiting(bool waiting) {
     Elevator::waiting = waiting;
 }
 
-float Elevator::getFloorBottom(int floor) {
-    return System::groundLevel + Ground::height + (floor - 1) * 150;
+int Elevator::getBoarding() const {
+    return boarding;
+}
+
+void Elevator::decBoarding() {
+    boarding--;
+}
+
+void Elevator::incBoarding() {
+    boarding++;
+}
+
+const std::deque<int> &Elevator::getQueue() const {
+    return queue;
 }

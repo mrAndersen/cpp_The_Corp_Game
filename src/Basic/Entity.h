@@ -3,7 +3,7 @@
 
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics.hpp>
-#include "System/Enum.h"
+#include "..\System\Enum.h"
 #include "Animation.h"
 
 class Animation;
@@ -12,6 +12,7 @@ class Entity {
 protected:
     //parameters
     Entities eType = E_Entity;
+    std::string groupName = "~";
     int id;
     std::map<States, Animation> animations;
     Animation *currentAnimation = nullptr;
@@ -41,7 +42,6 @@ protected:
     Direction direction = Direction::None;
 
     sf::Clock liveClock;
-    float frameTimeSeconds;
 
     //property map
     std::map<std::string, int> properties;
@@ -50,8 +50,15 @@ protected:
     sf::Text debugInfo;
     sf::Text errorString;
 
+    bool updated = false;
 public:
     virtual void spawn();
+
+    virtual ~Entity();
+
+    const std::string &getGroupName() const;
+
+    void setGroupName(const std::string &groupName);
 
     bool isVisible() const;
 
@@ -72,6 +79,10 @@ public:
     void selectAnimation(States state);
 
     bool isSpawned();
+
+    bool isUpdated() const;
+
+    void setUpdated(bool updated);
 
     bool isSelectable() const;
 
@@ -139,7 +150,7 @@ public:
 
     int getDrawOrder() const;
 
-    void setDrawOrder(int drawOrder);
+    void setDrawOrder(int drawOrder, bool resort = false);
 
     float getHealth() const;
 

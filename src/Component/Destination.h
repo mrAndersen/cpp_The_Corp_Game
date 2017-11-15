@@ -2,10 +2,18 @@
 #define THE_CORP_GAME_DESTINATION_H
 
 #include <SFML/System/Vector2.hpp>
-#include <functional>
-#include <System/Enum.h>
-#include <Basic/Movable.h>
-#include <System/System.h>
+#include "../Characters/Clerk.h"
+#include "../System/Enum.h"
+#include "../Component/Elevator.h"
+#include "../System/System.h"
+#include "../Characters/Manager.h"
+#include "../Characters/Clerk.h"
+#include "../Background/Ground.h"
+#include "../Basic/Movable.h"
+
+class Elevator;
+
+class Movable;
 
 class Destination {
     sf::Vector2f coordinates;
@@ -21,9 +29,19 @@ public:
 
     void setType(DestinationType type);
 
-    bool reached(Movable *movable);
-
     int getFloor();
+
+    static Destination createElevatorWaitingDST(Elevator *elevator, Movable *movable);
+
+    static Destination createElevatorExitingDST(Elevator *elevator, Movable *movable, sf::Vector2f finalDestination);
+
+    static Destination createElevatorCabinDST(Elevator *elevator, Movable *movable);
+
+    static Destination createWorkplaceDST(Clerk *movable);
+
+    static Destination createSmokeAreaDST(Movable *movable, sf::Vector2f &smokeArea);
+
+    static Destination createHomeDST(Movable *movable, sf::Vector2f &home);
 };
 
 

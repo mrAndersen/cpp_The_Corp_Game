@@ -39,7 +39,7 @@ bool GameTime::isWorkTime() {
 }
 
 bool GameTime::isEarningHour() {
-    return hour >= System::startWorkHour + 1 && hour <= System::endWorkHour && minute == 0;
+    return hour >= System::startWorkHour + 1 && hour <= System::endWorkHour && (minute == 30 || minute == 0);
 }
 
 bool GameTime::isDayEndHour() {
@@ -68,4 +68,8 @@ int GameTime::getHour() const {
 
 int GameTime::getMinute() const {
     return minute;
+}
+
+bool GameTime::isHourStart() {
+    return minute == 0;
 }

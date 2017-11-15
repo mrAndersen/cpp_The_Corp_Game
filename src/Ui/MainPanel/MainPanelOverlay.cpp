@@ -1,4 +1,4 @@
-#include <System/System.h>
+#include "..\..\System\System.h"
 #include "MainPanelOverlay.h"
 
 MainPanelOverlay::MainPanelOverlay(float leftOffset, float topOffset) : BasicUi(leftOffset, topOffset) {
@@ -9,7 +9,6 @@ MainPanelOverlay::MainPanelOverlay(float leftOffset, float topOffset) : BasicUi(
     setHeight(MainPanelOverlay::height);
 
     addAnimation(S_None, Animation(this, S_None, 1, ResourceLoader::getTexture(eType)));
-
 
     time.setCharacterSize(40);
     time.setFont(*System::gameFont);

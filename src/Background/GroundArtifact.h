@@ -3,10 +3,10 @@
 
 
 #include <SFML/System/Vector2.hpp>
-#include <System/Enum.h>
-#include <System/ResourceLoader.h>
-#include <System/EntityContainer.h>
-#include <Basic/Entity.h>
+#include "..\System\Enum.h"
+#include "..\System\ResourceLoader.h"
+#include "..\System\EntityContainer.h"
+#include "..\Basic\Entity.h"
 
 class GroundArtifact : public Entity {
 

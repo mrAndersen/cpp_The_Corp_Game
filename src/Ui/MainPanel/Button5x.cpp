@@ -33,7 +33,7 @@ void Button5x::update() {
         b1x->setPressed(false);
         b10x->setPressed(false);
 
-        System::timeFactor = 5;
+        System::timeFactor = 10;
     }
 
     BasicUi::update();

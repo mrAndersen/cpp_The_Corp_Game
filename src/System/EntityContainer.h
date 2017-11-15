@@ -1,46 +1,53 @@
 #ifndef THE_CORP_GAME_ENTITYCONTAINER_H
 #define THE_CORP_GAME_ENTITYCONTAINER_H
 
-#include "Component/Elevator.h"
-#include "ResourceLoader.h"
-#include "Characters/Clerk.h"
-#include "Office/Office.h"
-#include "EntityGroup.h"
+#include "..\Component\Elevator.h"
+#include "..\Office\Office.h"
+#include "../Basic/Movable.h"
 
 namespace EntityContainer {
-    extern std::vector<Entity *> items;
 
     extern std::vector<sf::VertexArray> verticies;
-
     extern std::vector<Elevator *> elevators;
 
-    std::vector<Entity *> getItems();
 
-    std::vector<Entity *> getSaveable();
+    //groups
+    extern std::map<std::string, std::vector<Entity *>> itemsByGroup;
 
-    Entity *searchSingleEntityByType(Entities type);
+    void addToGroup(const std::string &groupName, Entity *target);
 
-    std::vector<Entity *> searchEntitiesByType(Entities type);
+    void removeFromGroup(const std::string &groupName, Entity *target);
 
-    std::vector<Entity *> searchEntitiesByGroup(EntityGroup group);
+    std::vector<Entity *> getGroupItems(const std::string &groupName);
+    //groups
 
-    void addElevator(Elevator * elevator);
 
-    std::vector<Elevator *> getElevators();
+    //items
+    extern std::vector<Entity *> items;
+
+    extern std::vector<Entity *> itemsToRemove;
 
     void add(Entity *item);
 
-    void resort();
-
     void remove(Entity *item);
+
+    void sort();
+    //items
+
+
+
+
+
+    std::vector<Entity *> getSaveable();
+
+    void addElevator(Elevator *elevator);
+
+    std::vector<Elevator *> getElevators();
+
 
     int size();
 
     void initBackground();
-
-    void initGrid();
-
-    void refreshVertices();
 
     void refreshEntities();
 }

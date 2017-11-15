@@ -2,8 +2,8 @@
 #define THE_CORP_GAME_TEXTENTITY_H
 
 #include <SFML/Graphics/Text.hpp>
-#include <Basic/Entity.h>
-#include "System/Enum.h"
+#include "..\Basic\Entity.h"
+#include "..\System\Enum.h"
 
 class TextEntity : public Entity {
 

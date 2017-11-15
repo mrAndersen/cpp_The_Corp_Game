@@ -2,14 +2,16 @@
 #define THE_CORP_GAME_ELEVATOR_H
 
 #include <stack>
-#include "Objects/ElevatorCabin.h"
-#include "Objects/ElevatorShaftTop.h"
-#include "Objects/ElevatorShaftMiddle.h"
+#include "functional"
+#include "..\Objects\ElevatorCabin.h"
+#include "..\Objects\ElevatorShaftTop.h"
+#include "..\Objects\ElevatorShaftMiddle.h"
 
 class ElevatorShaftTop;
 class ElevatorShaftMiddle;
 class ElevatorCabin;
 class Elevator {
+    int boarding = 0;
 
     float top = 0;
     float left = 0;
@@ -19,13 +21,23 @@ class Elevator {
     std::vector<ElevatorShaftMiddle *> middleShafts;
     ElevatorShaftTop *topShaft = nullptr;
 
-    std::vector<int> queue;
+    std::deque<int> queue;
     sf::Clock waitTimer;
-    bool waiting = false;
+
+    bool waiting = true;
+    sf::Clock waitClock;
+    Direction direction = Up;
+
 public:
     ElevatorCabin *getCabin() const;
 
-    float getFloorBottom(int floor);
+    int getBoarding() const;
+
+    void incBoarding();
+
+    const std::deque<int> &getQueue() const;
+
+    void decBoarding();
 
     bool isWaiting() const;
 

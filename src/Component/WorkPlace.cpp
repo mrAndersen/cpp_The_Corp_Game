@@ -1,5 +1,5 @@
-#include <System/System.h>
-#include <Office/Chair.h>
+#include "..\System\System.h"
+#include "..\Office\Chair.h"
 #include "WorkPlace.h"
 
 const sf::Vector2f &WorkPlace::getWorldCoordinates() const {

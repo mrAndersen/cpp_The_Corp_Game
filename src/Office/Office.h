@@ -1,19 +1,19 @@
 #ifndef THE_CORP_GAME_OFFICE_H
 #define THE_CORP_GAME_OFFICE_H
 
-#include <Basic/Entity.h>
-#include <Basic/Movable.h>
-#include <Component/WorkPlace.h>
+#include "..\Basic\Entity.h"
+#include "..\Basic\Movable.h"
+#include "..\Component\WorkPlace.h"
 
-class Movable;
 class WorkPlace;
+
 class Office : public Entity {
 protected:
     int floor = 1;
 
     float cost = 0;
 
-    WorkPlace* workPlaces[4];
+    WorkPlace *workPlaces[4];
 public:
     Office();
 
@@ -37,11 +37,11 @@ public:
 
     bool hasFreeWorkPlaces();
 
-    void addWorker(Movable * worker);
+    void addWorker(Movable *worker);
 
     int getBusyWorkPlaces();
 
-    WorkPlace* getNextFreeWorkPlace();
+    WorkPlace *getNextFreeWorkPlace();
 };
 
 #endif //THE_CORP_GAME_OFFICE_H

@@ -1,7 +1,7 @@
-#include <System/ResourceLoader.h>
-#include <System/EntityContainer.h>
-#include <Text/TextEntity.h>
-#include <System/System.h>
+#include "..\System\ResourceLoader.h"
+#include "..\System\EntityContainer.h"
+#include "..\Text\TextEntity.h"
+#include "..\System\System.h"
 #include "ElevatorCabin.h"
 
 ElevatorCabin::ElevatorCabin(sf::Vector2f coordinates) {
@@ -42,18 +42,14 @@ bool ElevatorCabin::isSpawned() const {
 }
 
 bool ElevatorCabin::isInsideShaftBoundaries() {
-    for (auto e:EntityContainer::getItems()) {
-        if (e != this) {
-            if (
-                    e->getEType() == E_ElevatorShaftMiddle &&
-                    (int) e->getLeft() == (int) left &&
-                    (int) e->getBottom() == (int) bottom &&
-                    (int) e->getTop() == (int) top &&
-                    (int) e->getRight() == (int) right
-                    )
-            {
-                return true;
-            }
+    for (auto e:EntityContainer::getGroupItems("shafts")) {
+        if (
+                (int) e->getLeft() == (int) left &&
+                (int) e->getBottom() == (int) bottom &&
+                (int) e->getTop() == (int) top &&
+                (int) e->getRight() == (int) right
+                ) {
+            return true;
         }
     }
 
@@ -87,7 +83,7 @@ void ElevatorCabin::spawn() {
     auto elevator = new Elevator();
     elevator->addCabin(this);
 
-    for (auto e:EntityContainer::getItems()) {
+    for (auto e:EntityContainer::items) {
 
         if (auto d = dynamic_cast<ElevatorShaftMiddle *>(e)) {
             if (d->getWorldCoordinates().x == worldCoordinates.x) {
@@ -103,8 +99,10 @@ void ElevatorCabin::spawn() {
         };
     }
 
-    elevator->addToQueue(2);
+    elevator->addToQueue(1);
     elevator->finish();
+    this->elevator = elevator;
+
 
     Entity::spawn();
 }
@@ -142,7 +140,7 @@ void ElevatorCabin::updateIndicators() {
         if (currentPeople.size() < 10) {
             capacityIndicator.setString("0" + std::to_string(currentPeople.size()) + "/" + std::to_string(capacity));
         } else {
-            capacityIndicator.setString(currentPeople.size() + "/" + capacity);
+            capacityIndicator.setString(std::to_string(currentPeople.size()) + "/" + std::to_string(capacity));
         }
 
         capacityIndicator.setPosition(System::cToGl(position));
@@ -177,4 +175,12 @@ void ElevatorCabin::setSpeed(int speed) {
 
 bool ElevatorCabin::hasFreeSpace() {
     return currentPeople.size() < capacity;
+}
+
+int ElevatorCabin::getCapacity() const {
+    return capacity;
+}
+
+void ElevatorCabin::setCapacity(int capacity) {
+    ElevatorCabin::capacity = capacity;
 }

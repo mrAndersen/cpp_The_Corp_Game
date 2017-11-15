@@ -8,9 +8,7 @@
 
 namespace ViewHandler {
     Direction viewDirectionMovement = Direction::None;
-
     sf::View *view;
-    sf::Clock viewClock;
 
     float top = 0;
     float right = 0;
@@ -19,110 +17,107 @@ namespace ViewHandler {
     float zoom = 1;
 
     void handleViewScroll() {
-        int scrollSpeed = 50;
+        int scrollSpeed = 2200;
+        auto scrollDistance = (float) System::frameTimeMcs / 1000000 * scrollSpeed;
 
-        if (viewClock.getElapsedTime().asMilliseconds() > 20) {
-            viewClock.restart();
-
-            if (viewDirectionMovement == Direction::Left) {
-                if (ViewHandler::left <= (int) -System::worldWidth / 2) {
-                    return;
-                } else {
-                    view->move(-scrollSpeed, 0);
-                }
+        if (viewDirectionMovement == Direction::Left) {
+            if (ViewHandler::left <= (int) -System::worldWidth / 2) {
+                return;
+            } else {
+                view->move(-scrollDistance, 0);
             }
-
-            if (viewDirectionMovement == Direction::Right) {
-                if (ViewHandler::right >= (int) System::worldWidth / 2) {
-                    return;
-                } else {
-                    view->move(scrollSpeed, 0);
-                }
-            }
-
-            if (viewDirectionMovement == Direction::Up) {
-                view->move(0, -scrollSpeed);
-            }
-
-            if (viewDirectionMovement == Direction::Down) {
-                if (bottom > System::groundLevel) {
-                    view->move(0, scrollSpeed);
-                }
-            }
-
-            if (viewDirectionMovement == Direction::UpLeft) {
-                if (ViewHandler::left <= (int) -System::worldWidth / 2) {
-                    view->move(0, -scrollSpeed);
-                } else {
-                    view->move(-scrollSpeed, -scrollSpeed);
-                }
-
-            }
-
-            if (viewDirectionMovement == Direction::UpRight) {
-                if (ViewHandler::right >= (int) System::worldWidth / 2) {
-                    view->move(0, -scrollSpeed);
-                } else {
-                    view->move(scrollSpeed, -scrollSpeed);
-                }
-            }
-
-            if (viewDirectionMovement == Direction::DownLeft) {
-                if (ViewHandler::bottom <= System::groundLevel && ViewHandler::left <= -System::worldWidth / 2) {
-                    return;
-                }
-
-                if (ViewHandler::bottom > System::groundLevel && ViewHandler::left <= -System::worldWidth / 2) {
-                    view->move(0, scrollSpeed);
-                }
-
-                if (ViewHandler::bottom <= System::groundLevel && ViewHandler::left > -System::worldWidth / 2) {
-                    view->move(-scrollSpeed, 0);
-                }
-
-                if (ViewHandler::bottom > System::groundLevel && ViewHandler::left > -System::worldWidth / 2) {
-                    view->move(-scrollSpeed, scrollSpeed);
-                }
-            }
-
-            if (viewDirectionMovement == Direction::DownRight) {
-                if (ViewHandler::bottom <= System::groundLevel && ViewHandler::right >= System::worldWidth / 2) {
-                    return;
-                }
-
-                if (ViewHandler::bottom > System::groundLevel && ViewHandler::right >= System::worldWidth / 2) {
-                    view->move(0, -scrollSpeed);
-                }
-
-                if (ViewHandler::bottom <= System::groundLevel && ViewHandler::right < System::worldWidth / 2) {
-                    view->move(scrollSpeed, 0);
-                }
-
-                if (ViewHandler::bottom > System::groundLevel && ViewHandler::right < System::worldWidth / 2) {
-                    view->move(scrollSpeed, scrollSpeed);
-                }
-            }
-
-            auto center = System::cFromGl(ViewHandler::view->getCenter());
-
-            left = center.x - System::screenWidth / 2;
-            right = center.x + System::screenWidth / 2;
-            top = center.y + System::screenHeight / 2;
-            bottom = center.y - System::screenHeight / 2;
-
-            left = left * zoom;
-            right = right * zoom;
-            top = top * zoom;
-            bottom = bottom * zoom;
-
-            auto mousePosition = sf::Mouse::getPosition(*System::window);
-            auto coordMap = System::window->mapPixelToCoords(mousePosition);
-
-            System::g_x = coordMap.x;
-            System::g_y = System::screenHeight - coordMap.y;
-
-            System::window->setView(*view);
         }
+
+        if (viewDirectionMovement == Direction::Right) {
+            if (ViewHandler::right >= (int) System::worldWidth / 2) {
+                return;
+            } else {
+                view->move(scrollDistance, 0);
+            }
+        }
+
+        if (viewDirectionMovement == Direction::Up) {
+            view->move(0, -scrollDistance);
+        }
+
+        if (viewDirectionMovement == Direction::Down) {
+            if (bottom > System::groundLevel) {
+                view->move(0, scrollDistance);
+            }
+        }
+
+        if (viewDirectionMovement == Direction::UpLeft) {
+            if (ViewHandler::left <= (int) -System::worldWidth / 2) {
+                view->move(0, -scrollDistance);
+            } else {
+                view->move(-scrollDistance, -scrollDistance);
+            }
+
+        }
+
+        if (viewDirectionMovement == Direction::UpRight) {
+            if (ViewHandler::right >= (int) System::worldWidth / 2) {
+                view->move(0, -scrollDistance);
+            } else {
+                view->move(scrollDistance, -scrollDistance);
+            }
+        }
+
+        if (viewDirectionMovement == Direction::DownLeft) {
+            if (ViewHandler::bottom <= System::groundLevel && ViewHandler::left <= -System::worldWidth / 2) {
+                return;
+            }
+
+            if (ViewHandler::bottom > System::groundLevel && ViewHandler::left <= -System::worldWidth / 2) {
+                view->move(0, scrollDistance);
+            }
+
+            if (ViewHandler::bottom <= System::groundLevel && ViewHandler::left > -System::worldWidth / 2) {
+                view->move(-scrollDistance, 0);
+            }
+
+            if (ViewHandler::bottom > System::groundLevel && ViewHandler::left > -System::worldWidth / 2) {
+                view->move(-scrollDistance, scrollDistance);
+            }
+        }
+
+        if (viewDirectionMovement == Direction::DownRight) {
+            if (ViewHandler::bottom <= System::groundLevel && ViewHandler::right >= System::worldWidth / 2) {
+                return;
+            }
+
+            if (ViewHandler::bottom > System::groundLevel && ViewHandler::right >= System::worldWidth / 2) {
+                view->move(0, -scrollDistance);
+            }
+
+            if (ViewHandler::bottom <= System::groundLevel && ViewHandler::right < System::worldWidth / 2) {
+                view->move(scrollDistance, 0);
+            }
+
+            if (ViewHandler::bottom > System::groundLevel && ViewHandler::right < System::worldWidth / 2) {
+                view->move(scrollDistance, scrollDistance);
+            }
+        }
+
+        auto center = System::cFromGl(ViewHandler::view->getCenter());
+
+        left = center.x - System::screenWidth / 2;
+        right = center.x + System::screenWidth / 2;
+        top = center.y + System::screenHeight / 2;
+        bottom = center.y - System::screenHeight / 2;
+
+        left = left * zoom;
+        right = right * zoom;
+        top = top * zoom;
+        bottom = bottom * zoom;
+
+        auto mousePosition = sf::Mouse::getPosition(*System::window);
+        auto coordMap = System::window->mapPixelToCoords(mousePosition);
+
+        System::g_x = coordMap.x;
+        System::g_y = System::screenHeight - coordMap.y;
+
+        System::window->setView(*view);
     }
 
     void handleViewZoomKeyPress(sf::Event e) {

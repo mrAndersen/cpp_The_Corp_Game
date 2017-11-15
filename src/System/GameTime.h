@@ -24,6 +24,8 @@ public:
 
     bool isDayStartHour();
 
+    bool isHourStart();
+
     int diffMinutes(const GameTime &target);
 
     friend GameTime operator+(const GameTime &a, const GameTime &b);

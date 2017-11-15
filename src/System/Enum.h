@@ -7,9 +7,9 @@ enum DrawOrder {
 
     D_GroundArtifacts = 21,
 
-
-
     D_Offices = 98,
+    D_Offices_Spawning = 99,
+
     D_Characters_Wokring = 100,
     D_Chair = 105,
     D_ElevatorShafts = 110,
@@ -26,7 +26,8 @@ enum DestinationType {
     DST_Elevator_Exiting = 4,
     DST_Elevator_Inside_Cabin = 2,
     DST_Workplace = 3,
-    DST_SmokeArea = 5
+    DST_SmokeArea = 5,
+    DST_Home = 6
 };
 
 enum Gender {
@@ -41,11 +42,11 @@ enum Race {
 };
 
 enum Direction {
-    None,
-    Right,
-    Left,
-    Up,
-    Down,
+    None = 0,
+    Right = 1,
+    Left = 2,
+    Up = 3,
+    Down = 4,
 
     UpRight,
     UpLeft,
@@ -71,14 +72,17 @@ enum Entities {
 
     E_StaticGround_1 = 11,
     E_StaticGround_2 = 12,
-
+    E_StaticGround_3 = 18,
     E_StaticTree_1 = 13,
     E_StaticTree_2 = 14,
     E_StaticGroundArtifact_1 = 15,
     E_StaticTree_3 = 16,
     E_StaticTree_4 = 17,
 
+
+
     E_Clerk = 21,
+    E_Manager = 22,
 
     E_ButtonAddClerk = 31,
     E_Question_Mark_ButtonAddClerk = 311,
@@ -91,6 +95,9 @@ enum Entities {
     E_ButtonAddElevatorShaftTop = 352,
     E_ButtonAddElevatorCabin = 353,
     E_Question_Mark_ButtonAddElevator = 354,
+
+    E_ButtonAddManager = 36,
+    E_Question_Mark_ButtonAddManager = 361,
 
 
     E_OfficeDefault = 41,

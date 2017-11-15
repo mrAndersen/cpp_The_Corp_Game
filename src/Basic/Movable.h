@@ -2,15 +2,15 @@
 #define THE_CORP_GAME_MOVABLE_H
 
 #include "Entity.h"
+#include "..\Component\Destination.h"
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Clock.hpp>
-#include "System/Enum.h"
-#include "System/GameTime.h"
-#include <Component/WorkPlace.h>
-#include <Component/Elevator.h>
-#include <Component/Destination.h>
+#include "..\System\Enum.h"
+#include "..\System\GameTime.h"
+#include "..\Component\WorkPlace.h"
+#include "..\Component\Elevator.h"
 
 class Office;
 
@@ -30,17 +30,18 @@ protected:
     float currentSpeed = 130;
     float fallAcceleration = 980;
 
-    WorkPlace *currentWorkPlace = nullptr;
-
     std::deque<Destination> destinations;
+    DestinationType currentDST = DST_Unknown;
     bool moving = false;
+    Elevator *targetElevator = nullptr;
+    sf::Clock lastElevatorSearch;
+    int elevatorSearchResolutionSeconds = 5;
+    bool smoking = false;
 
-    int randomedCabinPosition = 0;
-
-    sf::Clock workPlaceSearchResolution;
+    int routeRefreshIntervalSeconds = 5;
 
     //relevant to game time
-    int smokePeriodMinutes = 5;
+    int smokePeriodMinutes = 15;
     GameTime smokeStarted;
 
     //attr
@@ -51,18 +52,24 @@ protected:
     Gender gender = Gender::G_Male;
     Race race = Race::R_White;
 
-    bool hasReachedWorldEdges();
-
     void updateLogic() override;
 
 public:
     Movable(Entities type, int width, int height);
 
+    bool isCrossingShafts();
+
     void updateFloor();
 
-    void stop();
+    float getFloorBottom(int floor);
 
-    sf::Vector2f findNearestOutside();
+    float getFloorBottom(sf::Vector2f coordinates);
+
+    void createSmokeAreaRoute();
+
+    void createHomeRoute();
+
+    sf::Vector2f searchNearestOutside();
 
     void addAnimation(States state, Gender gender, Race race, int frames = 24, int duration = 1000000);
 
@@ -90,11 +97,7 @@ public:
 
     void setFallAcceleration(float fallAcceleration);
 
-    void searchWorkPlace();
-
     Elevator *searchNearestElevator();
-
-    bool isInWorkPlace();
 
     std::string serialize() override;
 

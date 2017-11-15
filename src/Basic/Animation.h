@@ -2,7 +2,7 @@
 #define THE_CORP_GAME_ANIMATION_H
 
 
-#include <System/Enum.h>
+#include "..\System\Enum.h"
 #include <SFML/Graphics/Sprite.hpp>
 #include <vector>
 #include <SFML/System/Clock.hpp>

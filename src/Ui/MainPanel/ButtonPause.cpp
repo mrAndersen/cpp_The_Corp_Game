@@ -20,7 +20,6 @@ void ButtonPause::update() {
     auto b5x = dynamic_cast<BasicUi *>(ControlPanel::getControls()[E_Button5x]);
     auto b10x = dynamic_cast<BasicUi *>(ControlPanel::getControls()[E_Button10x]);
 
-
     if(pressed){
         selectAnimation(S_Button_Pressed);
     }else{

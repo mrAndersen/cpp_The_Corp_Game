@@ -1,12 +1,14 @@
-#include <System/System.h>
-#include <Text/TextEntity.h>
+#include "..\System\System.h"
+#include "..\Text\TextEntity.h"
 #include "ElevatorShaftMiddle.h"
-#include "System/EntityContainer.h"
+#include "..\System\EntityContainer.h"
+#include "../System/ResourceLoader.h"
 
 ElevatorShaftMiddle::ElevatorShaftMiddle(sf::Vector2f coordinates) : Entity(E_ElevatorShaftMiddle) {
     setWidth(ElevatorShaftMiddle::width);
     setHeight(ElevatorShaftMiddle::height);
     setCost(1000);
+    setGroupName("shafts");
 
     setWorldCoordinates(coordinates);
     setSelectable(false);
@@ -16,7 +18,9 @@ ElevatorShaftMiddle::ElevatorShaftMiddle(sf::Vector2f coordinates) : Entity(E_El
     initEntity();
 
     EntityContainer::add(this);
+    EntityContainer::addToGroup(groupName, this);
 }
+
 
 float ElevatorShaftMiddle::getCost() const {
     return cost;
@@ -27,9 +31,9 @@ void ElevatorShaftMiddle::setCost(float cost) {
 }
 
 bool ElevatorShaftMiddle::hasMiddleShaftOnTheBottom() {
-    for (auto e:EntityContainer::getItems()) {
+    for (auto e:EntityContainer::items) {
 
-        if (auto d = dynamic_cast<ElevatorShaftMiddle *>(e) && e->getTop() == bottom) {
+        if (dynamic_cast<ElevatorShaftMiddle *>(e) && e->getTop() == bottom) {
             return true;
         }
     }
@@ -39,7 +43,7 @@ bool ElevatorShaftMiddle::hasMiddleShaftOnTheBottom() {
 
 std::vector<Office *> ElevatorShaftMiddle::getNeighborOffices() {
     std::vector<Office *> result;
-    std::vector<Entity *> offices = EntityContainer::searchEntitiesByGroup(System::officeGroup);
+    std::vector<Entity *> offices = EntityContainer::getGroupItems("offices");
 
     for (auto e:offices) {
         auto target = dynamic_cast<Office *>(e);
@@ -80,3 +84,5 @@ void ElevatorShaftMiddle::spawn() {
 
     spawned = true;
 }
+
+
