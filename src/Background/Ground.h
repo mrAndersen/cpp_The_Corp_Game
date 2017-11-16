@@ -3,6 +3,7 @@
 
 #include "..\Basic\Entity.h"
 
+
 class Ground : public Entity {
 public:
     const static int width = 300;

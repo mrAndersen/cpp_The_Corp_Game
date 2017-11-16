@@ -6,11 +6,9 @@
 #include "../Component/Elevator.h"
 #include "../System/System.h"
 #include "../Background/Ground.h"
-#include "../Characters/Clerk.h"
+#include "..\Basic\Movable.h"
 
 class Elevator;
-
-class Movable;
 
 class Clerk;
 
@@ -38,7 +36,7 @@ public:
 
     static Destination createElevatorCabinDST(Elevator *elevator, Movable *movable);
 
-    static Destination createWorkplaceDST(Clerk *movable);
+//    static Destination createWorkplaceDST(Clerk *movable);
 
     static Destination createSmokeAreaDST(Movable *movable, sf::Vector2f &smokeArea);
 

@@ -3,10 +3,9 @@
 
 #include <SFML/System/Vector2.hpp>
 #include "..\Office\Office.h"
+#include "..\Basic\Movable.h"
 
 class Office;
-
-class Movable;
 
 class WorkPlace {
 

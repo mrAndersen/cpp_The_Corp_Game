@@ -6,9 +6,8 @@
 #include "..\Background\Ground.h"
 #include "..\Component\Elevator.h"
 #include "..\Office\Office.h"
+#include "..\Basic\Movable.h"
 #include "System.h"
-
-class Movable;
 
 namespace EntityContainer {
 

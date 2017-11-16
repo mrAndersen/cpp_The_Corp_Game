@@ -2,7 +2,6 @@
 #define THE_CORP_GAME_MOVABLE_H
 
 #include "Entity.h"
-#include "..\Component\Destination.h"
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Time.hpp>
@@ -11,12 +10,17 @@
 #include "..\System\GameTime.h"
 #include "..\Component\WorkPlace.h"
 #include "..\Component\Elevator.h"
+#include "../Component/Destination.h"
 
 class Office;
 
 class WorkPlace;
 
 class Elevator;
+
+class Clerk;
+
+class Manager;
 
 class Destination;
 
@@ -112,4 +116,4 @@ public:
     void setDefaultSpeed(float defaultSpeed);
 };
 
-#endif //THE_CORP_GAME_ENTITYANIMATION_CPP_H
+#endif //THE_CORP_GAME_MOVABLE_H

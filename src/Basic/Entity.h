@@ -7,6 +7,9 @@
 #include "Animation.h"
 
 class Animation;
+
+class Movable;
+
 class Entity {
 
 protected:

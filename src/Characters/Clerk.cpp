@@ -35,7 +35,7 @@ void Clerk::updateLogic() {
         moving = true;
         setDrawOrder(D_Characters, true);
 
-        createWorkPlaceRoute();
+//        createWorkPlaceRoute();
     }
 
     //ONE TIME EXEC
@@ -115,21 +115,21 @@ bool Clerk::isInWorkPlace() {
             (int) worldCoordinates.x == (int) currentWorkPlace->getWorldCoordinates().x;
 }
 
-void Clerk::createWorkPlaceRoute() {
-    if (floor == currentWorkPlace->getParentOffice()->getFloor()) {
-        destinations.push_back(Destination::createWorkplaceDST(this));
-    } else {
-        targetElevator = searchNearestElevator();
-        targetElevator->incBoarding();
-
-        if (targetElevator) {
-            destinations.push_back(Destination::createElevatorWaitingDST(targetElevator, this));
-            destinations.push_back(Destination::createElevatorCabinDST(targetElevator, this));
-            destinations.push_back(Destination::createElevatorExitingDST(targetElevator, this, currentWorkPlace->getWorldCoordinates()));
-            destinations.push_back(Destination::createWorkplaceDST(this));
-        }
-    }
-}
+//void Clerk::createWorkPlaceRoute() {
+//    if (floor == currentWorkPlace->getParentOffice()->getFloor()) {
+//        destinations.push_back(Destination::createWorkplaceDST(this));
+//    } else {
+//        targetElevator = searchNearestElevator();
+//        targetElevator->incBoarding();
+//
+//        if (targetElevator) {
+//            destinations.push_back(Destination::createElevatorWaitingDST(targetElevator, this));
+//            destinations.push_back(Destination::createElevatorCabinDST(targetElevator, this));
+//            destinations.push_back(Destination::createElevatorExitingDST(targetElevator, this, currentWorkPlace->getWorldCoordinates()));
+//            destinations.push_back(Destination::createWorkplaceDST(this));
+//        }
+//    }
+//}
 
 void Clerk::searchWorkPlace() {
     if (!this->currentWorkPlace && this->isSpawned()) {

@@ -3,6 +3,7 @@
 
 #include "..\Basic\Entity.h"
 #include "..\Component\WorkPlace.h"
+#include "../Basic/Movable.h"
 
 class WorkPlace;
 

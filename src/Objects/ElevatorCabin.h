@@ -4,10 +4,11 @@
 #include "..\Basic\Entity.h"
 #include "..\Basic\Movable.h"
 #include "..\Text\TextEntity.h"
-
-class Movable;
+#include "..\Basic\Movable.h"
 
 class Elevator;
+
+class Movable;
 
 class ElevatorCabin : public Entity {
     const static int width = 150;
