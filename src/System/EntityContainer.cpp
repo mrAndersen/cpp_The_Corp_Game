@@ -1,10 +1,4 @@
-#include "..\Basic\Movable.h"
-#include "..\Office\Office.h"
-#include "..\Background\Tree.h"
-#include "..\Background\GroundArtifact.h"
 #include "EntityContainer.h"
-#include "..\Background\Ground.h"
-#include "System.h"
 
 namespace EntityContainer {
     std::vector<Entity *> items = {};

@@ -1,7 +1,3 @@
-//
-// Created by mrAndersen on 26.10.2017.
-//
-
 #ifndef THE_CORP_GAME_QADDOFFICE_H
 #define THE_CORP_GAME_QADDOFFICE_H
 

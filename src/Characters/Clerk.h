@@ -1,10 +1,10 @@
 #ifndef THE_CORP_GAME_CLERK_H
 #define THE_CORP_GAME_CLERK_H
 
-#include "..\Basic\Movable.h"
-#include "..\Office\Office.h"
-#include "..\System\ResourceLoader.h"
-#include "..\System\EntityContainer.h"
+#include <cmath>
+#include "../Basic/Movable.h"
+#include "../Component/WorkPlace.h"
+#include "../Text/TextEntity.h"
 
 class Clerk : public Movable {
 public:

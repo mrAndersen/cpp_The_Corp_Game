@@ -1,12 +1,16 @@
 #ifndef THE_CORP_GAME_ENTITY_H
 #define THE_CORP_GAME_ENTITY_H
 
-#include <SFML/Graphics/Texture.hpp>
-#include <SFML/Graphics.hpp>
-#include "..\System\Enum.h"
+#include <string>
+#include <map>
+#include <SFML/Graphics/Text.hpp>
+#include <SFML/Window/Mouse.hpp>
 #include "Animation.h"
+#include "../System/System.h"
+#include "../System/Enum.h"
 
-class Animation;
+class Office;
+
 class Entity {
 
 protected:

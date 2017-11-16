@@ -2,6 +2,9 @@
 #define THE_CORP_GAME_SAVEMANAGER_H
 
 #include <string>
+#include "EntityContainer.h"
+#include <fstream>
+#include <SFML/Window/Keyboard.hpp>
 
 class SaveManager {
 public:

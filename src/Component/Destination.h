@@ -1,19 +1,14 @@
 #ifndef THE_CORP_GAME_DESTINATION_H
 #define THE_CORP_GAME_DESTINATION_H
 
-#include <SFML/System/Vector2.hpp>
-#include "../Characters/Clerk.h"
+#include <SFML/System.hpp>
 #include "../System/Enum.h"
-#include "../Component/Elevator.h"
-#include "../System/System.h"
-#include "../Characters/Manager.h"
-#include "../Characters/Clerk.h"
-#include "../Background/Ground.h"
-#include "../Basic/Movable.h"
 
 class Elevator;
 
 class Movable;
+
+class Clerk;
 
 class Destination {
     sf::Vector2f coordinates;

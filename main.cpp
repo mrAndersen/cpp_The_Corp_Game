@@ -1,15 +1,12 @@
-#include <sstream>
-#include "src\Component\Destination.h"
+#include <windef.h>
 #include <SFML/Window/Event.hpp>
-#include "src\Objects\ElevatorShaftMiddle.h"
-#include "src\Office\OfficeClerk.h"
-#include "src\System\ResourceLoader.h"
-#include "src\System\ViewHandler.h"
-#include "src\System\EntityContainer.h"
-#include "src\System\ControlPanel.h"
-#include "src\System\SaveManager.h"
-#include "src\System\DebugPattern.h"
-#include "src/Characters/Clerk.h"
+#include "System/ViewHandler.h"
+#include "System/DebugPattern.h"
+#include "System/System.h"
+#include "System/SaveManager.h"
+#include "System/ResourceLoader.h"
+#include "System/EntityContainer.h"
+#include "System/ControlPanel.h"
 
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow) {
     SaveManager saveManager;

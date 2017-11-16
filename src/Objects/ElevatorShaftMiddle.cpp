@@ -1,8 +1,4 @@
-#include "..\System\System.h"
-#include "..\Text\TextEntity.h"
 #include "ElevatorShaftMiddle.h"
-#include "..\System\EntityContainer.h"
-#include "../System/ResourceLoader.h"
 
 ElevatorShaftMiddle::ElevatorShaftMiddle(sf::Vector2f coordinates) : Entity(E_ElevatorShaftMiddle) {
     setWidth(ElevatorShaftMiddle::width);

@@ -1,15 +1,17 @@
 #ifndef THE_CORP_GAME_ELEVATOR_H
 #define THE_CORP_GAME_ELEVATOR_H
 
-#include <stack>
-#include "functional"
-#include "..\Objects\ElevatorCabin.h"
-#include "..\Objects\ElevatorShaftTop.h"
-#include "..\Objects\ElevatorShaftMiddle.h"
+#include <deque>
+#include <vector>
+#include <SFML/System/Clock.hpp>
+#include "../System/Enum.h"
+
+class ElevatorShaftMiddle;
 
 class ElevatorShaftTop;
-class ElevatorShaftMiddle;
+
 class ElevatorCabin;
+
 class Elevator {
     int boarding = 0;
 

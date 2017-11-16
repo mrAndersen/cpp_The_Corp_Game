@@ -1,9 +1,9 @@
 #ifndef THE_CORP_GAME_OFFICE_H
 #define THE_CORP_GAME_OFFICE_H
 
-#include "..\Basic\Entity.h"
-#include "..\Basic\Movable.h"
-#include "..\Component\WorkPlace.h"
+#include "../Basic/Entity.h"
+
+class Movable;
 
 class WorkPlace;
 

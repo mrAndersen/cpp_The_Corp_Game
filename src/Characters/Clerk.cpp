@@ -1,9 +1,4 @@
-#include <iostream>
-#include <cmath>
-#include "..\System\ResourceLoader.h"
-#include "..\System\EntityContainer.h"
 #include "Clerk.h"
-#include "..\Basic\Movable.h"
 
 Clerk::Clerk(sf::Vector2f coordinates) : Movable(E_Clerk, Clerk::width, Clerk::height) {
     setDefaultSpeed(150);

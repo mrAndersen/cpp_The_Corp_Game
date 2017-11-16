@@ -1,7 +1,3 @@
-#include "..\System\ResourceLoader.h"
-#include "..\System\EntityContainer.h"
-#include "..\Text\TextEntity.h"
-#include "..\System\System.h"
 #include "ElevatorCabin.h"
 
 ElevatorCabin::ElevatorCabin(sf::Vector2f coordinates) {

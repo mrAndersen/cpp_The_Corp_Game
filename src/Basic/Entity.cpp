@@ -1,10 +1,6 @@
-#include <sstream>
-#include <iostream>
 #include "Entity.h"
-#include "..\System\System.h"
-#include "..\System\Enum.h"
-#include "..\System\EntityContainer.h"
-#include "..\Background\Ground.h"
+#include "../Background/Ground.h"
+#include "../System/EntityContainer.h"
 
 std::string Entity::serialize() {
     return "";
