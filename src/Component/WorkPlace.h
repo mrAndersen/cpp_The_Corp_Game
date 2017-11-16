@@ -1,11 +1,12 @@
 #ifndef THE_CORP_GAME_WORKPLACE_H
 #define THE_CORP_GAME_WORKPLACE_H
 
-#include "..\Basic\Movable.h"
-#include "..\Office\Office.h"
 #include <SFML/System/Vector2.hpp>
+#include "..\Office\Office.h"
 
 class Office;
+
+class Movable;
 
 class WorkPlace {
 

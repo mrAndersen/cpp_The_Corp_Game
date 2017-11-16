@@ -8,8 +8,11 @@
 #include "..\Objects\ElevatorShaftMiddle.h"
 
 class ElevatorShaftTop;
+
 class ElevatorShaftMiddle;
+
 class ElevatorCabin;
+
 class Elevator {
     int boarding = 0;
 

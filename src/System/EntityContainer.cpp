@@ -1,10 +1,4 @@
-#include "..\Basic\Movable.h"
-#include "..\Office\Office.h"
-#include "..\Background\Tree.h"
-#include "..\Background\GroundArtifact.h"
 #include "EntityContainer.h"
-#include "..\Background\Ground.h"
-#include "System.h"
 
 namespace EntityContainer {
     std::vector<Entity *> items = {};
@@ -28,18 +22,7 @@ namespace EntityContainer {
     }
 
     std::vector<Entity *> getSaveable() {
-        std::vector<Entity *> buffer;
 
-        for (auto entity:items) {
-            if (
-                    dynamic_cast<Movable *>(entity) ||
-                    dynamic_cast<Office *>(entity)
-                    ) {
-                buffer.push_back(entity);
-            }
-        }
-
-        return buffer;
     }
 
 
