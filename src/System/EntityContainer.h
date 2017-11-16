@@ -1,16 +1,9 @@
 #ifndef THE_CORP_GAME_ENTITYCONTAINER_H
 #define THE_CORP_GAME_ENTITYCONTAINER_H
 
-
-#include <SFML/Graphics/VertexArray.hpp>
-#include "../Component/Elevator.h"
-#include "../Basic/Entity.h"
-#include "../Characters/Clerk.h"
-#include "../Background/Ground.h"
-#include "../Background/Tree.h"
-#include "../Background/GroundArtifact.h"
-
-class Movable;
+#include "..\Component\Elevator.h"
+#include "..\Office\Office.h"
+#include "../Basic/Movable.h"
 
 namespace EntityContainer {
 

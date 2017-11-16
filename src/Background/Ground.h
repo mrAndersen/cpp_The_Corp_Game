@@ -1,8 +1,7 @@
 #ifndef THE_CORP_GAME_GROUND_H
 #define THE_CORP_GAME_GROUND_H
 
-#include "../System/Enum.h"
-#include "../Basic/Entity.h"
+#include "..\Basic\Entity.h"
 
 class Ground : public Entity {
 public:

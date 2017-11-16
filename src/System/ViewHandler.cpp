@@ -1,5 +1,10 @@
-#include "ViewHandler.h"
+#include <SFML/Graphics/View.hpp>
+#include <SFML/Window/Event.hpp>
 
+#include "Enum.h"
+#include "System.h"
+#include "ViewHandler.h"
+#include <iostream>
 
 namespace ViewHandler {
     Direction viewDirectionMovement = Direction::None;

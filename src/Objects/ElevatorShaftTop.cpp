@@ -1,4 +1,10 @@
+#include "..\System\System.h"
+#include "..\Text\TextEntity.h"
 #include "ElevatorShaftTop.h"
+#include "..\System\EntityContainer.h"
+#include "ElevatorShaftMiddle.h"
+#include "../System/ResourceLoader.h"
+
 
 ElevatorShaftTop::ElevatorShaftTop(sf::Vector2f coordinates) {
     setEType(E_ElevatorShaftTop);

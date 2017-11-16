@@ -1,7 +1,11 @@
 #ifndef THE_CORP_GAME_BUTTON5X_H
 #define THE_CORP_GAME_BUTTON5X_H
 
-#include "Button5x.h"
+#include "..\..\Ui\BasicUi.h"
+#include "..\..\System\ResourceLoader.h"
+#include "..\..\System\EntityContainer.h"
+#include "..\..\System\System.h"
+#include "..\..\System\ControlPanel.h"
 
 class Button5x : public BasicUi {
 public:

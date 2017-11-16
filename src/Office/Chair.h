@@ -1,7 +1,7 @@
 #ifndef THE_CORP_GAME_CHAIR_H
 #define THE_CORP_GAME_CHAIR_H
 
-#include "Chair.h"
+#include "..\Basic\Entity.h"
 
 class Chair : public Entity {
 

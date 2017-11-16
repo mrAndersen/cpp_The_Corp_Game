@@ -1,13 +1,13 @@
 #ifndef THE_CORP_GAME_ELEVATORCABIN_H
 #define THE_CORP_GAME_ELEVATORCABIN_H
 
-#include "../Basic/Entity.h"
-#include "../System/ResourceLoader.h"
-#include "../System/EntityContainer.h"
-
-class Elevator;
+#include "..\Basic\Entity.h"
+#include "..\Basic\Movable.h"
+#include "..\Text\TextEntity.h"
 
 class Movable;
+
+class Elevator;
 
 class ElevatorCabin : public Entity {
     const static int width = 150;

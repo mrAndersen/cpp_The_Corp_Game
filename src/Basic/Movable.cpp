@@ -1,4 +1,13 @@
+#include <cmath>
+#include <iostream>
+#include <fstream>
+#include "..\Text\TextEntity.h"
+#include "..\Background\Ground.h"
+#include "..\System\EntityContainer.h"
 #include "Movable.h"
+#include "..\System\System.h"
+#include "../Ui/MainPanel/ButtonPause.h"
+
 
 void Movable::renderDebugInfo() {
     if (System::debug) {

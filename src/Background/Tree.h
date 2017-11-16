@@ -1,6 +1,11 @@
 #ifndef THE_CORP_GAME_TREE_H
 #define THE_CORP_GAME_TREE_H
 
+
+#include "..\System\Enum.h"
+#include "..\Basic\Entity.h"
+#include <SFML/Window.hpp>
+
 class Tree : public Entity {
 public:
     const static int width = 267;

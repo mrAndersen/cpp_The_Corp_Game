@@ -1,7 +1,11 @@
 #ifndef THE_CORP_GAME_BUTTONPAUSE_H
 #define THE_CORP_GAME_BUTTONPAUSE_H
 
-#include "../BasicUi.h"
+#include "..\..\Ui\BasicUi.h"
+#include "..\..\System\ResourceLoader.h"
+#include "..\..\System\EntityContainer.h"
+#include "..\..\System\System.h"
+#include "..\..\System\ControlPanel.h"
 
 class ButtonPause : public BasicUi {
 public:

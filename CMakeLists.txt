@@ -1,6 +1,12 @@
 cmake_minimum_required(VERSION 3.8)
-project(the_corp_game)
 
+# Enable debug symbols by default
+# must be done before project() statement
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Debug CACHE STRING "Choose the type of build (Debug or Release)" FORCE)
+endif()
+
+project(the_corp_game)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_FLAGS "-static-libgcc -static-libstdc++")
 
@@ -13,6 +19,10 @@ set(SFML_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/vendor/mingw_sfml-2.4.2/include")
 include_directories("${PROJECT_SOURCE_DIR}/src")
 
 file(COPY "resources" DESTINATION "${CMAKE_BINARY_DIR}")
+
+# Set version information in a config.h file
+set(the_corp_game_VERSION_MAJOR 1)
+set(the_corp_game_VERSION_MINOR 0)
 
 include_directories("${PROJECT_BINARY_DIR}")
 
@@ -157,16 +167,15 @@ add_executable(
         src/Characters/Manager.h
 
         src/Ui/Questions/QAddManager.cpp
-        src/Ui/Questions/QAddManager.h
-
-        src/System/DebugPattern.cpp
-        src/System/DebugPattern.h
-)
+        src/Ui/Questions/QAddManager.h src/System/DebugPattern.cpp src/System/DebugPattern.h)
 
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}" ${CMAKE_MODULE_PATH})
-set(SFML_STATIC_LIBRARIES TRUE)
 
+#Find any version 2.X of SFML
+#See the FindSFML.cmake file for additional details and instructions
+message(STATUS "Library (SFML_LIBRARIES): ${SFML_LIBRARIES}")
+set(SFML_STATIC_LIBRARIES TRUE)
 find_package(SFML 2 REQUIRED graphics network audio window system)
 if(SFML_FOUND)
     FIND_LIBRARY (PSAPI Psapi)
@@ -175,4 +184,13 @@ if(SFML_FOUND)
     target_link_libraries(${EXECUTABLE_NAME} ${PSAPI} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
 endif()
 
+
+# Install target
 install(TARGETS ${EXECUTABLE_NAME} DESTINATION bin)
+
+# CPack packaging
+include(InstallRequiredSystemLibraries)
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/COPYING")
+set(CPACK_PACKAGE_VERSION_MAJOR "${the_corp_game_VERSION_MAJOR}")
+set(CPACK_PACKAGE_VERSION_MINOR "${the_corp_game_VERSION_MINOR}")
+include(CPack)

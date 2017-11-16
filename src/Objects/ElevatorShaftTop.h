@@ -1,11 +1,9 @@
 #ifndef THE_CORP_GAME_ELEVATORSHAFTTOP_H
 #define THE_CORP_GAME_ELEVATORSHAFTTOP_H
 
-#include "..\System\System.h"
-#include "..\Text\TextEntity.h"
-#include "..\System\EntityContainer.h"
-#include "../System/ResourceLoader.h"
-#include "../Objects/ElevatorShaftMiddle.h"
+#include "..\Basic\Entity.h"
+#include "..\Component\Elevator.h"
+#include "..\Office\Office.h"
 
 class Elevator;
 

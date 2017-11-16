@@ -1,6 +1,7 @@
 #ifndef THE_CORP_GAME_QADDCLERK_H
 #define THE_CORP_GAME_QADDCLERK_H
 
+
 #include "Question.h"
 
 class QAddClerk : public Question {

@@ -1,10 +1,9 @@
 #ifndef THE_CORP_GAME_ELEVATORSHATFMIDDLE_H
 #define THE_CORP_GAME_ELEVATORSHATFMIDDLE_H
 
-#include "../Basic/Entity.h"
-#include "../Office/Office.h"
-#include "../System/ResourceLoader.h"
-#include "../System/EntityContainer.h"
+#include "..\Basic\Entity.h"
+#include "..\Office\Office.h"
+#include "..\Component\WorkPlace.h"
 
 class ElevatorShaftMiddle : public Entity {
 

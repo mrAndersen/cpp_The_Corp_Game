@@ -2,6 +2,7 @@
 #define THE_CORP_GAME_CONTROLBUTTONADDELEVATORSHAFTTOP_H
 
 #include "..\Objects\ElevatorShaftMiddle.h"
+#include "..\Objects\ElevatorShaftTop.h"
 #include "BasicUi.h"
 
 class ControlButtonAddElevatorShaftTop : public BasicUi {

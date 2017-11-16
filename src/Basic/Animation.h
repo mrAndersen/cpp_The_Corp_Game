@@ -1,12 +1,14 @@
 #ifndef THE_CORP_GAME_ANIMATION_H
 #define THE_CORP_GAME_ANIMATION_H
 
-#include "../System/Enum.h"
+
+#include "..\System\Enum.h"
 #include <SFML/Graphics/Sprite.hpp>
+#include <vector>
 #include <SFML/System/Clock.hpp>
+#include "Entity.h"
 
 class Entity;
-
 class Animation {
     Entity *entity = nullptr;
 

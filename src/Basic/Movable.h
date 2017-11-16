@@ -1,17 +1,24 @@
 #ifndef THE_CORP_GAME_MOVABLE_H
 #define THE_CORP_GAME_MOVABLE_H
 
-#include <cmath>
-#include <iostream>
-#include <fstream>
 #include "Entity.h"
-#include "..\Text\TextEntity.h"
-#include "..\Background\Ground.h"
-#include "..\System\EntityContainer.h"
-#include "..\System\System.h"
-#include "../Component/Destination.h"
-#include "../System/EntityContainer.h"
-#include <SFML/Graphics/RectangleShape.hpp>
+#include "..\Component\Destination.h"
+#include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics.hpp>
+#include <SFML/System/Time.hpp>
+#include <SFML/System/Clock.hpp>
+#include "..\System\Enum.h"
+#include "..\System\GameTime.h"
+#include "..\Component\WorkPlace.h"
+#include "..\Component\Elevator.h"
+
+class Office;
+
+class WorkPlace;
+
+class Elevator;
+
+class Destination;
 
 class Movable : public Entity {
 
