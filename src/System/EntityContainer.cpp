@@ -18,7 +18,9 @@ namespace EntityContainer {
     }
 
     void removeFromGroup(const std::string &groupName, Entity *target) {
-        itemsByGroup[groupName].erase(std::remove(itemsByGroup[groupName].begin(), itemsByGroup[groupName].end(), target), itemsByGroup[groupName].end());
+        itemsByGroup[groupName].erase(
+                std::remove(itemsByGroup[groupName].begin(), itemsByGroup[groupName].end(), target),
+                itemsByGroup[groupName].end());
     }
 
 
@@ -109,7 +111,7 @@ namespace EntityContainer {
     void refreshEntities() {
         System::window->clear(System::c_background);
 
-        for (auto &entity:items) {
+        for (auto entity:items) {
             entity->update();
         }
 
@@ -130,21 +132,21 @@ namespace EntityContainer {
             itemsToRemove.clear();
         }
 
-        //@todo debug logic - to remove
-        System::debugCounters["empty"] = 0;
-        for (auto &e:items) {
-            System::debugCounters["empty"] = e->getEType() == E_Entity ? System::debugCounters["empty"]++ : System::debugCounters["empty"];
+        if (System::debug) {
+            System::debugCounters["empty"] = 0;
+            for (auto &e:items) {
+                System::debugCounters["empty"] =
+                        e->getEType() == E_Entity ? System::debugCounters["empty"]++ : System::debugCounters["empty"];
+            }
+
+            auto group = EntityContainer::getGroupItems("offices");
+            System::debugCounters["free_offices"] = 0;
+
+            for (auto &e:group) {
+                auto office = dynamic_cast<Office *>(e);
+                System::debugCounters["free_offices"] += (4 - office->getBusyWorkPlaces());
+            }
         }
-
-        auto group = EntityContainer::getGroupItems("offices");
-        System::debugCounters["free_offices"] = 0;
-
-        for (auto &e:group) {
-            auto office = dynamic_cast<Office *>(e);
-            System::debugCounters["free_offices"] += (4 - office->getBusyWorkPlaces());
-        }
-
-        //@todo debug logic - to remove
     }
 
     void addElevator(Elevator *elevator) {
