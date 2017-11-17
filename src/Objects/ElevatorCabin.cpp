@@ -4,6 +4,7 @@
 #include "..\System\System.h"
 #include "ElevatorCabin.h"
 
+
 ElevatorCabin::ElevatorCabin(sf::Vector2f coordinates) {
     setEType(E_ElevatorCabin);
 

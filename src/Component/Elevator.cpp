@@ -146,7 +146,9 @@ void Elevator::addToQueue(int floor) {
 
         if (direction == Up) {
             std::sort(queue.begin(), queue.end(), std::less<int>());
-        } else {
+        }
+
+        if (direction == Down) {
             std::sort(queue.begin(), queue.end(), std::greater<int>());
         }
     }

@@ -5,6 +5,7 @@
 #include "..\Basic\Movable.h"
 #include "..\Text\TextEntity.h"
 #include "..\Basic\Movable.h"
+#include "../Component/Destination.h"
 
 class Elevator;
 

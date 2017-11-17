@@ -20,15 +20,15 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{4BEF8ECE-C258-4147-AF52-4E5878769217}</ProjectGuid>
+    <ProjectGuid>{5C679A0A-AF38-450D-99B5-B6FB17E02D44}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -71,7 +71,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>SFML_STATIC;WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;SFML_STATIC;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -83,11 +83,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>C:\Projects\cpp_The_Corp_Game_VC\vendor\sfml-2.4.2-windows\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;winmm.lib;glu32.lib;sfml-main.lib;sfml-system-s-d.lib;sfml-window-s-d.lib;sfml-graphics-s-d.lib;sfml-network-s-d.lib;sfml-audio-s-d.lib;vorbis.lib;vorbisenc.lib;vorbisfile.lib;openal32.lib;ogg.lib;jpeg.lib;freetype.lib;flac.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;winmm.lib;openal32.lib;flac.lib;freetype.lib;jpeg.lib;ogg.lib;sfml-audio-s-d.lib;sfml-network-s-d.lib;sfml-system-s-d.lib;sfml-main-d.lib;sfml-graphics-s-d.lib;sfml-window-s-d.lib;vorbis.lib;vorbisenc.lib;vorbisfile.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <PostBuildEvent>
-      <Command>XCOPY "$(SolutionDir)resources" "$(TargetDir)resources" /s /i /y</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -102,14 +99,6 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ClCompile>
-      <AdditionalIncludeDirectories>D:\CppProjects\The_Corp_Game\vendor\sfml-2.4.2-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ClCompile>
-    <Link>
-      <AdditionalLibraryDirectories>D:\CppProjects\The_Corp_Game\vendor\sfml-2.4.2-windows\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -132,8 +121,8 @@
     <ClCompile Include="src\office\Office.cpp" />
     <ClCompile Include="src\office\OfficeClerk.cpp" />
     <ClCompile Include="src\system\ControlPanel.cpp" />
+    <ClCompile Include="src\system\DebugPattern.cpp" />
     <ClCompile Include="src\system\EntityContainer.cpp" />
-    <ClCompile Include="src\system\EntityGroup.cpp" />
     <ClCompile Include="src\system\GameTime.cpp" />
     <ClCompile Include="src\system\ResourceLoader.cpp" />
     <ClCompile Include="src\system\SaveManager.cpp" />
@@ -179,8 +168,8 @@
     <ClInclude Include="src\office\Office.h" />
     <ClInclude Include="src\office\OfficeClerk.h" />
     <ClInclude Include="src\system\ControlPanel.h" />
+    <ClInclude Include="src\system\DebugPattern.h" />
     <ClInclude Include="src\system\EntityContainer.h" />
-    <ClInclude Include="src\system\EntityGroup.h" />
     <ClInclude Include="src\system\Enum.h" />
     <ClInclude Include="src\system\GameTime.h" />
     <ClInclude Include="src\system\ResourceLoader.h" />
@@ -207,6 +196,100 @@
     <ClInclude Include="src\ui\questions\QAddManager.h" />
     <ClInclude Include="src\ui\questions\QAddOffice.h" />
     <ClInclude Include="src\ui\questions\Question.h" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\Audio.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\audio\AlResource.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\audio\Export.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\audio\InputSoundFile.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\audio\Listener.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\audio\Music.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\audio\OutputSoundFile.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\audio\Sound.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\audio\SoundBuffer.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\audio\SoundBufferRecorder.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\audio\SoundFileFactory.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\audio\SoundFileReader.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\audio\SoundFileWriter.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\audio\SoundRecorder.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\audio\SoundSource.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\audio\SoundStream.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\Config.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\Graphics.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\BlendMode.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\CircleShape.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\Color.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\ConvexShape.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\Drawable.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\Export.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\Font.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\Glsl.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\Glyph.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\Image.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\PrimitiveType.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\Rect.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\RectangleShape.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\RenderStates.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\RenderTarget.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\RenderTexture.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\RenderWindow.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\Shader.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\Shape.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\Sprite.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\Text.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\Texture.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\Transform.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\Transformable.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\Vertex.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\VertexArray.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\View.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\Main.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\Network.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\network\Export.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\network\Ftp.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\network\Http.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\network\IpAddress.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\network\Packet.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\network\Socket.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\network\SocketHandle.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\network\SocketSelector.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\network\TcpListener.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\network\TcpSocket.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\network\UdpSocket.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\OpenGL.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\System.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\system\Clock.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\system\Err.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\system\Export.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\system\FileInputStream.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\system\InputStream.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\system\Lock.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\system\MemoryInputStream.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\system\Mutex.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\system\NativeActivity.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\system\NonCopyable.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\system\Sleep.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\system\String.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\system\Thread.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\system\ThreadLocal.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\system\ThreadLocalPtr.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\system\Time.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\system\Utf.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\system\Vector2.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\system\Vector3.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\Window.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\window\Context.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\window\ContextSettings.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\window\Event.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\window\Export.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\window\GlResource.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\window\Joystick.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\window\Keyboard.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\window\Mouse.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\window\Sensor.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\window\Touch.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\window\VideoMode.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\window\Window.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\window\WindowHandle.hpp" />
+    <ClInclude Include="vendor\mingw_sfml-2.4.2\include\sfml\window\WindowStyle.hpp" />
     <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\Audio.hpp" />
     <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\audio\AlResource.hpp" />
     <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\audio\Export.hpp" />
@@ -303,6 +386,20 @@
     <ClInclude Include="vendor\sfml-2.4.2-windows\include\sfml\window\WindowStyle.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="cmake-build-debug\cmakefiles\3.8.2\CMakeDetermineCompilerABI_C.bin" />
+    <None Include="cmake-build-debug\cmakefiles\3.8.2\CMakeDetermineCompilerABI_CXX.bin" />
+    <None Include="cmake-build-debug\cmakefiles\corpgame.dir\CXX.includecache" />
+    <None Include="cmake-build-debug\cmakefiles\corpgame.dir\RC.includecache" />
+    <None Include="cmake-build-debug\cmakefiles\feature_tests.bin" />
+    <None Include="vendor\mingw_sfml-2.4.2\include\sfml\audio\SoundFileFactory.inl" />
+    <None Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\Glsl.inl" />
+    <None Include="vendor\mingw_sfml-2.4.2\include\sfml\graphics\Rect.inl" />
+    <None Include="vendor\mingw_sfml-2.4.2\include\sfml\system\String.inl" />
+    <None Include="vendor\mingw_sfml-2.4.2\include\sfml\system\Thread.inl" />
+    <None Include="vendor\mingw_sfml-2.4.2\include\sfml\system\ThreadLocalPtr.inl" />
+    <None Include="vendor\mingw_sfml-2.4.2\include\sfml\system\Utf.inl" />
+    <None Include="vendor\mingw_sfml-2.4.2\include\sfml\system\Vector2.inl" />
+    <None Include="vendor\mingw_sfml-2.4.2\include\sfml\system\Vector3.inl" />
     <None Include="vendor\sfml-2.4.2-windows\include\sfml\audio\SoundFileFactory.inl" />
     <None Include="vendor\sfml-2.4.2-windows\include\sfml\graphics\Glsl.inl" />
     <None Include="vendor\sfml-2.4.2-windows\include\sfml\graphics\Rect.inl" />

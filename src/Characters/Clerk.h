@@ -5,9 +5,6 @@
 #include "..\System\ResourceLoader.h"
 #include "..\System\EntityContainer.h"
 #include "..\Basic\Movable.h"
-#include "../Component/Destination.h"
-
-class Destination;
 
 class Movable;
 

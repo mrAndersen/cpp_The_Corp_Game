@@ -218,11 +218,11 @@ namespace ResourceLoader {
 
     std::string getRandomName(Gender gender) {
         if (gender == Gender::G_Male) {
-            return maleNames[System::getRandom(0, maleNames.size())];
+            return maleNames[System::getRandom(0, maleNames.size() - 1)];
         }
 
         if (gender == Gender::G_Female) {
-            return femaleNames[System::getRandom(0, femaleNames.size())];
+            return femaleNames[System::getRandom(0, femaleNames.size() - 1)];
         }
 
         return "Unknown";

@@ -22,8 +22,7 @@ void Movable::renderDebugInfo() {
         );
 
         if (!destinations.empty()) {
-            auto size = destinations.size() + 1;
-            sf::Vertex lines[size];
+            sf::Vertex lines[20];
 
             lines[0].position = System::cToGl(worldCoordinates);
             lines[0].color = selected ? sf::Color::Green : sf::Color::Yellow;

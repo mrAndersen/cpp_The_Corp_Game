@@ -21,10 +21,6 @@ namespace EntityContainer {
         itemsByGroup[groupName].erase(std::remove(itemsByGroup[groupName].begin(), itemsByGroup[groupName].end(), target), itemsByGroup[groupName].end());
     }
 
-    std::vector<Entity *> getSaveable() {
-
-    }
-
 
     std::vector<Elevator *> getElevators() {
         return elevators;

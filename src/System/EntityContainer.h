@@ -6,7 +6,8 @@
 #include "..\Background\Ground.h"
 #include "..\Component\Elevator.h"
 #include "..\Office\Office.h"
-#include "..\Basic\Movable.h"
+#include "../Component/Destination.h"
+
 #include "System.h"
 
 namespace EntityContainer {
@@ -38,11 +39,6 @@ namespace EntityContainer {
     void sort();
     //items
 
-
-
-
-
-    std::vector<Entity *> getSaveable();
 
     void addElevator(Elevator *elevator);
 

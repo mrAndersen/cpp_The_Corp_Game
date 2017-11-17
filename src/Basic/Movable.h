@@ -8,8 +8,6 @@
 #include <SFML/System/Clock.hpp>
 #include "..\System\Enum.h"
 #include "..\System\GameTime.h"
-#include "..\Component\WorkPlace.h"
-#include "..\Component\Elevator.h"
 #include "../Component/Destination.h"
 
 class Office;
@@ -21,8 +19,6 @@ class Elevator;
 class Clerk;
 
 class Manager;
-
-class Destination;
 
 class Movable : public Entity {
 

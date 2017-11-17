@@ -8,6 +8,7 @@
 #include "src\System\SaveManager.h"
 #include "src\System\DebugPattern.h"
 
+
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow) {
     SaveManager saveManager;
 //    System::seed = std::chrono::system_clock::now().time_since_epoch().count();
