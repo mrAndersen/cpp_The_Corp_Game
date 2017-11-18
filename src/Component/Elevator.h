@@ -31,7 +31,7 @@ class Elevator {
 
     bool waiting = true;
     sf::Clock waitClock;
-    Direction direction = Up;
+    Direction direction = None;
 
 public:
     ElevatorCabin *getCabin() const;

@@ -22,6 +22,8 @@ namespace ViewHandler {
 
     void handleViewZoomKeyPress(sf::Event e);
 
+    sf::Vector2f recalculateBoundaires();
+
     void handleViewScrollKeyPress(sf::Event e);
 }
 #endif //THE_CORP_GAME_VIEWHANDLER_HF

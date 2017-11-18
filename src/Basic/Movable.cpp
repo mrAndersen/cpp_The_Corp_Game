@@ -459,6 +459,14 @@ bool Movable::isCrossingShafts() {
     return false;
 }
 
+const std::deque<Destination> &Movable::getDestinations() const {
+    return destinations;
+}
+
+void Movable::setDestinations(const std::deque<Destination> &destinations) {
+    Movable::destinations = destinations;
+}
+
 
 
 

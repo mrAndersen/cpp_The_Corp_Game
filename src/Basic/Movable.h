@@ -59,6 +59,10 @@ public:
 
     bool isCrossingShafts();
 
+    const std::deque<Destination> &getDestinations() const;
+
+    void setDestinations(const std::deque<Destination> &destinations);
+
     void updateFloor();
 
     float getFloorBottom(int floor);
