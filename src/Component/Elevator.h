@@ -29,12 +29,14 @@ class Elevator {
     std::deque<int> queue;
     sf::Clock waitTimer;
 
-    bool waiting = true;
+    bool waiting = false;
     sf::Clock waitClock;
     Direction direction = None;
 
 public:
     ElevatorCabin *getCabin() const;
+
+    float getFloorBottom(int floor);
 
     int getBoarding() const;
 
