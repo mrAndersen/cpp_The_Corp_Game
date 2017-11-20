@@ -35,15 +35,11 @@ namespace EntityContainer {
 
     void sort() {
         std::sort(items.begin(), items.end(), [](Entity *a, Entity *b) -> bool {
-            if (a && b) {
-                if (a->getDrawOrder() == b->getDrawOrder()) {
-                    return a->getDrawOrder() + a->getWorldCoordinates().x + a->getWorldCoordinates().y <
-                           b->getDrawOrder() + b->getWorldCoordinates().x + b->getWorldCoordinates().y;
-                } else {
-                    return a->getDrawOrder() < b->getDrawOrder();
-                }
+            if (a->getDrawOrder() == b->getDrawOrder()) {
+                return a->getDrawOrder() + a->getWorldCoordinates().x + a->getWorldCoordinates().y <
+                       b->getDrawOrder() + b->getWorldCoordinates().x + b->getWorldCoordinates().y;
             } else {
-                return false;
+                return a->getDrawOrder() < b->getDrawOrder();
             }
         });
     }

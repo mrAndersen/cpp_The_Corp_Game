@@ -130,7 +130,8 @@ void Movable::updateLogic() {
                     currentDST = DST_Elevator_Waiting;
                     targetElevator->addToQueue(floor);
 
-                    if (targetElevator->getCabin()->getBottom() == bottom && targetElevator->getCabin()->hasFreeSpace() && targetElevator->isWaiting()) {
+                    if (targetElevator->getCabin()->getBottom() == bottom &&
+                        targetElevator->getCabin()->hasFreeSpace() && targetElevator->isWaiting()) {
 
                         targetElevator->getCabin()->addMovable(this);
                         destinations.pop_front();
@@ -422,7 +423,8 @@ void Movable::addAnimation(States state, Gender gender, Race race, int frames, i
         auto animation = Animation(this, state, frames, texture, duration);
         Entity::addAnimation(state, animation);
     } else {
-        auto animation = Animation(this, state, frames, ResourceLoader::getCharacterTexture(eType, state, G_Male, R_White), duration);
+        auto animation = Animation(this, state, frames,
+                                   ResourceLoader::getCharacterTexture(eType, state, G_Male, R_White), duration);
         Entity::addAnimation(state, animation);
     }
 }
@@ -466,6 +468,18 @@ const std::deque<Destination> &Movable::getDestinations() const {
 void Movable::setDestinations(const std::deque<Destination> &destinations) {
     Movable::destinations = destinations;
 }
+
+Destination *Movable::getFinalDestination() {
+    if (destinations.empty()) {
+        return nullptr;
+    }
+
+    return &destinations.back();
+}
+
+
+
+
 
 
 

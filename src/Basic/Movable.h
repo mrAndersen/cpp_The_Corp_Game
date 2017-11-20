@@ -63,6 +63,8 @@ public:
 
     void setDestinations(const std::deque<Destination> &destinations);
 
+    Destination *getFinalDestination();
+
     void updateFloor();
 
     float getFloorBottom(int floor);

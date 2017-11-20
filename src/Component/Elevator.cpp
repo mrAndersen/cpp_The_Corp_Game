@@ -26,7 +26,7 @@ void Elevator::addMiddleSection(ElevatorShaftMiddle *shaft) {
 void Elevator::drawDebug() {
 
     sf::RectangleShape rect;
-    sf::Vector2f position(left, top);
+    sf::Vector2f position(left, System::groundLevel + 40);
 
     rect.setPosition(System::cToGl(position));
     rect.setSize({20, 20});
@@ -38,18 +38,23 @@ void Elevator::drawDebug() {
         sf::Text text;
         std::string ds;
 
-        text.setFillColor(sf::Color::Black);
+        text.setFillColor(sf::Color::White);
         text.setFont(*System::debugFont);
         text.setCharacterSize(20);
         text.setPosition(System::cToGl(position));
         ds = "waiting:" + std::to_string(waiting) + ";boarding:" + std::to_string(boarding);
+        ds = ds + ";direction:";
 
         if (direction == Up) {
-            ds = ds + ";direction:Up;";
+            ds = ds + "Up;";
         }
 
         if (direction == Down) {
-            ds = ds + ";direction:Down;";
+            ds = ds + "Down;";
+        }
+
+        if (direction == None) {
+            ds = ds + "None;";
         }
 
 //        ds = ds + std::to_string(waitClock.getElapsedTime().asSeconds()) + ";";
@@ -69,7 +74,18 @@ void Elevator::update() {
     auto distance = frameTimeSeconds * cabin->getSpeed() * System::timeFactor;
     auto waitTime = 0.5f;
 
-    if (!waiting) {
+    if (!cabin->getCurrentPeople().empty()) {
+        //debug
+        for (auto &p:cabin->getCurrentPeople()) {
+            addToQueue(p->getFinalDestination()->getFloor());
+        }
+    }
+
+    if (queue.empty() && cabin->getCurrentPeople().empty()) {
+        direction = None;
+    }
+
+    if (!waiting && !queue.empty()) {
         auto nextFloor = queue.front();
         auto nextTarget = getFloorBottom(nextFloor) + cabin->getHeight() / 2;
         auto currentPosition = cabin->getWorldCoordinates();
