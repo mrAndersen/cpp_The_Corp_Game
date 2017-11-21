@@ -5,11 +5,16 @@
 #include "functional"
 #include "..\Objects\ElevatorCabin.h"
 #include "..\Objects\ElevatorShaftTop.h"
+#include "..\Basic\Movable.h"
 #include "..\Objects\ElevatorShaftMiddle.h"
+#include "../Component/Destination.h"
 
 class ElevatorShaftTop;
+
 class ElevatorShaftMiddle;
+
 class ElevatorCabin;
+
 class Elevator {
     int boarding = 0;
 
@@ -24,12 +29,14 @@ class Elevator {
     std::deque<int> queue;
     sf::Clock waitTimer;
 
-    bool waiting = true;
+    bool waiting = false;
     sf::Clock waitClock;
-    Direction direction = Up;
+    Direction direction = None;
 
 public:
     ElevatorCabin *getCabin() const;
+
+    float getFloorBottom(int floor);
 
     int getBoarding() const;
 

@@ -1,6 +1,7 @@
 #include "../Objects/ElevatorCabin.h"
 #include "../Office/OfficeClerk.h"
 #include "../Characters/Clerk.h"
+#include "../Characters/Manager.h"
 #include "DebugPattern.h"
 #include "System.h"
 
@@ -22,8 +23,25 @@ namespace DebugPattern {
             }
         }
 
+        if (System::event.type == sf::Event::KeyPressed && System::event.key.code == sf::Keyboard::H) {
+            auto count = 4;
+
+            for (int i = 0; i < count; ++i) {
+                auto m = new Manager({System::g_x + (i * 72), 300.f});
+                m->spawn();
+            }
+        }
+
+        if (System::event.type == sf::Event::KeyPressed && System::event.key.code == sf::Keyboard::Numpad4) {
+            auto o = new OfficeClerk({1000, 175});
+            o->spawn();
+
+            auto o2 = new OfficeClerk({400, 175});
+            o2->spawn();
+        }
+
         if (System::event.type == sf::Event::KeyPressed && System::event.key.code == sf::Keyboard::Numpad2) {
-            auto top = 600;
+            auto top = 900;
 
             for (int i = 0; i <= top; ++i) {
                 if ((i % 150 == 0 || i == 0) && i != top) {

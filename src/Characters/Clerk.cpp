@@ -3,10 +3,9 @@
 #include "..\System\ResourceLoader.h"
 #include "..\System\EntityContainer.h"
 #include "Clerk.h"
-#include "..\Basic\Movable.h"
 
 Clerk::Clerk(sf::Vector2f coordinates) : Movable(E_Clerk, Clerk::width, Clerk::height) {
-    setDefaultSpeed(150);
+    setDefaultSpeed(180);
 
     setCost(500);
     setWorldCoordinates(coordinates);
@@ -25,6 +24,7 @@ void Clerk::updateLogic() {
     //search workplace every 500ms
     if (!currentWorkPlace && workPlaceSearchResolution.getElapsedTime().asMilliseconds() >= 500) {
         searchWorkPlace();
+        workPlaceSearchResolution.restart();
     }
 
     //ONE TIME EXEC
@@ -45,7 +45,7 @@ void Clerk::updateLogic() {
             smoking && !moving &&
             isInWorkPlace() && state == S_Working &&
             System::gameTime.getHour() >= 12 &&
-            System::getRandom(0, System::fps * 1000) <= 50
+            System::getRandom(0, System::fps * 1000) <= 30
             ) {
 
         moving = true;

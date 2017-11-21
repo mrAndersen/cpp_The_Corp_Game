@@ -22,7 +22,6 @@ ElevatorShaftTop::ElevatorShaftTop(sf::Vector2f coordinates) {
     initEntity();
 
     EntityContainer::add(this);
-    EntityContainer::addToGroup(groupName, this);
 }
 
 bool ElevatorShaftTop::hasMiddleShaftOnTheBottom() {

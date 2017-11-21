@@ -26,21 +26,17 @@ namespace ResourceLoader {
 
     std::string getCharacterTextNotation(Entities character);
 
-
     std::string getStateTextNotation(States state);
 
     States getStateEnumNotation(const std::string &title);
-
 
     std::string getGenderTextNotation(Gender gender);
 
     Gender getGenderEnumNotation(const std::string &title);
 
-
     std::string getRaceTextNotation(Race race);
 
     Race getRaceEnumNotation(const std::string &title);
-
 
     std::string getRandomName(Gender gender);
 }

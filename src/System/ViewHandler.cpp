@@ -99,17 +99,28 @@ namespace ViewHandler {
             }
         }
 
-        auto center = System::cFromGl(ViewHandler::view->getCenter());
+        auto center = recalculateBoundaires();
 
-        left = center.x - System::screenWidth / 2;
-        right = center.x + System::screenWidth / 2;
-        top = center.y + System::screenHeight / 2;
-        bottom = center.y - System::screenHeight / 2;
+//        left = left * zoom;
+//        right = right * zoom;
+//        top = top * zoom;
+//        bottom = bottom * zoom;
 
-        left = left * zoom;
-        right = right * zoom;
-        top = top * zoom;
-        bottom = bottom * zoom;
+        //normalizer
+
+        if (right > System::worldWidth / 2) {
+            view->setCenter(System::cToGl({System::worldWidth / 2 - System::screenWidth / 2, center.y}));
+        }
+
+        if (left < -System::worldWidth / 2) {
+            view->setCenter(System::cToGl({-System::worldWidth / 2 + System::screenWidth / 2, center.y}));
+        }
+
+        if (bottom < System::groundLevel) {
+            view->setCenter(System::cToGl({center.x, System::groundLevel + System::screenHeight / 2}));
+        }
+
+        recalculateBoundaires();
 
         auto mousePosition = sf::Mouse::getPosition(*System::window);
         auto coordMap = System::window->mapPixelToCoords(mousePosition);
@@ -130,6 +141,17 @@ namespace ViewHandler {
         }
 
         view->setSize(System::screenWidth * zoom, System::screenHeight * zoom);
+    }
+
+    sf::Vector2f recalculateBoundaires() {
+        auto center = System::cFromGl(ViewHandler::view->getCenter());
+
+        left = center.x - System::screenWidth / 2;
+        right = center.x + System::screenWidth / 2;
+        top = center.y + System::screenHeight / 2;
+        bottom = center.y - System::screenHeight / 2;
+
+        return center;
     }
 
     void handleViewScrollKeyPress(sf::Event e) {

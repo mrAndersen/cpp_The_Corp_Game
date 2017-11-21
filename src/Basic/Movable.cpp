@@ -22,8 +22,7 @@ void Movable::renderDebugInfo() {
         );
 
         if (!destinations.empty()) {
-            auto size = destinations.size() + 1;
-            sf::Vertex lines[size];
+            sf::Vertex lines[20];
 
             lines[0].position = System::cToGl(worldCoordinates);
             lines[0].color = selected ? sf::Color::Green : sf::Color::Yellow;
@@ -131,7 +130,8 @@ void Movable::updateLogic() {
                     currentDST = DST_Elevator_Waiting;
                     targetElevator->addToQueue(floor);
 
-                    if (targetElevator->getCabin()->getBottom() == bottom && targetElevator->getCabin()->hasFreeSpace() && targetElevator->isWaiting()) {
+                    if (targetElevator->getCabin()->getBottom() == bottom &&
+                        targetElevator->getCabin()->hasFreeSpace() && targetElevator->isWaiting()) {
 
                         targetElevator->getCabin()->addMovable(this);
                         destinations.pop_front();
@@ -158,6 +158,20 @@ void Movable::updateLogic() {
 
                 if (local.getType() == DST_Workplace) {
                     currentDST = DST_Workplace;
+                    destinations.pop_front();
+
+                    state = S_Working;
+                    direction = Right;
+                    setDrawOrder(D_Characters_Working, true);
+
+                    worldCoordinates.y = final.getCoordinates().y;
+                    worldCoordinates.x = final.getCoordinates().x;
+
+                    moving = false;
+                }
+
+                if (local.getType() == DST_Buff_Position) {
+                    currentDST = DST_Buff_Position;
                     destinations.pop_front();
 
                     state = S_Working;
@@ -329,6 +343,8 @@ Movable::Movable(Entities type, int width, int height) : Entity(type) {
     addAnimation(S_Walk, gender, race, 24);
     addAnimation(S_Working, gender, race, 24);
     addAnimation(S_Smoking, gender, race, 66, 2750000);
+
+    setGroupName("movable");
 }
 
 float Movable::getDefaultSpeed() const {
@@ -423,7 +439,8 @@ void Movable::addAnimation(States state, Gender gender, Race race, int frames, i
         auto animation = Animation(this, state, frames, texture, duration);
         Entity::addAnimation(state, animation);
     } else {
-        auto animation = Animation(this, state, frames, ResourceLoader::getCharacterTexture(eType, state, G_Male, R_White), duration);
+        auto animation = Animation(this, state, frames,
+                                   ResourceLoader::getCharacterTexture(eType, state, G_Male, R_White), duration);
         Entity::addAnimation(state, animation);
     }
 }
@@ -459,6 +476,41 @@ bool Movable::isCrossingShafts() {
 
     return false;
 }
+
+const std::deque<Destination> &Movable::getDestinations() const {
+    return destinations;
+}
+
+void Movable::setDestinations(const std::deque<Destination> &destinations) {
+    Movable::destinations = destinations;
+}
+
+Destination *Movable::getFinalDestination() {
+    if (destinations.empty()) {
+        return nullptr;
+    }
+
+    return &destinations.back();
+}
+
+bool Movable::isBuffed() const {
+    return buffed;
+}
+
+void Movable::setBuffed(bool buffed) {
+    Movable::buffed = buffed;
+}
+
+bool Movable::isWillBeBuffed() const {
+    return willBeBuffed;
+}
+
+void Movable::setWillBeBuffed(bool willBeBuffed) {
+    Movable::willBeBuffed = willBeBuffed;
+}
+
+
+
 
 
 

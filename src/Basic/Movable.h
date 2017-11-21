@@ -2,15 +2,13 @@
 #define THE_CORP_GAME_MOVABLE_H
 
 #include "Entity.h"
-#include "..\Component\Destination.h"
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Clock.hpp>
 #include "..\System\Enum.h"
 #include "..\System\GameTime.h"
-#include "..\Component\WorkPlace.h"
-#include "..\Component\Elevator.h"
+#include "../Component/Destination.h"
 
 class Office;
 
@@ -18,7 +16,9 @@ class WorkPlace;
 
 class Elevator;
 
-class Destination;
+class Clerk;
+
+class Manager;
 
 class Movable : public Entity {
 
@@ -34,11 +34,11 @@ protected:
     DestinationType currentDST = DST_Unknown;
     bool moving = false;
     Elevator *targetElevator = nullptr;
-    sf::Clock lastElevatorSearch;
-    int elevatorSearchResolutionSeconds = 5;
     bool smoking = false;
 
-    int routeRefreshIntervalSeconds = 5;
+    bool buffed = false;
+    bool willBeBuffed = false;
+    float buffStrength = 1.f;
 
     //relevant to game time
     int smokePeriodMinutes = 15;
@@ -57,7 +57,21 @@ protected:
 public:
     Movable(Entities type, int width, int height);
 
+    bool isBuffed() const;
+
+    void setBuffed(bool buffed);
+
+    bool isWillBeBuffed() const;
+
+    void setWillBeBuffed(bool willBeBuffed);
+
     bool isCrossingShafts();
+
+    const std::deque<Destination> &getDestinations() const;
+
+    void setDestinations(const std::deque<Destination> &destinations);
+
+    Destination *getFinalDestination();
 
     void updateFloor();
 
@@ -112,4 +126,4 @@ public:
     void setDefaultSpeed(float defaultSpeed);
 };
 
-#endif //THE_CORP_GAME_ENTITYANIMATION_CPP_H
+#endif //THE_CORP_GAME_MOVABLE_H

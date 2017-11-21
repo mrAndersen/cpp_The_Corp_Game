@@ -18,7 +18,6 @@ ElevatorShaftMiddle::ElevatorShaftMiddle(sf::Vector2f coordinates) : Entity(E_El
     initEntity();
 
     EntityContainer::add(this);
-    EntityContainer::addToGroup(groupName, this);
 }
 
 

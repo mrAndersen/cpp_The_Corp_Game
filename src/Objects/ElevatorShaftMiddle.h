@@ -4,6 +4,7 @@
 #include "..\Basic\Entity.h"
 #include "..\Office\Office.h"
 #include "..\Component\WorkPlace.h"
+#include "..\Basic\Movable.h"
 
 class ElevatorShaftMiddle : public Entity {
 

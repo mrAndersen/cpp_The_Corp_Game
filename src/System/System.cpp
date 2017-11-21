@@ -56,7 +56,7 @@ namespace System {
     int buttonReload = 150;
 
     sf::Clock dayClock = {};
-    GameTime gameTime(10, 15);
+    GameTime gameTime(17, 30);
 
     int startWorkHour = 10;
     int endWorkHour = 19;

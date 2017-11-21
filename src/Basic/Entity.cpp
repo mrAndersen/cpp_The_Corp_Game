@@ -156,7 +156,7 @@ int Entity::getDrawOrder() const {
 void Entity::setDrawOrder(int drawOrder, bool resort) {
     Entity::drawOrder = drawOrder;
     if (resort) {
-        EntityContainer::sort();
+        EntityContainer::sortNextFrame = true;
     }
 }
 
@@ -372,5 +372,7 @@ void Entity::setGroupName(const std::string &groupName) {
 }
 
 Entity::~Entity() {
-    System::debugCounters["e_dtor_calls"]++;
+    if (System::debug) {
+        System::debugCounters["e_dtor_calls"]++;
+    }
 }

@@ -1,10 +1,4 @@
-#include "..\Basic\Movable.h"
-#include "..\Office\Office.h"
-#include "..\Background\Tree.h"
-#include "..\Background\GroundArtifact.h"
 #include "EntityContainer.h"
-#include "..\Background\Ground.h"
-#include "System.h"
 
 namespace EntityContainer {
     std::vector<Entity *> items = {};
@@ -17,6 +11,8 @@ namespace EntityContainer {
 
     std::vector<Elevator *> elevators;
 
+    bool sortNextFrame = false;
+
     void addToGroup(const std::string &groupName, Entity *target) {
         if (groupName != "~") {
             itemsByGroup[groupName].push_back(target);
@@ -24,22 +20,9 @@ namespace EntityContainer {
     }
 
     void removeFromGroup(const std::string &groupName, Entity *target) {
-        itemsByGroup[groupName].erase(std::remove(itemsByGroup[groupName].begin(), itemsByGroup[groupName].end(), target), itemsByGroup[groupName].end());
-    }
-
-    std::vector<Entity *> getSaveable() {
-        std::vector<Entity *> buffer;
-
-        for (auto entity:items) {
-            if (
-                    dynamic_cast<Movable *>(entity) ||
-                    dynamic_cast<Office *>(entity)
-                    ) {
-                buffer.push_back(entity);
-            }
-        }
-
-        return buffer;
+        itemsByGroup[groupName].erase(
+                std::remove(itemsByGroup[groupName].begin(), itemsByGroup[groupName].end(), target),
+                itemsByGroup[groupName].end());
     }
 
 
@@ -49,20 +32,18 @@ namespace EntityContainer {
 
     void add(Entity *item) {
         items.push_back(item);
-        sort();
+        addToGroup(item->getGroupName(), item);
+
+        sortNextFrame = true;
     }
 
     void sort() {
         std::sort(items.begin(), items.end(), [](Entity *a, Entity *b) -> bool {
-            if (a && b) {
-                if (a->getDrawOrder() == b->getDrawOrder()) {
-                    return a->getDrawOrder() + a->getWorldCoordinates().x + a->getWorldCoordinates().y <
-                           b->getDrawOrder() + b->getWorldCoordinates().x + b->getWorldCoordinates().y;
-                } else {
-                    return a->getDrawOrder() < b->getDrawOrder();
-                }
+            if (a->getDrawOrder() == b->getDrawOrder()) {
+                return a->getDrawOrder() + a->getWorldCoordinates().x + a->getWorldCoordinates().y <
+                       b->getDrawOrder() + b->getWorldCoordinates().x + b->getWorldCoordinates().y;
             } else {
-                return false;
+                return a->getDrawOrder() < b->getDrawOrder();
             }
         });
     }
@@ -130,8 +111,10 @@ namespace EntityContainer {
     void refreshEntities() {
         System::window->clear(System::c_background);
 
-        for (auto &entity:items) {
-            entity->update();
+        const int iterableSize = items.size();
+        for (int i = 0; i < iterableSize; ++i) {
+            Entity *element = items[i];
+            element->update();
         }
 
         if (!itemsToRemove.empty()) {
@@ -151,21 +134,26 @@ namespace EntityContainer {
             itemsToRemove.clear();
         }
 
-        //@todo debug logic - to remove
-        System::debugCounters["empty"] = 0;
-        for (auto &e:items) {
-            System::debugCounters["empty"] = e->getEType() == E_Entity ? System::debugCounters["empty"]++ : System::debugCounters["empty"];
+        if (sortNextFrame) {
+            sort();
+            sortNextFrame = false;
         }
 
-        auto group = EntityContainer::getGroupItems("offices");
-        System::debugCounters["free_offices"] = 0;
+        if (System::debug) {
+            System::debugCounters["empty"] = 0;
+            for (auto &e:items) {
+                System::debugCounters["empty"] =
+                        e->getEType() == E_Entity ? System::debugCounters["empty"]++ : System::debugCounters["empty"];
+            }
 
-        for (auto &e:group) {
-            auto office = dynamic_cast<Office *>(e);
-            System::debugCounters["free_offices"] += (4 - office->getBusyWorkPlaces());
+            auto group = EntityContainer::getGroupItems("offices");
+            System::debugCounters["free_offices"] = 0;
+
+            for (auto &e:group) {
+                auto office = dynamic_cast<Office *>(e);
+                System::debugCounters["free_offices"] += (4 - office->getBusyWorkPlaces());
+            }
         }
-
-        //@todo debug logic - to remove
     }
 
     void addElevator(Elevator *elevator) {

@@ -1,15 +1,22 @@
 #ifndef THE_CORP_GAME_ENTITYCONTAINER_H
 #define THE_CORP_GAME_ENTITYCONTAINER_H
 
+#include "..\Background\Tree.h"
+#include "..\Background\GroundArtifact.h"
+#include "..\Background\Ground.h"
 #include "..\Component\Elevator.h"
 #include "..\Office\Office.h"
-#include "../Basic/Movable.h"
+#include "../Component/Destination.h"
+
+#include "System.h"
 
 namespace EntityContainer {
 
     extern std::vector<sf::VertexArray> verticies;
+
     extern std::vector<Elevator *> elevators;
 
+    extern bool sortNextFrame;
 
     //groups
     extern std::map<std::string, std::vector<Entity *>> itemsByGroup;
@@ -35,11 +42,6 @@ namespace EntityContainer {
     //items
 
 
-
-
-
-    std::vector<Entity *> getSaveable();
-
     void addElevator(Elevator *elevator);
 
     std::vector<Elevator *> getElevators();
@@ -51,6 +53,4 @@ namespace EntityContainer {
 
     void refreshEntities();
 }
-
-
 #endif //THE_CORP_GAME_ENTITYCONTAINER_H

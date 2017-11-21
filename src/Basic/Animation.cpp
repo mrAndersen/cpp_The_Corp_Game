@@ -101,12 +101,10 @@ void Animation::update() {
 
     if (entity->getDirection() == Direction::Left) {
         sprite.setScale(-1.f, 1.f);
-        sprite.setRotation(0);
     }
 
     if (entity->getDirection() == Direction::Right) {
         sprite.setScale(1.f, 1.f);
-        sprite.setRotation(0);
     }
 
     System::window->draw(sprite);
