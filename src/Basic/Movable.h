@@ -34,11 +34,11 @@ protected:
     DestinationType currentDST = DST_Unknown;
     bool moving = false;
     Elevator *targetElevator = nullptr;
-    sf::Clock lastElevatorSearch;
-    int elevatorSearchResolutionSeconds = 5;
     bool smoking = false;
 
-    int routeRefreshIntervalSeconds = 5;
+    bool buffed = false;
+    bool willBeBuffed = false;
+    float buffStrength = 1.f;
 
     //relevant to game time
     int smokePeriodMinutes = 15;
@@ -56,6 +56,14 @@ protected:
 
 public:
     Movable(Entities type, int width, int height);
+
+    bool isBuffed() const;
+
+    void setBuffed(bool buffed);
+
+    bool isWillBeBuffed() const;
+
+    void setWillBeBuffed(bool willBeBuffed);
 
     bool isCrossingShafts();
 

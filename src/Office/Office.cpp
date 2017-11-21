@@ -13,7 +13,6 @@ Office::Office() {
     workPlaces[3] = new WorkPlace(worldCoordinates, this);
 
     setSelectable(true);
-    EntityContainer::addToGroup(groupName, this);
 }
 
 

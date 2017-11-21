@@ -74,8 +74,8 @@ void Elevator::update() {
     auto distance = frameTimeSeconds * cabin->getSpeed() * System::timeFactor;
     auto waitTime = 0.5f;
 
+    //spam fucking button
     if (!cabin->getCurrentPeople().empty()) {
-        //debug
         for (auto &p:cabin->getCurrentPeople()) {
             addToQueue(p->getFinalDestination()->getFloor());
         }
@@ -136,11 +136,6 @@ void Elevator::update() {
 void Elevator::addToQueue(int floor) {
     //same floor
     if (floor == cabin->getFloor()) {
-        return;
-    }
-
-    //no places
-    if (cabin->getCurrentPeople().size() == cabin->getCapacity()) {
         return;
     }
 

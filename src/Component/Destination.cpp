@@ -64,6 +64,11 @@ Destination Destination::createWorkplaceDST(Clerk *movable) {
              movable->getCurrentWorkPlace()->getParentOffice()->getBottom() + movable->getHeight() / 2}, DST_Workplace};
 }
 
+Destination Destination::createBuffPlaceDST(Clerk *movable) {
+    return {{movable->getCurrentWorkPlace()->getWorldCoordinates().x - 35,
+             movable->getCurrentWorkPlace()->getParentOffice()->getBottom() + movable->getHeight() / 2}, DST_Buff_Position};
+}
+
 
 Destination Destination::createSmokeAreaDST(Movable *movable, sf::Vector2f &smokeArea) {
     auto scatter = 300;
@@ -75,3 +80,5 @@ Destination Destination::createSmokeAreaDST(Movable *movable, sf::Vector2f &smok
 Destination Destination::createHomeDST(Movable *movable, sf::Vector2f &home) {
     return {{home.x, System::groundLevel + Ground::height + movable->getHeight() / 2}, DST_Home};
 }
+
+

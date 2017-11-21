@@ -167,7 +167,10 @@ add_executable(
         src/Characters/Manager.h
 
         src/Ui/Questions/QAddManager.cpp
-        src/Ui/Questions/QAddManager.h src/System/DebugPattern.cpp src/System/DebugPattern.h)
+        src/Ui/Questions/QAddManager.h
+
+        src/System/DebugPattern.cpp
+        src/System/DebugPattern.h)
 
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}" ${CMAKE_MODULE_PATH})

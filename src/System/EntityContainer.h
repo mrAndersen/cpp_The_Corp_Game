@@ -13,8 +13,10 @@
 namespace EntityContainer {
 
     extern std::vector<sf::VertexArray> verticies;
+
     extern std::vector<Elevator *> elevators;
 
+    extern bool sortNextFrame;
 
     //groups
     extern std::map<std::string, std::vector<Entity *>> itemsByGroup;
@@ -51,6 +53,4 @@ namespace EntityContainer {
 
     void refreshEntities();
 }
-
-
 #endif //THE_CORP_GAME_ENTITYCONTAINER_H

@@ -24,6 +24,7 @@ void Clerk::updateLogic() {
     //search workplace every 500ms
     if (!currentWorkPlace && workPlaceSearchResolution.getElapsedTime().asMilliseconds() >= 500) {
         searchWorkPlace();
+        workPlaceSearchResolution.restart();
     }
 
     //ONE TIME EXEC
@@ -44,7 +45,7 @@ void Clerk::updateLogic() {
             smoking && !moving &&
             isInWorkPlace() && state == S_Working &&
             System::gameTime.getHour() >= 12 &&
-            System::getRandom(0, System::fps * 1000) <= 50
+            System::getRandom(0, System::fps * 1000) <= 30
             ) {
 
         moving = true;

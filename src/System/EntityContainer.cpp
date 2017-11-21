@@ -11,6 +11,8 @@ namespace EntityContainer {
 
     std::vector<Elevator *> elevators;
 
+    bool sortNextFrame = false;
+
     void addToGroup(const std::string &groupName, Entity *target) {
         if (groupName != "~") {
             itemsByGroup[groupName].push_back(target);
@@ -30,7 +32,9 @@ namespace EntityContainer {
 
     void add(Entity *item) {
         items.push_back(item);
-        sort();
+        addToGroup(item->getGroupName(), item);
+
+        sortNextFrame = true;
     }
 
     void sort() {
@@ -107,8 +111,10 @@ namespace EntityContainer {
     void refreshEntities() {
         System::window->clear(System::c_background);
 
-        for (auto entity:items) {
-            entity->update();
+        const int iterableSize = items.size();
+        for (int i = 0; i < iterableSize; ++i) {
+            Entity *element = items[i];
+            element->update();
         }
 
         if (!itemsToRemove.empty()) {
@@ -126,6 +132,11 @@ namespace EntityContainer {
             }
 
             itemsToRemove.clear();
+        }
+
+        if (sortNextFrame) {
+            sort();
+            sortNextFrame = false;
         }
 
         if (System::debug) {

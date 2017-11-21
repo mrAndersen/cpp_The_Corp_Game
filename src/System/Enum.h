@@ -10,7 +10,7 @@ enum DrawOrder {
     D_Offices = 98,
     D_Offices_Spawning = 99,
 
-    D_Characters_Wokring = 100,
+    D_Characters_Working = 100,
     D_Chair = 105,
     D_ElevatorShafts = 110,
     D_ElevatorCabin = 120,
@@ -27,7 +27,8 @@ enum DestinationType {
     DST_Elevator_Inside_Cabin = 2,
     DST_Workplace = 3,
     DST_SmokeArea = 5,
-    DST_Home = 6
+    DST_Home = 6,
+    DST_Buff_Position = 7,
 };
 
 enum Gender {

@@ -36,6 +36,8 @@ public:
 
     static Destination createWorkplaceDST(Clerk *movable);
 
+    static Destination createBuffPlaceDST(Clerk *movable);
+
     static Destination createSmokeAreaDST(Movable *movable, sf::Vector2f &smokeArea);
 
     static Destination createHomeDST(Movable *movable, sf::Vector2f &home);

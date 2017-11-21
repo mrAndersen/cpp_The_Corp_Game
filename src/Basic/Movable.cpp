@@ -162,6 +162,20 @@ void Movable::updateLogic() {
 
                     state = S_Working;
                     direction = Right;
+                    setDrawOrder(D_Characters_Working, true);
+
+                    worldCoordinates.y = final.getCoordinates().y;
+                    worldCoordinates.x = final.getCoordinates().x;
+
+                    moving = false;
+                }
+
+                if (local.getType() == DST_Buff_Position) {
+                    currentDST = DST_Buff_Position;
+                    destinations.pop_front();
+
+                    state = S_Working;
+                    direction = Right;
 
                     worldCoordinates.y = final.getCoordinates().y;
                     worldCoordinates.x = final.getCoordinates().x;
@@ -329,6 +343,8 @@ Movable::Movable(Entities type, int width, int height) : Entity(type) {
     addAnimation(S_Walk, gender, race, 24);
     addAnimation(S_Working, gender, race, 24);
     addAnimation(S_Smoking, gender, race, 66, 2750000);
+
+    setGroupName("movable");
 }
 
 float Movable::getDefaultSpeed() const {
@@ -477,6 +493,21 @@ Destination *Movable::getFinalDestination() {
     return &destinations.back();
 }
 
+bool Movable::isBuffed() const {
+    return buffed;
+}
+
+void Movable::setBuffed(bool buffed) {
+    Movable::buffed = buffed;
+}
+
+bool Movable::isWillBeBuffed() const {
+    return willBeBuffed;
+}
+
+void Movable::setWillBeBuffed(bool willBeBuffed) {
+    Movable::willBeBuffed = willBeBuffed;
+}
 
 
 
