@@ -14,6 +14,12 @@ public:
     float dailySalary = 100;
     bool salaryProcessed = false;
 
+    bool buffInProgress = false;
+    sf::Clock buffingProcedureClock;
+
+    int buffDurationGameHours = 2;
+    float buffStrength = 1.2f;
+
     explicit Manager(sf::Vector2f coordinates);
 
     void updateLogic() override;

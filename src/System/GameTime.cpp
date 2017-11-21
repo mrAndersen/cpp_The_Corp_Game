@@ -34,6 +34,10 @@ GameTime operator+(const GameTime &a, int minutes) {
     return a + b;
 }
 
+bool operator==(const GameTime &a, const GameTime &b) {
+    return a.hour == b.hour && a.minute == b.minute;
+}
+
 bool GameTime::isWorkTime() {
     return hour >= System::startWorkHour && hour < System::endWorkHour;
 }
