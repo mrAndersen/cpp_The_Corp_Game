@@ -16,7 +16,7 @@ Question::Question(float leftOffset, float topOffset, Entities type) : BasicUi(l
     popup = new Popup(300, 400);
 
     helpText.setFont(*System::debugFont);
-    helpText.setCharacterSize(14);
+    helpText.setCharacterSize(20);
     helpText.setFillColor(sf::Color::Black);
 
     titleText.setFont(*System::gameFont);
