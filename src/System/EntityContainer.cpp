@@ -138,6 +138,8 @@ namespace EntityContainer {
 
                 //free object
                 delete e;
+
+                e = nullptr;
             }
 
             itemsToRemove.clear();

@@ -1,4 +1,5 @@
-#include <Ui/Popup.h>
+#include "..\Popup.h"
+#include <cmath>
 #include "..\..\System\System.h"
 #include "Question.h"
 
@@ -16,7 +17,7 @@ Question::Question(float leftOffset, float topOffset, Entities type) : BasicUi(l
     popup = new Popup(300, 400);
 
     helpText.setFont(*System::debugFont);
-    helpText.setCharacterSize(20);
+    helpText.setCharacterSize(14);
     helpText.setFillColor(sf::Color::Black);
 
     titleText.setFont(*System::gameFont);
@@ -54,11 +55,14 @@ void Question::update() {
         helpText.setString(helpTextString);
         titleText.setString(titleTextString);
 
-        helpText.setOrigin(hBounds.width / 2, hBounds.height / 2);
-        titleText.setOrigin(tBounds.width / 2, tBounds.height / 2);
+        helpText.setOrigin(roundf((hBounds.width / 2)), roundf((hBounds.height / 2)));
+        titleText.setOrigin(roundf((tBounds.width / 2)), roundf((tBounds.height / 2)));
 
-        helpText.setPosition(System::cToGl(popup->getWorldCoordinates()));
-        titleText.setPosition(System::cToGl({popup->getWorldCoordinates().x, popup->getWorldCoordinates().y - 190}));
+        sf::Vector2f hPosition = {roundf(popup->getWorldCoordinates().x), roundf(popup->getWorldCoordinates().y)};
+        sf::Vector2f tPosition = {roundf(popup->getWorldCoordinates().x), roundf((popup->getWorldCoordinates().y - 190))};
+
+        helpText.setPosition(System::cToGl(hPosition));
+        titleText.setPosition(System::cToGl(tPosition));
 
         System::window->draw(helpText);
         System::window->draw(titleText);

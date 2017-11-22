@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{5C679A0A-AF38-450D-99B5-B6FB17E02D44}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -134,6 +134,7 @@
     <ClCompile Include="src\system\ViewHandler.cpp" />
     <ClCompile Include="src\text\TextEntity.cpp" />
     <ClCompile Include="src\ui\BasicUi.cpp" />
+    <ClCompile Include="src\ui\Popup.cpp" />
     <ClCompile Include="src\ui\ControlButtonAddClerk.cpp" />
     <ClCompile Include="src\ui\ControlButtonAddElevator.cpp" />
     <ClCompile Include="src\ui\ControlButtonAddElevatorCabin.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="src\system\ViewHandler.h" />
     <ClInclude Include="src\text\TextEntity.h" />
     <ClInclude Include="src\ui\BasicUi.h" />
+    <ClInclude Include="src\ui\Popup.h" />
     <ClInclude Include="src\ui\ControlButtonAddClerk.h" />
     <ClInclude Include="src\ui\ControlButtonAddElevator.h" />
     <ClInclude Include="src\ui\ControlButtonAddElevatorCabin.h" />

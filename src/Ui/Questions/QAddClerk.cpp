@@ -3,7 +3,6 @@
 QAddClerk::QAddClerk(float leftOffset, float topOffset) : Question(leftOffset, topOffset, E_Question_Mark_ButtonAddClerk) {
     setTitleTextString("Clerk");
 
-
     std::string s;
     s = System::formatNewLines("Your main unit - clerk. Warhorse of your company, works as all your employees from 10:00 AM till 9:00 PM. Has four levels of skill: \n", 40);
     s = s + "\t- 1. Yields 10$ per hour\n\t\t  Basic cost is 500$\n";
