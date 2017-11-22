@@ -9,7 +9,7 @@ void BasicUi::update() {
     worldCoordinates.x = ViewHandler::left + leftOffset;
     worldCoordinates.y = ViewHandler::top - topOffset;
 
-    if (currentAnimation) {
+    if (currentAnimation && visible) {
         selectAnimation(state);
         currentAnimation->update();
     }

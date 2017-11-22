@@ -86,6 +86,8 @@ namespace System {
 
     std::string f_to_string(const double value, const int n = 2);
 
+    std::string formatNewLines(const std::string &in, size_t every_n);
+
     sf::Text createDebugString(const std::string &alias);
 
     sf::Vector2f cToGl(sf::Vector2f worldCoordinates);

@@ -404,3 +404,11 @@ bool Entity::operator<(const Entity &a) const {
         return drawOrder < a.getDrawOrder();
     }
 }
+
+bool Entity::isManualUpdate() const {
+    return manualUpdate;
+}
+
+void Entity::setManualUpdate(bool manualUpdate) {
+    Entity::manualUpdate = manualUpdate;
+}

@@ -1,9 +1,11 @@
+#include <Ui/Popup.h>
 #include "..\..\System\System.h"
 #include "Question.h"
 
 Question::Question(float leftOffset, float topOffset, Entities type) : BasicUi(leftOffset, topOffset) {
     setEType(type);
     setDrawOrder(D_Ui);
+    setGroupName("questions");
 
     setWidth(Question::width);
     setHeight(Question::height);
@@ -11,10 +13,15 @@ Question::Question(float leftOffset, float topOffset, Entities type) : BasicUi(l
     addAnimation(S_Button_Normal, Animation(this, S_Button_Normal, 1, ResourceLoader::getTexture(eType, S_Button_Normal)));
     addAnimation(S_Button_Pressed, Animation(this, S_Button_Pressed, 1, ResourceLoader::getTexture(eType, S_Button_Pressed)));
 
-    helpText.setFont(*System::gameFont);
-    helpText.setCharacterSize(26);
+    popup = new Popup(300, 400);
+
+    helpText.setFont(*System::debugFont);
+    helpText.setCharacterSize(14);
     helpText.setFillColor(sf::Color::Black);
-    helpText.setString(helpTextString);
+
+    titleText.setFont(*System::gameFont);
+    titleText.setCharacterSize(56);
+    titleText.setFillColor(sf::Color::Black);
 
     initEntity();
     EntityContainer::add(this);
@@ -27,30 +34,54 @@ void Question::update() {
     }
 
     if (pressed) {
+        auto questions = EntityContainer::getGroupItems("questions");
+
+        for (auto &e:questions) {
+            auto q = dynamic_cast<Question *>(e);
+
+            if (q && q != this) {
+                q->setPressed(false);
+            }
+        }
+
         state = S_Button_Pressed;
+        popup->setVisible(true);
+        popup->update();
 
-        auto color = sf::Color(160, 87, 14);
-        auto size = sf::Vector2f(500, 300);
+        auto tBounds = titleText.getLocalBounds();
+        auto hBounds = helpText.getLocalBounds();
 
-        helpText.setPosition(System::cToGl({ViewHandler::left + 100, ViewHandler::top - 500 + size.y}));
+        helpText.setString(helpTextString);
+        titleText.setString(titleTextString);
 
-        popup[0].position = System::cToGl({ViewHandler::left + 100, ViewHandler::top - 500});
-        popup[0].color = color;
+        helpText.setOrigin(hBounds.width / 2, hBounds.height / 2);
+        titleText.setOrigin(tBounds.width / 2, tBounds.height / 2);
 
-        popup[1].position = System::cToGl({ViewHandler::left + 100, ViewHandler::top - 500 + size.y});
-        popup[1].color = color;
+        helpText.setPosition(System::cToGl(popup->getWorldCoordinates()));
+        titleText.setPosition(System::cToGl({popup->getWorldCoordinates().x, popup->getWorldCoordinates().y - 190}));
 
-        popup[2].position = System::cToGl({ViewHandler::left + 100 + size.x, ViewHandler::top - 500 + size.y});
-        popup[2].color = color;
-
-        popup[3].position = System::cToGl({ViewHandler::left + 100 + size.x, ViewHandler::top - 500});
-        popup[3].color = color;
-
-        System::window->draw(popup, 4, sf::Quads);
         System::window->draw(helpText);
+        System::window->draw(titleText);
     } else {
         state = S_Button_Normal;
+        popup->setVisible(false);
     }
 
     BasicUi::update();
+}
+
+const std::string &Question::getHelpTextString() const {
+    return helpTextString;
+}
+
+void Question::setHelpTextString(const std::string &helpTextString) {
+    Question::helpTextString = helpTextString;
+}
+
+const std::string &Question::getTitleTextString() const {
+    return titleTextString;
+}
+
+void Question::setTitleTextString(const std::string &titleTextString) {
+    Question::titleTextString = titleTextString;
 }

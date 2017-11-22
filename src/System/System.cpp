@@ -129,11 +129,14 @@ namespace System {
             g_x = coordMap.x;
             g_y = System::screenHeight - coordMap.y;
 
-            debugPanelTextNodes["g_coordinates"].setString("global: {" + std::to_string((int) g_x) + "," + std::to_string((int) g_y) + "}");
+            debugPanelTextNodes["g_coordinates"].setString(
+                    "global: {" + std::to_string((int) g_x) + "," + std::to_string((int) g_y) + "}");
             debugPanelTextNodes["fps"].setString("fps: " + std::to_string(fps));
-            debugPanelTextNodes["mouse"].setString("mouse: {" + std::to_string(mousePosition.x) + "," + std::to_string(mousePosition.y) + "}");
+            debugPanelTextNodes["mouse"].setString(
+                    "mouse: {" + std::to_string(mousePosition.x) + "," + std::to_string(mousePosition.y) + "}");
             debugPanelTextNodes["entity_count"].setString("entities: " + std::to_string(entitiesOnScreen));
-            debugPanelTextNodes["v_direction"].setString("v_direction: " + std::to_string(ViewHandler::viewDirectionMovement));
+            debugPanelTextNodes["v_direction"].setString(
+                    "v_direction: " + std::to_string(ViewHandler::viewDirectionMovement));
             debugPanelTextNodes["mem"].setString("mem:" + std::to_string((int) mem / 1024 / 1024) + "mb");
 
 
@@ -152,13 +155,13 @@ namespace System {
             debugPanelTextNodes["d_level"].setString("d_level:" + std::to_string(System::debug));
 
             std::string dcs = "d_counters:";
-            for(auto e:debugCounters){
+            for (auto e:debugCounters) {
                 dcs += e.first + "->" + std::to_string(e.second) + ";";
             }
             debugPanelTextNodes["d_counters"].setString(dcs);
 
             int i = 1;
-            for(auto n:debugPanelTextNodes){
+            for (auto n:debugPanelTextNodes) {
                 n.second.setPosition(cToGl(sf::Vector2f(ViewHandler::left + 12, ViewHandler::top - 600 - i * 12)));
                 System::window->draw(n.second);
                 i++;
@@ -268,6 +271,31 @@ namespace System {
         out << value;
 
         return out.str();
+    }
+
+    std::string formatNewLines(const std::string &in, const size_t every_n) {
+        std::string out;
+        out.reserve(in.size() + in.size() / every_n);
+        bool nextSpaceLine = false;
+
+        for (std::string::size_type i = 0; i < in.size(); i++) {
+            if (nextSpaceLine && in[i] == ' ') {
+                out.push_back('\n');
+                nextSpaceLine = false;
+                continue;
+            }
+
+            if (!(i % every_n) && i) {
+                if (in[i] == ' ') {
+                    out.push_back('\n');
+                } else {
+                    nextSpaceLine = true;
+                }
+            } else {
+                out.push_back(in[i]);
+            }
+        }
+        return out;
     }
 
     int getRandom(int min, int max) {

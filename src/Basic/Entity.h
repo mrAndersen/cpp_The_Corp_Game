@@ -24,6 +24,7 @@ protected:
     States lastNoneSwapAnimationState = S_None;
 
     bool visible = true;
+    bool manualUpdate = false;
 
     float health = 100;
     bool valid = true;
@@ -58,6 +59,11 @@ protected:
     sf::Text errorString;
 public:
     virtual void spawn();
+
+    bool isManualUpdate() const;
+
+    void setManualUpdate(bool manualUpdate);
+
 
     virtual bool operator<(const Entity &a) const;
 

@@ -39,7 +39,7 @@ namespace EntityContainer {
     }
 
     void sort() {
-        std::sort(items.begin(), items.end(), [](const Entity *a, const Entity *b) -> const bool {
+        std::sort(items.begin(), items.end(), [](const Entity *a, const Entity *b) -> bool {
             if (a->getDrawOrder() == b->getDrawOrder()) {
                 return a->getDrawOrder() + a->getWorldCoordinates().x + a->getWorldCoordinates().y <
                        b->getDrawOrder() + b->getWorldCoordinates().x + b->getWorldCoordinates().y;
@@ -118,7 +118,10 @@ namespace EntityContainer {
 
         for (int i = 0; i < startSize; ++i) {
             Entity *e = items[i];
-            e->update();
+
+            if(!e->isManualUpdate()){
+                e->update();
+            }
         }
 
         int endSize = items.size();
@@ -141,7 +144,7 @@ namespace EntityContainer {
         }
 
         if (sortNextFrame && startSize == endSize) {
-//            sort();
+            sort();
             System::debugCounters["sort_operations"]++;
             sortNextFrame = false;
         }

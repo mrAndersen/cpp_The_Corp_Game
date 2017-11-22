@@ -112,11 +112,11 @@ enum Entities {
 
     E_Indicator_Money = 101,
     E_MainPanelOverlay = 102,
-
     E_ButtonPause = 103,
     E_Button1x = 104,
     E_Button5x = 105,
     E_Button10x = 106,
+    E_Popup = 107,
 };
 
 #endif
