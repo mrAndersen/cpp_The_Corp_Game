@@ -19,6 +19,10 @@ protected:
     int id;
     std::map<States, Animation> animations;
     Animation *currentAnimation = nullptr;
+
+    sf::Clock lastNoneSwapAnimation;
+    States lastNoneSwapAnimationState = S_None;
+
     bool visible = true;
 
     float health = 100;
@@ -52,10 +56,10 @@ protected:
     //debug
     sf::Text debugInfo;
     sf::Text errorString;
-
-    bool updated = false;
 public:
     virtual void spawn();
+
+    virtual bool operator<(const Entity &a) const;
 
     virtual ~Entity();
 
@@ -82,10 +86,6 @@ public:
     void selectAnimation(States state);
 
     bool isSpawned();
-
-    bool isUpdated() const;
-
-    void setUpdated(bool updated);
 
     bool isSelectable() const;
 
@@ -128,6 +128,8 @@ public:
     bool isBelowGround();
 
     bool isAboveGround();
+
+    bool isOnTheFloor();
 
     bool isOnTheGround();
 

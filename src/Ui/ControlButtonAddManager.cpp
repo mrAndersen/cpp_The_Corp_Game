@@ -15,7 +15,7 @@ ControlButtonAddManager::ControlButtonAddManager(float leftOffset, float topOffs
 }
 
 void ControlButtonAddManager::update() {
-    selectAnimation(S_Button_Normal);
+    state = S_Button_Normal;
 
     bool spawnCondition = attachedManager &&
                           System::cash >= attachedManager->getCost() &&
@@ -43,7 +43,7 @@ void ControlButtonAddManager::update() {
     }
 
     if (attachedManager) {
-        selectAnimation(S_Button_Pressed);
+        state = S_Button_Pressed;
         System::spawningUnit = true;
         attachedManager->setWorldCoordinates(System::getGlobalMouse());
 

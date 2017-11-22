@@ -14,8 +14,10 @@ void Movable::renderDebugInfo() {
         debugInfo.setOutlineColor(sf::Color::White);
         debugInfo.setPosition(System::cToGl(worldCoordinates.x + width / 2, worldCoordinates.y + height / 2));
         debugInfo.setString(
-                "s: " + std::to_string(state) + "\n" +
+                "state: " + std::to_string(state) + "\n" +
                 "dests: " + std::to_string(destinations.size()) + "\n" +
+                "group: " + groupName + "\n" +
+                "a_state: " + std::to_string(currentAnimation->getState()) + "\n" +
                 "speed: " + std::to_string(currentSpeed) + "\n" +
                 "mv: " + std::to_string(moving) + "\n"
                         "cdst: " + std::to_string(currentDST)
@@ -59,13 +61,14 @@ void Movable::updateLogic() {
 
     if (buffed && System::gameTime == buffEnd) {
         workingModificator = 1.f;
+        buffed = false;
     }
 
     if (!spawned) {
         return;
     }
 
-    if (isAboveGround() && state == S_None) {
+    if (isAboveGround() && !isOnTheFloor() && state == S_None) {
         state = S_Falling;
     }
 
@@ -228,7 +231,7 @@ void Movable::updateLogic() {
         }
     }
 
-    //ONE TIME EXEC
+    //one-time-exec
     //time to go home
     if (System::gameTime.isDayEndHour() && !moving) {
 
@@ -267,21 +270,23 @@ void Movable::createSmokeAreaRoute() {
         destinations.push_back(Destination::createSmokeAreaDST(this, smokeArea));
     } else {
         targetElevator = searchNearestElevator();
-        targetElevator->incBoarding();
 
-        destinations.push_back(Destination::createElevatorWaitingDST(targetElevator, this));
+        if(targetElevator){
+            targetElevator->incBoarding();
+            destinations.push_back(Destination::createElevatorWaitingDST(targetElevator, this));
 
-        if (worldCoordinates.x < targetElevator->getLeft()) {
-            worldCoordinates.x += 1;
+            if (worldCoordinates.x < targetElevator->getLeft()) {
+                worldCoordinates.x += 1;
+            }
+
+            if (worldCoordinates.x > targetElevator->getRight()) {
+                worldCoordinates.x -= 1;
+            }
+
+            destinations.push_back(Destination::createElevatorCabinDST(targetElevator, this));
+            destinations.push_back(Destination::createElevatorExitingDST(targetElevator, this, smokeArea));
+            destinations.push_back(Destination::createSmokeAreaDST(this, smokeArea));
         }
-
-        if (worldCoordinates.x > targetElevator->getRight()) {
-            worldCoordinates.x -= 1;
-        }
-
-        destinations.push_back(Destination::createElevatorCabinDST(targetElevator, this));
-        destinations.push_back(Destination::createElevatorExitingDST(targetElevator, this, smokeArea));
-        destinations.push_back(Destination::createSmokeAreaDST(this, smokeArea));
     }
 }
 
@@ -344,6 +349,7 @@ Movable::Movable(Entities type, int width, int height) : Entity(type) {
     gender = G_Male;
 
     addAnimation(S_None, gender, race, 24);
+    addAnimation(S_Play, gender, race, 24);
     addAnimation(S_Walk, gender, race, 24);
     addAnimation(S_Working, gender, race, 24);
     addAnimation(S_Smoking, gender, race, 66, 2750000);
@@ -443,8 +449,7 @@ void Movable::addAnimation(States state, Gender gender, Race race, int frames, i
         auto animation = Animation(this, state, frames, texture, duration);
         Entity::addAnimation(state, animation);
     } else {
-        auto animation = Animation(this, state, frames,
-                                   ResourceLoader::getCharacterTexture(eType, state, G_Male, R_White), duration);
+        auto animation = Animation(this, state, frames, ResourceLoader::getCharacterTexture(eType, state, G_Male, R_White), duration);
         Entity::addAnimation(state, animation);
     }
 }

@@ -27,7 +27,7 @@ void Clerk::updateLogic() {
         workPlaceSearchResolution.restart();
     }
 
-    //ONE TIME EXEC
+    //one-time-exec
     //not working but should
     if (System::gameTime.isWorkTime() && !isInWorkPlace() && currentWorkPlace && state != S_Working &&
         state != S_Smoking && state != S_Falling && !moving) {
@@ -39,10 +39,10 @@ void Clerk::updateLogic() {
         createWorkPlaceRoute();
     }
 
-    //ONE TIME EXEC
+    //one-time-exec
     //go smoke
     if (
-            smoking && !moving &&
+            smoking && !moving && !buffed && !willBeBuffed &&
             isInWorkPlace() && state == S_Working &&
             System::gameTime.getHour() >= 12 &&
             System::getRandom(0, System::fps * 1000) <= 30
@@ -59,7 +59,7 @@ void Clerk::updateLogic() {
     if (state == S_Working) {
         //earning every half hour
         if (System::gameTime.isEarningHour() && !earningProcessed) {
-            auto earning =  dailyEarning / 8 / 2 * workingModificator;
+            auto earning = dailyEarning / 8 / 2 * workingModificator;
             System::cash += earning;
 
             auto *earningHint = new TextEntity(System::c_green, 25);
@@ -120,7 +120,8 @@ void Clerk::createWorkPlaceRoute() {
             targetElevator->incBoarding();
             destinations.push_back(Destination::createElevatorWaitingDST(targetElevator, this));
             destinations.push_back(Destination::createElevatorCabinDST(targetElevator, this));
-            destinations.push_back(Destination::createElevatorExitingDST(targetElevator, this, currentWorkPlace->getWorldCoordinates()));
+            destinations.push_back(Destination::createElevatorExitingDST(targetElevator, this,
+                                                                         currentWorkPlace->getWorldCoordinates()));
             destinations.push_back(Destination::createWorkplaceDST(this));
         }
     }

@@ -264,6 +264,10 @@ namespace ResourceLoader {
             return "smoke";
         }
 
+        if (state == S_Play) {
+            return "play";
+        }
+
         return "wait";
     }
 

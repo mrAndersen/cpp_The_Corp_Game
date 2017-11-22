@@ -25,7 +25,7 @@ void ControlButtonAddElevatorShaftTop::update() {
         return;
     }
 
-    selectAnimation(S_Button_Normal);
+    state = S_Button_Pressed;
 
     bool spawnCondition = attachedShaft &&
                           System::cash >= attachedShaft->getCost() &&

@@ -27,11 +27,10 @@ void Question::update() {
     }
 
     if (pressed) {
-        selectAnimation(S_Button_Pressed);
+        state = S_Button_Pressed;
+
         auto color = sf::Color(160, 87, 14);
-
         auto size = sf::Vector2f(500, 300);
-
 
         helpText.setPosition(System::cToGl({ViewHandler::left + 100, ViewHandler::top - 500 + size.y}));
 
@@ -50,7 +49,7 @@ void Question::update() {
         System::window->draw(popup, 4, sf::Quads);
         System::window->draw(helpText);
     } else {
-        selectAnimation(S_Button_Normal);
+        state = S_Button_Normal;
     }
 
     BasicUi::update();

@@ -12,29 +12,34 @@ Manager::Manager(sf::Vector2f coordinates) : Movable(E_Manager, Manager::width, 
     setDrawOrder(D_Characters);
     initEntity();
 
-    System::salaryTotal += dailySalary;
     EntityContainer::add(this);
 }
 
 void Manager::updateLogic() {
     Movable::updateLogic();
 
-    if (state == S_None && isSpawned()) {
+    if (state == S_None && spawned) {
         if (!currentTarget && targetSearchResolution.getElapsedTime().asMilliseconds() >= 500) {
             currentTarget = searchTarget();
             targetSearchResolution.restart();
         }
 
-        if (currentTarget) {
+        //one-time-exec
+        if (currentTarget && !moving) {
             moving = true;
-            currentTarget->setWillBeBuffed(true);
-            setDrawOrder(D_Characters, true);
 
+            currentTarget->setWillBeBuffed(true);
+
+            setDrawOrder(D_Characters, true);
             createBuffTargetDestination();
+        }else{
+            moving = true;
+            setDrawOrder(D_Characters, true);
+            createSmokeAreaRoute();
         }
     }
 
-    if (state == S_Working && currentTarget && !buffInProgress && !currentTarget->isBuffed() && currentTarget->getState() == S_Working) {
+    if (state == S_Working && currentTarget && !buffInProgress && !currentTarget->isBuffed()) {
         buffingProcedureClock.restart();
 
         currentTarget->setWorkingModificator(currentTarget->getWorkingModificator() * buffStrength);
@@ -44,7 +49,7 @@ void Manager::updateLogic() {
         currentTarget->setBuffEnd(System::gameTime + 120);
         buffInProgress = true;
 
-        auto *buffHint = new TextEntity(System::c_blue, 30);
+        auto *buffHint = new TextEntity(System::c_blue, 25);
         auto position = currentTarget->getWorldCoordinates();
         position.y += currentTarget->getHeight() / 2 + 10;
 
@@ -58,10 +63,6 @@ void Manager::updateLogic() {
         buffInProgress = false;
         currentTarget = nullptr;
         state = S_None;
-    }
-
-    if (state == S_None && !currentTarget) {
-        state = S_Smoking;
     }
 }
 
@@ -95,7 +96,7 @@ Movable *Manager::searchTarget() {
     for (auto &e:targets) {
         auto movable = dynamic_cast<Movable *>(e);
 
-        if (!movable->isBuffed() && !movable->isWillBeBuffed()) {
+        if (!movable->isBuffed() && !movable->isWillBeBuffed() && movable->getState() == S_Working) {
             return movable;
         }
     }
