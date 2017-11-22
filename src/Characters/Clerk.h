@@ -16,6 +16,7 @@ public:
     float dailyEarning = 80;
     bool earningProcessed = false;
 
+
     float dailySalary = 64;
     bool salaryProcessed = false;
 

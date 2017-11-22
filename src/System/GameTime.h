@@ -32,6 +32,8 @@ public:
 
     friend GameTime operator+(const GameTime &a, int minutes);
 
+    friend bool operator==(const GameTime &a, const GameTime &b);
+
     GameTime(int hour, int minute);
 
     GameTime();

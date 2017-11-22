@@ -57,16 +57,10 @@ void Clerk::updateLogic() {
     }
 
     if (state == S_Working) {
-        sf::Text hourEarningHint;
-
-        hourEarningHint.setCharacterSize(30);
-        hourEarningHint.setFillColor(System::c_green);
-        hourEarningHint.setFont(*System::gameFont);
-        hourEarningHint.setString("+" + System::f_to_string(dailyEarning / 8 / 2) + "$");
-
         //earning every half hour
         if (System::gameTime.isEarningHour() && !earningProcessed) {
-            System::cash = System::cash + dailyEarning / 8 / 2;
+            auto earning =  dailyEarning / 8 / 2 * workingModificator;
+            System::cash += earning;
 
             auto *earningHint = new TextEntity(System::c_green, 25);
             auto position = worldCoordinates;
@@ -75,7 +69,7 @@ void Clerk::updateLogic() {
             earningHint->setSpeed(100);
             earningHint->setLiveTimeSeconds(2);
             earningHint->setWorldCoordinates(position);
-            earningHint->setString("+" + System::f_to_string(dailyEarning / 8 / 2) + "$");
+            earningHint->setString("+" + System::f_to_string(earning) + "$");
 
             earningProcessed = true;
         }
@@ -121,9 +115,9 @@ void Clerk::createWorkPlaceRoute() {
         destinations.push_back(Destination::createWorkplaceDST(this));
     } else {
         targetElevator = searchNearestElevator();
-        targetElevator->incBoarding();
 
         if (targetElevator) {
+            targetElevator->incBoarding();
             destinations.push_back(Destination::createElevatorWaitingDST(targetElevator, this));
             destinations.push_back(Destination::createElevatorCabinDST(targetElevator, this));
             destinations.push_back(Destination::createElevatorExitingDST(targetElevator, this, currentWorkPlace->getWorldCoordinates()));

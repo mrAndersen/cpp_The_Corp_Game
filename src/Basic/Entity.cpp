@@ -306,17 +306,28 @@ void Entity::addAnimation(States state, const Animation &animation) {
 }
 
 void Entity::selectAnimation(States state) {
+    States targetState = S_None;
+
     if (!animations.empty()) {
         if (!animations.count(state)) {
             if (!animations.count(S_None)) {
-                currentAnimation = &animations.at(S_Button_Normal);
+                targetState = S_Button_Normal;
             } else {
-                currentAnimation = &animations.at(S_None);
+                targetState = S_None;
             }
         } else {
-            currentAnimation = &animations.at(state);
+            targetState = state;
         }
     }
+
+    if (this->groupName == "movable") {
+        //None swap animation logic
+
+
+
+    }
+
+    currentAnimation = &animations.at(targetState);
 }
 
 Direction Entity::getDirection() const {

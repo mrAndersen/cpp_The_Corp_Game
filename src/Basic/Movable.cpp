@@ -57,6 +57,10 @@ void Movable::updateLogic() {
     float frameTimeSeconds = (float) System::frameTimeMcs / 1000000;
     float frameDistance = frameTimeSeconds * currentSpeed * System::timeFactor;
 
+    if (buffed && System::gameTime == buffEnd) {
+        workingModificator = 1.f;
+    }
+
     if (!spawned) {
         return;
     }
@@ -507,6 +511,30 @@ bool Movable::isWillBeBuffed() const {
 
 void Movable::setWillBeBuffed(bool willBeBuffed) {
     Movable::willBeBuffed = willBeBuffed;
+}
+
+float Movable::getWorkingModificator() const {
+    return workingModificator;
+}
+
+void Movable::setWorkingModificator(float workingModificator) {
+    Movable::workingModificator = workingModificator;
+}
+
+const GameTime &Movable::getBuffStart() const {
+    return buffStart;
+}
+
+void Movable::setBuffStart(const GameTime &buffStart) {
+    Movable::buffStart = buffStart;
+}
+
+const GameTime &Movable::getBuffEnd() const {
+    return buffEnd;
+}
+
+void Movable::setBuffEnd(const GameTime &buffEnd) {
+    Movable::buffEnd = buffEnd;
 }
 
 

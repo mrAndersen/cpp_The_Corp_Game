@@ -38,7 +38,9 @@ protected:
 
     bool buffed = false;
     bool willBeBuffed = false;
-    float buffStrength = 1.f;
+    GameTime buffStart;
+    GameTime buffEnd;
+    float workingModificator = 1.f;
 
     //relevant to game time
     int smokePeriodMinutes = 15;
@@ -56,6 +58,18 @@ protected:
 
 public:
     Movable(Entities type, int width, int height);
+
+    const GameTime &getBuffStart() const;
+
+    void setBuffStart(const GameTime &buffStart);
+
+    const GameTime &getBuffEnd() const;
+
+    void setBuffEnd(const GameTime &buffEnd);
+
+    float getWorkingModificator() const;
+
+    void setWorkingModificator(float workingModificator);
 
     bool isBuffed() const;
 
