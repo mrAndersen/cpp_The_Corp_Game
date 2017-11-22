@@ -79,8 +79,7 @@ void Manager::createBuffTargetDestination() {
         if (targetElevator) {
             destinations.push_back(Destination::createElevatorWaitingDST(targetElevator, this));
             destinations.push_back(Destination::createElevatorCabinDST(targetElevator, this));
-            destinations.push_back(
-                    Destination::createElevatorExitingDST(targetElevator, this, currentTarget->getWorldCoordinates()));
+            destinations.push_back(Destination::createElevatorExitingDST(targetElevator, this, currentTarget->getWorldCoordinates()));
 
             if (currentTarget->getEType() == E_Clerk) {
                 auto clerk = dynamic_cast<Clerk *>(currentTarget);

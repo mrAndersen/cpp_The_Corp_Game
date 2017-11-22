@@ -18,7 +18,7 @@ namespace DebugPattern {
             auto count = 4;
 
             for (int i = 0; i < count; ++i) {
-                auto c = new Clerk({System::g_x + (i * 72), 300.f});
+                auto c = new Clerk({System::g_x + (i * 72) - 150, System::g_y});
                 c->spawn();
             }
         }
@@ -27,7 +27,7 @@ namespace DebugPattern {
             auto count = 4;
 
             for (int i = 0; i < count; ++i) {
-                auto m = new Manager({System::g_x + (i * 72), 300.f});
+                auto m = new Manager({System::g_x + (i * 72) - 150, System::g_y});
                 m->spawn();
             }
         }

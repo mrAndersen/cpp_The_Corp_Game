@@ -20,7 +20,9 @@ namespace EntityContainer {
     }
 
     void removeFromGroup(const std::string &groupName, Entity *target) {
-        itemsByGroup[groupName].erase(std::remove(itemsByGroup[groupName].begin(), itemsByGroup[groupName].end(), target), itemsByGroup[groupName].end());
+        itemsByGroup[groupName].erase(
+                std::remove(itemsByGroup[groupName].begin(), itemsByGroup[groupName].end(), target),
+                itemsByGroup[groupName].end());
     }
 
 
@@ -38,8 +40,27 @@ namespace EntityContainer {
         sortNextFrame = true;
     }
 
+    int compareEntity(const void *v_a, const void *v_b) {
+        const Entity *a = *(static_cast<const Entity *const *>(v_a));
+        const Entity *b = *(static_cast<const Entity *const *>(v_b));
+
+        if (a->getDrawOrder() == b->getDrawOrder()) {
+            return (a->getDrawOrder() + a->getWorldCoordinates().x + a->getWorldCoordinates().y) >
+                   (b->getDrawOrder() + b->getWorldCoordinates().x + b->getWorldCoordinates().y);
+        } else {
+            return a->getDrawOrder() > b->getDrawOrder();
+        }
+
+    }
+
     void sort() {
+//        qsort(items.data(), items.size(), sizeof(Entity *), EntityContainer::compareEntity);
+
         std::sort(items.begin(), items.end(), [](const Entity *a, const Entity *b) -> bool {
+            if (a == b) {
+                return false;
+            }
+
             if (a->getDrawOrder() == b->getDrawOrder()) {
                 return a->getDrawOrder() + a->getWorldCoordinates().x + a->getWorldCoordinates().y <
                        b->getDrawOrder() + b->getWorldCoordinates().x + b->getWorldCoordinates().y;
@@ -119,7 +140,7 @@ namespace EntityContainer {
         for (int i = 0; i < startSize; ++i) {
             Entity *e = items[i];
 
-            if(!e->isManualUpdate()){
+            if (!e->isManualUpdate()) {
                 e->update();
             }
         }
@@ -154,7 +175,8 @@ namespace EntityContainer {
         if (System::debug) {
             System::debugCounters["empty"] = 0;
             for (auto &e:items) {
-                System::debugCounters["empty"] = e->getEType() == E_Entity ? System::debugCounters["empty"]++ : System::debugCounters["empty"];
+                System::debugCounters["empty"] =
+                        e->getEType() == E_Entity ? System::debugCounters["empty"]++ : System::debugCounters["empty"];
             }
 
             auto group = EntityContainer::getGroupItems("offices");
