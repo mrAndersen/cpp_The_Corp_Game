@@ -50,19 +50,19 @@ void Movable::renderDebugInfo() {
         if (System::debug > 1) {
             sf::VertexArray quad(sf::LineStrip, 5);
 
-            quad[0].position = System::cToGl({rect.left, rect.top});
+            quad[0].position = System::cToGl({(float) rect.left, (float) rect.top});
             quad[0].color = sf::Color::Red;
 
-            quad[1].position = System::cToGl({rect.left + width, rect.top});
+            quad[1].position = System::cToGl({(float) rect.left + width, (float) rect.top});
             quad[1].color = sf::Color::Red;
 
-            quad[2].position = System::cToGl({rect.left + width, rect.top - height});
+            quad[2].position = System::cToGl({(float) rect.left + width, (float) rect.top - height});
             quad[2].color = sf::Color::Red;
 
-            quad[3].position = System::cToGl({rect.left, rect.top - height});
+            quad[3].position = System::cToGl({(float) rect.left, (float) rect.top - height});
             quad[3].color = sf::Color::Red;
 
-            quad[4].position = System::cToGl({rect.left, rect.top});
+            quad[4].position = System::cToGl({(float) rect.left, (float) rect.top});
             quad[4].color = sf::Color::Red;
 
             System::window->draw(quad);
@@ -77,6 +77,7 @@ void Movable::updateLogic() {
     Entity::updateLogic();
 
     updateFloor();
+    drawSelectionRect();
 
     float frameTimeSeconds = (float) System::frameTimeMcs / 1000000;
     float frameDistance = frameTimeSeconds * currentSpeed * System::timeFactor;
@@ -563,6 +564,30 @@ const GameTime &Movable::getBuffEnd() const {
 
 void Movable::setBuffEnd(const GameTime &buffEnd) {
     Movable::buffEnd = buffEnd;
+}
+
+void Movable::drawSelectionRect() {
+    if (spawned && Entity::mouseIn()) {
+        sf::RectangleShape rect;
+
+        auto width = 15.f;
+        auto height = 15.f;
+
+        rect.setPosition(System::cToGl({worldCoordinates.x - this->width / 2, worldCoordinates.y + this->height / 2}));
+        rect.setSize({width, height});
+        rect.setFillColor(sf::Color(232, 168, 51));
+
+        System::window->draw(rect);
+    }
+}
+
+bool Movable::mouseIn() {
+    auto selectionSize = 15.f;
+
+    return System::g_x >= worldCoordinates.x - width / 2 &&
+           System::g_x <= worldCoordinates.x - width / 2 + selectionSize &&
+           System::g_y >= worldCoordinates.y + height / 2 - selectionSize &&
+           System::g_y <= worldCoordinates.y + height / 2;
 }
 
 

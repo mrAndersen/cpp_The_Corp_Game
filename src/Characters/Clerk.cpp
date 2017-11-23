@@ -5,7 +5,7 @@
 #include "Clerk.h"
 
 Clerk::Clerk(sf::Vector2f coordinates) : Movable(E_Clerk, Clerk::width, Clerk::height) {
-    setDefaultSpeed(180);
+    setDefaultSpeed(165);
 
     setCost(500);
     setWorldCoordinates(coordinates);

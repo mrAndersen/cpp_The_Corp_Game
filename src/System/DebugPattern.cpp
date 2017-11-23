@@ -41,7 +41,7 @@ namespace DebugPattern {
         }
 
         if (System::event.type == sf::Event::KeyPressed && System::event.key.code == sf::Keyboard::Numpad2) {
-            auto top = 900;
+            auto top = 600;
 
             for (int i = 0; i <= top; ++i) {
                 if ((i % 150 == 0 || i == 0) && i != top) {

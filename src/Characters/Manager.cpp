@@ -3,7 +3,7 @@
 #include "Clerk.h"
 
 Manager::Manager(sf::Vector2f coordinates) : Movable(E_Manager, Manager::width, Manager::height) {
-    setDefaultSpeed(150);
+    setDefaultSpeed(165);
 
     setCost(1000);
     setWorldCoordinates(coordinates);

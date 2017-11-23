@@ -140,7 +140,7 @@ public:
 
     bool intersectsWithObjects();
 
-    bool mouseIn();
+    virtual bool mouseIn();
 
     bool leftClicked();
 
