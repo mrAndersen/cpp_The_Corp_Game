@@ -32,15 +32,12 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
 
         sf::Event e{};
 
-        ViewHandler::handleViewScroll();
-        EntityContainer::refreshEntities();
-
         while (System::window->pollEvent(e)) {
             System::event = e;
 
             System::eventDeque.push_front(e);
 
-            if(System::eventDeque.size() >= 5){
+            if (System::eventDeque.size() >= 5) {
                 System::eventDeque.pop_back();
             }
 
@@ -55,16 +52,19 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
                 System::initWindow();
             }
 
+            System::selectionAllowed = !System::spawningUnit && System::selectionCooldown.getElapsedTime().asMilliseconds() >= System::buttonReload;
+
             //entity selection
-            if (e.type == sf::Event::MouseButtonPressed && e.mouseButton.button == sf::Mouse::Left) {
-                for (auto ex:EntityContainer::items) {
+            if (e.type == sf::Event::MouseButtonPressed && e.mouseButton.button == sf::Mouse::Left && System::selectionAllowed) {
+                for(auto it = EntityContainer::items.begin(); it != EntityContainer::items.end(); ++it){
+                    auto ex = *it;
                     if (
-                            !System::spawningUnit &&
                             ex->mouseIn() &&
                             ex->isSelectable() &&
                             ex->isSpawned() &&
-                            ex->getLiveClock().getElapsedTime().asSeconds() >= 1
-                            ) {
+                            ex->getLiveClock().getElapsedTime().asMilliseconds() >= System::buttonReload
+                            )
+                    {
 
                         for (auto ei:EntityContainer::items) {
                             if (ei != ex) {
@@ -109,6 +109,9 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
                 }
             }
         }
+
+        ViewHandler::handleViewScroll();
+        EntityContainer::refreshEntities();
 
         System::refreshDebugPanel();
         System::window->display();

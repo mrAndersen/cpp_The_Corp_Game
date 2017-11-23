@@ -26,6 +26,7 @@ void ControlButtonAddElevatorShaftTop::update() {
     }
 
     state = S_Button_Pressed;
+    System::selectionCooldown.restart();
 
     bool spawnCondition = attachedShaft &&
                           System::cash >= attachedShaft->getCost() &&
@@ -42,6 +43,7 @@ void ControlButtonAddElevatorShaftTop::update() {
         EntityContainer::remove(attachedShaft);
 
         System::spawningUnit = false;
+        System::selectionCooldown.restart();
         attachedShaft = nullptr;
     }
 
@@ -51,6 +53,7 @@ void ControlButtonAddElevatorShaftTop::update() {
         attachedShaft->spawn();
 
         System::spawningUnit = false;
+        System::selectionCooldown.restart();
         attachedShaft = nullptr;
     }
 

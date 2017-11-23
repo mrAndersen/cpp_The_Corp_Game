@@ -41,6 +41,8 @@ namespace EntityContainer {
     void remove(Entity *item);
 
     void sort();
+
+    bool comparator(const Entity *a, const Entity *b);
     //items
 
 

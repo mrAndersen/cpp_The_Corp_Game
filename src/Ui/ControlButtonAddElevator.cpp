@@ -27,6 +27,7 @@ void ControlButtonAddElevator::update() {
 
     if (pressed) {
         state = S_Button_Pressed;
+        System::selectionCooldown.restart();
 
         bc->setVisible(true);
         bs->setVisible(true);

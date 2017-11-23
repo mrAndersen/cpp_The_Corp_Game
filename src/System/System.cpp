@@ -32,6 +32,7 @@ namespace System {
 
     sf::RenderWindow *window;
     sf::Event event;
+    bool selectionAllowed = false;
     std::deque<sf::Event> eventDeque;
     long long int frameTimeMcs;
     sf::Uint32 screenMode = sf::Style::Default;
@@ -49,7 +50,7 @@ namespace System {
     //player
     double cash = 2000000;
     bool spawningUnit = false;
-
+    sf::Clock selectionCooldown;
     bool dayEndProcessed = false;
     bool dayStartProcessed = false;
 
@@ -153,6 +154,9 @@ namespace System {
             debugPanelTextNodes["p_time"].setString("p_time:" + gameTime.get());
             debugPanelTextNodes["p_time_factor"].setString("p_time_factor:" + std::to_string(timeFactor));
             debugPanelTextNodes["d_level"].setString("d_level:" + std::to_string(System::debug));
+            debugPanelTextNodes["spawning"].setString("spawning:" + std::to_string(System::spawningUnit));
+            debugPanelTextNodes["selection_cd"].setString(
+                    "selection_cd:" + std::to_string(System::selectionCooldown.getElapsedTime().asSeconds()));
 
             std::string dcs = "d_counters:";
             for (auto e:debugCounters) {
@@ -188,10 +192,13 @@ namespace System {
         sf::Image icon;
         icon.loadFromFile("resources/app/icon.png");
 
-        window = new sf::RenderWindow(sf::VideoMode(screenWidth, screenHeight), title, screenMode);
+        sf::ContextSettings settings;
+        settings.antialiasingLevel = 8;
+
+        window = new sf::RenderWindow(sf::VideoMode(screenWidth, screenHeight), title, screenMode, settings);
 
         window->clear(c_background);
-//        window->setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+        window->setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
         ViewHandler::view = new sf::View();
         ViewHandler::view->reset(sf::FloatRect(0, 0, screenWidth, screenHeight));
@@ -224,6 +231,8 @@ namespace System {
         createDebugString("p_time_factor");
         createDebugString("d_level");
         createDebugString("d_counters");
+        createDebugString("spawning");
+        createDebugString("selection_cd");
     }
 
     sf::Vector2f cToGl(sf::Vector2f worldCoordinates) {
@@ -304,6 +313,12 @@ namespace System {
 
         std::uniform_int_distribution<int> distribution(min, max);
         return distribution(generator);
+    }
+
+    int roundToMultiple(float target, int multiple) {
+        const auto ratio = static_cast<double>(target) / multiple;
+        const auto iratio = std::lround(ratio);
+        return iratio * multiple;
     }
 }
 

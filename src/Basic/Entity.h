@@ -64,7 +64,6 @@ public:
 
     void setManualUpdate(bool manualUpdate);
 
-
     virtual bool operator<(const Entity &a) const;
 
     virtual ~Entity();

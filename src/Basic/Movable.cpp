@@ -47,6 +47,28 @@ void Movable::renderDebugInfo() {
             System::window->draw(lines, destinations.size() + 1, sf::LineStrip);
         }
 
+        if (System::debug > 1) {
+            sf::VertexArray quad(sf::LineStrip, 5);
+
+            quad[0].position = System::cToGl({rect.left, rect.top});
+            quad[0].color = sf::Color::Red;
+
+            quad[1].position = System::cToGl({rect.left + width, rect.top});
+            quad[1].color = sf::Color::Red;
+
+            quad[2].position = System::cToGl({rect.left + width, rect.top - height});
+            quad[2].color = sf::Color::Red;
+
+            quad[3].position = System::cToGl({rect.left, rect.top - height});
+            quad[3].color = sf::Color::Red;
+
+            quad[4].position = System::cToGl({rect.left, rect.top});
+            quad[4].color = sf::Color::Red;
+
+            System::window->draw(quad);
+        }
+
+
         System::window->draw(debugInfo);
     }
 }
@@ -171,7 +193,7 @@ void Movable::updateLogic() {
                     direction = Right;
                     setDrawOrder(D_Characters_Working, true);
 
-                    worldCoordinates.y = final.getCoordinates().y;
+                    worldCoordinates.y = final.getCoordinates().y + 3;
                     worldCoordinates.x = final.getCoordinates().x;
 
                     moving = false;
@@ -271,7 +293,7 @@ void Movable::createSmokeAreaRoute() {
     } else {
         targetElevator = searchNearestElevator();
 
-        if(targetElevator){
+        if (targetElevator) {
             targetElevator->incBoarding();
             destinations.push_back(Destination::createElevatorWaitingDST(targetElevator, this));
 
@@ -449,7 +471,8 @@ void Movable::addAnimation(States state, Gender gender, Race race, int frames, i
         auto animation = Animation(this, state, frames, texture, duration);
         Entity::addAnimation(state, animation);
     } else {
-        auto animation = Animation(this, state, frames, ResourceLoader::getCharacterTexture(eType, state, G_Male, R_White), duration);
+        auto animation = Animation(this, state, frames,
+                                   ResourceLoader::getCharacterTexture(eType, state, G_Male, R_White), duration);
         Entity::addAnimation(state, animation);
     }
 }

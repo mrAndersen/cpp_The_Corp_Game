@@ -46,6 +46,8 @@ void Question::update() {
         }
 
         state = S_Button_Pressed;
+        System::selectionCooldown.restart();
+
         popup->setVisible(true);
         popup->update();
 

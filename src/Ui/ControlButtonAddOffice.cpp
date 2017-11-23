@@ -1,5 +1,6 @@
 #include <climits>
 #include <cmath>
+#include <iostream>
 #include "ControlButtonAddOffice.h"
 #include "..\System\EntityContainer.h"
 #include "..\System\ViewHandler.h"
@@ -14,8 +15,10 @@ ControlButtonAddOffice::ControlButtonAddOffice(float leftOffset, float topOffset
     setWidth(ControlButtonAddOffice::width);
     setHeight(ControlButtonAddOffice::height);
 
-    addAnimation(S_Button_Normal, Animation(this, S_Button_Normal, 1, ResourceLoader::getTexture(eType, S_Button_Normal)));
-    addAnimation(S_Button_Pressed, Animation(this, S_Button_Pressed, 1, ResourceLoader::getTexture(eType, S_Button_Pressed)));
+    addAnimation(S_Button_Normal,
+                 Animation(this, S_Button_Normal, 1, ResourceLoader::getTexture(eType, S_Button_Normal)));
+    addAnimation(S_Button_Pressed,
+                 Animation(this, S_Button_Pressed, 1, ResourceLoader::getTexture(eType, S_Button_Pressed)));
 
     initEntity();
     EntityContainer::add(this);
@@ -39,6 +42,7 @@ void ControlButtonAddOffice::update() {
         EntityContainer::remove(attachedOffice);
 
         System::spawningUnit = false;
+        System::selectionCooldown.restart();
         attachedOffice = nullptr;
     }
 
@@ -48,6 +52,7 @@ void ControlButtonAddOffice::update() {
         attachedOffice->spawn();
 
         System::spawningUnit = false;
+        System::selectionCooldown.restart();
         attachedOffice = nullptr;
     }
 
@@ -55,17 +60,23 @@ void ControlButtonAddOffice::update() {
         System::spawningUnit = true;
         auto global = System::getGlobalMouse();
         state = S_Button_Pressed;
+        System::selectionCooldown.restart();
 
-        float normalizedX = global.x - ((int) global.x % System::gridSize) + System::gridSize;
-        float normalizedY = global.y - ((int) global.y % System::gridSize) + System::gridSize / 2;
+        float x = roundf(global.x - ((int) global.x % System::gridSize) + System::gridSize);
+        float y = roundf(global.y - ((int) global.y % System::gridSize) + System::gridSize / 2);
 
-        attachedOffice->setWorldCoordinates(sf::Vector2f(normalizedX, normalizedY));
+        x = System::roundToMultiple(x);
+        y = System::roundToMultiple(y);
+
+        attachedOffice->setWorldCoordinates({x, y});
 
         if (!spawnCondition) {
             attachedOffice->setInvalid();
 
             //placement error
-            if (attachedOffice && (attachedOffice->intersectsWithObjects() || attachedOffice->getNeighborOffices().empty() || !attachedOffice->isOnTheGround())) {
+            if (attachedOffice &&
+                (attachedOffice->intersectsWithObjects() || attachedOffice->getNeighborOffices().empty() ||
+                 !attachedOffice->isOnTheGround())) {
                 attachedOffice->getErrorString().setString("Invalid placement position");
             }
 

@@ -5,6 +5,7 @@
 #include "..\System\Enum.h"
 #include <SFML/Graphics/Sprite.hpp>
 #include <vector>
+#include <list>
 #include <SFML/System/Clock.hpp>
 #include "Entity.h"
 
