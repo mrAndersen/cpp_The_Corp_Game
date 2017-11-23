@@ -26,13 +26,13 @@ void ControlButtonAddElevator::update() {
     }
 
     if (pressed) {
-        selectAnimation(S_Button_Pressed);
+        state = S_Button_Pressed;
 
         bc->setVisible(true);
         bs->setVisible(true);
         bst->setVisible(true);
     } else {
-        selectAnimation(S_Button_Normal);
+        state = S_Button_Normal;
 
         bc->setVisible(false);
         bs->setVisible(false);

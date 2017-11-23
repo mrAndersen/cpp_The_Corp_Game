@@ -20,9 +20,9 @@ void Button10x::update() {
     auto b5x = dynamic_cast<BasicUi *>(ControlPanel::getControls()[E_Button5x]);
 
     if(pressed){
-        selectAnimation(S_Button_Pressed);
+        state = S_Button_Pressed;
     }else{
-        selectAnimation(S_Button_Normal);
+        state = S_Button_Normal;
     }
 
     if(leftClicked() && !System::spawningUnit && liveClock.getElapsedTime().asMilliseconds() >= System::buttonReload){

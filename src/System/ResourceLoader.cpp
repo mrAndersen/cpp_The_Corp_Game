@@ -68,6 +68,7 @@ namespace ResourceLoader {
 
         //----<<Ui>>----
         ResourceLoader::loadTexture(Entities::E_Indicator_Money, "resources/ui/indicator.money.png");
+        ResourceLoader::loadTexture(Entities::E_Popup, "resources/ui/popup.png");
         ResourceLoader::loadTexture(Entities::E_MainPanelOverlay, "resources/ui/main.panel.png");
 
         ResourceLoader::loadTexture(Entities::E_ButtonPause, "resources/ui/button.pause.png", S_Button_Normal);
@@ -262,6 +263,10 @@ namespace ResourceLoader {
 
         if (state == S_Smoking) {
             return "smoke";
+        }
+
+        if (state == S_Play) {
+            return "play";
         }
 
         return "wait";

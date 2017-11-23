@@ -18,10 +18,10 @@ ControlButtonAddClerk::ControlButtonAddClerk(float leftOffset, float topOffset) 
 }
 
 void ControlButtonAddClerk::update() {
-    selectAnimation(S_Button_Normal);
+    state = S_Button_Normal;
 
     bool spawnCondition = attachedClerk &&
-                          System::cash >= attachedClerk->getCost() &&
+                          System::cash >= attachedClerk->getCost() && !intersectsWithObjects() &&
                           !attachedClerk->isBelowGround();
 
     if (leftClicked() && !attachedClerk && !System::spawningUnit) {
@@ -46,7 +46,7 @@ void ControlButtonAddClerk::update() {
     }
 
     if (attachedClerk) {
-        selectAnimation(S_Button_Pressed);
+        state = S_Button_Pressed;
         System::spawningUnit = true;
         attachedClerk->setWorldCoordinates(System::getGlobalMouse());
 

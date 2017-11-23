@@ -22,7 +22,7 @@ ControlButtonAddOffice::ControlButtonAddOffice(float leftOffset, float topOffset
 }
 
 void ControlButtonAddOffice::update() {
-    selectAnimation(S_Button_Normal);
+    state = S_Button_Normal;
 
     bool spawnCondition = attachedOffice &&
                           System::cash >= attachedOffice->getCost() &&
@@ -54,7 +54,7 @@ void ControlButtonAddOffice::update() {
     if (attachedOffice) {
         System::spawningUnit = true;
         auto global = System::getGlobalMouse();
-        selectAnimation(S_Button_Pressed);
+        state = S_Button_Pressed;
 
         float normalizedX = global.x - ((int) global.x % System::gridSize) + System::gridSize;
         float normalizedY = global.y - ((int) global.y % System::gridSize) + System::gridSize / 2;

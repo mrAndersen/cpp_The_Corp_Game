@@ -1,3 +1,4 @@
+#include <cmath>
 #include "GameTime.h"
 #include "System.h"
 
@@ -29,7 +30,17 @@ GameTime::GameTime(int hour, int minute) {
 }
 
 GameTime operator+(const GameTime &a, int minutes) {
-    GameTime b(0, minutes);
+    GameTime b;
+
+    if (minutes > 60) {
+        auto lminutes = minutes % 60;
+        auto hours = (minutes - lminutes) / 60;
+        b.hour = hours;
+        b.minute = lminutes;
+    } else {
+        b.hour = 0;
+        b.minute = minutes;
+    }
 
     return a + b;
 }

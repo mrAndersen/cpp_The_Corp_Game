@@ -25,7 +25,7 @@ void ControlButtonAddElevatorCabin::update() {
         return;
     }
 
-    selectAnimation(S_Button_Normal);
+    state = S_Button_Normal;
 
     bool spawnCondition = attachedCabin &&
                           System::cash >= attachedCabin->getCost() &&
@@ -53,7 +53,7 @@ void ControlButtonAddElevatorCabin::update() {
     }
 
     if (attachedCabin) {
-        selectAnimation(S_Button_Pressed);
+        state = S_Button_Pressed;
         System::spawningUnit = true;
         auto global = System::getGlobalMouse();
 

@@ -36,6 +36,8 @@ namespace EntityContainer {
 
     void add(Entity *item);
 
+    int compareEntity(const void *v_a, const void *v_b);
+
     void remove(Entity *item);
 
     void sort();

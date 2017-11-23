@@ -32,6 +32,9 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
 
         sf::Event e{};
 
+        ViewHandler::handleViewScroll();
+        EntityContainer::refreshEntities();
+
         while (System::window->pollEvent(e)) {
             System::event = e;
 
@@ -106,9 +109,6 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
                 }
             }
         }
-
-        ViewHandler::handleViewScroll();
-        EntityContainer::refreshEntities();
 
         System::refreshDebugPanel();
         System::window->display();

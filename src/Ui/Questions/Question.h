@@ -13,12 +13,24 @@ public:
     const static int height = 62;
 
     sf::Text helpText;
-    std::string helpTextString = "This is your warhorse, main unit - clerk. He works from 9:00 AM to 6:00 PM. Daily salary is 80$";
-    sf::Vertex popup[4];
+    std::string helpTextString = "my-text";
+
+    sf::Text titleText;
+    std::string titleTextString = "my-title";
+
+    Entity *popup = nullptr;
 
     Question(float leftOffset, float topOffset, Entities type);
 
     void update() override;
+
+    const std::string &getHelpTextString() const;
+
+    void setHelpTextString(const std::string &helpTextString);
+
+    const std::string &getTitleTextString() const;
+
+    void setTitleTextString(const std::string &titleTextString);
 };
 
 #endif //THE_CORP_GAME_QUESTION_H

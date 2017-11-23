@@ -93,6 +93,7 @@ bool Entity::isAboveGround() {
     return bottom > System::groundLevel + Ground::height;
 }
 
+
 bool Entity::isOnTheGround() {
     int delta = 3;
 
@@ -306,7 +307,7 @@ void Entity::addAnimation(States state, const Animation &animation) {
 }
 
 void Entity::selectAnimation(States state) {
-    States targetState = S_None;
+    States targetState;
 
     if (!animations.empty()) {
         if (!animations.count(state)) {
@@ -318,16 +319,28 @@ void Entity::selectAnimation(States state) {
         } else {
             targetState = state;
         }
-    }
 
-    if (this->groupName == "movable") {
         //None swap animation logic
+        if (groupName == "movable" && targetState == S_None) {
+            if (lastNoneSwapAnimation.getElapsedTime().asSeconds() >= 10 / System::timeFactor) {
+                lastNoneSwapAnimation.restart();
 
+                auto rnd = System::getRandom(0, 100);
 
+                if (rnd >= 50) {
+                    targetState = S_None;
+                } else {
+                    targetState = S_Play;
+                }
 
+                lastNoneSwapAnimationState = targetState;
+            } else {
+                targetState = lastNoneSwapAnimationState;
+            }
+        }
+
+        currentAnimation = &animations.at(targetState);
     }
-
-    currentAnimation = &animations.at(targetState);
 }
 
 Direction Entity::getDirection() const {
@@ -366,14 +379,6 @@ void Entity::setVisible(bool visible) {
     Entity::visible = visible;
 }
 
-bool Entity::isUpdated() const {
-    return updated;
-}
-
-void Entity::setUpdated(bool updated) {
-    Entity::updated = updated;
-}
-
 const std::string &Entity::getGroupName() const {
     return groupName;
 }
@@ -386,4 +391,24 @@ Entity::~Entity() {
     if (System::debug) {
         System::debugCounters["e_dtor_calls"]++;
     }
+}
+
+bool Entity::isOnTheFloor() {
+    return (int) bottom % 150 == 100;
+}
+
+bool Entity::operator<(const Entity &a) const {
+    if (drawOrder == a.getDrawOrder()) {
+        return drawOrder + worldCoordinates.x + worldCoordinates.y < a.getDrawOrder() + a.getWorldCoordinates().x + a.getWorldCoordinates().y;
+    } else {
+        return drawOrder < a.getDrawOrder();
+    }
+}
+
+bool Entity::isManualUpdate() const {
+    return manualUpdate;
+}
+
+void Entity::setManualUpdate(bool manualUpdate) {
+    Entity::manualUpdate = manualUpdate;
 }

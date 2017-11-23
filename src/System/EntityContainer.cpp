@@ -34,11 +34,33 @@ namespace EntityContainer {
         items.push_back(item);
         addToGroup(item->getGroupName(), item);
 
+        System::debugCounters["vec_size"] = items.size();
+        System::debugCounters["vec_capacity"] = items.capacity();
+
         sortNextFrame = true;
     }
 
+    int compareEntity(const void *v_a, const void *v_b) {
+        const Entity *a = *(static_cast<const Entity *const *>(v_a));
+        const Entity *b = *(static_cast<const Entity *const *>(v_b));
+
+        if (a->getDrawOrder() == b->getDrawOrder()) {
+            return (a->getDrawOrder() + a->getWorldCoordinates().x + a->getWorldCoordinates().y) >
+                   (b->getDrawOrder() + b->getWorldCoordinates().x + b->getWorldCoordinates().y);
+        } else {
+            return a->getDrawOrder() > b->getDrawOrder();
+        }
+
+    }
+
     void sort() {
-        std::sort(items.begin(), items.end(), [](Entity *a, Entity *b) -> bool {
+//        qsort(items.data(), items.size(), sizeof(Entity *), EntityContainer::compareEntity);
+
+        std::sort(items.begin(), items.end(), [](const Entity *a, const Entity *b) -> bool {
+            if (a == b) {
+                return false;
+            }
+
             if (a->getDrawOrder() == b->getDrawOrder()) {
                 return a->getDrawOrder() + a->getWorldCoordinates().x + a->getWorldCoordinates().y <
                        b->getDrawOrder() + b->getWorldCoordinates().x + b->getWorldCoordinates().y;
@@ -49,7 +71,9 @@ namespace EntityContainer {
     }
 
     void remove(Entity *item) {
-        itemsToRemove.push_back(item);
+        if (std::find(itemsToRemove.cbegin(), itemsToRemove.cend(), item) == itemsToRemove.cend()) {
+            itemsToRemove.push_back(item);
+        }
     }
 
     int size() {
@@ -77,25 +101,25 @@ namespace EntityContainer {
             }
 
             //trees
-            if (System::getRandom(0, 20000) <= 75 && i < System::worldWidth / 2 - Tree::width) {
-                auto treeIndex = System::getRandom(0, 100);
-
-                if (treeIndex <= 25) {
-                    new Tree({(float) i, System::groundLevel + Ground::height + Tree::height / 2}, E_StaticTree_1);
-                }
-
-                if (treeIndex > 25 && treeIndex <= 50) {
-                    new Tree({(float) i, System::groundLevel + Ground::height + Tree::height / 2}, E_StaticTree_2);
-                }
-
-                if (treeIndex > 50 && treeIndex <= 75) {
-                    new Tree({(float) i, System::groundLevel + Ground::height + 449 / 2}, E_StaticTree_3, {361, 449});
-                }
-
-                if (treeIndex > 75) {
-                    new Tree({(float) i, System::groundLevel + Ground::height + 162 / 2}, E_StaticTree_4, {308, 162});
-                }
-            }
+//            if (System::getRandom(0, 20000) <= 75 && i < System::worldWidth / 2 - Tree::width) {
+//                auto treeIndex = System::getRandom(0, 100);
+//
+//                if (treeIndex <= 25) {
+//                    new Tree({(float) i, System::groundLevel + Ground::height + Tree::height / 2}, E_StaticTree_1);
+//                }
+//
+//                if (treeIndex > 25 && treeIndex <= 50) {
+//                    new Tree({(float) i, System::groundLevel + Ground::height + Tree::height / 2}, E_StaticTree_2);
+//                }
+//
+//                if (treeIndex > 50 && treeIndex <= 75) {
+//                    new Tree({(float) i, System::groundLevel + Ground::height + 449 / 2}, E_StaticTree_3, {361, 449});
+//                }
+//
+//                if (treeIndex > 75) {
+//                    new Tree({(float) i, System::groundLevel + Ground::height + 162 / 2}, E_StaticTree_4, {308, 162});
+//                }
+//            }
 
             //ground artifacts
             if (System::getRandom(0, 20000) <= 15 && i < System::worldWidth / 2 - Tree::width) {
@@ -111,11 +135,17 @@ namespace EntityContainer {
     void refreshEntities() {
         System::window->clear(System::c_background);
 
-        const int iterableSize = items.size();
-        for (int i = 0; i < iterableSize; ++i) {
-            Entity *element = items[i];
-            element->update();
+        int startSize = items.size();
+
+        for (int i = 0; i < startSize; ++i) {
+            Entity *e = items[i];
+
+            if (!e->isManualUpdate()) {
+                e->update();
+            }
         }
+
+        int endSize = items.size();
 
         if (!itemsToRemove.empty()) {
             for (auto &e:itemsToRemove) {
@@ -129,13 +159,16 @@ namespace EntityContainer {
 
                 //free object
                 delete e;
+
+                e = nullptr;
             }
 
             itemsToRemove.clear();
         }
 
-        if (sortNextFrame) {
+        if (sortNextFrame && startSize == endSize) {
             sort();
+            System::debugCounters["sort_operations"]++;
             sortNextFrame = false;
         }
 
