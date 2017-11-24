@@ -16,6 +16,8 @@ namespace ResourceLoader {
 
     sf::Texture *getTexture(Entities target, States states = S_None);
 
+    sf::Texture *loadAndGetTexture(const std::string &path);
+
     sf::Texture *getCharacterTexture(Entities target, States state = S_None, Gender gender = G_Male, Race race = R_White, int level = 1);
 
     void loadTexturesFromFiles();

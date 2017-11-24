@@ -29,7 +29,9 @@ void ControlButtonAddElevatorCabin::update() {
 
     bool spawnCondition = attachedCabin &&
                           System::cash >= attachedCabin->getCost() &&
-                          attachedCabin->isInsideShaftBoundaries();
+                          attachedCabin->isInsideShaftBoundaries() &&
+                          attachedCabin->hasElevatorShaftTopAbove()
+    ;
 
     if (leftClicked() && !attachedCabin && !System::spawningUnit) {
         attachedCabin = new ElevatorCabin({System::g_x, System::g_y});

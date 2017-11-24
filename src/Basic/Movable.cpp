@@ -339,8 +339,8 @@ Movable::Movable(Entities type, int width, int height) : Entity(type) {
     this->height = height;
 
     personName = ResourceLoader::getRandomName(gender);
-    popup = new Popup(0, 0);
 
+    popup = new Popup(0, 0);
     popup->setVisible(false);
     popup->setFixed(false);
 
@@ -625,7 +625,7 @@ std::string Movable::createStatsText() {
 
     s = s + "Level: " + std::to_string(level) + "\n";
     s = s + "State: " + ResourceLoader::getStateTextNotation(state) + "\n";
-    s = s + "Smoking: " + (smoking == 1 ? "True" : "False") + "\n";
+    s = s + "Smoking: " + (smoking == 1 ? "Yes" : "No") + "\n";
 
     return s;
 }

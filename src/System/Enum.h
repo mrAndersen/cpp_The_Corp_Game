@@ -2,6 +2,15 @@
 #define CORP_GAME_ENUM
 
 enum DrawOrder {
+
+    D_BG_Mountain_1 = 14,
+    D_BG_Mountain_2 = 15,
+
+    D_BG_Field_1 = 17,
+    D_BG_Field_2 = 18,
+
+    D_BG_Trees = 19,
+
     D_Ground = 20,
     D_Trees = 20,
 
