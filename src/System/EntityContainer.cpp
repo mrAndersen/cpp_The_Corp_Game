@@ -58,12 +58,10 @@ namespace EntityContainer {
 
         System::debugCounters["vec_size"] = items.size();
         System::debugCounters["vec_capacity"] = items.capacity();
-
-//        sortNextFrame = true;
     }
 
     void sort() {
-//        std::sort(items.begin(), items.end(), EntityContainer::comparator);
+        std::sort(items.begin(), items.end(), EntityContainer::comparator);
     }
 
     bool comparator(const Entity *a, const Entity *b) {

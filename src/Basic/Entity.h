@@ -152,7 +152,7 @@ public:
 
     void setTransparent();
 
-    void setNormal();
+    virtual void setNormal();
 
     virtual void updateLogic();
 
@@ -196,7 +196,7 @@ public:
 
     void setErrorString(sf::Text &errorString);
 
-    void setSelected(bool selected);
+    virtual void setSelected(bool selected);
 };
 
 #endif //THE_CORP_GAME_ENTITY_H

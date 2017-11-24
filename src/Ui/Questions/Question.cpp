@@ -16,14 +16,6 @@ Question::Question(float leftOffset, float topOffset, Entities type) : BasicUi(l
 
     popup = new Popup(300, 400);
 
-    helpText.setFont(*System::debugFont);
-    helpText.setCharacterSize(14);
-    helpText.setFillColor(sf::Color::Black);
-
-    titleText.setFont(*System::gameFont);
-    titleText.setCharacterSize(56);
-    titleText.setFillColor(sf::Color::Black);
-
     initEntity();
     EntityContainer::add(this);
 }
@@ -51,23 +43,7 @@ void Question::update() {
         popup->setVisible(true);
         popup->update();
 
-        auto tBounds = titleText.getLocalBounds();
-        auto hBounds = helpText.getLocalBounds();
 
-        helpText.setString(helpTextString);
-        titleText.setString(titleTextString);
-
-        helpText.setOrigin(roundf((hBounds.width / 2)), roundf((hBounds.height / 2)));
-        titleText.setOrigin(roundf((tBounds.width / 2)), roundf((tBounds.height / 2)));
-
-        sf::Vector2f hPosition = {roundf(popup->getWorldCoordinates().x), roundf(popup->getWorldCoordinates().y)};
-        sf::Vector2f tPosition = {roundf(popup->getWorldCoordinates().x), roundf((popup->getWorldCoordinates().y - 190))};
-
-        helpText.setPosition(System::cToGl(hPosition));
-        titleText.setPosition(System::cToGl(tPosition));
-
-        System::window->draw(helpText);
-        System::window->draw(titleText);
     } else {
         state = S_Button_Normal;
         popup->setVisible(false);

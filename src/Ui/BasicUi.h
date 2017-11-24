@@ -11,6 +11,7 @@ public:
     float topOffset = 0;
 
     bool pressed = false;
+    bool fixed = true;
 
     BasicUi(float leftOffset, float topOffset);
 
@@ -19,6 +20,18 @@ public:
     bool isPressed() const;
 
     void setPressed(bool pressed);
+
+    float getLeftOffset() const;
+
+    void setLeftOffset(float leftOffset);
+
+    float getTopOffset() const;
+
+    void setTopOffset(float topOffset);
+
+    bool isFixed() const;
+
+    void setFixed(bool fixed);
 };
 
 

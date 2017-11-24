@@ -6,8 +6,10 @@ BasicUi::BasicUi(float leftOffset, float topOffset) {
 }
 
 void BasicUi::update() {
-    worldCoordinates.x = ViewHandler::left + leftOffset;
-    worldCoordinates.y = ViewHandler::top - topOffset;
+    if (fixed) {
+        worldCoordinates.x = ViewHandler::left + leftOffset;
+        worldCoordinates.y = ViewHandler::top - topOffset;
+    }
 
     if (currentAnimation && visible) {
         selectAnimation(state);
@@ -21,4 +23,28 @@ bool BasicUi::isPressed() const {
 
 void BasicUi::setPressed(bool pressed) {
     BasicUi::pressed = pressed;
+}
+
+float BasicUi::getLeftOffset() const {
+    return leftOffset;
+}
+
+void BasicUi::setLeftOffset(float leftOffset) {
+    BasicUi::leftOffset = leftOffset;
+}
+
+float BasicUi::getTopOffset() const {
+    return topOffset;
+}
+
+void BasicUi::setTopOffset(float topOffset) {
+    BasicUi::topOffset = topOffset;
+}
+
+bool BasicUi::isFixed() const {
+    return fixed;
+}
+
+void BasicUi::setFixed(bool fixed) {
+    BasicUi::fixed = fixed;
 }

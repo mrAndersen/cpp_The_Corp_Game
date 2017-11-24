@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Clock.hpp>
+#include <Ui/Popup.h>
 #include "..\System\Enum.h"
 #include "..\System\GameTime.h"
 #include "../Component/Destination.h"
@@ -53,11 +54,26 @@ protected:
 
     Gender gender = Gender::G_Male;
     Race race = Race::R_White;
+    int level = 1;
+
+    Popup *popup;
+    sf::Text popupText;
+    std::string popupString;
 
     void updateLogic() override;
 
 public:
     Movable(Entities type, int width, int height);
+
+    void upgrade();
+
+    void updatePopup();
+
+    virtual std::string createStatsText();
+
+    void setSelected(bool selected) override;
+
+    void loadAnimations();
 
     const GameTime &getBuffStart() const;
 
@@ -103,7 +119,7 @@ public:
 
     sf::Vector2f searchNearestOutside();
 
-    void addAnimation(States state, Gender gender, Race race, int frames = 24, int duration = 1000000);
+    void addAnimation(States state, Gender gender, Race race, int level = 1, int frames = 24, int duration = 1000000);
 
     Gender getGender() const;
 

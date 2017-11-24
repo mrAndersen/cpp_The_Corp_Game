@@ -60,7 +60,9 @@ void Clerk::updateLogic() {
         //earning every half hour
         if (System::gameTime.isEarningHour() && !earningProcessed) {
             auto earning = dailyEarning / 8 / 2 * workingModificator;
+
             System::cash += earning;
+            totalEarnings += earning;
 
             auto *earningHint = new TextEntity(System::c_green, 25);
             auto position = worldCoordinates;
@@ -154,4 +156,14 @@ void Clerk::searchWorkPlace() {
             currentWorkPlace->setWorker(this);
         }
     }
+}
+
+std::string Clerk::createStatsText() {
+    auto s = Movable::createStatsText();
+
+    s = s + "Earned total: " + System::f_to_string(totalEarnings) + "$\n";
+    s = s + "Earning/h: " + System::f_to_string(dailyEarning / 8 * workingModificator) + "$\n";
+    s = s + "Buff: " + (buffed ? (buffStart.get() + " - " + buffEnd.get()) : "Not buffed") + "\n";
+
+    return s;
 }
