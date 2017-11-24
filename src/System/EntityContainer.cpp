@@ -135,7 +135,7 @@ namespace EntityContainer {
                     nextFieldBorder += 1592;
                 }
 
-                if (rnd2 > 33 && rnd2 <= 66) {
+                if (rnd2 > 50) {
                     Entity::create(E_Entity, D_BG_Field_2, {1740, 584}, {(float) i + 1740 / 2, Ground::height + 584 / 2}, "resources/background/bg.field2.png");
                     nextFieldBorder += 1740;
                 }
