@@ -21,12 +21,18 @@ namespace ResourceLoader {
         textureCollection[target][state] = texture;
     }
 
-    void loadCharacterTexture(Entities target, const std::string &path, States state, Gender gender, Race race) {
+    void loadCharacterTexture(Entities target, const std::string &path, States state, Gender gender, Race race, int level) {
         auto *texture = new sf::Texture;
 
         texture->loadFromFile(path);
-        std::string key = std::to_string(target) + "." + std::to_string(state) + "." + std::to_string(gender) + "." +
-                          std::to_string(race);
+
+        std::string key =
+                std::to_string(level) + "."
+                + std::to_string(target) + "."
+                + std::to_string(state) + "."
+                + std::to_string(gender) + "."
+                + std::to_string(race);
+
         characterTextureCollection[key] = texture;
     }
 
@@ -40,9 +46,13 @@ namespace ResourceLoader {
         return texture;
     }
 
-    sf::Texture *getCharacterTexture(Entities target, States state, Gender gender, Race race) {
-        std::string key = std::to_string(target) + "." + std::to_string(state) + "." + std::to_string(gender) + "." +
-                          std::to_string(race);
+    sf::Texture *getCharacterTexture(Entities target, States state, Gender gender, Race race, int level) {
+        std::string key =
+                std::to_string(level) + "."
+                + std::to_string(target) + "."
+                + std::to_string(state) + "."
+                + std::to_string(gender) + "."
+                + std::to_string(race);
 
         sf::Texture *texture = characterTextureCollection[key];
 
@@ -151,7 +161,7 @@ namespace ResourceLoader {
         std::vector<Entities> characters = {E_Clerk, E_Manager};
         Gender genders[] = {G_Male};
         Race races[] = {R_White, R_Black, R_Asian};
-        std::string levels[] = {"l1"};
+        int levels[] = {1};
         States states[] = {
                 S_None,
                 S_Play,
@@ -172,7 +182,7 @@ namespace ResourceLoader {
                                     getCharacterTextNotation(character) + "/"
                                     + getGenderTextNotation(gender) + "."
                                     + getRaceTextNotation(race) + "."
-                                    + level + "."
+                                    + "l" + std::to_string(level) + "."
                                     + getStateTextNotation(state) + ".png";
 
                             if (std::ifstream(path)) {
@@ -181,7 +191,8 @@ namespace ResourceLoader {
                                         path,
                                         state,
                                         gender,
-                                        race
+                                        race,
+                                        level
                                 );
                             }
                         }

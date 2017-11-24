@@ -16,9 +16,10 @@ public:
     float dailyEarning = 80;
     bool earningProcessed = false;
 
-
     float dailySalary = 64;
     bool salaryProcessed = false;
+
+    float totalEarnings = 0;
 
     WorkPlace *currentWorkPlace = nullptr;
     sf::Clock workPlaceSearchResolution;
@@ -36,6 +37,8 @@ public:
     void searchWorkPlace();
 
     void createWorkPlaceRoute();
+
+    std::string createStatsText() override;
 };
 
 #endif //THE_CORP_GAME_CLERK_H

@@ -78,6 +78,7 @@ void Movable::updateLogic() {
 
     updateFloor();
     drawSelectionRect();
+    updatePopup();
 
     float frameTimeSeconds = (float) System::frameTimeMcs / 1000000;
     float frameDistance = frameTimeSeconds * currentSpeed * System::timeFactor;
@@ -338,6 +339,10 @@ Movable::Movable(Entities type, int width, int height) : Entity(type) {
     this->height = height;
 
     personName = ResourceLoader::getRandomName(gender);
+    popup = new Popup(0, 0);
+
+    popup->setVisible(false);
+    popup->setFixed(false);
 
     //40% smoking people
     if (System::getRandom(0, 100) <= 40) {
@@ -371,12 +376,7 @@ Movable::Movable(Entities type, int width, int height) : Entity(type) {
 
     gender = G_Male;
 
-    addAnimation(S_None, gender, race, 24);
-    addAnimation(S_Play, gender, race, 24);
-    addAnimation(S_Walk, gender, race, 24);
-    addAnimation(S_Working, gender, race, 24);
-    addAnimation(S_Smoking, gender, race, 66, 2750000);
-
+    loadAnimations();
     setGroupName("movable");
 }
 
@@ -465,15 +465,15 @@ Elevator *Movable::searchNearestElevator() {
     return buffer.begin()->second;
 }
 
-void Movable::addAnimation(States state, Gender gender, Race race, int frames, int duration) {
-    auto texture = ResourceLoader::getCharacterTexture(eType, state, gender, race);
+void Movable::addAnimation(States state, Gender gender, Race race, int level, int frames, int duration) {
+    auto texture = ResourceLoader::getCharacterTexture(eType, state, gender, race, level);
 
     if (texture) {
         auto animation = Animation(this, state, frames, texture, duration);
         Entity::addAnimation(state, animation);
     } else {
         auto animation = Animation(this, state, frames,
-                                   ResourceLoader::getCharacterTexture(eType, state, G_Male, R_White), duration);
+                                   ResourceLoader::getCharacterTexture(eType, state, G_Male, R_White, level), duration);
         Entity::addAnimation(state, animation);
     }
 }
@@ -588,6 +588,46 @@ bool Movable::mouseIn() {
            System::g_x <= worldCoordinates.x - width / 2 + selectionSize &&
            System::g_y >= worldCoordinates.y + height / 2 - selectionSize &&
            System::g_y <= worldCoordinates.y + height / 2;
+}
+
+void Movable::upgrade() {
+    level = level < 4 ? level + 1 : 4;
+
+    animations.clear();
+    loadAnimations();
+}
+
+void Movable::loadAnimations() {
+    addAnimation(S_None, gender, race, level, 24);
+    addAnimation(S_Play, gender, race, level, 24);
+    addAnimation(S_Walk, gender, race, level, 24);
+    addAnimation(S_Working, gender, race, level, 24);
+    addAnimation(S_Smoking, gender, race, level, 66, 2750000);
+}
+
+void Movable::updatePopup() {
+    if (!popup->isVisible() || !visible) {
+        return;
+    }
+
+    popup->setPopupTextString(createStatsText());
+    popup->setPopupTitleString(personName);
+    popup->setWorldCoordinates({worldCoordinates.x, worldCoordinates.y + popup->getHeight() / 2 + height / 2 + 20});
+}
+
+void Movable::setSelected(bool selected) {
+    Entity::setSelected(selected);
+    popup->setVisible(selected);
+}
+
+std::string Movable::createStatsText() {
+    std::string s;
+
+    s = s + "Level: " + std::to_string(level) + "\n";
+    s = s + "State: " + ResourceLoader::getStateTextNotation(state) + "\n";
+    s = s + "Smoking: " + (smoking == 1 ? "True" : "False") + "\n";
+
+    return s;
 }
 
 

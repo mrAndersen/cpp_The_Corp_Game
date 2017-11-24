@@ -12,11 +12,11 @@ namespace ResourceLoader {
 
     void loadTexture(Entities target, const std::string &path, States states = S_None);
 
-    void loadCharacterTexture(Entities target, const std::string &path, States state = S_None, Gender gender = G_Male, Race race = R_White);
+    void loadCharacterTexture(Entities target, const std::string &path, States state = S_None, Gender gender = G_Male, Race race = R_White, int level = 1);
 
     sf::Texture *getTexture(Entities target, States states = S_None);
 
-    sf::Texture *getCharacterTexture(Entities target, States state = S_None, Gender gender = G_Male, Race race = R_White);
+    sf::Texture *getCharacterTexture(Entities target, States state = S_None, Gender gender = G_Male, Race race = R_White, int level = 1);
 
     void loadTexturesFromFiles();
 
