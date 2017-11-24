@@ -213,6 +213,8 @@ void Entity::setRight(float right) {
     Entity::right = right;
 }
 
+
+
 void Entity::renderErrorText() {
     if (!valid) {
         errorString.setPosition(System::cToGl(worldCoordinates.x - width / 2, worldCoordinates.y + height / 2 + 20));

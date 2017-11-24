@@ -28,6 +28,7 @@ void Button5x::update() {
     if(leftClicked() && !System::spawningUnit && liveClock.getElapsedTime().asMilliseconds() >= System::buttonReload){
         pressed = !pressed;
         liveClock.restart();
+        System::selectionCooldown.restart();
 
         pause->setPressed(false);
         b1x->setPressed(false);

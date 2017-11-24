@@ -38,6 +38,7 @@ void ControlButtonAddElevatorShaftMiddle::update() {
         EntityContainer::remove(attachedShaft);
 
         System::spawningUnit = false;
+        System::selectionCooldown.restart();
         attachedShaft = nullptr;
     }
 
@@ -47,6 +48,7 @@ void ControlButtonAddElevatorShaftMiddle::update() {
         attachedShaft->spawn();
 
         System::spawningUnit = false;
+        System::selectionCooldown.restart();
         attachedShaft = nullptr;
     }
 

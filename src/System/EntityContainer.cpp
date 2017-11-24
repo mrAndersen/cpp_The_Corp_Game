@@ -31,43 +31,52 @@ namespace EntityContainer {
     }
 
     void add(Entity *item) {
-        items.push_back(item);
+        auto size = items.size();
+
+        if (items.empty()) {
+            items.push_back(item);
+        }
+
+        for (auto it = items.begin(); it != items.end();) {
+            auto e = *it;
+            bool position = comparator(item, e);
+
+            if (position) {
+                items.insert(it, item);
+                break;
+            } else {
+                it++;
+            }
+        }
+
+
+        if (items.size() == size) {
+            items.push_back(item);
+        }
+
         addToGroup(item->getGroupName(), item);
 
         System::debugCounters["vec_size"] = items.size();
         System::debugCounters["vec_capacity"] = items.capacity();
 
-        sortNextFrame = true;
-    }
-
-    int compareEntity(const void *v_a, const void *v_b) {
-        const Entity *a = *(static_cast<const Entity *const *>(v_a));
-        const Entity *b = *(static_cast<const Entity *const *>(v_b));
-
-        if (a->getDrawOrder() == b->getDrawOrder()) {
-            return (a->getDrawOrder() + a->getWorldCoordinates().x + a->getWorldCoordinates().y) >
-                   (b->getDrawOrder() + b->getWorldCoordinates().x + b->getWorldCoordinates().y);
-        } else {
-            return a->getDrawOrder() > b->getDrawOrder();
-        }
-
+//        sortNextFrame = true;
     }
 
     void sort() {
-//        qsort(items.data(), items.size(), sizeof(Entity *), EntityContainer::compareEntity);
+//        std::sort(items.begin(), items.end(), EntityContainer::comparator);
+    }
 
-        std::sort(items.begin(), items.end(), [](const Entity *a, const Entity *b) -> bool {
-            if (a == b) {
-                return false;
-            }
+    bool comparator(const Entity *a, const Entity *b) {
+        if (a == b) {
+            return false;
+        }
 
-            if (a->getDrawOrder() == b->getDrawOrder()) {
-                return a->getDrawOrder() + a->getWorldCoordinates().x + a->getWorldCoordinates().y <
-                       b->getDrawOrder() + b->getWorldCoordinates().x + b->getWorldCoordinates().y;
-            } else {
-                return a->getDrawOrder() < b->getDrawOrder();
-            }
-        });
+        if (a->getDrawOrder() == b->getDrawOrder()) {
+            return a->getDrawOrder() + a->getWorldCoordinates().x + a->getWorldCoordinates().y <
+                   b->getDrawOrder() + b->getWorldCoordinates().x + b->getWorldCoordinates().y;
+        } else {
+            return a->getDrawOrder() < b->getDrawOrder();
+        }
     }
 
     void remove(Entity *item) {
@@ -159,8 +168,6 @@ namespace EntityContainer {
 
                 //free object
                 delete e;
-
-                e = nullptr;
             }
 
             itemsToRemove.clear();

@@ -24,6 +24,7 @@ namespace System {
     extern sf::Clock timeSinceStart;
     extern sf::RenderWindow *window;
     extern sf::Event event;
+    extern bool selectionAllowed;
     extern std::deque<sf::Event> eventDeque;
     extern long long int frameTimeMcs;
     extern sf::Uint32 screenMode;
@@ -44,6 +45,7 @@ namespace System {
     //player
     extern double cash;
     extern bool spawningUnit;
+    extern sf::Clock selectionCooldown;
     extern bool dayEndProcessed;
     extern bool dayStartProcessed;
     extern float salaryTotal;
@@ -101,6 +103,8 @@ namespace System {
     sf::Vector2f getGlobalMouse();
 
     int getRandom(int min, int max);
+
+    int roundToMultiple(float target, int multiple = 25);
 }
 
 #endif //THE_CORP_GAME_SYSTEM_H

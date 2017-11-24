@@ -61,6 +61,10 @@ public:
 
     const GameTime &getBuffStart() const;
 
+    bool mouseIn() override;
+
+    void drawSelectionRect();
+
     void setBuffStart(const GameTime &buffStart);
 
     const GameTime &getBuffEnd() const;

@@ -4,6 +4,15 @@
 #include "..\System\EntityContainer.h"
 #include "..\System\ViewHandler.h"
 
+TextEntity::TextEntity(const sf::Color &color, int size) : Entity() {
+    text.setCharacterSize((unsigned int) size);
+    text.setFillColor(color);
+    text.setFont(*System::gameFont);
+
+    setDrawOrder(D_Text_Entities);
+    EntityContainer::add(this);
+}
+
 void TextEntity::updateLogic() {
     float frameTimeSeconds = (float) System::frameTimeMcs / 1000000;
     float frameDistance = frameTimeSeconds * speed * System::timeFactor;
@@ -43,7 +52,6 @@ void TextEntity::updateLogic() {
     }
 }
 
-
 sf::Text &TextEntity::getText() {
     return text;
 }
@@ -52,15 +60,7 @@ void TextEntity::setText(const sf::Text &text) {
     TextEntity::text = text;
 }
 
-TextEntity::TextEntity(const sf::Color &color, int size) : Entity() {
-    text.setCharacterSize((unsigned int) size);
-    text.setFillColor(color);
-    text.setFont(*System::gameFont);
 
-    setDrawOrder(INT_MAX);
-
-    EntityContainer::add(this);
-}
 
 void TextEntity::setString(const std::string &string) {
     text.setString(string);

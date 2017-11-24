@@ -3,7 +3,7 @@
 #include "Clerk.h"
 
 Manager::Manager(sf::Vector2f coordinates) : Movable(E_Manager, Manager::width, Manager::height) {
-    setDefaultSpeed(150);
+    setDefaultSpeed(165);
 
     setCost(1000);
     setWorldCoordinates(coordinates);
@@ -32,10 +32,6 @@ void Manager::updateLogic() {
 
             setDrawOrder(D_Characters, true);
             createBuffTargetDestination();
-        }else{
-            moving = true;
-            setDrawOrder(D_Characters, true);
-            createSmokeAreaRoute();
         }
     }
 
@@ -49,14 +45,14 @@ void Manager::updateLogic() {
         currentTarget->setBuffEnd(System::gameTime + 120);
         buffInProgress = true;
 
-        auto *buffHint = new TextEntity(System::c_blue, 25);
+        auto *buffHint = new TextEntity(System::c_blue, 30);
         auto position = currentTarget->getWorldCoordinates();
         position.y += currentTarget->getHeight() / 2 + 10;
 
         buffHint->setSpeed(100);
         buffHint->setLiveTimeSeconds(2);
         buffHint->setWorldCoordinates(position);
-        buffHint->setString("Earnings = " + std::to_string(currentTarget->getWorkingModificator() * 100) + "%");
+        buffHint->setString("Earnings = " + System::f_to_string(currentTarget->getWorkingModificator() * 100) + "%");
     }
 
     if (state == S_Working && buffInProgress && buffingProcedureClock.getElapsedTime().asSeconds() >= 10 / System::timeFactor) {

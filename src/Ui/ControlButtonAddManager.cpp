@@ -29,6 +29,7 @@ void ControlButtonAddManager::update() {
         EntityContainer::remove(attachedManager);
 
         System::spawningUnit = false;
+        System::selectionCooldown.restart();
         attachedManager = nullptr;
     }
 
@@ -39,11 +40,13 @@ void ControlButtonAddManager::update() {
         attachedManager->spawn();
 
         System::spawningUnit = false;
+        System::selectionCooldown.restart();
         attachedManager = nullptr;
     }
 
     if (attachedManager) {
         state = S_Button_Pressed;
+        System::selectionCooldown.restart();
         System::spawningUnit = true;
         attachedManager->setWorldCoordinates(System::getGlobalMouse());
 

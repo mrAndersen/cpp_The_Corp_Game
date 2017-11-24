@@ -64,7 +64,6 @@ public:
 
     void setManualUpdate(bool manualUpdate);
 
-
     virtual bool operator<(const Entity &a) const;
 
     virtual ~Entity();
@@ -141,7 +140,7 @@ public:
 
     bool intersectsWithObjects();
 
-    bool mouseIn();
+    virtual bool mouseIn();
 
     bool leftClicked();
 

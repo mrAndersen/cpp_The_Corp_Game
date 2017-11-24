@@ -32,6 +32,7 @@ void ControlButtonAddClerk::update() {
         EntityContainer::remove(attachedClerk);
 
         System::spawningUnit = false;
+        System::selectionCooldown.restart();
         attachedClerk = nullptr;
     }
 
@@ -42,11 +43,13 @@ void ControlButtonAddClerk::update() {
         attachedClerk->spawn();
 
         System::spawningUnit = false;
+        System::selectionCooldown.restart();
         attachedClerk = nullptr;
     }
 
     if (attachedClerk) {
         state = S_Button_Pressed;
+        System::selectionCooldown.restart();
         System::spawningUnit = true;
         attachedClerk->setWorldCoordinates(System::getGlobalMouse());
 

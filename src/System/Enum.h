@@ -16,6 +16,8 @@ enum DrawOrder {
     D_ElevatorCabin = 120,
     D_Characters = 200,
 
+    D_Text_Entities = 150,
+
     D_Ui = 250,
     D_Ui_Over = 251
 };

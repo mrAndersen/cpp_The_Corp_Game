@@ -40,6 +40,7 @@ void ControlButtonAddElevatorCabin::update() {
         EntityContainer::remove(attachedCabin);
 
         System::spawningUnit = false;
+        System::selectionCooldown.restart();
         attachedCabin = nullptr;
     }
 
@@ -49,11 +50,13 @@ void ControlButtonAddElevatorCabin::update() {
         attachedCabin->spawn();
 
         System::spawningUnit = false;
+        System::selectionCooldown.restart();
         attachedCabin = nullptr;
     }
 
     if (attachedCabin) {
         state = S_Button_Pressed;
+        System::selectionCooldown.restart();
         System::spawningUnit = true;
         auto global = System::getGlobalMouse();
 
