@@ -21,7 +21,7 @@ void ControlButtonAddClerk::update() {
     state = S_Button_Normal;
 
     bool spawnCondition = attachedClerk &&
-                          System::cash >= attachedClerk->getCost() && !intersectsWithObjects() &&
+                          System::cash >= attachedClerk->getCost() &&
                           !attachedClerk->isBelowGround();
 
     if (leftClicked() && !attachedClerk && !System::spawningUnit) {

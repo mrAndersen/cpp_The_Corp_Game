@@ -15,11 +15,11 @@ void Entity::update() {
         selectAnimation(state);
 
         if (currentAnimation) {
-            if (selectable && mouseIn() && System::selectionAllowed) {
-                setHovered();
-            } else {
-                setNormal();
-            }
+//            if (selectable && mouseIn() && System::selectionAllowed) {
+//                setHovered();
+//            } else {
+//                setNormal();
+//            }
 
             currentAnimation->update();
         }
