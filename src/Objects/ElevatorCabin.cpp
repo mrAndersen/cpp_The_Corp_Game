@@ -57,6 +57,16 @@ bool ElevatorCabin::isInsideShaftBoundaries() {
     return false;
 }
 
+bool ElevatorCabin::hasElevatorShaftTopAbove() {
+    for (auto e:EntityContainer::getGroupItems("shafts")) {
+        if (e->getEType() == E_ElevatorShaftTop && e->getWorldCoordinates().x == worldCoordinates.x) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 void ElevatorCabin::updateLogic() {
     //update floor
     floor = ((int) worldCoordinates.y - ((int) worldCoordinates.y % System::gridSize)) / System::gridSize / 3;
@@ -185,3 +195,5 @@ int ElevatorCabin::getCapacity() const {
 void ElevatorCabin::setCapacity(int capacity) {
     ElevatorCabin::capacity = capacity;
 }
+
+

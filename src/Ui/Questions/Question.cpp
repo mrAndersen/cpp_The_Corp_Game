@@ -51,19 +51,3 @@ void Question::update() {
 
     BasicUi::update();
 }
-
-const std::string &Question::getHelpTextString() const {
-    return helpTextString;
-}
-
-void Question::setHelpTextString(const std::string &helpTextString) {
-    Question::helpTextString = helpTextString;
-}
-
-const std::string &Question::getTitleTextString() const {
-    return titleTextString;
-}
-
-void Question::setTitleTextString(const std::string &titleTextString) {
-    Question::titleTextString = titleTextString;
-}

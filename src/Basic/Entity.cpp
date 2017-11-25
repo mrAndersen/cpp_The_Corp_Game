@@ -69,14 +69,6 @@ void Entity::updateLogic() {
     recalculateBoundaries();
 }
 
-float Entity::getHealth() const {
-    return health;
-}
-
-void Entity::setHealth(float health) {
-    Entity::health = health;
-}
-
 const sf::Vector2f &Entity::getWorldCoordinates() const {
     return worldCoordinates;
 }
@@ -212,7 +204,6 @@ float Entity::getRight() const {
 void Entity::setRight(float right) {
     Entity::right = right;
 }
-
 
 
 void Entity::renderErrorText() {
@@ -401,7 +392,8 @@ bool Entity::isOnTheFloor() {
 
 bool Entity::operator<(const Entity &a) const {
     if (drawOrder == a.getDrawOrder()) {
-        return drawOrder + worldCoordinates.x + worldCoordinates.y < a.getDrawOrder() + a.getWorldCoordinates().x + a.getWorldCoordinates().y;
+        return drawOrder + worldCoordinates.x + worldCoordinates.y <
+               a.getDrawOrder() + a.getWorldCoordinates().x + a.getWorldCoordinates().y;
     } else {
         return drawOrder < a.getDrawOrder();
     }
@@ -414,3 +406,21 @@ bool Entity::isManualUpdate() const {
 void Entity::setManualUpdate(bool manualUpdate) {
     Entity::manualUpdate = manualUpdate;
 }
+
+Entity *Entity::create(Entities type, DrawOrder order, sf::Vector2f size, sf::Vector2f coordinates, const std::string &texturePath) {
+    auto e = new Entity(type);
+
+    e->setDrawOrder(order);
+    e->setWidth(size.x);
+    e->setHeight(size.y);
+
+    e->setWorldCoordinates(coordinates);
+    e->addAnimation(S_None, Animation(e, S_None, 1, ResourceLoader::loadAndGetTexture(texturePath)));
+
+    EntityContainer::add(e);
+    EntityContainer::addToGroup(e->getGroupName(), e);
+
+    return e;
+}
+
+

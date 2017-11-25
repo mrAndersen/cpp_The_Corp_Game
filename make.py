@@ -2,13 +2,14 @@ import time
 import os
 import shutil
 
+binDirector = "cmake-build-debug"
 releaseDirectory = "release_" + str(time.time())
 
 if not os.path.exists(releaseDirectory):
     os.makedirs(releaseDirectory)
 
-shutil.copytree("./debug/resources", releaseDirectory + "/resources")
-shutil.copyfile("./debug/corpgame.exe", releaseDirectory + "/incorporated.exe")
+shutil.copytree("./" + binDirector + "/resources", releaseDirectory + "/resources")
+shutil.copyfile("./" + binDirector + "/corpgame.exe", releaseDirectory + "/incorporated.exe")
 
 shutil.make_archive(releaseDirectory, 'zip', releaseDirectory)
 shutil.rmtree(releaseDirectory)

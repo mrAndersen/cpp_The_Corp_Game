@@ -305,5 +305,12 @@ namespace ResourceLoader {
         return "clerk";
     }
 
+    sf::Texture *loadAndGetTexture(const std::string &path) {
+        auto texture = new sf::Texture;
+        texture->loadFromFile(path);
+
+        return texture;
+    }
+
 
 }

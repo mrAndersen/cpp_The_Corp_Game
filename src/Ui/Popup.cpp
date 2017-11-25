@@ -8,7 +8,7 @@
 Popup::Popup(float leftOffset, float topOffset) : BasicUi(leftOffset, topOffset) {
     setEType(E_Popup);
 
-    setDrawOrder(D_Ui);
+    setDrawOrder(D_Ui_Over);
     setVisible(false);
 
     setWidth(Popup::width);

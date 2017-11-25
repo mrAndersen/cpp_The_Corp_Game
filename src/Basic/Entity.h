@@ -25,8 +25,6 @@ protected:
 
     bool visible = true;
     bool manualUpdate = false;
-
-    float health = 100;
     bool valid = true;
 
     sf::Vector2f worldCoordinates;
@@ -77,6 +75,8 @@ public:
     void setVisible(bool visible);
 
     Entity(Entities type = E_Entity);
+
+    static Entity *create(Entities type = E_Entity, DrawOrder order = D_Ui, sf::Vector2f size = {}, sf::Vector2f coordinates = {}, const std::string &texturePath = "");
 
     Entities getEType() const;
 
@@ -161,10 +161,6 @@ public:
     int getDrawOrder() const;
 
     void setDrawOrder(int drawOrder, bool resort = false);
-
-    float getHealth() const;
-
-    void setHealth(float health);
 
     const sf::Vector2f &getWorldCoordinates() const;
 

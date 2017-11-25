@@ -60,6 +60,8 @@ public:
 
     bool isInsideShaftBoundaries();
 
+    bool hasElevatorShaftTopAbove();
+
     void updateLogic() override;
 
     void updateIndicators();
