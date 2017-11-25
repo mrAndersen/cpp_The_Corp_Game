@@ -29,6 +29,7 @@ namespace System {
     extern long long int frameTimeMcs;
     extern sf::Uint32 screenMode;
     extern float timeFactor;
+    extern int hoverCount;
     //sys
 
 
@@ -48,7 +49,6 @@ namespace System {
     extern sf::Clock selectionCooldown;
     extern bool dayEndProcessed;
     extern bool dayStartProcessed;
-    extern float salaryTotal;
     extern int buttonReload;
 
     extern sf::Clock dayClock;
@@ -63,6 +63,7 @@ namespace System {
     extern std::map<std::string, int> debugCounters;
     extern sf::Font *debugFont;
     extern sf::Font *gameFont;
+    extern sf::Font *gameFont2;
     extern unsigned int seed;
 
     extern float g_x;
@@ -85,6 +86,8 @@ namespace System {
     void initWindow();
 
     void initDebug();
+
+    bool mouseInsideRect(const sf::Vector2f &leftTop, const sf::Vector2f &rightBottom);
 
     std::string f_to_string(const double value, const int n = 2);
 

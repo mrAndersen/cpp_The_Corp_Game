@@ -77,7 +77,6 @@ void Movable::updateLogic() {
     Entity::updateLogic();
 
     updateFloor();
-    drawSelectionRect();
     updatePopup();
 
     float frameTimeSeconds = (float) System::frameTimeMcs / 1000000;
@@ -344,6 +343,17 @@ Movable::Movable(Entities type, int width, int height) : Entity(type) {
     popup->setVisible(false);
     popup->setFixed(false);
 
+    auto upgrade = new PopupButton;
+    upgrade->setString("Upgrade");
+    upgrade->setFixed(false);
+
+    auto fire = new PopupButton;
+    fire->setString("Fire");
+    fire->setFixed(false);
+
+    popup->buttons["upgrade"] = upgrade;
+    popup->buttons["fire"] = fire;
+
     //40% smoking people
     if (System::getRandom(0, 100) <= 40) {
         smoking = true;
@@ -472,8 +482,7 @@ void Movable::addAnimation(States state, Gender gender, Race race, int level, in
         auto animation = Animation(this, state, frames, texture, duration);
         Entity::addAnimation(state, animation);
     } else {
-        auto animation = Animation(this, state, frames,
-                                   ResourceLoader::getCharacterTexture(eType, state, G_Male, R_White, level), duration);
+        auto animation = Animation(this, state, frames, ResourceLoader::getCharacterTexture(eType, state, G_Male, R_White, 1), duration);
         Entity::addAnimation(state, animation);
     }
 }
@@ -566,29 +575,6 @@ void Movable::setBuffEnd(const GameTime &buffEnd) {
     Movable::buffEnd = buffEnd;
 }
 
-void Movable::drawSelectionRect() {
-    if (spawned && Entity::mouseIn()) {
-        sf::RectangleShape rect;
-
-        auto width = 15.f;
-        auto height = 15.f;
-
-        rect.setPosition(System::cToGl({worldCoordinates.x - this->width / 2, worldCoordinates.y + this->height / 2}));
-        rect.setSize({width, height});
-        rect.setFillColor(sf::Color(232, 168, 51));
-
-        System::window->draw(rect);
-    }
-}
-
-bool Movable::mouseIn() {
-    auto selectionSize = 15.f;
-
-    return System::g_x >= worldCoordinates.x - width / 2 &&
-           System::g_x <= worldCoordinates.x - width / 2 + selectionSize &&
-           System::g_y >= worldCoordinates.y + height / 2 - selectionSize &&
-           System::g_y <= worldCoordinates.y + height / 2;
-}
 
 void Movable::upgrade() {
     level = level < 4 ? level + 1 : 4;
@@ -607,12 +593,44 @@ void Movable::loadAnimations() {
 
 void Movable::updatePopup() {
     if (!popup->isVisible() || !visible) {
+        for (auto &e:popup->buttons) {
+            e.second->setVisible(false);
+        }
+
         return;
     }
 
     popup->setPopupTextString(createStatsText());
+    popup->getPopupText().setCharacterSize(16);
     popup->setPopupTitleString(personName);
     popup->setWorldCoordinates({worldCoordinates.x, worldCoordinates.y + popup->getHeight() / 2 + height / 2 + 20});
+
+    for (auto &e:popup->buttons) {
+        e.second->setVisible(true);
+
+        if (e.first == "upgrade") {
+            e.second->setWorldCoordinates({popup->getLeft() + 10 + PopupButton::width / 2, popup->getTop() - PopupButton::height / 2 - 10});
+
+            if(e.second->isPressed() && lastUpgradeTimer.getElapsedTime().asMilliseconds() >= 500){
+                upgrade();
+            }
+
+            if(upgradeAvailable){
+                e.second->getCurrentAnimation()->getSprite().setColor(sf::Color::Green);
+            }else{
+                e.second->getCurrentAnimation()->getSprite().setColor(sf::Color::Red);
+            }
+        }
+
+        if (e.first == "fire") {
+            e.second->setWorldCoordinates({popup->getLeft() + 10 + PopupButton::width / 2, popup->getTop() - PopupButton::height / 2 - PopupButton::height - 10});
+
+            if(e.second->isPressed()){
+                popup->setVisible(false);
+                EntityContainer::remove(this);
+            }
+        }
+    }
 }
 
 void Movable::setSelected(bool selected) {
@@ -622,6 +640,14 @@ void Movable::setSelected(bool selected) {
 
 std::string Movable::createStatsText() {
     std::string s;
+
+    if (eType == E_Clerk) {
+        s = s + "Role: Clerk\n";
+    }
+
+    if (eType == E_Manager) {
+        s = s + "Role: Manager\n";
+    }
 
     s = s + "Level: " + std::to_string(level) + "\n";
     s = s + "State: " + ResourceLoader::getStateTextNotation(state) + "\n";

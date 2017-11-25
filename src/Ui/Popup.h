@@ -3,11 +3,12 @@
 
 #include "..\Basic\Entity.h"
 #include "BasicUi.h"
+#include "PopupButton.h"
 
 class Popup : public BasicUi {
 public:
     const static int width = 300;
-    const static int height = 500;
+    const static int height = 496;
 
     sf::Text popupText;
     std::string popupTextString;
@@ -15,9 +16,11 @@ public:
     sf::Text popupTitle;
     std::string popupTitleString;
 
+    std::map<std::string, PopupButton*> buttons;
+
     explicit Popup(float leftOffset, float topOffset);
 
-    const sf::Text &getPopupText() const;
+    sf::Text &getPopupText();
 
     void setPopupText(const sf::Text &popupText);
 
@@ -25,7 +28,7 @@ public:
 
     void setPopupTextString(const std::string &popupTextString);
 
-    const sf::Text &getPopupTitle() const;
+    sf::Text &getPopupTitle();
 
     void setPopupTitle(const sf::Text &popupTitle);
 

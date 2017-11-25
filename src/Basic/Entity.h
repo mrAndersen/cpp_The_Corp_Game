@@ -56,6 +56,8 @@ protected:
     sf::Text debugInfo;
     sf::Text errorString;
 public:
+    Animation *getCurrentAnimation();
+
     virtual void spawn();
 
     bool isManualUpdate() const;
@@ -153,6 +155,8 @@ public:
     void setTransparent();
 
     virtual void setNormal();
+
+    virtual void setHovered();
 
     virtual void updateLogic();
 

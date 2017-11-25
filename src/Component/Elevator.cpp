@@ -114,7 +114,7 @@ void Elevator::update() {
     }
 
     //boarding
-    if (waitClock.getElapsedTime().asSeconds() >= waitTime && !cabin->getCurrentPeople().empty()) {
+    if (waitClock.getElapsedTime().asSeconds() >= waitTime / System::timeFactor && !cabin->getCurrentPeople().empty()) {
         auto people = cabin->getCurrentPeople();
         auto finishedEntering = 0;
 
@@ -128,7 +128,7 @@ void Elevator::update() {
     }
 
     //emtpy cabin to dest floor
-    if (cabin->getCurrentPeople().empty() && !queue.empty() && waitClock.getElapsedTime().asSeconds() >= waitTime) {
+    if (cabin->getCurrentPeople().empty() && !queue.empty() && waitClock.getElapsedTime().asSeconds() >= waitTime / System::timeFactor) {
         waiting = false;
     }
 }

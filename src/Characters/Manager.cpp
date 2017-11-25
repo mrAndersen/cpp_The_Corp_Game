@@ -43,6 +43,7 @@ void Manager::updateLogic() {
         currentTarget->setWillBeBuffed(false);
         currentTarget->setBuffStart(System::gameTime);
         currentTarget->setBuffEnd(System::gameTime + 120);
+        targetsBuffed++;
         buffInProgress = true;
 
         auto *buffHint = new TextEntity(System::c_blue, 30);
@@ -52,7 +53,7 @@ void Manager::updateLogic() {
         buffHint->setSpeed(100);
         buffHint->setLiveTimeSeconds(2);
         buffHint->setWorldCoordinates(position);
-        buffHint->setString("Earnings = " + System::f_to_string(currentTarget->getWorkingModificator() * 100) + "%");
+        buffHint->setString("Earnings + " + System::f_to_string((currentTarget->getWorkingModificator() * 100) - 100) + "%");
     }
 
     if (state == S_Working && buffInProgress && buffingProcedureClock.getElapsedTime().asSeconds() >= 10 / System::timeFactor) {
@@ -97,4 +98,14 @@ Movable *Manager::searchTarget() {
     }
 
     return nullptr;
+}
+
+std::string Manager::createStatsText() {
+
+    auto s = Movable::createStatsText();
+
+    s = s + "Daily salary: " + System::f_to_string(dailySalary) + "$\n";
+    s = s + "Employees motivated: " + std::to_string(targetsBuffed) + "\n";
+
+    return s;
 }

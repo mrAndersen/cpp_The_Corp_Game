@@ -170,7 +170,7 @@ add_executable(
         src/Ui/Questions/QAddManager.h
 
         src/System/DebugPattern.cpp
-        src/System/DebugPattern.h src/Ui/Popup.cpp src/Ui/Popup.h)
+        src/System/DebugPattern.h src/Ui/Popup.cpp src/Ui/Popup.h src/Ui/PopupButton.cpp src/Ui/PopupButton.h)
 
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}" ${CMAKE_MODULE_PATH})

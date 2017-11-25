@@ -1,0 +1,36 @@
+game:
+    title: Forest corporation
+
+    atomics:
+        yes: Yes
+        no: No
+
+    units:
+        titles:
+            clerk: Clerk
+            manager: Manager
+            accountant: Accountant
+        states:
+            wait: Waiting
+            walk: Walking
+            work: Working
+            smoke: Smoking
+            play: Playing
+
+    popups:
+        upgrade_conditions:
+            level_1: more total earnings
+
+        unit_help_texts:
+            role: Role
+            level: Level
+            state: State
+            smkoing: Smoking
+            daily_salary: Daily salary
+            earned_total: Earned total
+            earned_hour: Earning/h
+            motivation: Motivation
+            upgrade: Upgrade
+
+    descriptions:
+        clerk:

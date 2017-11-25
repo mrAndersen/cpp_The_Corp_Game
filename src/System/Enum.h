@@ -28,7 +28,10 @@ enum DrawOrder {
     D_Text_Entities = 150,
 
     D_Ui = 250,
-    D_Ui_Over = 251
+    D_Ui_Over = 251,
+
+    D_Popup = 251,
+    D_Popup_Button = 252
 };
 
 enum DestinationType {
@@ -128,6 +131,7 @@ enum Entities {
     E_Button5x = 105,
     E_Button10x = 106,
     E_Popup = 107,
+    E_Popup_Button = 108
 };
 
 #endif

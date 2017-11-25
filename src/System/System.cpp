@@ -28,6 +28,7 @@ namespace System {
 
     sf::Font *debugFont;
     sf::Font *gameFont;
+    sf::Font *gameFont2;
     unsigned int seed = 0;
 
     sf::RenderWindow *window;
@@ -37,6 +38,7 @@ namespace System {
     long long int frameTimeMcs;
     sf::Uint32 screenMode = sf::Style::Default;
     float timeFactor = 1;
+    int hoverCount = 0;
     //sys
 
     //utility
@@ -53,8 +55,6 @@ namespace System {
     sf::Clock selectionCooldown;
     bool dayEndProcessed = false;
     bool dayStartProcessed = false;
-
-    float salaryTotal = 0;
     int buttonReload = 150;
 
     sf::Clock dayClock = {};
@@ -85,14 +85,13 @@ namespace System {
         }
 
         if (gameTime.isDayEndHour() && !dayEndProcessed) {
-            auto *salarySpent = new TextEntity(System::c_red, 40);
-            salarySpent->setFixed(true);
-            salarySpent->setString("Salaries: -" + System::f_to_string(salaryTotal) + "$");
-            salarySpent->setLeft(12);
-            salarySpent->setTop(-100);
-            salarySpent->setDirection(Direction::Down);
-            salarySpent->setLiveTimeSeconds(3);
-
+//            auto *salarySpent = new TextEntity(System::c_red, 40);
+//            salarySpent->setFixed(true);
+//            salarySpent->setString("Salaries: -" + System::f_to_string(salaryTotal) + "$");
+//            salarySpent->setLeft(12);
+//            salarySpent->setTop(-100);
+//            salarySpent->setDirection(Direction::Down);
+//            salarySpent->setLiveTimeSeconds(3);
 
             dayEndProcessed = true;
             dayStartProcessed = false;
@@ -319,6 +318,13 @@ namespace System {
         const auto ratio = static_cast<double>(target) / multiple;
         const auto iratio = std::lround(ratio);
         return iratio * multiple;
+    }
+
+    bool mouseInsideRect(const sf::Vector2f &leftTop, const sf::Vector2f &rightBottom) {
+        return System::g_x >= leftTop.x &&
+               System::g_x <= rightBottom.x &&
+               System::g_y >= rightBottom.y &&
+               System::g_y <= leftTop.y;
     }
 }
 

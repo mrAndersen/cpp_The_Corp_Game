@@ -3,9 +3,13 @@
 BasicUi::BasicUi(float leftOffset, float topOffset) {
     this->leftOffset = leftOffset;
     this->topOffset = topOffset;
+
+    selectable = false;
 }
 
 void BasicUi::update() {
+    recalculateBoundaries();
+
     if (fixed) {
         worldCoordinates.x = ViewHandler::left + leftOffset;
         worldCoordinates.y = ViewHandler::top - topOffset;
