@@ -1,4 +1,5 @@
 #include <climits>
+#include "..\Ui\ControlButtonAddAccountant.h"
 #include "..\Basic\Entity.h"
 #include "..\Ui\ControlButtonAddClerk.h"
 #include "..\Ui\ControlButtonAddOffice.h"
@@ -38,16 +39,18 @@ namespace ControlPanel {
         controls[E_Question_Mark_ButtonAddManager] = new QAddManager(4 + Question::width / 2, 362);
         controls[E_ButtonAddManager] = new ControlButtonAddManager(4 + ControlButtonAddManager::width / 2 + Question::width + 2, 362);
 
-        controls[E_Question_Mark_ButtonAddOffice] = new QAddOffice(4 + Question::width / 2, 424);
-        controls[E_ButtonAddOffice] = new ControlButtonAddOffice(4 + ControlButtonAddOffice::width / 2 + Question::width + 2, 424);
+        controls[E_ButtonAddAccountant] = new ControlButtonAddAccountant(4 + ControlButtonAddManager::width / 2 + Question::width + 2, 424);
 
-        controls[E_Question_Mark_ButtonAddElevator] = new QAddElevator(4 + Question::width / 2, 486);
+        controls[E_Question_Mark_ButtonAddOffice] = new QAddOffice(4 + Question::width / 2, 486);
+        controls[E_ButtonAddOffice] = new ControlButtonAddOffice(4 + ControlButtonAddOffice::width / 2 + Question::width + 2, 486);
 
-        controls[E_ButtonAddElevatorCabin] = new ControlButtonAddElevatorCabin(162, 486);
-        controls[E_ButtonAddElevatorShaftMiddle] = new ControlButtonAddElevatorShaftMiddle(224, 486);
-        controls[E_ButtonAddElevatorShaftTop] = new ControlButtonAddElevatorShaftTop(286, 486);
+        controls[E_Question_Mark_ButtonAddElevator] = new QAddElevator(4 + Question::width / 2, 548);
 
-        controls[E_ButtonAddElevator] = new ControlButtonAddElevator(4 + ControlButtonAddElevator::width / 2 + Question::width + 2, 486);
+        controls[E_ButtonAddElevatorCabin] = new ControlButtonAddElevatorCabin(162, 548);
+        controls[E_ButtonAddElevatorShaftMiddle] = new ControlButtonAddElevatorShaftMiddle(224, 548);
+        controls[E_ButtonAddElevatorShaftTop] = new ControlButtonAddElevatorShaftTop(286, 548);
+
+        controls[E_ButtonAddElevator] = new ControlButtonAddElevator(4 + ControlButtonAddElevator::width / 2 + Question::width + 2, 548);
 
 
     }

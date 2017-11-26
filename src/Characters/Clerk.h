@@ -20,6 +20,7 @@ public:
     bool salaryProcessed = false;
 
     float totalEarnings = 0;
+    float accountantsBonus = 1.f;
 
     WorkPlace *currentWorkPlace = nullptr;
     sf::Clock workPlaceSearchResolution;
@@ -41,6 +42,10 @@ public:
     std::string createStatsText() override;
 
     void upgrade() override;
+
+    float getAccountantsBonus() const;
+
+    void setAccountantsBonus(float accountantsBonus);
 };
 
 #endif //THE_CORP_GAME_CLERK_H

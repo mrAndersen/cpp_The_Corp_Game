@@ -69,6 +69,8 @@ public:
 
     virtual void upgrade();
 
+    int getLevel() const;
+
     void updatePopup();
 
     virtual std::string createStatsText();

@@ -103,6 +103,9 @@ namespace ResourceLoader {
         ResourceLoader::loadTexture(Entities::E_ButtonAddManager, "resources/ui/button.add.manager.png", S_Button_Normal);
         ResourceLoader::loadTexture(Entities::E_ButtonAddManager, "resources/ui/button.add.manager.pressed.png", S_Button_Pressed);
 
+        ResourceLoader::loadTexture(Entities::E_ButtonAddAccountant, "resources/ui/button.add.accountant.png", S_Button_Normal);
+        ResourceLoader::loadTexture(Entities::E_ButtonAddAccountant, "resources/ui/button.add.accountant.pressed.png", S_Button_Pressed);
+
         ResourceLoader::loadTexture(Entities::E_ButtonAddOffice, "resources/ui/button.add.office.png", S_Button_Normal);
         ResourceLoader::loadTexture(Entities::E_ButtonAddOffice, "resources/ui/button.add.office.pressed.png", S_Button_Pressed);
 
@@ -150,7 +153,7 @@ namespace ResourceLoader {
 
 
         //----<<Characters>>-----
-        std::vector<Entities> characters = {E_Clerk, E_Manager};
+        std::vector<Entities> characters = {E_Clerk, E_Manager, E_Accountant};
         Gender genders[] = {G_Male};
         Race races[] = {R_White, R_Black, R_Asian};
         int levels[] = {1, 2};
@@ -170,8 +173,7 @@ namespace ResourceLoader {
                     for (auto &level:levels) {
                         for (auto &state:states) {
                             std::string path =
-                                    "resources/characters/" +
-                                    getCharacterTextNotation(character) + "/"
+                                    "resources/characters/" + getCharacterTextNotation(character) + "/"
                                     + getGenderTextNotation(gender) + "."
                                     + getRaceTextNotation(race) + "."
                                     + "l" + std::to_string(level) + "."
@@ -295,6 +297,7 @@ namespace ResourceLoader {
     std::string getCharacterTextNotation(Entities character) {
         if (character == E_Clerk) { return "clerk"; }
         if (character == E_Manager) { return "manager"; }
+        if (character == E_Accountant) { return "accountant"; }
 
         return "clerk";
     }

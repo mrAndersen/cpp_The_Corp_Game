@@ -74,7 +74,7 @@ void Clerk::updateLogic() {
     if (state == S_Working) {
         //earning every half hour
         if (System::gameTime.isEarningHour() && !earningProcessed) {
-            auto earning = dailyEarnings[level] / 8 / 2 * workingModificator;
+            auto earning = dailyEarnings[level] / 8 / 2 * workingModificator * accountantsBonus;
 
             System::cash += earning;
             totalEarnings += earning;
@@ -178,7 +178,7 @@ std::string Clerk::createStatsText() {
 
     s = s + "Daily salary: " + System::f_to_string(dailySalaries[level]) + "$\n";
     s = s + "Earned total: " + System::f_to_string(totalEarnings) + "$\n";
-    s = s + "Earning/h: " + System::f_to_string(dailyEarnings[level] / 8 * workingModificator) + "$\n";
+    s = s + "Earning/h: " + System::f_to_string(dailyEarnings[level] / 8 * workingModificator * accountantsBonus) + "$\n";
     s = s + "Motivation: " + (buffed ? (buffStart.get() + " - " + buffEnd.get()) : "Not buffed") + "\n";
 
     if (upgradeAvailable) {
@@ -215,4 +215,12 @@ void Clerk::upgrade() {
 
 
     Movable::upgrade();
+}
+
+float Clerk::getAccountantsBonus() const {
+    return accountantsBonus;
+}
+
+void Clerk::setAccountantsBonus(float accountantsBonus) {
+    Clerk::accountantsBonus = accountantsBonus;
 }

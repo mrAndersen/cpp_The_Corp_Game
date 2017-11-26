@@ -1,6 +1,7 @@
 #include "Destination.h"
 #include "../Basic/Movable.h"
 #include "../Characters/Clerk.h"
+#include "../Characters/Accountant.h"
 
 const sf::Vector2f &Destination::getCoordinates() const {
     return coordinates;
@@ -60,6 +61,11 @@ Destination Destination::createElevatorExitingDST(Elevator *elevator, Movable *m
 }
 
 Destination Destination::createWorkplaceDST(Clerk *movable) {
+    return {{movable->getCurrentWorkPlace()->getWorldCoordinates().x,
+             movable->getCurrentWorkPlace()->getParentOffice()->getBottom() + movable->getHeight() / 2}, DST_Workplace};
+}
+
+Destination Destination::createWorkplaceDST(Accountant *movable) {
     return {{movable->getCurrentWorkPlace()->getWorldCoordinates().x,
              movable->getCurrentWorkPlace()->getParentOffice()->getBottom() + movable->getHeight() / 2}, DST_Workplace};
 }

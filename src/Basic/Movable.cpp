@@ -656,6 +656,10 @@ std::string Movable::createStatsText() {
     return s;
 }
 
+int Movable::getLevel() const {
+    return level;
+}
+
 
 
 
