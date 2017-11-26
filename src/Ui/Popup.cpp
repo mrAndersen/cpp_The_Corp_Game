@@ -8,7 +8,7 @@
 Popup::Popup(float leftOffset, float topOffset) : BasicUi(leftOffset, topOffset) {
     setEType(E_Popup);
 
-    setDrawOrder(D_Ui_Over);
+    setDrawOrder(D_Popup);
     setVisible(false);
 
     setWidth(Popup::width);
@@ -35,16 +35,21 @@ void Popup::update() {
 
     BasicUi::update();
 
+    if (mouseIn()) {
+        //preventSelection if mouse inside popup
+        System::selectionCooldown.restart();
+    }
+
     auto tBounds = popupTitle.getLocalBounds();
     auto hBounds = popupText.getLocalBounds();
 
     popupText.setString(popupTextString);
     popupTitle.setString(popupTitleString);
 
-    popupText.setOrigin(roundf((hBounds.width / 2)), roundf((hBounds.height / 2)));
+    popupText.setOrigin({0, 0});
     popupTitle.setOrigin(roundf((tBounds.width / 2)), roundf((tBounds.height / 2)));
 
-    sf::Vector2f hPosition = worldCoordinates;
+    sf::Vector2f hPosition = {left + 10, top - 150};
     sf::Vector2f tPosition = {roundf(worldCoordinates.x), roundf((worldCoordinates.y - 190))};
 
     popupText.setPosition(System::cToGl(hPosition));
@@ -54,23 +59,7 @@ void Popup::update() {
     System::window->draw(popupTitle);
 }
 
-const sf::Text &Popup::getPopupText() const {
-    return popupText;
-}
-
-void Popup::setPopupText(const sf::Text &popupText) {
-    Popup::popupText = popupText;
-}
-
-const std::string &Popup::getPopupTextString() const {
-    return popupTextString;
-}
-
-void Popup::setPopupTextString(const std::string &popupTextString) {
-    Popup::popupTextString = popupTextString;
-}
-
-const sf::Text &Popup::getPopupTitle() const {
+sf::Text &Popup::getPopupTitle() {
     return popupTitle;
 }
 
@@ -84,4 +73,20 @@ const std::string &Popup::getPopupTitleString() const {
 
 void Popup::setPopupTitleString(const std::string &popupTitleString) {
     Popup::popupTitleString = popupTitleString;
+}
+
+sf::Text &Popup::getPopupText() {
+    return popupText;
+}
+
+void Popup::setPopupText(const sf::Text &popupText) {
+    Popup::popupText = popupText;
+}
+
+const std::string &Popup::getPopupTextString() const {
+    return popupTextString;
+}
+
+void Popup::setPopupTextString(const std::string &popupTextString) {
+    Popup::popupTextString = popupTextString;
 }

@@ -20,11 +20,15 @@ public:
     int buffDurationGameHours = 2;
     float buffStrength = 1.2f;
 
+    int targetsBuffed = 0;
+
     explicit Manager(sf::Vector2f coordinates);
 
     void updateLogic() override;
 
     void createBuffTargetDestination();
+
+    std::string createStatsText() override;
 
     Movable *searchTarget();
 };

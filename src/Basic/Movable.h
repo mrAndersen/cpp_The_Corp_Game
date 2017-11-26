@@ -42,6 +42,7 @@ protected:
     GameTime buffStart;
     GameTime buffEnd;
     float workingModificator = 1.f;
+    bool upgradeAvailable = false;
 
     //relevant to game time
     int smokePeriodMinutes = 15;
@@ -55,6 +56,7 @@ protected:
     Gender gender = Gender::G_Male;
     Race race = Race::R_White;
     int level = 1;
+    sf::Clock lastUpgradeTimer;
 
     Popup *popup;
     sf::Text popupText;
@@ -65,7 +67,7 @@ protected:
 public:
     Movable(Entities type, int width, int height);
 
-    void upgrade();
+    virtual void upgrade();
 
     void updatePopup();
 
@@ -76,10 +78,6 @@ public:
     void loadAnimations();
 
     const GameTime &getBuffStart() const;
-
-    bool mouseIn() override;
-
-    void drawSelectionRect();
 
     void setBuffStart(const GameTime &buffStart);
 

@@ -15,6 +15,12 @@ void Entity::update() {
         selectAnimation(state);
 
         if (currentAnimation) {
+//            if (selectable && mouseIn() && System::selectionAllowed) {
+//                setHovered();
+//            } else {
+//                setNormal();
+//            }
+
             currentAnimation->update();
         }
 
@@ -61,7 +67,7 @@ void Entity::setTransparent() {
 void Entity::setInvalid() {
     valid = false;
     if (currentAnimation) {
-        currentAnimation->getSprite().setColor(sf::Color(255, 0, 0, 255));
+        currentAnimation->getSprite().setColor(System::c_red);
     }
 }
 
@@ -263,9 +269,10 @@ bool Entity::isSelected() const {
 
 void Entity::setSelected(bool selected) {
     Entity::selected = selected;
+    System::selectionCooldown.restart();
 
     if (selected) {
-        currentAnimation->getSprite().setColor(sf::Color(0, 255, 0, 255));
+        setHovered();
     } else {
         setNormal();
     }
@@ -274,6 +281,12 @@ void Entity::setSelected(bool selected) {
 void Entity::setNormal() {
     if (currentAnimation) {
         currentAnimation->getSprite().setColor(sf::Color(255, 255, 255, 255));
+    }
+}
+
+void Entity::setHovered() {
+    if (currentAnimation) {
+        currentAnimation->getSprite().setColor(System::c_green);
     }
 }
 
@@ -407,7 +420,8 @@ void Entity::setManualUpdate(bool manualUpdate) {
     Entity::manualUpdate = manualUpdate;
 }
 
-Entity *Entity::create(Entities type, DrawOrder order, sf::Vector2f size, sf::Vector2f coordinates, const std::string &texturePath) {
+Entity *Entity::create(Entities type, DrawOrder order, sf::Vector2f size, sf::Vector2f coordinates,
+                       const std::string &texturePath) {
     auto e = new Entity(type);
 
     e->setDrawOrder(order);
@@ -422,5 +436,11 @@ Entity *Entity::create(Entities type, DrawOrder order, sf::Vector2f size, sf::Ve
 
     return e;
 }
+
+Animation *Entity::getCurrentAnimation() {
+    return currentAnimation;
+}
+
+
 
 

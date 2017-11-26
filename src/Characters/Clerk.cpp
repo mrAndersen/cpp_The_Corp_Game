@@ -14,12 +14,27 @@ Clerk::Clerk(sf::Vector2f coordinates) : Movable(E_Clerk, Clerk::width, Clerk::h
     setDrawOrder(D_Characters);
     initEntity();
 
-    System::salaryTotal += dailySalary;
     EntityContainer::add(this);
 }
 
 void Clerk::updateLogic() {
     Movable::updateLogic();
+
+    if (level == 1 && totalEarnings >= 1000) {
+        upgradeAvailable = true;
+    }
+
+    if (level == 2 && totalEarnings >= 2500) {
+        upgradeAvailable = true;
+    }
+
+    if (level == 3 && totalEarnings >= 5000) {
+        upgradeAvailable = true;
+    }
+
+    if (level == 4) {
+        upgradeAvailable = false;
+    }
 
     //search workplace every 500ms
     if (!currentWorkPlace && workPlaceSearchResolution.getElapsedTime().asMilliseconds() >= 500) {
@@ -59,7 +74,7 @@ void Clerk::updateLogic() {
     if (state == S_Working) {
         //earning every half hour
         if (System::gameTime.isEarningHour() && !earningProcessed) {
-            auto earning = dailyEarning / 8 / 2 * workingModificator;
+            auto earning = dailyEarnings[level] / 8 / 2 * workingModificator;
 
             System::cash += earning;
             totalEarnings += earning;
@@ -84,7 +99,7 @@ void Clerk::updateLogic() {
         //salary every day
         if (System::gameTime.getHour() == System::endWorkHour && System::gameTime.getMinute() == 0 &&
             !salaryProcessed) {
-            System::cash = System::cash - dailySalary;
+            System::cash = System::cash - dailySalaries[level];
             salaryProcessed = true;
         }
 
@@ -161,9 +176,43 @@ void Clerk::searchWorkPlace() {
 std::string Clerk::createStatsText() {
     auto s = Movable::createStatsText();
 
+    s = s + "Daily salary: " + System::f_to_string(dailySalaries[level]) + "$\n";
     s = s + "Earned total: " + System::f_to_string(totalEarnings) + "$\n";
-    s = s + "Earning/h: " + System::f_to_string(dailyEarning / 8 * workingModificator) + "$\n";
-    s = s + "Buff: " + (buffed ? (buffStart.get() + " - " + buffEnd.get()) : "Not buffed") + "\n";
+    s = s + "Earning/h: " + System::f_to_string(dailyEarnings[level] / 8 * workingModificator) + "$\n";
+    s = s + "Motivation: " + (buffed ? (buffStart.get() + " - " + buffEnd.get()) : "Not buffed") + "\n";
+
+    if (upgradeAvailable) {
+        s = s + "Upgrade: Yes!\n";
+    } else {
+        if (level == 1) {
+            s = s + "Upgrade: " + System::f_to_string(1000 - totalEarnings, 0) + "$ more total earnings\n";
+        }
+
+
+    }
 
     return s;
+}
+
+void Clerk::upgrade() {
+    lastUpgradeTimer.restart();
+
+    if (level == 1 && totalEarnings < 1000) {
+        return;
+    }
+
+    if (level == 2 && totalEarnings < 2500) {
+        return;
+    }
+
+    if (level == 3 && totalEarnings < 5000) {
+        return;
+    }
+
+    if (level == 4) {
+        return;
+    }
+
+
+    Movable::upgrade();
 }

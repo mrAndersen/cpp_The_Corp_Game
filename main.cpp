@@ -57,7 +57,10 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
             //entity selection
             if (e.type == sf::Event::MouseButtonPressed && e.mouseButton.button == sf::Mouse::Left && System::selectionAllowed) {
                 for (auto ei:EntityContainer::items) {
-                    ei->setSelected(false);
+                    if(!ei->mouseIn() && ei->isSelectable()){
+                        ei->setSelected(false);
+                        ei->setNormal();
+                    }
                 }
 
                 for(auto it = EntityContainer::items.rbegin(); it != EntityContainer::items.rend(); ++it){
