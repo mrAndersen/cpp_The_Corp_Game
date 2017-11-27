@@ -21,6 +21,8 @@ class Clerk;
 
 class Manager;
 
+class Accountnat;
+
 class Movable : public Entity {
 
 protected:
@@ -66,6 +68,12 @@ protected:
 
 public:
     Movable(Entities type, int width, int height);
+
+    virtual ~Movable();
+
+    Popup *getPopup() const;
+
+    void setPopup(Popup *popup);
 
     virtual void upgrade();
 
@@ -114,6 +122,8 @@ public:
     float getFloorBottom(sf::Vector2f coordinates);
 
     void createSmokeAreaRoute();
+
+    void recalculateAccountantsBonus();
 
     void createHomeRoute();
 

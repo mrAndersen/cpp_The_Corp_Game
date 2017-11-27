@@ -4,7 +4,8 @@
 #include "..\Text\TextEntity.h"
 #include "..\Background\Ground.h"
 #include "..\System\EntityContainer.h"
-#include "Movable.h"
+#include "../Characters/Accountant.h"
+#include "../Characters/Clerk.h"
 #include "..\System\System.h"
 #include "../Ui/MainPanel/ButtonPause.h"
 
@@ -602,7 +603,7 @@ void Movable::updatePopup() {
 
     popup->setPopupTextString(createStatsText());
     popup->getPopupText().setCharacterSize(16);
-    popup->setPopupTitleString(personName);
+    popup->setPopupTitleString(personName + "");
     popup->setWorldCoordinates({worldCoordinates.x, worldCoordinates.y + popup->getHeight() / 2 + height / 2 + 20});
 
     for (auto &e:popup->buttons) {
@@ -649,6 +650,10 @@ std::string Movable::createStatsText() {
         s = s + "Role: Manager\n";
     }
 
+    if (eType == E_Accountant) {
+        s = s + "Role: Accountant\n";
+    }
+
     s = s + "Level: " + std::to_string(level) + "\n";
     s = s + "State: " + ResourceLoader::getStateTextNotation(state) + "\n";
     s = s + "Smoking: " + (smoking == 1 ? "Yes" : "No") + "\n";
@@ -658,6 +663,33 @@ std::string Movable::createStatsText() {
 
 int Movable::getLevel() const {
     return level;
+}
+
+void Movable::recalculateAccountantsBonus() {
+    auto movables = EntityContainer::getGroupItems("movable");
+    auto totalBonus = 1.f;
+
+    for (auto &e:movables) {
+        if (e->getEType() == E_Accountant) {
+            auto d = dynamic_cast<Accountant *>(e);
+
+            totalBonus += (d->getBuffPercentages().at(d->getLevel()) / 100) * d->getWorkingModificator();
+        }
+    }
+
+    System::accountantsBonus = totalBonus;
+}
+
+Popup *Movable::getPopup() const {
+    return popup;
+}
+
+void Movable::setPopup(Popup *popup) {
+    Movable::popup = popup;
+}
+
+Movable::~Movable() {
+    delete popup;
 }
 
 

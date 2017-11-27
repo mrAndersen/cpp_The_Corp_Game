@@ -90,3 +90,11 @@ const std::string &Popup::getPopupTextString() const {
 void Popup::setPopupTextString(const std::string &popupTextString) {
     Popup::popupTextString = popupTextString;
 }
+
+Popup::~Popup() {
+    for (auto &b:buttons) {
+        delete b.second;
+    }
+
+    buttons.clear();
+}

@@ -29,7 +29,6 @@ namespace System {
     extern long long int frameTimeMcs;
     extern sf::Uint32 screenMode;
     extern float timeFactor;
-    extern int hoverCount;
     //sys
 
 
@@ -45,6 +44,7 @@ namespace System {
 
     //player
     extern double cash;
+    extern float accountantsBonus;
     extern bool spawningUnit;
     extern sf::Clock selectionCooldown;
     extern bool dayEndProcessed;

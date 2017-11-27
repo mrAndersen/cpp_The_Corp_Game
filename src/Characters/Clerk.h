@@ -19,8 +19,7 @@ public:
     std::map<int, float> dailySalaries = {{1, 64}, {2, 100}, {3, 150}, {4, 200}};
     bool salaryProcessed = false;
 
-    float totalEarnings = 0;
-    float accountantsBonus = 1.f;
+    float totalEarnings = 10000;
 
     WorkPlace *currentWorkPlace = nullptr;
     sf::Clock workPlaceSearchResolution;
@@ -37,15 +36,13 @@ public:
 
     void searchWorkPlace();
 
+    void spawn() override;
+
     void createWorkPlaceRoute();
 
     std::string createStatsText() override;
 
     void upgrade() override;
-
-    float getAccountantsBonus() const;
-
-    void setAccountantsBonus(float accountantsBonus);
 };
 
 #endif //THE_CORP_GAME_CLERK_H

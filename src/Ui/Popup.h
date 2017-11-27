@@ -20,6 +20,8 @@ public:
 
     explicit Popup(float leftOffset, float topOffset);
 
+    virtual ~Popup();
+
     sf::Text &getPopupText();
 
     void setPopupText(const sf::Text &popupText);

@@ -74,7 +74,7 @@ void Clerk::updateLogic() {
     if (state == S_Working) {
         //earning every half hour
         if (System::gameTime.isEarningHour() && !earningProcessed) {
-            auto earning = dailyEarnings[level] / 8 / 2 * workingModificator * accountantsBonus;
+            auto earning = dailyEarnings[level] / 8 / 2 * workingModificator * System::accountantsBonus;
 
             System::cash += earning;
             totalEarnings += earning;
@@ -178,8 +178,9 @@ std::string Clerk::createStatsText() {
 
     s = s + "Daily salary: " + System::f_to_string(dailySalaries[level]) + "$\n";
     s = s + "Earned total: " + System::f_to_string(totalEarnings) + "$\n";
-    s = s + "Earning/h: " + System::f_to_string(dailyEarnings[level] / 8 * workingModificator * accountantsBonus) + "$\n";
-    s = s + "Motivation: " + (buffed ? (buffStart.get() + " - " + buffEnd.get()) : "Not buffed") + "\n";
+    s = s + "Earning/h: " + System::f_to_string(dailyEarnings[level] / 8 * workingModificator * System::accountantsBonus) + "$\n";
+    s = s + "Manager buff: " + (buffed ? (buffStart.get() + " - " + buffEnd.get()) : "Not buffed") + "\n";
+    s = s + "Accountants bonus: " + System::f_to_string((System::accountantsBonus - 1) * 100) + "%\n";
 
     if (upgradeAvailable) {
         s = s + "Upgrade: Yes!\n";
@@ -187,8 +188,6 @@ std::string Clerk::createStatsText() {
         if (level == 1) {
             s = s + "Upgrade: " + System::f_to_string(1000 - totalEarnings, 0) + "$ more total earnings\n";
         }
-
-
     }
 
     return s;
@@ -217,10 +216,6 @@ void Clerk::upgrade() {
     Movable::upgrade();
 }
 
-float Clerk::getAccountantsBonus() const {
-    return accountantsBonus;
-}
-
-void Clerk::setAccountantsBonus(float accountantsBonus) {
-    Clerk::accountantsBonus = accountantsBonus;
+void Clerk::spawn() {
+    Movable::spawn();
 }

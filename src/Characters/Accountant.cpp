@@ -17,24 +17,7 @@ Accountant::Accountant(sf::Vector2f coordinates) : Movable(E_Accountant, width, 
 }
 
 void Accountant::spawn() {
-    auto movables = EntityContainer::getGroupItems("movable");
-    auto totalBonus = 1.f;
-
-    for (auto &e:movables) {
-        if (e->getEType() == E_Accountant) {
-            auto d = dynamic_cast<Accountant *>(e);
-
-            totalBonus += (d->getBuffPercentages().at(d->getLevel()) / 100);
-        }
-    }
-
-    for (auto &e:movables) {
-        if (e->getEType() == E_Clerk) {
-            auto d = dynamic_cast<Clerk *>(e);
-            d->setAccountantsBonus(totalBonus);
-        }
-    }
-
+    recalculateAccountantsBonus();
     Movable::spawn();
 }
 
@@ -145,7 +128,7 @@ bool Accountant::isInWorkPlace() {
 std::string Accountant::createStatsText() {
     auto s = Movable::createStatsText();
 
-    s = s + "Earning modificator: " + System::f_to_string(buffPercentages[level]) + "%\n";
+    s = s + "Global earning modificator: " + System::f_to_string(buffPercentages[level] * workingModificator) + "%\n";
 
     return s;
 }

@@ -202,7 +202,7 @@ namespace ResourceLoader {
         System::gameFont = new sf::Font();
         System::gameFont2 = new sf::Font();
 
-        System::debugFont->loadFromFile("resources/fonts/OpenSans-Light.ttf");
+        System::debugFont->loadFromFile("resources/fonts/DidactGothic-Regular.ttf");
         System::gameFont->loadFromFile("resources/fonts/Teko-Regular.ttf");
         System::gameFont2->loadFromFile("resources/fonts/Comfortaa-Regular.ttf");
     }

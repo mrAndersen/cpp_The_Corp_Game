@@ -1,6 +1,7 @@
 #include "../System/EntityContainer.h"
 #include "Manager.h"
 #include "Clerk.h"
+#include "Accountant.h"
 
 Manager::Manager(sf::Vector2f coordinates) : Movable(E_Manager, Manager::width, Manager::height) {
     setDefaultSpeed(165);
@@ -53,7 +54,16 @@ void Manager::updateLogic() {
         buffHint->setSpeed(100);
         buffHint->setLiveTimeSeconds(2);
         buffHint->setWorldCoordinates(position);
-        buffHint->setString("Earnings + " + System::f_to_string((currentTarget->getWorkingModificator() * 100) - 100) + "%");
+
+        if(currentTarget->getEType() == E_Accountant){
+            currentTarget->recalculateAccountantsBonus();
+            buffHint->setString("Earning modificator +" + System::f_to_string((currentTarget->getWorkingModificator() * 100) - 100) + "%");
+        }
+
+        if(currentTarget->getEType() == E_Clerk){
+            buffHint->setString("Earnings + " + System::f_to_string((currentTarget->getWorkingModificator() * 100) - 100) + "%");
+        }
+
     }
 
     if (state == S_Working && buffInProgress && buffingProcedureClock.getElapsedTime().asSeconds() >= 10 / System::timeFactor) {
@@ -69,6 +79,11 @@ void Manager::createBuffTargetDestination() {
             auto clerk = dynamic_cast<Clerk *>(currentTarget);
             destinations.push_back(Destination::createBuffPlaceDST(clerk));
         }
+
+        if (currentTarget->getEType() == E_Accountant) {
+            auto accountant = dynamic_cast<Accountant *>(currentTarget);
+            destinations.push_back(Destination::createBuffPlaceDST(accountant));
+        }
     } else {
         targetElevator = searchNearestElevator();
         targetElevator->incBoarding();
@@ -81,6 +96,11 @@ void Manager::createBuffTargetDestination() {
             if (currentTarget->getEType() == E_Clerk) {
                 auto clerk = dynamic_cast<Clerk *>(currentTarget);
                 destinations.push_back(Destination::createBuffPlaceDST(clerk));
+            }
+
+            if (currentTarget->getEType() == E_Accountant) {
+                auto accountant = dynamic_cast<Accountant *>(currentTarget);
+                destinations.push_back(Destination::createBuffPlaceDST(accountant));
             }
         }
     }
