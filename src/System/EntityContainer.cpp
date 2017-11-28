@@ -55,9 +55,6 @@ namespace EntityContainer {
         }
 
         addToGroup(item->getGroupName(), item);
-
-        System::debugCounters["vec_size"] = items.size();
-        System::debugCounters["vec_capacity"] = items.capacity();
     }
 
     void sort() {
@@ -81,10 +78,6 @@ namespace EntityContainer {
         if (std::find(itemsToRemove.cbegin(), itemsToRemove.cend(), item) == itemsToRemove.cend()) {
             itemsToRemove.push_back(item);
         }
-    }
-
-    int size() {
-        return items.size();
     }
 
     void initBackground() {
@@ -256,6 +249,19 @@ namespace EntityContainer {
                     removeFromGroup(e->getGroupName(), e);
                 }
 
+                //removing popups and buttons
+                if(e->getGroupName() == "movable"){
+                    auto d = dynamic_cast<Movable *>(e);
+
+                    for(auto &b:d->getPopup()->getButtons()){
+                        items.erase(std::remove(items.begin(), items.end(), b.second), items.end());
+                        delete b.second;
+                    }
+
+                    items.erase(std::remove(items.begin(), items.end(), d->getPopup()), items.end());
+                    delete d->getPopup();
+                }
+
                 //remove from actual vector
                 items.erase(std::remove(items.begin(), items.end(), e), items.end());
 
@@ -273,6 +279,9 @@ namespace EntityContainer {
         }
 
         if (System::debug) {
+            System::debugCounters["vec_size"] = items.size();
+            System::debugCounters["vec_capacity"] = items.capacity();
+
             System::debugCounters["empty"] = 0;
             for (auto &e:items) {
                 System::debugCounters["empty"] =

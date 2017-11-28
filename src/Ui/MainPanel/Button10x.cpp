@@ -25,10 +25,13 @@ void Button10x::update() {
         state = S_Button_Normal;
     }
 
+    if(mouseIn()){
+        System::selectionCooldown.restart();
+    }
+
     if(leftClicked() && !System::spawningUnit && liveClock.getElapsedTime().asMilliseconds() >= System::buttonReload){
         pressed = !pressed;
         liveClock.restart();
-        System::selectionCooldown.restart();
 
         b1x->setPressed(false);
         b5x->setPressed(false);

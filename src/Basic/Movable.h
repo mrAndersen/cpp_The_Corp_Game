@@ -69,8 +69,6 @@ protected:
 public:
     Movable(Entities type, int width, int height);
 
-    virtual ~Movable();
-
     Popup *getPopup() const;
 
     void setPopup(Popup *popup);
@@ -85,7 +83,7 @@ public:
 
     void setSelected(bool selected) override;
 
-    void loadAnimations();
+    virtual void loadAnimations();
 
     const GameTime &getBuffStart() const;
 

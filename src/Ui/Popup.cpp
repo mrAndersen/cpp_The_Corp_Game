@@ -91,10 +91,10 @@ void Popup::setPopupTextString(const std::string &popupTextString) {
     Popup::popupTextString = popupTextString;
 }
 
-Popup::~Popup() {
-    for (auto &b:buttons) {
-        delete b.second;
-    }
+const std::map<std::string, PopupButton *> &Popup::getButtons() const {
+    return buttons;
+}
 
-    buttons.clear();
+void Popup::setButtons(const std::map<std::string, PopupButton *> &buttons) {
+    Popup::buttons = buttons;
 }

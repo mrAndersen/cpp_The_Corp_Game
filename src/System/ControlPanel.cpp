@@ -19,6 +19,7 @@
 #include "..\Ui\ControlButtonAddElevatorShaftTop.h"
 #include "..\Ui\ControlButtonAddManager.h"
 #include "..\Ui\Questions/QAddManager.h"
+#include "..\Ui\Questions/QAddAccountant.h"
 #include "ControlPanel.h"
 
 namespace ControlPanel {
@@ -39,6 +40,7 @@ namespace ControlPanel {
         controls[E_Question_Mark_ButtonAddManager] = new QAddManager(4 + Question::width / 2, 362);
         controls[E_ButtonAddManager] = new ControlButtonAddManager(4 + ControlButtonAddManager::width / 2 + Question::width + 2, 362);
 
+        controls[E_Question_Mark_ButtonAddAccountant] = new QAddAccountant(4 + Question::width / 2, 424);
         controls[E_ButtonAddAccountant] = new ControlButtonAddAccountant(4 + ControlButtonAddManager::width / 2 + Question::width + 2, 424);
 
         controls[E_Question_Mark_ButtonAddOffice] = new QAddOffice(4 + Question::width / 2, 486);

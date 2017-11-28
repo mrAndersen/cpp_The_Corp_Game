@@ -26,6 +26,10 @@ void Question::update() {
         liveClock.restart();
     }
 
+    if(mouseIn()){
+        System::selectionCooldown.restart();
+    }
+
     if (pressed) {
         auto questions = EntityContainer::getGroupItems("questions");
 
@@ -38,8 +42,6 @@ void Question::update() {
         }
 
         state = S_Button_Pressed;
-        System::selectionCooldown.restart();
-
         popup->setVisible(true);
         popup->update();
 

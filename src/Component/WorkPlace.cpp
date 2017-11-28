@@ -1,5 +1,6 @@
 #include "..\System\System.h"
 #include "..\Office\Chair.h"
+#include "../System/EntityContainer.h"
 #include "WorkPlace.h"
 
 const sf::Vector2f &WorkPlace::getWorldCoordinates() const {
@@ -50,5 +51,10 @@ void WorkPlace::update() {
 
     if (worker && !chair) {
         chair = new Chair({worldCoordinates.x - 23, worldCoordinates.y - 16});
+    }
+
+    if(!worker && chair){
+        EntityContainer::remove(chair);
+        chair = nullptr;
     }
 }

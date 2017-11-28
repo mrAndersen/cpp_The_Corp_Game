@@ -20,8 +20,6 @@ public:
 
     explicit Popup(float leftOffset, float topOffset);
 
-    virtual ~Popup();
-
     sf::Text &getPopupText();
 
     void setPopupText(const sf::Text &popupText);
@@ -39,6 +37,10 @@ public:
     void setPopupTitleString(const std::string &popupTitleString);
 
     void update() override;
+
+    const std::map<std::string, PopupButton *> &getButtons() const;
+
+    void setButtons(const std::map<std::string, PopupButton *> &buttons);
 };
 
 

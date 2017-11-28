@@ -22,6 +22,10 @@ void ControlButtonAddAccountant::update() {
                           System::cash >= attachedAccountant->getCost() &&
                           !attachedAccountant->isBelowGround();
 
+    if(mouseIn()){
+        System::selectionCooldown.restart();
+    }
+
     if (leftClicked() && !attachedAccountant && !System::spawningUnit) {
         attachedAccountant = new Accountant({System::g_x, System::g_y});
     }
@@ -30,7 +34,6 @@ void ControlButtonAddAccountant::update() {
         EntityContainer::remove(attachedAccountant);
 
         System::spawningUnit = false;
-        System::selectionCooldown.restart();
         attachedAccountant = nullptr;
     }
 
@@ -41,13 +44,12 @@ void ControlButtonAddAccountant::update() {
         attachedAccountant->spawn();
 
         System::spawningUnit = false;
-        System::selectionCooldown.restart();
+
         attachedAccountant = nullptr;
     }
 
     if (attachedAccountant) {
         state = S_Button_Pressed;
-        System::selectionCooldown.restart();
         System::spawningUnit = true;
         attachedAccountant->setWorldCoordinates(System::getGlobalMouse());
 

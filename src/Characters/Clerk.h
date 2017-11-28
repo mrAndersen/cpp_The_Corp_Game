@@ -26,6 +26,8 @@ public:
 
     explicit Clerk(sf::Vector2f coordinates);
 
+    virtual ~Clerk();
+
     void updateLogic() override;
 
     WorkPlace *getCurrentWorkPlace() const;

@@ -219,3 +219,7 @@ void Clerk::upgrade() {
 void Clerk::spawn() {
     Movable::spawn();
 }
+
+Clerk::~Clerk() {
+    currentWorkPlace->setWorker(nullptr);
+}

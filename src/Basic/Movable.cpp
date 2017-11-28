@@ -589,7 +589,12 @@ void Movable::loadAnimations() {
     addAnimation(S_Play, gender, race, level, 24);
     addAnimation(S_Walk, gender, race, level, 24);
     addAnimation(S_Working, gender, race, level, 24);
-    addAnimation(S_Smoking, gender, race, level, 66, 2750000);
+
+    if(eType == E_Accountant){
+        addAnimation(S_Smoking, gender, race, level, 60, 2500000);
+    }else{
+        addAnimation(S_Smoking, gender, race, level, 66, 2750000);
+    }
 }
 
 void Movable::updatePopup() {
@@ -604,7 +609,14 @@ void Movable::updatePopup() {
     popup->setPopupTextString(createStatsText());
     popup->getPopupText().setCharacterSize(16);
     popup->setPopupTitleString(personName + "");
-    popup->setWorldCoordinates({worldCoordinates.x, worldCoordinates.y + popup->getHeight() / 2 + height / 2 + 20});
+
+    //@todo swap popup logic discuss
+//    if(ViewHandler::top - worldCoordinates.y > popup->getHeight()){
+        popup->setWorldCoordinates({worldCoordinates.x, worldCoordinates.y + popup->getHeight() / 2 + height / 2 + 20});
+//    }else{
+//        popup->setWorldCoordinates({worldCoordinates.x, worldCoordinates.y - popup->getHeight() / 2 - height / 2 + 20});
+//    }
+
 
     for (auto &e:popup->buttons) {
         e.second->setVisible(true);
@@ -687,11 +699,6 @@ Popup *Movable::getPopup() const {
 void Movable::setPopup(Popup *popup) {
     Movable::popup = popup;
 }
-
-Movable::~Movable() {
-    delete popup;
-}
-
 
 
 

@@ -135,7 +135,6 @@ namespace System {
             debugPanelTextNodes["fps"].setString("fps: " + std::to_string(fps));
             debugPanelTextNodes["mouse"].setString(
                     "mouse: {" + std::to_string(mousePosition.x) + "," + std::to_string(mousePosition.y) + "}");
-            debugPanelTextNodes["entity_count"].setString("entities: " + std::to_string(entitiesOnScreen));
             debugPanelTextNodes["v_direction"].setString(
                     "v_direction: " + std::to_string(ViewHandler::viewDirectionMovement));
             debugPanelTextNodes["mem"].setString("mem:" + std::to_string((int) mem / 1024 / 1024) + "mb");
@@ -222,7 +221,6 @@ namespace System {
         createDebugString("mem");
         createDebugString("g_coordinates");
         createDebugString("mouse");
-        createDebugString("entity_count");
         createDebugString("v_direction");
         createDebugString("v_boundaries");
         createDebugString("v_zoom");

@@ -33,6 +33,10 @@ void ControlButtonAddOffice::update() {
                           !attachedOffice->intersectsWithObjects() &&
                           (!attachedOffice->getNeighborOffices().empty() || attachedOffice->isOnTheGround());
 
+    if(mouseIn()){
+        System::selectionCooldown.restart();
+    }
+
     if (leftClicked() && !attachedOffice && !System::spawningUnit) {
         attachedOffice = new OfficeClerk(sf::Vector2f(System::g_x, System::g_y));
         attachedOffice->setTransparent();
@@ -42,7 +46,6 @@ void ControlButtonAddOffice::update() {
         EntityContainer::remove(attachedOffice);
 
         System::spawningUnit = false;
-        System::selectionCooldown.restart();
         attachedOffice = nullptr;
     }
 
@@ -52,7 +55,6 @@ void ControlButtonAddOffice::update() {
         attachedOffice->spawn();
 
         System::spawningUnit = false;
-        System::selectionCooldown.restart();
         attachedOffice = nullptr;
     }
 
@@ -60,7 +62,6 @@ void ControlButtonAddOffice::update() {
         System::spawningUnit = true;
         auto global = System::getGlobalMouse();
         state = S_Button_Pressed;
-        System::selectionCooldown.restart();
 
         float x = roundf(global.x - ((int) global.x % System::gridSize) + System::gridSize);
         float y = roundf(global.y - ((int) global.y % System::gridSize) + System::gridSize / 2);

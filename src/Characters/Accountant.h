@@ -37,7 +37,6 @@ public:
     bool isInWorkPlace();
 
     std::string createStatsText() override;
-
 protected:
     void updateLogic() override;
 };

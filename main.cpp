@@ -26,7 +26,6 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
     ControlPanel::initControlPanel();
 
     while (System::window && System::window->isOpen()) {
-        System::entitiesOnScreen = EntityContainer::size();
         System::refreshSystem();
         System::refreshDayTime();
 

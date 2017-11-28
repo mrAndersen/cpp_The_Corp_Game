@@ -21,6 +21,10 @@ void ControlButtonAddManager::update() {
                           System::cash >= attachedManager->getCost() &&
                           !attachedManager->isBelowGround();
 
+    if(mouseIn()){
+        System::selectionCooldown.restart();
+    }
+
     if (leftClicked() && !attachedManager && !System::spawningUnit) {
         attachedManager = new Manager({System::g_x, System::g_y});
     }
@@ -29,7 +33,6 @@ void ControlButtonAddManager::update() {
         EntityContainer::remove(attachedManager);
 
         System::spawningUnit = false;
-        System::selectionCooldown.restart();
         attachedManager = nullptr;
     }
 
@@ -40,13 +43,11 @@ void ControlButtonAddManager::update() {
         attachedManager->spawn();
 
         System::spawningUnit = false;
-        System::selectionCooldown.restart();
         attachedManager = nullptr;
     }
 
     if (attachedManager) {
         state = S_Button_Pressed;
-        System::selectionCooldown.restart();
         System::spawningUnit = true;
         attachedManager->setWorldCoordinates(System::getGlobalMouse());
 
