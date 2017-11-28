@@ -1,20 +1,9 @@
 import time
 import os
 import shutil
-import argparse
-import http.client
-import json
 import github
 import requests
 import base64
-
-# parser = argparse.ArgumentParser(description='cpp Deployer')
-# parser.add_argument('--zip', help='Zip release and put in root directory', action='store_true')
-# parser.add_argument('--rm', help='Remove folder after creating zip archive', action='store_true')
-# parser.add_argument('--upload', help="Upload to github", action='store_true')
-
-# args = parser.parse_args()
-# print("Working zip = {}, rm = {}, upload = {}", args.zip, args.rm, args.upload)
 
 print("Copying...", end="")
 
