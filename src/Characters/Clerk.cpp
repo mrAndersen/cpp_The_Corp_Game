@@ -178,7 +178,8 @@ std::string Clerk::createStatsText() {
 
     s = s + "Daily salary: " + System::f_to_string(dailySalaries[level]) + "$\n";
     s = s + "Earned total: " + System::f_to_string(totalEarnings) + "$\n";
-    s = s + "Earning/h: " + System::f_to_string(dailyEarnings[level] / 8 * workingModificator * System::accountantsBonus) + "$\n";
+    s = s + "Earning/h: " +
+        System::f_to_string(dailyEarnings[level] / 8 * workingModificator * System::accountantsBonus) + "$\n";
     s = s + "Manager buff: " + (buffed ? (buffStart.get() + " - " + buffEnd.get()) : "Not buffed") + "\n";
     s = s + "Accountants bonus: " + System::f_to_string((System::accountantsBonus - 1) * 100) + "%\n";
 
@@ -221,5 +222,7 @@ void Clerk::spawn() {
 }
 
 Clerk::~Clerk() {
-    currentWorkPlace->setWorker(nullptr);
+    if (currentWorkPlace) {
+        currentWorkPlace->setWorker(nullptr);
+    }
 }
