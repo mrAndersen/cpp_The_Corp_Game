@@ -155,6 +155,8 @@ public:
 
     Elevator *searchNearestElevator();
 
+    bool insideElevator();
+
     std::string serialize() override;
 
     void renderDebugInfo() override;

@@ -76,6 +76,8 @@ public:
 
     void update();
 
+    int getMaxFloor();
+
     void addToQueue(int floor);
 };
 

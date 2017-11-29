@@ -134,6 +134,12 @@ void Elevator::update() {
 }
 
 void Elevator::addToQueue(int floor) {
+
+    //max floor
+    if(floor >= getMaxFloor()){
+        return;
+    }
+
     //same floor
     if (floor == cabin->getFloor()) {
         return;
@@ -227,4 +233,8 @@ const std::deque<int> &Elevator::getQueue() const {
 
 float Elevator::getFloorBottom(int floor) {
     return System::groundLevel + Ground::height + (floor - 1) * 150;
+}
+
+int Elevator::getMaxFloor() {
+    return topShaft->getFloor();
 }

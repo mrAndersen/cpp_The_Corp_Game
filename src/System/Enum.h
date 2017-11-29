@@ -76,7 +76,6 @@ enum States {
     S_Walk = 3,
     S_Smoking = 4,
     S_Working = 7,
-    S_Falling = 8,
 
     S_Button_Normal = 101,
     S_Button_Pressed = 102,

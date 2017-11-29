@@ -420,8 +420,7 @@ void Entity::setManualUpdate(bool manualUpdate) {
     Entity::manualUpdate = manualUpdate;
 }
 
-Entity *Entity::create(Entities type, DrawOrder order, sf::Vector2f size, sf::Vector2f coordinates,
-                       const std::string &texturePath) {
+Entity *Entity::create(Entities type, DrawOrder order, sf::Vector2f size, sf::Vector2f coordinates, const std::string &texturePath) {
     auto e = new Entity(type);
 
     e->setDrawOrder(order);

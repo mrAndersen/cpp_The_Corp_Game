@@ -38,6 +38,8 @@ public:
     void renderDebugInfo() override;
 
     std::vector<Office *> getNeighborOffices();
+
+    int getFloor();
 };
 
 

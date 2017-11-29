@@ -45,7 +45,7 @@ void Clerk::updateLogic() {
     //one-time-exec
     //not working but should
     if (System::gameTime.isWorkTime() && !isInWorkPlace() && currentWorkPlace && state != S_Working &&
-        state != S_Smoking && state != S_Falling && !moving) {
+        state != S_Smoking && !moving) {
 
         visible = true;
         moving = true;

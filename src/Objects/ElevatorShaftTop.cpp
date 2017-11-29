@@ -1,3 +1,4 @@
+#include <cmath>
 #include "..\System\System.h"
 #include "..\Text\TextEntity.h"
 #include "ElevatorShaftTop.h"
@@ -112,5 +113,9 @@ void ElevatorShaftTop::renderDebugInfo() {
     }
 
     Entity::renderDebugInfo();
+}
+
+int ElevatorShaftTop::getFloor() {
+    return ((int) worldCoordinates.y - ((int) worldCoordinates.y % System::gridSize)) / System::gridSize / 3;
 }
 

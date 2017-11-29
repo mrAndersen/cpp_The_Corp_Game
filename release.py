@@ -13,6 +13,8 @@ binMsvcDirectory = "Debug"
 timeString = time.strftime("%H-%M-%S_%d-%B", time.localtime())
 releaseDirectory = "release_" + timeString
 
+# Copying
+
 if not os.path.exists(releaseDirectory):
     os.makedirs(releaseDirectory + "/gcc")
     os.makedirs(releaseDirectory + "/msvc")
@@ -30,37 +32,37 @@ shutil.copyfile("./manual.txt", releaseDirectory + "/manual.txt")
 
 print("\r Copying... Done")
 
-if True:
-    print("Zipping...", end="")
-    shutil.make_archive(releaseDirectory, 'zip', releaseDirectory)
-    size = os.path.getsize(releaseDirectory + ".zip")
-    print("\r Zipping... " + str(round(size / 1024 / 1024, 2)) + " Mb")
+# Zipping
+print("Zipping...", end="")
+shutil.make_archive(releaseDirectory, 'zip', releaseDirectory)
+size = os.path.getsize(releaseDirectory + ".zip")
+print("\r Zipping... " + str(round(size / 1024 / 1024, 2)) + " Mb")
 
-if True:
-    shutil.rmtree(releaseDirectory)
+# Uploading
+shutil.rmtree(releaseDirectory)
 
-if True:
-    print("Uploading...", end="")
 
-    login = "mrAndersen"
-    password = "matrixx1s"
+print("Uploading...", end="")
 
-    g = github.Github("mrAndersen", "matrixx1s")
-    niceTime = time.strftime("%H:%M:%S %d-%B", time.localtime())
-    release = g.get_user().get_repo("cppForestCorporation").create_git_release(tag="early-alpha-" + timeString, message="Automated release", name=niceTime)
+login = "mrAndersen"
+password = "matrixx1s"
 
-    binaryData = open(releaseDirectory + ".zip", 'rb').read()
+g = github.Github("mrAndersen", "matrixx1s")
+niceTime = time.strftime("%H:%M:%S %d-%B", time.localtime())
+release = g.get_user().get_repo("cppForestCorporation").create_git_release(tag="early-alpha-" + timeString, message="Automated release", name=niceTime)
 
-    headers = {
-        'Authorization': "Basic " + base64.b64encode((login + ":" + password).encode("utf-8")).decode("utf-8").replace('\n', ''),
-        'Content-Type': 'application/zip'
-    }
+binaryData = open(releaseDirectory + ".zip", 'rb').read()
 
-    url = release.upload_url.replace("{?name,label}", "") + "?name=" + releaseDirectory + ".zip"
-    r = requests.post(url, headers=headers, data=binaryData)
+headers = {
+    'Authorization': "Basic " + base64.b64encode((login + ":" + password).encode("utf-8")).decode("utf-8").replace('\n', ''),
+    'Content-Type': 'application/zip'
+}
 
-    shutil.rmtree(releaseDirectory + ".zip")
+url = release.upload_url.replace("{?name,label}", "") + "?name=" + releaseDirectory + ".zip"
+r = requests.post(url, headers=headers, data=binaryData)
 
-    print("\r Uploading... Done\n")
-    print("\r" + release.html_url)
-    print("\n")
+shutil.rmtree(releaseDirectory + ".zip")
+
+print("\r Uploading... Done\n")
+print("\r" + release.html_url)
+print("\n")

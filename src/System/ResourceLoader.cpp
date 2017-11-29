@@ -158,8 +158,7 @@ namespace ResourceLoader {
                 S_Run,
                 S_Walk,
                 S_Smoking,
-                S_Working,
-                S_Falling,
+                S_Working
         };
 
         for (auto &character:characters) {

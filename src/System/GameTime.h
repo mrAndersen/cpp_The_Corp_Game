@@ -18,6 +18,8 @@ public:
 
     bool isWorkTime();
 
+    bool isRestTime();
+
     bool isEarningHour();
 
     bool isDayEndHour();

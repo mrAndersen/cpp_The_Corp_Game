@@ -92,27 +92,12 @@ void Movable::updateLogic() {
         return;
     }
 
-    if (isAboveGround() && !isOnTheFloor() && state == S_None) {
-        state = S_Falling;
-    }
-
     if (moving) {
         state = !destinations.empty() ? S_Walk : S_None;
     }
 
     if (state == S_None) {
         currentSpeed = 0;
-    }
-
-    if (state == S_Falling) {
-        worldCoordinates.y -= frameDistance;
-        currentSpeed = currentSpeed + fallAcceleration * frameTimeSeconds * System::timeFactor;
-
-        if (isOnTheGround() || isBelowGround()) {
-            worldCoordinates.y = System::groundLevel + Ground::height + height / 2;
-            currentSpeed = 0;
-            state = S_None;
-        }
     }
 
     if (state == S_Smoking && System::gameTime.diffMinutes(smokeStarted) >= smokePeriodMinutes) {
@@ -257,7 +242,7 @@ void Movable::updateLogic() {
 
     //one-time-exec
     //time to go home
-    if (System::gameTime.isDayEndHour() && !moving) {
+    if (System::gameTime.isRestTime() && !moving) {
 
         moving = true;
         setDrawOrder(D_Characters, true);
@@ -276,9 +261,10 @@ void Movable::createHomeRoute() {
         destinations.push_back(Destination::createHomeDST(this, home));
     } else {
         targetElevator = searchNearestElevator();
-        targetElevator->incBoarding();
 
         if (targetElevator) {
+            targetElevator->incBoarding();
+
             destinations.push_back(Destination::createElevatorWaitingDST(targetElevator, this));
             destinations.push_back(Destination::createElevatorCabinDST(targetElevator, this));
             destinations.push_back(Destination::createElevatorExitingDST(targetElevator, this, home));
@@ -420,11 +406,6 @@ void Movable::spawn() {
 
     recalculateBoundaries();
 
-    if (isAboveGround()) {
-        direction = Direction::Down;
-        state = S_Falling;
-    }
-
     Entity::spawn();
 }
 
@@ -483,7 +464,8 @@ void Movable::addAnimation(States state, Gender gender, Race race, int level, in
         auto animation = Animation(this, state, frames, texture, duration);
         Entity::addAnimation(state, animation);
     } else {
-        auto animation = Animation(this, state, frames, ResourceLoader::getCharacterTexture(eType, state, G_Male, R_White, 1), duration);
+        auto animation = Animation(this, state, frames,
+                                   ResourceLoader::getCharacterTexture(eType, state, G_Male, R_White, 1), duration);
         Entity::addAnimation(state, animation);
     }
 }
@@ -590,9 +572,9 @@ void Movable::loadAnimations() {
     addAnimation(S_Walk, gender, race, level, 24);
     addAnimation(S_Working, gender, race, level, 24);
 
-    if(eType == E_Accountant){
+    if (eType == E_Accountant) {
         addAnimation(S_Smoking, gender, race, level, 60, 2500000);
-    }else{
+    } else {
         addAnimation(S_Smoking, gender, race, level, 66, 2750000);
     }
 }
@@ -612,7 +594,7 @@ void Movable::updatePopup() {
 
     //@todo swap popup logic discuss
 //    if(ViewHandler::top - worldCoordinates.y > popup->getHeight()){
-        popup->setWorldCoordinates({worldCoordinates.x, worldCoordinates.y + popup->getHeight() / 2 + height / 2 + 20});
+    popup->setWorldCoordinates({worldCoordinates.x, worldCoordinates.y + popup->getHeight() / 2 + height / 2 + 20});
 //    }else{
 //        popup->setWorldCoordinates({worldCoordinates.x, worldCoordinates.y - popup->getHeight() / 2 - height / 2 + 20});
 //    }
@@ -622,23 +604,25 @@ void Movable::updatePopup() {
         e.second->setVisible(true);
 
         if (e.first == "upgrade") {
-            e.second->setWorldCoordinates({popup->getLeft() + 10 + PopupButton::width / 2, popup->getTop() - PopupButton::height / 2 - 10});
+            e.second->setWorldCoordinates(
+                    {popup->getLeft() + 10 + PopupButton::width / 2, popup->getTop() - PopupButton::height / 2 - 10});
 
-            if(e.second->isPressed() && lastUpgradeTimer.getElapsedTime().asMilliseconds() >= 500){
+            if (e.second->isPressed() && lastUpgradeTimer.getElapsedTime().asMilliseconds() >= 500) {
                 upgrade();
             }
 
-            if(upgradeAvailable){
+            if (upgradeAvailable) {
                 e.second->getCurrentAnimation()->getSprite().setColor(sf::Color::Green);
-            }else{
+            } else {
                 e.second->getCurrentAnimation()->getSprite().setColor(sf::Color::Red);
             }
         }
 
         if (e.first == "fire") {
-            e.second->setWorldCoordinates({popup->getLeft() + 10 + PopupButton::width / 2, popup->getTop() - PopupButton::height / 2 - PopupButton::height - 10});
+            e.second->setWorldCoordinates({popup->getLeft() + 10 + PopupButton::width / 2,
+                                           popup->getTop() - PopupButton::height / 2 - PopupButton::height - 10});
 
-            if(e.second->isPressed()){
+            if (e.second->isPressed()) {
                 popup->setVisible(false);
                 EntityContainer::remove(this);
             }
@@ -653,6 +637,10 @@ void Movable::setSelected(bool selected) {
 
 std::string Movable::createStatsText() {
     std::string s;
+
+    if (System::debug) {
+        s = s + "Id: " + std::to_string(id) + "\n";
+    }
 
     if (eType == E_Clerk) {
         s = s + "Role: Clerk\n";
@@ -698,6 +686,18 @@ Popup *Movable::getPopup() const {
 
 void Movable::setPopup(Popup *popup) {
     Movable::popup = popup;
+}
+
+bool Movable::insideElevator() {
+    auto shafts = EntityContainer::getGroupItems("shafts");
+
+    for (auto &e:shafts) {
+        if (e->getRect().intersects(rect)) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 
