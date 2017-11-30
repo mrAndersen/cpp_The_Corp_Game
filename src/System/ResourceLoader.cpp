@@ -6,8 +6,12 @@
 #include "Enum.h"
 #include "ResourceLoader.h"
 #include "System.h"
+#include "../../vendor/yaml-cpp/include/yaml-cpp/yaml.h"
 
 namespace ResourceLoader {
+
+
+
     std::map<int, std::map<int, sf::Texture *>> textureCollection;
     std::map<std::string, sf::Texture *> characterTextureCollection;
 
@@ -300,6 +304,16 @@ namespace ResourceLoader {
         texture->loadFromFile(path);
 
         return texture;
+    }
+
+    void loadLocales() {
+        YAML::Node config = YAML::LoadFile("resources/locale/" + System::locale + ".yml");
+
+
+
+        return;
+
+
     }
 
 

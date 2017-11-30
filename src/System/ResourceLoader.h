@@ -6,10 +6,6 @@
 #include "Enum.h"
 
 namespace ResourceLoader {
-    extern std::map<int, std::map<int, sf::Texture *>> textureCollection;
-
-    extern std::map<std::string, sf::Texture *> characterTextureCollection;
-
     void loadTexture(Entities target, const std::string &path, States states = S_None);
 
     void loadCharacterTexture(Entities target, const std::string &path, States state = S_None, Gender gender = G_Male, Race race = R_White, int level = 1);
@@ -25,6 +21,8 @@ namespace ResourceLoader {
     void loadFonts();
 
     void loadNames();
+
+    void loadLocales();
 
     std::string getCharacterTextNotation(Entities character);
 

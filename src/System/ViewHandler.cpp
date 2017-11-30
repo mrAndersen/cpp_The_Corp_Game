@@ -117,7 +117,7 @@ namespace ViewHandler {
         }
 
         if (bottom < 0) {
-            view->setCenter(System::cToGl({center.x, System::screenHeight / 2}));
+            view->setCenter(System::cToGl({center.x, (float) System::screenHeight / 2}));
         }
 
         recalculateBoundaires();

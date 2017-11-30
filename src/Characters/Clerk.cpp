@@ -177,7 +177,7 @@ std::string Clerk::createStatsText() {
     if(currentWorkPlace){
         s = s + "Workplace: Office #" + std::to_string(currentWorkPlace->getParentOffice()->getId()) + "\n";
     }else{
-        s = s + "Workplace: No";
+        s = s + "Workplace: No\n";
     }
 
     s = s + "Daily salary: " + System::f_to_string(dailySalaries[level]) + "$\n";
