@@ -3,9 +3,12 @@
 
 #include <SFML/Graphics/Texture.hpp>
 #include <map>
+#include <yaml-cpp/yaml.h>
 #include "Enum.h"
 
 namespace ResourceLoader {
+    extern YAML::Node translations;
+
     void loadTexture(Entities target, const std::string &path, States states = S_None);
 
     void loadCharacterTexture(Entities target, const std::string &path, States state = S_None, Gender gender = G_Male, Race race = R_White, int level = 1);

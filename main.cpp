@@ -11,7 +11,6 @@
 
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow) {
     SaveManager saveManager;
-//    System::seed = std::chrono::system_clock::now().time_since_epoch().count();
 
     //preload resources
     ResourceLoader::loadTexturesFromFiles();

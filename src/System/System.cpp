@@ -11,6 +11,7 @@
 #include "ViewHandler.h"
 #include "GameTime.h"
 #include "..\Text\TextEntity.h"
+#include "ResourceLoader.h"
 
 namespace System {
     unsigned int screenWidth = 1850;
@@ -324,6 +325,25 @@ namespace System {
                System::g_x <= rightBottom.x &&
                System::g_y >= rightBottom.y &&
                System::g_y <= leftTop.y;
+    }
+
+    std::vector<std::string> split(std::string source, char delimiter) {
+        std::vector<std::string> vector;
+        std::string temp;
+
+        for (int index = 0; index < source.size(); ++index) {
+            if (source[index] == delimiter || index == source.size()) {
+                vector.push_back(temp);
+                temp = "";
+            }else{
+                temp += source[index];
+            }
+        }
+
+        vector.push_back(temp);
+        temp = "";
+
+        return vector;
     }
 }
 

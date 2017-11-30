@@ -78,6 +78,8 @@ namespace System {
 
     RECT getScreenBoundaries();
 
+    std::vector<std::string> split(std::string source, char delimiter = '.');
+
     void refreshDayTime();
 
     void refreshDebugPanel();
