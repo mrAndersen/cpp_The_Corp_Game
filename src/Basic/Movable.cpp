@@ -214,6 +214,8 @@ void Movable::updateLogic() {
                     visible = false;
 
                     moving = false;
+                    setDrawOrder(D_Characters, true);
+
                     destinations.pop_front();
                 }
 
@@ -231,18 +233,13 @@ void Movable::updateLogic() {
                     currentDST = DST_Unknown;
                     destinations.pop_front();
                 }
-
-                if (local.getCoordinates() == final.getCoordinates()) {
-                    //revert draw order
-                    setDrawOrder(D_Characters, true);
-                }
             }
         }
     }
 
     //one-time-exec
     //time to go home
-    if (System::gameTime.isRestTime() && !moving) {
+    if (System::gameTime.isRestTime() && !moving && visible) {
 
         moving = true;
         setDrawOrder(D_Characters, true);
