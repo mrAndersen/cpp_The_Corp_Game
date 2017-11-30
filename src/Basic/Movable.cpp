@@ -640,15 +640,18 @@ std::string Movable::createStatsText() {
     }
 
     if (eType == E_Clerk) {
-        s = s + "Role: Clerk\n";
+        s = s + ResourceLoader::translations["popups"]["unit_help_texts"]["role"].as<std::string>() + ":" +
+                ResourceLoader::translations["units"]["titles"]["clerk"].as<std::string>() + "\n";
     }
 
     if (eType == E_Manager) {
-        s = s + "Role: Manager\n";
+        s = s + ResourceLoader::translations["popups"]["unit_help_texts"]["role"].as<std::string>() + ":" +
+                ResourceLoader::translations["units"]["titles"]["manager"].as<std::string>() + "\n";
     }
 
     if (eType == E_Accountant) {
-        s = s + "Role: Accountant\n";
+        s = s + ResourceLoader::translations["popups"]["unit_help_texts"]["role"].as<std::string>() + ":" +
+                ResourceLoader::translations["units"]["titles"]["accountant"].as<std::string>() + "\n";
     }
 
     s = s + "Level: " + std::to_string(level) + "\n";

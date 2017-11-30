@@ -38,7 +38,7 @@ namespace System {
     long long int frameTimeMcs;
     sf::Uint32 screenMode = sf::Style::Default;
     float timeFactor = 1;
-    std::string locale = "en";
+    std::string locale = "ru";
     //sys
 
     //utility
@@ -106,7 +106,7 @@ namespace System {
     }
 
     void refreshSystem() {
-        window->setTitle("Incorporated ~ [" + std::to_string(fps) + " FPS]");
+        window->setTitle(ResourceLoader::translations["title"].as<std::string>() + " ~ [" + std::to_string(fps) + " FPS]");
 
         frameTimeMcs = frameClock.restart().asMicroseconds();
         framesPassed++;
