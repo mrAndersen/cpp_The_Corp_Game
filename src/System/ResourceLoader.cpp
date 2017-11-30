@@ -146,7 +146,6 @@ namespace ResourceLoader {
         ResourceLoader::loadTexture(Entities::E_OfficeDefault, "resources/office/office.default.png");
         ResourceLoader::loadTexture(Entities::E_Chair, "resources/office/chair.png");
 
-
         //----<<Characters>>-----
         std::vector<Entities> characters = {E_Clerk, E_Manager, E_Accountant};
         Gender genders[] = {G_Male};
@@ -198,7 +197,7 @@ namespace ResourceLoader {
 
         System::debugFont->loadFromFile("resources/fonts/DidactGothic-Regular.ttf");
         System::gameFont->loadFromFile("resources/fonts/Teko-Regular.ttf");
-        System::gameFont2->loadFromFile("resources/fonts/Comfortaa-Regular.ttf");
+        System::gameFont2->loadFromFile("resources/fonts/Oswald-Regular.ttf");
     }
 
     void loadNames() {

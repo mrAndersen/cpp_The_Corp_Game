@@ -21,6 +21,9 @@ MainPanelOverlay::MainPanelOverlay(float leftOffset, float topOffset) : BasicUi(
 void MainPanelOverlay::update() {
     BasicUi::update();
 
+    worldCoordinates.x = ViewHandler::right - width / 2;
+    worldCoordinates.y = ViewHandler::top - height / 2;
+
     time.setString(System::gameTime.get());
     time.setPosition(System::cToGl(ViewHandler::left + leftOffset + 58, ViewHandler::top - topOffset + 32));
 

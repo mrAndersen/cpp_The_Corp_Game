@@ -16,12 +16,22 @@ protected:
     float cost = 0;
 
     WorkPlace *workPlaces[4];
+
+    Popup *popup;
+    sf::Text popupText;
+    std::string popupString;
 public:
     Office();
+
+    void updatePopup();
+
+    std::string createStatsText();
 
     WorkPlace *const *getWorkPlaces() const;
 
     std::vector<Office *> getNeighborOffices();
+
+    void setSelected(bool selected) override;
 
     float getCost() const;
 

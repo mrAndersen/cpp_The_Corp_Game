@@ -174,6 +174,12 @@ void Clerk::searchWorkPlace() {
 std::string Clerk::createStatsText() {
     auto s = Movable::createStatsText();
 
+    if(currentWorkPlace){
+        s = s + "Workplace: Office #" + std::to_string(currentWorkPlace->getParentOffice()->getId()) + "\n";
+    }else{
+        s = s + "Workplace: No";
+    }
+
     s = s + "Daily salary: " + System::f_to_string(dailySalaries[level]) + "$\n";
     s = s + "Earned total: " + System::f_to_string(totalEarnings) + "$\n";
     s = s + "Earning/h: " + System::f_to_string(dailyEarnings[level] / 8 * workingModificator * System::accountantsBonus) + "$\n";

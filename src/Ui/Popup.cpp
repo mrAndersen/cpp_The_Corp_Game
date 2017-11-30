@@ -21,8 +21,8 @@ Popup::Popup(float leftOffset, float topOffset) : BasicUi(leftOffset, topOffset)
     popupText.setCharacterSize(14);
     popupText.setFillColor(sf::Color::Black);
 
-    popupTitle.setFont(*System::gameFont);
-    popupTitle.setCharacterSize(56);
+    popupTitle.setFont(*System::gameFont2);
+    popupTitle.setCharacterSize(52);
     popupTitle.setFillColor(sf::Color::Black);
 
     EntityContainer::add(this);
@@ -49,7 +49,7 @@ void Popup::update() {
     popupTitle.setOrigin(roundf((tBounds.width / 2)), roundf((tBounds.height / 2)));
 
     sf::Vector2f hPosition = {left + 10, top - 150};
-    sf::Vector2f tPosition = {roundf(worldCoordinates.x), roundf((worldCoordinates.y - 190))};
+    sf::Vector2f tPosition = {roundf(worldCoordinates.x), roundf((worldCoordinates.y - 200))};
 
     popupText.setPosition(System::cToGl(hPosition));
     popupTitle.setPosition(System::cToGl(tPosition));
