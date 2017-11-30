@@ -41,7 +41,6 @@ print("\r Zipping... " + str(round(size / 1024 / 1024, 2)) + " Mb")
 # Uploading
 shutil.rmtree(releaseDirectory)
 
-
 print("Uploading...", end="")
 
 login = "mrAndersen"
@@ -49,8 +48,15 @@ password = "matrixx1s"
 
 g = github.Github("mrAndersen", "matrixx1s")
 niceTime = time.strftime("%H:%M:%S %d-%B", time.localtime())
-release = g.get_user().get_repo("cppForestCorporation").create_git_release(tag="early-alpha-" + timeString, message="Automated release", name=niceTime)
 
+repo = g.get_user().get_repo("cppForestCorporation")
+
+# Delete old releses
+for release in repo.get_releases():
+    release.delete_release()
+
+# New release
+release = repo.create_git_release(tag="early-alpha-" + timeString, message="Automated release", name=niceTime)
 binaryData = open(releaseDirectory + ".zip", 'rb').read()
 
 headers = {
