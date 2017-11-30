@@ -16,7 +16,6 @@ namespace System {
     unsigned int screenWidth = 1850;
     unsigned int screenHeight = 900;
     std::string title = "New World";
-    float groundLevel = 0;
     float worldWidth = 9900;
     int gridSize = 50;
     int entitySequence = 1;
@@ -59,7 +58,7 @@ namespace System {
     int buttonReload = 150;
 
     sf::Clock dayClock = {};
-    GameTime gameTime(19, 30);
+    GameTime gameTime(10, 30);
 
     int startWorkHour = 10;
     int endWorkHour = 19;

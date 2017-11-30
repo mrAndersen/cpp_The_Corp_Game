@@ -22,7 +22,9 @@ void ControlButtonAddClerk::update() {
 
     bool spawnCondition = attachedClerk &&
                           System::cash >= attachedClerk->getCost() &&
-                          !attachedClerk->isBelowGround();
+                          !attachedClerk->isBelowGround() &&
+                          (attachedClerk->isCrossingOffices() || attachedClerk->isOnTheGround(30))
+    ;
 
     if(mouseIn()){
         System::selectionCooldown.restart();
@@ -50,6 +52,7 @@ void ControlButtonAddClerk::update() {
     }
 
     if (attachedClerk) {
+        System::selectionCooldown.restart();
         state = S_Button_Pressed;
         System::spawningUnit = true;
         attachedClerk->setWorldCoordinates(System::getGlobalMouse());

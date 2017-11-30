@@ -19,7 +19,9 @@ void ControlButtonAddManager::update() {
 
     bool spawnCondition = attachedManager &&
                           System::cash >= attachedManager->getCost() &&
-                          !attachedManager->isBelowGround();
+                          !attachedManager->isBelowGround() &&
+                          (attachedManager->isCrossingOffices() || attachedManager->isOnTheGround(30))
+    ;
 
     if(mouseIn()){
         System::selectionCooldown.restart();
@@ -47,6 +49,7 @@ void ControlButtonAddManager::update() {
     }
 
     if (attachedManager) {
+        System::selectionCooldown.restart();
         state = S_Button_Pressed;
         System::spawningUnit = true;
         attachedManager->setWorldCoordinates(System::getGlobalMouse());

@@ -84,20 +84,19 @@ void Entity::setWorldCoordinates(const sf::Vector2f &worldCoordinates) {
 }
 
 bool Entity::isBelowGround() {
-    return bottom < System::groundLevel + Ground::height;
+    return bottom < 0 + Ground::height;
 }
 
 bool Entity::isAboveGround() {
-    return bottom > System::groundLevel + Ground::height;
+    return bottom > 0 + Ground::height;
 }
 
 
-bool Entity::isOnTheGround() {
-    int delta = 3;
+bool Entity::isOnTheGround(int delta) {
 
     return
-            bottom - delta < System::groundLevel + Ground::height ||
-            bottom + delta < System::groundLevel + Ground::height;
+            bottom - delta < 0 + Ground::height ||
+            bottom + delta < 0 + Ground::height;
 }
 
 bool Entity::intersectsWithObjects() {

@@ -41,7 +41,6 @@ void Popup::update() {
     }
 
     auto tBounds = popupTitle.getLocalBounds();
-    auto hBounds = popupText.getLocalBounds();
 
     popupText.setString(popupTextString);
     popupTitle.setString(popupTitleString);

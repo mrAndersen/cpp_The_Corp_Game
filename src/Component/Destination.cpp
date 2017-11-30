@@ -85,11 +85,11 @@ Destination Destination::createSmokeAreaDST(Movable *movable, sf::Vector2f &smok
     auto scatter = 300;
 
     return {{(float) System::getRandom((int) smokeArea.x - scatter / 2, (int) smokeArea.x + scatter / 2),
-             System::groundLevel + Ground::height + movable->getHeight() / 2}, DST_SmokeArea};
+             0 + Ground::height + movable->getHeight() / 2}, DST_SmokeArea};
 }
 
 Destination Destination::createHomeDST(Movable *movable, sf::Vector2f &home) {
-    return {{home.x, System::groundLevel + Ground::height + movable->getHeight() / 2}, DST_Home};
+    return {{home.x, 0 + Ground::height + movable->getHeight() / 2}, DST_Home};
 }
 
 

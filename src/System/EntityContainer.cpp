@@ -94,21 +94,21 @@ namespace EntityContainer {
                 auto rnd = System::getRandom(0, 100);
 
                 if (rnd <= 33) {
-                    new Ground(sf::Vector2f((float) i, System::groundLevel + Ground::height / 2), E_StaticGround_1);
+                    new Ground(sf::Vector2f((float) i, 0 + Ground::height / 2), E_StaticGround_1);
                 }
 
                 if (rnd > 33 && rnd <= 66) {
-                    new Ground(sf::Vector2f((float) i, System::groundLevel + Ground::height / 2), E_StaticGround_2);
+                    new Ground(sf::Vector2f((float) i, 0 + Ground::height / 2), E_StaticGround_2);
                 }
 
                 if (rnd > 66) {
-                    new Ground(sf::Vector2f((float) i, System::groundLevel + Ground::height / 2), E_StaticGround_3);
+                    new Ground(sf::Vector2f((float) i, 0 + Ground::height / 2), E_StaticGround_3);
                 }
             }
 
             //ground artifacts
             if (System::getRandom(0, 20000) <= 15 && i < System::worldWidth / 2 - Tree::width) {
-                auto yrnd = System::getRandom((int) (System::groundLevel + 55 / 2), (int) (System::groundLevel + Ground::height - 55 / 2 - 35));
+                auto yrnd = System::getRandom((int) (0 + 55 / 2), (int) (0 + Ground::height - 55 / 2 - 35));
                 new GroundArtifact({(float) i, (float) yrnd}, {81, 55}, E_StaticGroundArtifact_1);
             }
 
@@ -206,19 +206,19 @@ namespace EntityContainer {
 //                auto treeIndex = System::getRandom(0, 100);
 //
 //                if (treeIndex <= 25) {
-//                    new Tree({(float) i, System::groundLevel + Ground::height + Tree::height / 2}, E_StaticTree_1);
+//                    new Tree({(float) i, 0 + Ground::height + Tree::height / 2}, E_StaticTree_1);
 //                }
 //
 //                if (treeIndex > 25 && treeIndex <= 50) {
-//                    new Tree({(float) i, System::groundLevel + Ground::height + Tree::height / 2}, E_StaticTree_2);
+//                    new Tree({(float) i, 0 + Ground::height + Tree::height / 2}, E_StaticTree_2);
 //                }
 //
 //                if (treeIndex > 50 && treeIndex <= 75) {
-//                    new Tree({(float) i, System::groundLevel + Ground::height + 449 / 2}, E_StaticTree_3, {361, 449});
+//                    new Tree({(float) i, 0 + Ground::height + 449 / 2}, E_StaticTree_3, {361, 449});
 //                }
 //
 //                if (treeIndex > 75) {
-//                    new Tree({(float) i, System::groundLevel + Ground::height + 162 / 2}, E_StaticTree_4, {308, 162});
+//                    new Tree({(float) i, 0 + Ground::height + 162 / 2}, E_StaticTree_4, {308, 162});
 //                }
 //            }
 

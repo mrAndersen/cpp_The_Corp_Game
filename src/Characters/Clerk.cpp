@@ -37,9 +37,8 @@ void Clerk::updateLogic() {
     }
 
     //search workplace every 500ms
-    if (!currentWorkPlace && workPlaceSearchResolution.getElapsedTime().asMilliseconds() >= 500) {
+    if (!currentWorkPlace) {
         searchWorkPlace();
-        workPlaceSearchResolution.restart();
     }
 
     //one-time-exec
@@ -137,8 +136,7 @@ void Clerk::createWorkPlaceRoute() {
             targetElevator->incBoarding();
             destinations.push_back(Destination::createElevatorWaitingDST(targetElevator, this));
             destinations.push_back(Destination::createElevatorCabinDST(targetElevator, this));
-            destinations.push_back(Destination::createElevatorExitingDST(targetElevator, this,
-                                                                         currentWorkPlace->getWorldCoordinates()));
+            destinations.push_back(Destination::createElevatorExitingDST(targetElevator, this, currentWorkPlace->getWorldCoordinates()));
             destinations.push_back(Destination::createWorkplaceDST(this));
         }
     }
@@ -178,8 +176,7 @@ std::string Clerk::createStatsText() {
 
     s = s + "Daily salary: " + System::f_to_string(dailySalaries[level]) + "$\n";
     s = s + "Earned total: " + System::f_to_string(totalEarnings) + "$\n";
-    s = s + "Earning/h: " +
-        System::f_to_string(dailyEarnings[level] / 8 * workingModificator * System::accountantsBonus) + "$\n";
+    s = s + "Earning/h: " + System::f_to_string(dailyEarnings[level] / 8 * workingModificator * System::accountantsBonus) + "$\n";
     s = s + "Manager buff: " + (buffed ? (buffStart.get() + " - " + buffEnd.get()) : "Not buffed") + "\n";
     s = s + "Accountants bonus: " + System::f_to_string((System::accountantsBonus - 1) * 100) + "%\n";
 

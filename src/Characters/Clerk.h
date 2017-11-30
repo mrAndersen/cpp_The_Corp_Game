@@ -22,7 +22,6 @@ public:
     float totalEarnings = 10000;
 
     WorkPlace *currentWorkPlace = nullptr;
-    sf::Clock workPlaceSearchResolution;
 
     explicit Clerk(sf::Vector2f coordinates);
 

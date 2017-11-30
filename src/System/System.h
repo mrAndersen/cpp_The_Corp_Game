@@ -13,7 +13,6 @@ namespace System {
     extern unsigned int screenWidth;
     extern unsigned int screenHeight;
     extern std::string title;
-    extern float groundLevel;
     extern float worldWidth;
     extern int gridSize;
     extern int entitySequence;

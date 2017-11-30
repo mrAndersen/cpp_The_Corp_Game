@@ -395,6 +395,7 @@ void Movable::setCost(float cost) {
 
 void Movable::spawn() {
     System::cash -= this->cost;
+    worldCoordinates.y = getFloorBottom(floor) + height / 2;
 
     auto *spent = new TextEntity(System::c_red, 30);
     auto position = worldCoordinates;
@@ -481,7 +482,7 @@ sf::Vector2f Movable::searchNearestOutside() {
 }
 
 float Movable::getFloorBottom(int floor) {
-    return System::groundLevel + Ground::height + (floor - 1) * 150;
+    return 0 + Ground::height + (floor - 1) * 150;
 }
 
 float Movable::getFloorBottom(sf::Vector2f coordinates) {
@@ -693,6 +694,22 @@ bool Movable::insideElevator() {
 
     for (auto &e:shafts) {
         if (e->getRect().intersects(rect)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool Movable::isCrossingOffices() {
+    std::vector<Entity *> offices = EntityContainer::getGroupItems("offices");
+
+    if (offices.empty()) {
+        return false;
+    }
+
+    for (auto &e:offices) {
+        if (e->getRect().contains(rect.left, rect.top) && e->getRect().contains(rect.left + width, rect.top - height)) {
             return true;
         }
     }

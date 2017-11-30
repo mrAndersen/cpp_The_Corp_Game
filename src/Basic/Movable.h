@@ -107,6 +107,8 @@ public:
 
     bool isCrossingShafts();
 
+    bool isCrossingOffices();
+
     const std::deque<Destination> &getDestinations() const;
 
     void setDestinations(const std::deque<Destination> &destinations);

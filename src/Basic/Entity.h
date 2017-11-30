@@ -138,7 +138,7 @@ public:
 
     bool isOnTheFloor();
 
-    bool isOnTheGround();
+    bool isOnTheGround(int delta = 3);
 
     bool intersectsWithObjects();
 

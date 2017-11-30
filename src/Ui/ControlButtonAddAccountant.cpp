@@ -20,7 +20,10 @@ void ControlButtonAddAccountant::update() {
 
     bool spawnCondition = attachedAccountant &&
                           System::cash >= attachedAccountant->getCost() &&
-                          !attachedAccountant->isBelowGround();
+                          !attachedAccountant->isBelowGround() &&
+                          (attachedAccountant->isCrossingOffices() || attachedAccountant->isOnTheGround(30))
+    ;
+
 
     if(mouseIn()){
         System::selectionCooldown.restart();
@@ -49,6 +52,7 @@ void ControlButtonAddAccountant::update() {
     }
 
     if (attachedAccountant) {
+        System::selectionCooldown.restart();
         state = S_Button_Pressed;
         System::spawningUnit = true;
         attachedAccountant->setWorldCoordinates(System::getGlobalMouse());

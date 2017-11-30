@@ -19,8 +19,6 @@ private:
     bool salaryProcessed = false;
 
     WorkPlace *currentWorkPlace = nullptr;
-    sf::Clock workPlaceSearchResolution;
-
 public:
     void spawn() override;
 

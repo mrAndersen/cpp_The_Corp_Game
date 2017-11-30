@@ -59,6 +59,7 @@ void ControlButtonAddElevatorShaftTop::update() {
     }
 
     if (attachedShaft) {
+        System::selectionCooldown.restart();
         System::spawningUnit = true;
         auto global = System::getGlobalMouse();
 

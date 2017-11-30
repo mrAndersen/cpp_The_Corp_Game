@@ -26,7 +26,7 @@ void Elevator::addMiddleSection(ElevatorShaftMiddle *shaft) {
 void Elevator::drawDebug() {
 
     sf::RectangleShape rect;
-    sf::Vector2f position(left, System::groundLevel + 40);
+    sf::Vector2f position(left, 40);
 
     rect.setPosition(System::cToGl(position));
     rect.setSize({20, 20});
@@ -119,7 +119,11 @@ void Elevator::update() {
         auto finishedEntering = 0;
 
         for (auto p:people) {
-            if (p->getState() == S_None && p->getLeft() >= cabin->getLeft() && p->getRight() <= cabin->getRight()) {
+            if (
+                    p->getState() == S_None &&
+                    p->getWorldCoordinates().x >= cabin->getLeft() &&
+                    p->getWorldCoordinates().x <= cabin->getRight()
+                    ) {
                 finishedEntering++;
             }
         }
@@ -232,7 +236,7 @@ const std::deque<int> &Elevator::getQueue() const {
 }
 
 float Elevator::getFloorBottom(int floor) {
-    return System::groundLevel + Ground::height + (floor - 1) * 150;
+    return Ground::height + (floor - 1) * 150;
 }
 
 int Elevator::getMaxFloor() {

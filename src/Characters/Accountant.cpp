@@ -37,9 +37,8 @@ void Accountant::updateLogic() {
     Movable::updateLogic();
 
     //search workplace every 500ms
-    if (!currentWorkPlace && workPlaceSearchResolution.getElapsedTime().asMilliseconds() >= 500) {
+    if (!currentWorkPlace) {
         searchWorkPlace();
-        workPlaceSearchResolution.restart();
     }
 
     //one-time-exec

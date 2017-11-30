@@ -19,7 +19,7 @@ namespace DebugPattern {
             auto count = 4;
 
             for (int i = 0; i < count; ++i) {
-                auto c = new Clerk({System::g_x + (i * 72) - 150, System::g_y});
+                auto c = new Clerk({System::g_x + (i * 72) - 150, Ground::height + Clerk::height / 2});
                 c->spawn();
             }
         }
@@ -28,7 +28,7 @@ namespace DebugPattern {
             auto count = 4;
 
             for (int i = 0; i < count; ++i) {
-                auto m = new Manager({System::g_x + (i * 72) - 150, System::g_y});
+                auto m = new Manager({System::g_x + (i * 72) - 150, Ground::height + Clerk::height / 2});
                 m->spawn();
             }
         }
@@ -37,7 +37,7 @@ namespace DebugPattern {
             auto count = 4;
 
             for (int i = 0; i < count; ++i) {
-                auto a = new Accountant({System::g_x + (i * 72) - 150, System::g_y});
+                auto a = new Accountant({System::g_x + (i * 72) - 150, Ground::height + Clerk::height / 2});
                 a->spawn();
             }
         }

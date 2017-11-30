@@ -59,6 +59,7 @@ void ControlButtonAddOffice::update() {
     }
 
     if (attachedOffice) {
+        System::selectionCooldown.restart();
         System::spawningUnit = true;
         auto global = System::getGlobalMouse();
         state = S_Button_Pressed;

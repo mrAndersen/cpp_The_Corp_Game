@@ -59,6 +59,7 @@ void ControlButtonAddElevatorCabin::update() {
     }
 
     if (attachedCabin) {
+        System::selectionCooldown.restart();
         state = S_Button_Pressed;
         System::spawningUnit = true;
         auto global = System::getGlobalMouse();
