@@ -37,6 +37,7 @@ namespace System {
     extern sf::Color c_background;
     extern sf::Color c_grey;
     extern sf::Color c_red;
+    extern sf::Color c_yellow;
     extern sf::Color c_green;
     extern sf::Color c_blue;
     //utility

@@ -12,7 +12,7 @@ public:
 protected:
     sf::Text text;
     std::string string;
-
+    sf::Color color = sf::Color(255, 255, 255, 255);
 public:
     PopupButton();
 
@@ -25,6 +25,10 @@ public:
     void setString(const std::string &string);
 
     void update() override;
+
+    const sf::Color &getColor() const;
+
+    void setColor(const sf::Color &color);
 };
 
 

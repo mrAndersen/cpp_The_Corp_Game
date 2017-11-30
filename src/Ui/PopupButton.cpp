@@ -16,7 +16,7 @@ PopupButton::PopupButton() : BasicUi(leftOffset, topOffset) {
     initEntity();
 
     text.setFont(*System::debugFont);
-    text.setCharacterSize(14);
+    text.setCharacterSize(16);
     text.setFillColor(sf::Color::White);
 
     EntityContainer::add(this);
@@ -66,6 +66,15 @@ void PopupButton::update() {
     text.setString(string);
     text.setOrigin(roundf((tBounds.width / 2)), roundf((tBounds.height / 2)));
     text.setPosition(System::cToGl(worldCoordinates));
+    currentAnimation->getSprite().setColor(color);
 
     System::window->draw(text);
+}
+
+const sf::Color &PopupButton::getColor() const {
+    return color;
+}
+
+void PopupButton::setColor(const sf::Color &color) {
+    PopupButton::color = color;
 }

@@ -337,6 +337,7 @@ Movable::Movable(Entities type, int width, int height) : Entity(type) {
     auto fire = new PopupButton;
     fire->setString("Fire");
     fire->setFixed(false);
+    fire->setColor(System::c_yellow);
 
     popup->buttons["upgrade"] = upgrade;
     popup->buttons["fire"] = fire;
@@ -605,23 +606,21 @@ void Movable::updatePopup() {
         e.second->setVisible(true);
 
         if (e.first == "upgrade") {
-            e.second->setWorldCoordinates(
-                    {popup->getLeft() + 10 + PopupButton::width / 2, popup->getTop() - PopupButton::height / 2 - 10});
+            e.second->setWorldCoordinates({popup->getLeft() + 10 + PopupButton::width / 2, popup->getTop() - PopupButton::height / 2 - 10});
 
             if (e.second->isPressed() && lastUpgradeTimer.getElapsedTime().asMilliseconds() >= 500) {
                 upgrade();
             }
 
             if (upgradeAvailable) {
-                e.second->getCurrentAnimation()->getSprite().setColor(sf::Color::Green);
+                e.second->setColor(System::c_green);
             } else {
-                e.second->getCurrentAnimation()->getSprite().setColor(sf::Color::Red);
+                e.second->setColor(System::c_red);
             }
         }
 
         if (e.first == "fire") {
-            e.second->setWorldCoordinates({popup->getLeft() + 10 + PopupButton::width / 2,
-                                           popup->getTop() - PopupButton::height / 2 - PopupButton::height - 10});
+            e.second->setWorldCoordinates({popup->getLeft() + 10 + PopupButton::width / 2, popup->getTop() - PopupButton::height / 2 - PopupButton::height - 10});
 
             if (e.second->isPressed()) {
                 popup->setVisible(false);

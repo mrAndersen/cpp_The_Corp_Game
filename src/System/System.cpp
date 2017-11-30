@@ -44,6 +44,7 @@ namespace System {
     sf::Color c_background(231, 254, 250);
     sf::Color c_grey(236, 237, 227);
     sf::Color c_red(186, 24, 24);
+    sf::Color c_yellow(229, 234, 93);
     sf::Color c_green(92, 184, 92);
     sf::Color c_blue(65, 123, 216);
     //utility
