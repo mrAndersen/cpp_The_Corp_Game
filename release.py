@@ -61,7 +61,7 @@ headers = {
 url = release.upload_url.replace("{?name,label}", "") + "?name=" + releaseDirectory + ".zip"
 r = requests.post(url, headers=headers, data=binaryData)
 
-shutil.rmtree(releaseDirectory + ".zip")
+os.remove(releaseDirectory + ".zip")
 
 print("\r Uploading... Done\n")
 print("\r" + release.html_url)
