@@ -16,6 +16,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
     //preload resources
     ResourceLoader::loadTexturesFromFiles();
     ResourceLoader::loadFonts();
+    ResourceLoader::loadLocales();
     ResourceLoader::loadNames();
 
     //load window and debug utilities

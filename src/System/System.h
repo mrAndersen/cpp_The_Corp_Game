@@ -28,6 +28,7 @@ namespace System {
     extern long long int frameTimeMcs;
     extern sf::Uint32 screenMode;
     extern float timeFactor;
+    extern std::string locale;
     //sys
 
 

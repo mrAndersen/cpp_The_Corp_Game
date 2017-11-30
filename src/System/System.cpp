@@ -37,7 +37,7 @@ namespace System {
     long long int frameTimeMcs;
     sf::Uint32 screenMode = sf::Style::Default;
     float timeFactor = 1;
-    int hoverCount = 0;
+    std::string locale = "en";
     //sys
 
     //utility

@@ -10,21 +10,16 @@ project(the_corp_game)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_FLAGS "-static-libgcc -static-libstdc++")
 
-
-set(SFML_ROOT "${PROJECT_SOURCE_DIR}/vendor/mingw_sfml-2.4.2")
+set(SFML_ROOT "${PROJECT_SOURCE_DIR}/vendor/sfml-2.4.2-mingw")
 #set(SFML_ROOT "${PROJECT_SOURCE_DIR}/vendor/sfml-2.4.2-windows")
-set(SFML_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/vendor/mingw_sfml-2.4.2/include")
+set(SFML_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/vendor/sfml-2.4.2-mingw/include")
 #set(SFML_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/vendor/sfml-2.4.2-windows/include")
 
 include_directories("${PROJECT_SOURCE_DIR}/src")
+set(OTHER_DEPENDENCIES "${PROJECT_SOURCE_DIR}/vendor/yaml-cpp/lib/libyaml-cpp.a")
+
 
 file(COPY "resources" DESTINATION "${CMAKE_BINARY_DIR}")
-
-# Set version information in a config.h file
-set(the_corp_game_VERSION_MAJOR 1)
-set(the_corp_game_VERSION_MINOR 0)
-
-include_directories("${PROJECT_BINARY_DIR}")
 
 # Define sources and executable
 set(EXECUTABLE_NAME "corpgame")
@@ -184,7 +179,7 @@ if(SFML_FOUND)
     FIND_LIBRARY (PSAPI Psapi)
 
     include_directories(${SFML_INCLUDE_DIR})
-    target_link_libraries(${EXECUTABLE_NAME} ${PSAPI} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
+    target_link_libraries(${EXECUTABLE_NAME} ${PSAPI} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES} ${OTHER_DEPENDENCIES})
 endif()
 
 
