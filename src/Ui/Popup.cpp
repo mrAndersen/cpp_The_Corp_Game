@@ -62,32 +62,8 @@ sf::Text &Popup::getPopupTitle() {
     return popupTitle;
 }
 
-void Popup::setPopupTitle(const sf::Text &popupTitle) {
-    Popup::popupTitle = popupTitle;
-}
-
-const std::string &Popup::getPopupTitleString() const {
-    return popupTitleString;
-}
-
-void Popup::setPopupTitleString(const std::string &popupTitleString) {
-    Popup::popupTitleString = popupTitleString;
-}
-
 sf::Text &Popup::getPopupText() {
     return popupText;
-}
-
-void Popup::setPopupText(const sf::Text &popupText) {
-    Popup::popupText = popupText;
-}
-
-const std::string &Popup::getPopupTextString() const {
-    return popupTextString;
-}
-
-void Popup::setPopupTextString(const std::string &popupTextString) {
-    Popup::popupTextString = popupTextString;
 }
 
 const std::map<std::string, PopupButton *> &Popup::getButtons() const {

@@ -87,7 +87,7 @@ namespace EntityContainer {
         int nextFieldBorder = 0;
         int nextTreeBorder = 0;
 
-        bool drawBg = false;
+        bool drawBg = true;
 
         for (int i = (int) -System::worldWidth / 2; i < (int) (System::worldWidth / 2); ++i) {
 

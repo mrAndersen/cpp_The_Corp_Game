@@ -22,19 +22,7 @@ public:
 
     sf::Text &getPopupText();
 
-    void setPopupText(const sf::Text &popupText);
-
-    const std::string &getPopupTextString() const;
-
-    void setPopupTextString(const std::string &popupTextString);
-
     sf::Text &getPopupTitle();
-
-    void setPopupTitle(const sf::Text &popupTitle);
-
-    const std::string &getPopupTitleString() const;
-
-    void setPopupTitleString(const std::string &popupTitleString);
 
     void update() override;
 

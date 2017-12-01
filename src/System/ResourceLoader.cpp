@@ -6,7 +6,6 @@
 #include "Enum.h"
 #include "ResourceLoader.h"
 #include "System.h"
-#include <yaml-cpp/yaml.h>
 
 namespace ResourceLoader {
     YAML::Node translations;
@@ -331,6 +330,20 @@ namespace ResourceLoader {
 
     void loadLocales() {
         translations = YAML::LoadFile("resources/locale/" + System::locale + ".yml");
+    }
+
+    sf::String getTranslation(std::string key) {
+        auto vector = System::split(key);
+        YAML::Node part;
+
+        for (int i = 0; i < vector.size(); ++i) {
+            part = i == 0 ? translations[vector[i]] : part[vector[i]];
+
+            if(part.IsScalar()){
+                auto s = part.as<std::string>();
+                return sf::String::fromUtf8(s.begin(), s.end());
+            }
+        }
     }
 
 

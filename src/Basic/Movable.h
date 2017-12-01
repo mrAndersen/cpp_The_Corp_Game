@@ -79,7 +79,7 @@ public:
 
     void updatePopup();
 
-    virtual std::string createStatsText();
+    virtual sf::String createStatsText();
 
     void setSelected(bool selected) override;
 

@@ -28,7 +28,7 @@ public:
 
     void createBuffTargetDestination();
 
-    std::string createStatsText() override;
+    sf::String createStatsText() override;
 
     Movable *searchTarget();
 };

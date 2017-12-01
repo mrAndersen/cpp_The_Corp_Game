@@ -124,7 +124,7 @@ bool Accountant::isInWorkPlace() {
             (int) worldCoordinates.x == (int) currentWorkPlace->getWorldCoordinates().x;
 }
 
-std::string Accountant::createStatsText() {
+sf::String Accountant::createStatsText() {
     auto s = Movable::createStatsText();
 
     s = s + "Global earning modificator: " + System::f_to_string(buffPercentages[level] * workingModificator) + "%\n";

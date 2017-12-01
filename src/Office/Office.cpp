@@ -174,10 +174,10 @@ void Office::updatePopup() {
         return;
     }
 
-    popup->setPopupTextString(createStatsText());
+    popup->getPopupText().setString(createStatsText());
     popup->getPopupText().setCharacterSize(16);
     popup->getPopupTitle().setCharacterSize(45);
-    popup->setPopupTitleString("Office #" + std::to_string(id));
+    popup->getPopupTitle().setString("Office #" + std::to_string(id));
     popup->setWorldCoordinates({worldCoordinates.x, worldCoordinates.y + popup->getHeight() / 2 + height / 2 + 20});
 }
 

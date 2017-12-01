@@ -10,7 +10,6 @@
 
 
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow) {
-    std::setlocale(LC_ALL, "ru");
     SaveManager saveManager;
 
     //preload resources

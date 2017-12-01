@@ -5,9 +5,12 @@
 #include <map>
 #include <yaml-cpp/yaml.h>
 #include "Enum.h"
+#include <SFML/System/String.hpp>
 
 namespace ResourceLoader {
     extern YAML::Node translations;
+
+    sf::String getTranslation(std::string key);
 
     void loadTexture(Entities target, const std::string &path, States states = S_None);
 

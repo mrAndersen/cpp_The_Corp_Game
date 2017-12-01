@@ -587,23 +587,17 @@ void Movable::updatePopup() {
         return;
     }
 
-    popup->setPopupTextString(createStatsText());
+    popup->getPopupText().setString(createStatsText());
     popup->getPopupText().setCharacterSize(16);
-    popup->setPopupTitleString(personName + "");
-
-    //@todo swap popup logic discuss
-//    if(ViewHandler::top - worldCoordinates.y > popup->getHeight()){
+    popup->getPopupTitle().setString(personName);
     popup->setWorldCoordinates({worldCoordinates.x, worldCoordinates.y + popup->getHeight() / 2 + height / 2 + 20});
-//    }else{
-//        popup->setWorldCoordinates({worldCoordinates.x, worldCoordinates.y - popup->getHeight() / 2 - height / 2 + 20});
-//    }
-
 
     for (auto &e:popup->buttons) {
         e.second->setVisible(true);
 
         if (e.first == "upgrade") {
-            e.second->setWorldCoordinates({popup->getLeft() + 10 + PopupButton::width / 2, popup->getTop() - PopupButton::height / 2 - 10});
+            e.second->setWorldCoordinates(
+                    {popup->getLeft() + 10 + PopupButton::width / 2, popup->getTop() - PopupButton::height / 2 - 10});
 
             if (e.second->isPressed() && lastUpgradeTimer.getElapsedTime().asMilliseconds() >= 500) {
                 upgrade();
@@ -617,7 +611,8 @@ void Movable::updatePopup() {
         }
 
         if (e.first == "fire") {
-            e.second->setWorldCoordinates({popup->getLeft() + 10 + PopupButton::width / 2, popup->getTop() - PopupButton::height / 2 - PopupButton::height - 10});
+            e.second->setWorldCoordinates({popup->getLeft() + 10 + PopupButton::width / 2,
+                                           popup->getTop() - PopupButton::height / 2 - PopupButton::height - 10});
 
             if (e.second->isPressed()) {
                 popup->setVisible(false);
@@ -632,31 +627,23 @@ void Movable::setSelected(bool selected) {
     popup->setVisible(selected);
 }
 
-std::string Movable::createStatsText() {
-    std::string s;
+sf::String Movable::createStatsText() {
+    sf::String s;
 
     if (System::debug) {
-        s = s + "Id: " + std::to_string(id) + "\n";
+        s += "Id: " + std::to_string(id) + "\n";
     }
 
     if (eType == E_Clerk) {
-        s = s + ResourceLoader::translations["popups"]["unit_help_texts"]["role"].as<std::string>() + ":" +
-                ResourceLoader::translations["units"]["titles"]["clerk"].as<std::string>() + "\n";
+//        s += ResourceLoader::getTranslation("popups.unit_help_texts.role") + "\n";
+        std::string g = "Тест";
+        auto t = sf::String::fromUtf8(g.begin(), g.end());
+        s += t + "\n";
     }
 
-    if (eType == E_Manager) {
-        s = s + ResourceLoader::translations["popups"]["unit_help_texts"]["role"].as<std::string>() + ":" +
-                ResourceLoader::translations["units"]["titles"]["manager"].as<std::string>() + "\n";
-    }
-
-    if (eType == E_Accountant) {
-        s = s + ResourceLoader::translations["popups"]["unit_help_texts"]["role"].as<std::string>() + ":" +
-                ResourceLoader::translations["units"]["titles"]["accountant"].as<std::string>() + "\n";
-    }
-
-    s = s + "Level: " + std::to_string(level) + "\n";
-    s = s + "State: " + ResourceLoader::getStateTextNotation(state) + "\n";
-    s = s + "Smoking: " + (smoking == 1 ? "Yes" : "No") + "\n";
+    s += "Level: " + std::to_string(level) + "\n";
+    s += "State: " + ResourceLoader::getStateTextNotation(state) + "\n";
+//    s += "Smoking: " + (smoking == 1 ? "Yes" : "No") + "\n";
 
     return s;
 }

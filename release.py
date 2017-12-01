@@ -51,10 +51,6 @@ niceTime = time.strftime("%H:%M:%S %d-%B", time.localtime())
 
 repo = g.get_user().get_repo("cppForestCorporation")
 
-# Delete old releses
-for release in repo.get_releases():
-    release.delete_release()
-
 # New release
 release = repo.create_git_release(tag="early-alpha-" + timeString, message="Automated release", name=niceTime)
 binaryData = open(releaseDirectory + ".zip", 'rb').read()

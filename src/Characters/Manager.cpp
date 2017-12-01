@@ -120,7 +120,7 @@ Movable *Manager::searchTarget() {
     return nullptr;
 }
 
-std::string Manager::createStatsText() {
+sf::String Manager::createStatsText() {
 
     auto s = Movable::createStatsText();
 

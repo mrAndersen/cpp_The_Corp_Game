@@ -41,7 +41,7 @@ public:
 
     void createWorkPlaceRoute();
 
-    std::string createStatsText() override;
+    sf::String createStatsText() override;
 
     void upgrade() override;
 };

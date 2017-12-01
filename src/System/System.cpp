@@ -7,6 +7,7 @@
 #include <chrono>
 #include <climits>
 #include <iostream>
+#include <codecvt>
 #include "System.h"
 #include "ViewHandler.h"
 #include "GameTime.h"
@@ -106,7 +107,7 @@ namespace System {
     }
 
     void refreshSystem() {
-        window->setTitle(ResourceLoader::translations["title"].as<std::string>() + " ~ [" + std::to_string(fps) + " FPS]");
+        window->setTitle(ResourceLoader::getTranslation("title") + " ~ " + std::to_string(System::fps) + "FPS");
 
         frameTimeMcs = frameClock.restart().asMicroseconds();
         framesPassed++;
@@ -335,7 +336,7 @@ namespace System {
             if (source[index] == delimiter || index == source.size()) {
                 vector.push_back(temp);
                 temp = "";
-            }else{
+            } else {
                 temp += source[index];
             }
         }

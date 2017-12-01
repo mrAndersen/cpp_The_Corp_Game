@@ -171,28 +171,28 @@ void Clerk::searchWorkPlace() {
     }
 }
 
-std::string Clerk::createStatsText() {
+sf::String Clerk::createStatsText() {
     auto s = Movable::createStatsText();
 
-    if(currentWorkPlace){
-        s = s + "Workplace: Office #" + std::to_string(currentWorkPlace->getParentOffice()->getId()) + "\n";
-    }else{
-        s = s + "Workplace: No\n";
-    }
-
-    s = s + "Daily salary: " + System::f_to_string(dailySalaries[level]) + "$\n";
-    s = s + "Earned total: " + System::f_to_string(totalEarnings) + "$\n";
-    s = s + "Earning/h: " + System::f_to_string(dailyEarnings[level] / 8 * workingModificator * System::accountantsBonus) + "$\n";
-    s = s + "Manager buff: " + (buffed ? (buffStart.get() + " - " + buffEnd.get()) : "Not buffed") + "\n";
-    s = s + "Accountants bonus: " + System::f_to_string((System::accountantsBonus - 1) * 100) + "%\n";
-
-    if (upgradeAvailable) {
-        s = s + "Upgrade: Yes!\n";
-    } else {
-        if (level == 1) {
-            s = s + "Upgrade: " + System::f_to_string(1000 - totalEarnings, 0) + "$ more total earnings\n";
-        }
-    }
+//    if(currentWorkPlace){
+//        s = s + "Workplace: Office #" + std::to_string(currentWorkPlace->getParentOffice()->getId()) + "\n";
+//    }else{
+//        s = s + "Workplace: No\n";
+//    }
+//
+//    s = s + "Daily salary: " + System::f_to_string(dailySalaries[level]) + "$\n";
+//    s = s + "Earned total: " + System::f_to_string(totalEarnings) + "$\n";
+//    s = s + "Earning/h: " + System::f_to_string(dailyEarnings[level] / 8 * workingModificator * System::accountantsBonus) + "$\n";
+//    s = s + "Manager buff: " + (buffed ? (buffStart.get() + " - " + buffEnd.get()) : "Not buffed") + "\n";
+//    s = s + "Accountants bonus: " + System::f_to_string((System::accountantsBonus - 1) * 100) + "%\n";
+//
+//    if (upgradeAvailable) {
+//        s = s + "Upgrade: Yes!\n";
+//    } else {
+//        if (level == 1) {
+//            s = s + "Upgrade: " + System::f_to_string(1000 - totalEarnings, 0) + "$ more total earnings\n";
+//        }
+//    }
 
     return s;
 }
