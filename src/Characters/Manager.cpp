@@ -6,7 +6,7 @@
 Manager::Manager(sf::Vector2f coordinates) : Movable(E_Manager, Manager::width, Manager::height) {
     setDefaultSpeed(165);
 
-    setCost(1000);
+    setCost(750);
     setWorldCoordinates(coordinates);
     setSelectable(true);
 
@@ -39,11 +39,11 @@ void Manager::updateLogic() {
     if (state == S_Working && currentTarget && !buffInProgress && !currentTarget->isBuffed()) {
         buffingProcedureClock.restart();
 
-        currentTarget->setWorkingModificator(currentTarget->getWorkingModificator() * buffStrength);
+        currentTarget->setWorkingModificator(currentTarget->getWorkingModificator() * buffStrengths[level]);
         currentTarget->setBuffed(true);
         currentTarget->setWillBeBuffed(false);
         currentTarget->setBuffStart(System::gameTime);
-        currentTarget->setBuffEnd(System::gameTime + 120);
+        currentTarget->setBuffEnd(System::gameTime + (buffDurationGameHours * 60));
         targetsBuffed++;
         buffInProgress = true;
 
@@ -124,7 +124,7 @@ sf::String Manager::createStatsText() {
 
     auto s = Movable::createStatsText();
 
-    s = s + "Daily salary: " + System::f_to_string(dailySalary) + "$\n";
+    s = s + "Daily salary: " + System::f_to_string(dailySalaries[level]) + "$\n";
     s = s + "Employees motivated: " + std::to_string(targetsBuffed) + "\n";
 
     return s;

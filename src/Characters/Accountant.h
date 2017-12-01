@@ -15,7 +15,7 @@ private:
     std::map<int, float> buffPercentages = {{1, 1},{2, 1.5},{3, 2},{4, 2.5}};
     bool earningProcessed = false;
 
-    std::map<int, float> dailySalaries = {{1, 128}, {2, 200}, {3, 400}, {4, 500}};
+    std::map<int, float> dailySalaries = {{1, 150}, {2, 250}, {3, 500}, {4, 750}};
     bool salaryProcessed = false;
 
     WorkPlace *currentWorkPlace = nullptr;
