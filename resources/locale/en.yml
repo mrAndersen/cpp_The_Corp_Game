@@ -4,6 +4,10 @@ atomics:
     yes: Yes
     no: No
 
+buttons:
+    upgrade: Upgrade
+    fire: Fire
+
 units:
     titles:
         clerk: Clerk
