@@ -16,8 +16,8 @@ set(SFML_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/vendor/sfml-2.4.2-mingw/include")
 #set(SFML_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/vendor/sfml-2.4.2-windows/include")
 
 include_directories("${PROJECT_SOURCE_DIR}/src")
-include_directories("${PROJECT_SOURCE_DIR}/vendor/yaml-cpp/include")
-set(OTHER_DEPENDENCIES "${PROJECT_SOURCE_DIR}/vendor/yaml-cpp/libyaml-cpp.a")
+include_directories("vendor/yaml/include")
+set(OTHER_DEPENDENCIES "vendor/yaml/libyaml-cpp.a")
 
 
 file(COPY "resources" DESTINATION "${CMAKE_BINARY_DIR}")
