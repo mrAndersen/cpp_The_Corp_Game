@@ -7,16 +7,17 @@
 #include <chrono>
 #include <climits>
 #include <iostream>
+#include <codecvt>
 #include "System.h"
 #include "ViewHandler.h"
 #include "GameTime.h"
 #include "..\Text\TextEntity.h"
+#include "ResourceLoader.h"
 
 namespace System {
     unsigned int screenWidth = 1850;
     unsigned int screenHeight = 900;
     std::string title = "New World";
-    float groundLevel = 0;
     float worldWidth = 9900;
     int gridSize = 50;
     int entitySequence = 1;
@@ -38,19 +39,21 @@ namespace System {
     long long int frameTimeMcs;
     sf::Uint32 screenMode = sf::Style::Default;
     float timeFactor = 1;
-    int hoverCount = 0;
+    std::string locale = "ru";
     //sys
 
     //utility
     sf::Color c_background(231, 254, 250);
     sf::Color c_grey(236, 237, 227);
     sf::Color c_red(186, 24, 24);
+    sf::Color c_yellow(229, 234, 93);
     sf::Color c_green(92, 184, 92);
     sf::Color c_blue(65, 123, 216);
     //utility
 
     //player
     double cash = 2000000;
+    float accountantsBonus = 1.f;
     bool spawningUnit = false;
     sf::Clock selectionCooldown;
     bool dayEndProcessed = false;
@@ -58,7 +61,7 @@ namespace System {
     int buttonReload = 150;
 
     sf::Clock dayClock = {};
-    GameTime gameTime(10, 30);
+    GameTime gameTime(11, 30);
 
     int startWorkHour = 10;
     int endWorkHour = 19;
@@ -104,7 +107,7 @@ namespace System {
     }
 
     void refreshSystem() {
-        window->setTitle("Incorporated ~ [" + std::to_string(fps) + " FPS]");
+        window->setTitle(ResourceLoader::getTranslation("title") + " ~ " + std::to_string(System::fps) + "FPS");
 
         frameTimeMcs = frameClock.restart().asMicroseconds();
         framesPassed++;
@@ -134,7 +137,6 @@ namespace System {
             debugPanelTextNodes["fps"].setString("fps: " + std::to_string(fps));
             debugPanelTextNodes["mouse"].setString(
                     "mouse: {" + std::to_string(mousePosition.x) + "," + std::to_string(mousePosition.y) + "}");
-            debugPanelTextNodes["entity_count"].setString("entities: " + std::to_string(entitiesOnScreen));
             debugPanelTextNodes["v_direction"].setString(
                     "v_direction: " + std::to_string(ViewHandler::viewDirectionMovement));
             debugPanelTextNodes["mem"].setString("mem:" + std::to_string((int) mem / 1024 / 1024) + "mb");
@@ -221,7 +223,6 @@ namespace System {
         createDebugString("mem");
         createDebugString("g_coordinates");
         createDebugString("mouse");
-        createDebugString("entity_count");
         createDebugString("v_direction");
         createDebugString("v_boundaries");
         createDebugString("v_zoom");
@@ -325,6 +326,25 @@ namespace System {
                System::g_x <= rightBottom.x &&
                System::g_y >= rightBottom.y &&
                System::g_y <= leftTop.y;
+    }
+
+    std::vector<std::string> split(std::string source, char delimiter) {
+        std::vector<std::string> vector;
+        std::string temp;
+
+        for (int index = 0; index < source.size(); ++index) {
+            if (source[index] == delimiter || index == source.size()) {
+                vector.push_back(temp);
+                temp = "";
+            } else {
+                temp += source[index];
+            }
+        }
+
+        vector.push_back(temp);
+        temp = "";
+
+        return vector;
     }
 }
 

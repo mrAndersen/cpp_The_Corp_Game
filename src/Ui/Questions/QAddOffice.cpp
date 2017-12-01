@@ -1,5 +1,5 @@
 #include "QAddOffice.h"
 
 QAddOffice::QAddOffice(float leftOffset, float topOffset) : Question(leftOffset, topOffset, E_Question_Mark_ButtonAddOffice) {
-    popup->setPopupTextString("Office");
+    popup->getPopupTitle().setString("Office");
 }

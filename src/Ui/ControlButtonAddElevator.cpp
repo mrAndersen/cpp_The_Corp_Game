@@ -20,6 +20,10 @@ void ControlButtonAddElevator::update() {
     auto bs = ControlPanel::getControls()[E_ButtonAddElevatorShaftMiddle];
     auto bst = ControlPanel::getControls()[E_ButtonAddElevatorShaftTop];
 
+    if(mouseIn()){
+        System::selectionCooldown.restart();
+    }
+
     if (leftClicked() && !System::spawningUnit && liveClock.getElapsedTime().asMilliseconds() >= System::buttonReload) {
         pressed = !pressed;
         liveClock.restart();
@@ -27,7 +31,6 @@ void ControlButtonAddElevator::update() {
 
     if (pressed) {
         state = S_Button_Pressed;
-        System::selectionCooldown.restart();
 
         bc->setVisible(true);
         bs->setVisible(true);

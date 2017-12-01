@@ -21,6 +21,8 @@ class Clerk;
 
 class Manager;
 
+class Accountnat;
+
 class Movable : public Entity {
 
 protected:
@@ -67,15 +69,21 @@ protected:
 public:
     Movable(Entities type, int width, int height);
 
+    Popup *getPopup() const;
+
+    void setPopup(Popup *popup);
+
     virtual void upgrade();
+
+    int getLevel() const;
 
     void updatePopup();
 
-    virtual std::string createStatsText();
+    virtual sf::String createStatsText();
 
     void setSelected(bool selected) override;
 
-    void loadAnimations();
+    virtual void loadAnimations();
 
     const GameTime &getBuffStart() const;
 
@@ -99,6 +107,8 @@ public:
 
     bool isCrossingShafts();
 
+    bool isCrossingOffices();
+
     const std::deque<Destination> &getDestinations() const;
 
     void setDestinations(const std::deque<Destination> &destinations);
@@ -112,6 +122,8 @@ public:
     float getFloorBottom(sf::Vector2f coordinates);
 
     void createSmokeAreaRoute();
+
+    void recalculateAccountantsBonus();
 
     void createHomeRoute();
 
@@ -144,6 +156,8 @@ public:
     void setFallAcceleration(float fallAcceleration);
 
     Elevator *searchNearestElevator();
+
+    bool insideElevator();
 
     std::string serialize() override;
 

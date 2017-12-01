@@ -29,6 +29,10 @@ void ControlButtonAddElevatorShaftMiddle::update() {
                           !attachedShaft->intersectsWithObjects() &&
                           (attachedShaft->isOnTheGround() || attachedShaft->hasMiddleShaftOnTheBottom());
 
+    if(mouseIn()){
+        System::selectionCooldown.restart();
+    }
+
     if (leftClicked() && !attachedShaft && !System::spawningUnit) {
         attachedShaft = new ElevatorShaftMiddle(sf::Vector2f(System::g_x, System::g_y));
         attachedShaft->setTransparent();
@@ -38,7 +42,6 @@ void ControlButtonAddElevatorShaftMiddle::update() {
         EntityContainer::remove(attachedShaft);
 
         System::spawningUnit = false;
-        System::selectionCooldown.restart();
         attachedShaft = nullptr;
     }
 
@@ -48,18 +51,21 @@ void ControlButtonAddElevatorShaftMiddle::update() {
         attachedShaft->spawn();
 
         System::spawningUnit = false;
-        System::selectionCooldown.restart();
         attachedShaft = nullptr;
     }
 
     if (attachedShaft) {
+        System::selectionCooldown.restart();
         System::spawningUnit = true;
         auto global = System::getGlobalMouse();
 
-        float normalizedX = global.x - ((int) global.x % System::gridSize) + System::gridSize / 2;
-        float normalizedY = global.y - ((int) global.y % System::gridSize) + System::gridSize / 2;
+        float x = roundf(global.x - ((int) global.x % System::gridSize) + width / 2);
+        float y = roundf(global.y - ((int) global.y % System::gridSize) + System::gridSize / 2);
 
-        attachedShaft->setWorldCoordinates(sf::Vector2f(normalizedX, normalizedY));
+        x = System::roundToMultiple(x);
+        y = System::roundToMultiple(y);
+
+        attachedShaft->setWorldCoordinates({x, y});
 
         if (!spawnCondition) {
             attachedShaft->setInvalid();

@@ -33,6 +33,10 @@ void ControlButtonAddElevatorCabin::update() {
                           attachedCabin->hasElevatorShaftTopAbove()
     ;
 
+    if(mouseIn()){
+        System::selectionCooldown.restart();
+    }
+
     if (leftClicked() && !attachedCabin && !System::spawningUnit) {
         attachedCabin = new ElevatorCabin({System::g_x, System::g_y});
         attachedCabin->setTransparent();
@@ -42,7 +46,6 @@ void ControlButtonAddElevatorCabin::update() {
         EntityContainer::remove(attachedCabin);
 
         System::spawningUnit = false;
-        System::selectionCooldown.restart();
         attachedCabin = nullptr;
     }
 
@@ -52,20 +55,22 @@ void ControlButtonAddElevatorCabin::update() {
         attachedCabin->spawn();
 
         System::spawningUnit = false;
-        System::selectionCooldown.restart();
         attachedCabin = nullptr;
     }
 
     if (attachedCabin) {
-        state = S_Button_Pressed;
         System::selectionCooldown.restart();
+        state = S_Button_Pressed;
         System::spawningUnit = true;
         auto global = System::getGlobalMouse();
 
-        float normalizedX = global.x - ((int) global.x % System::gridSize) + System::gridSize / 2;
-        float normalizedY = global.y - ((int) global.y % System::gridSize) + System::gridSize / 2;
+        float x = roundf(global.x - ((int) global.x % System::gridSize) + width / 2);
+        float y = roundf(global.y - ((int) global.y % System::gridSize) + System::gridSize / 2);
 
-        attachedCabin->setWorldCoordinates(sf::Vector2f(normalizedX, normalizedY));
+        x = System::roundToMultiple(x);
+        y = System::roundToMultiple(y);
+
+        attachedCabin->setWorldCoordinates({x, y});
 
         if (!spawnCondition) {
             attachedCabin->setInvalid();

@@ -1,6 +1,5 @@
 /.idea
 /.vs
-debug
-release
+/Debug
 .vs
 /cmake-build-debug

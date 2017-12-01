@@ -19,12 +19,13 @@ public:
     std::map<int, float> dailySalaries = {{1, 64}, {2, 100}, {3, 150}, {4, 200}};
     bool salaryProcessed = false;
 
-    float totalEarnings = 0;
+    float totalEarnings = 10000;
 
     WorkPlace *currentWorkPlace = nullptr;
-    sf::Clock workPlaceSearchResolution;
 
     explicit Clerk(sf::Vector2f coordinates);
+
+    virtual ~Clerk();
 
     void updateLogic() override;
 
@@ -36,9 +37,11 @@ public:
 
     void searchWorkPlace();
 
+    void spawn() override;
+
     void createWorkPlaceRoute();
 
-    std::string createStatsText() override;
+    sf::String createStatsText() override;
 
     void upgrade() override;
 };

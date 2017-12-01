@@ -21,8 +21,8 @@ Popup::Popup(float leftOffset, float topOffset) : BasicUi(leftOffset, topOffset)
     popupText.setCharacterSize(14);
     popupText.setFillColor(sf::Color::Black);
 
-    popupTitle.setFont(*System::gameFont);
-    popupTitle.setCharacterSize(56);
+    popupTitle.setFont(*System::gameFont2);
+    popupTitle.setCharacterSize(52);
     popupTitle.setFillColor(sf::Color::Black);
 
     EntityContainer::add(this);
@@ -41,7 +41,6 @@ void Popup::update() {
     }
 
     auto tBounds = popupTitle.getLocalBounds();
-    auto hBounds = popupText.getLocalBounds();
 
     popupText.setString(popupTextString);
     popupTitle.setString(popupTitleString);
@@ -50,7 +49,7 @@ void Popup::update() {
     popupTitle.setOrigin(roundf((tBounds.width / 2)), roundf((tBounds.height / 2)));
 
     sf::Vector2f hPosition = {left + 10, top - 150};
-    sf::Vector2f tPosition = {roundf(worldCoordinates.x), roundf((worldCoordinates.y - 190))};
+    sf::Vector2f tPosition = {roundf(worldCoordinates.x), roundf((worldCoordinates.y - 200))};
 
     popupText.setPosition(System::cToGl(hPosition));
     popupTitle.setPosition(System::cToGl(tPosition));
@@ -63,30 +62,14 @@ sf::Text &Popup::getPopupTitle() {
     return popupTitle;
 }
 
-void Popup::setPopupTitle(const sf::Text &popupTitle) {
-    Popup::popupTitle = popupTitle;
-}
-
-const std::string &Popup::getPopupTitleString() const {
-    return popupTitleString;
-}
-
-void Popup::setPopupTitleString(const std::string &popupTitleString) {
-    Popup::popupTitleString = popupTitleString;
-}
-
 sf::Text &Popup::getPopupText() {
     return popupText;
 }
 
-void Popup::setPopupText(const sf::Text &popupText) {
-    Popup::popupText = popupText;
+const std::map<std::string, PopupButton *> &Popup::getButtons() const {
+    return buttons;
 }
 
-const std::string &Popup::getPopupTextString() const {
-    return popupTextString;
-}
-
-void Popup::setPopupTextString(const std::string &popupTextString) {
-    Popup::popupTextString = popupTextString;
+void Popup::setButtons(const std::map<std::string, PopupButton *> &buttons) {
+    Popup::buttons = buttons;
 }

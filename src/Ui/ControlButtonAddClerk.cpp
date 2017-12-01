@@ -22,7 +22,13 @@ void ControlButtonAddClerk::update() {
 
     bool spawnCondition = attachedClerk &&
                           System::cash >= attachedClerk->getCost() &&
-                          !attachedClerk->isBelowGround();
+                          !attachedClerk->isBelowGround() &&
+                          (attachedClerk->isCrossingOffices() || attachedClerk->isOnTheGround(30))
+    ;
+
+    if(mouseIn()){
+        System::selectionCooldown.restart();
+    }
 
     if (leftClicked() && !attachedClerk && !System::spawningUnit) {
         attachedClerk = new Clerk({System::g_x, System::g_y});
@@ -32,7 +38,6 @@ void ControlButtonAddClerk::update() {
         EntityContainer::remove(attachedClerk);
 
         System::spawningUnit = false;
-        System::selectionCooldown.restart();
         attachedClerk = nullptr;
     }
 
@@ -43,13 +48,12 @@ void ControlButtonAddClerk::update() {
         attachedClerk->spawn();
 
         System::spawningUnit = false;
-        System::selectionCooldown.restart();
         attachedClerk = nullptr;
     }
 
     if (attachedClerk) {
-        state = S_Button_Pressed;
         System::selectionCooldown.restart();
+        state = S_Button_Pressed;
         System::spawningUnit = true;
         attachedClerk->setWorldCoordinates(System::getGlobalMouse());
 

@@ -7,6 +7,10 @@
 Office::Office() {
     setGroupName("offices");
 
+    popup = new Popup(0, 0);
+    popup->setVisible(false);
+    popup->setFixed(false);
+
     workPlaces[0] = new WorkPlace(worldCoordinates, this);
     workPlaces[1] = new WorkPlace(worldCoordinates, this);
     workPlaces[2] = new WorkPlace(worldCoordinates, this);
@@ -47,6 +51,8 @@ std::vector<Office *> Office::getNeighborOffices() {
 }
 
 void Office::updateLogic() {
+    updatePopup();
+
     //update floor
     floor = ((int) worldCoordinates.y - ((int) worldCoordinates.y % System::gridSize)) / System::gridSize / 3;
 
@@ -157,5 +163,40 @@ WorkPlace *Office::getNextFreeWorkPlace() {
 
 WorkPlace *const *Office::getWorkPlaces() const {
     return workPlaces;
+}
+
+void Office::updatePopup() {
+    if (!popup->isVisible() || !visible) {
+        for (auto &e:popup->buttons) {
+            e.second->setVisible(false);
+        }
+
+        return;
+    }
+
+    popup->getPopupText().setString(createStatsText());
+    popup->getPopupText().setCharacterSize(16);
+    popup->getPopupTitle().setCharacterSize(45);
+    popup->getPopupTitle().setString("Office #" + std::to_string(id));
+    popup->setWorldCoordinates({worldCoordinates.x, worldCoordinates.y + popup->getHeight() / 2 + height / 2 + 20});
+}
+
+std::string Office::createStatsText() {
+    std::string s;
+
+    if(eType == E_OfficeDefault){
+        s = s + "Type: Default office\n";
+    }
+
+    s = s + "Free workplaces: " + std::to_string(4 - getBusyWorkPlaces()) + "\n";
+    s = s + "Floor: " + std::to_string(floor) + "\n";
+
+
+    return s;
+}
+
+void Office::setSelected(bool selected) {
+    Entity::setSelected(selected);
+    popup->setVisible(selected);
 }
 

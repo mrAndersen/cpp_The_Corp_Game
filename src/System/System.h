@@ -13,7 +13,6 @@ namespace System {
     extern unsigned int screenWidth;
     extern unsigned int screenHeight;
     extern std::string title;
-    extern float groundLevel;
     extern float worldWidth;
     extern int gridSize;
     extern int entitySequence;
@@ -29,7 +28,7 @@ namespace System {
     extern long long int frameTimeMcs;
     extern sf::Uint32 screenMode;
     extern float timeFactor;
-    extern int hoverCount;
+    extern std::string locale;
     //sys
 
 
@@ -39,12 +38,14 @@ namespace System {
     extern sf::Color c_background;
     extern sf::Color c_grey;
     extern sf::Color c_red;
+    extern sf::Color c_yellow;
     extern sf::Color c_green;
     extern sf::Color c_blue;
     //utility
 
     //player
     extern double cash;
+    extern float accountantsBonus;
     extern bool spawningUnit;
     extern sf::Clock selectionCooldown;
     extern bool dayEndProcessed;
@@ -76,6 +77,8 @@ namespace System {
     //debug
 
     RECT getScreenBoundaries();
+
+    std::vector<std::string> split(std::string source, char delimiter = '.');
 
     void refreshDayTime();
 

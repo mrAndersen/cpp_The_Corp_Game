@@ -2,6 +2,7 @@
 #define THE_CORP_GAME_DESTINATION_H
 
 #include <SFML/System/Vector2.hpp>
+
 #include "../System/Enum.h"
 #include "../System/System.h"
 #include "../Background/Ground.h"
@@ -11,6 +12,8 @@ class Elevator;
 class Clerk;
 
 class Manager;
+
+class Accountant;
 
 class Destination {
     sf::Vector2f coordinates;
@@ -35,8 +38,10 @@ public:
     static Destination createElevatorCabinDST(Elevator *elevator, Movable *movable);
 
     static Destination createWorkplaceDST(Clerk *movable);
+    static Destination createWorkplaceDST(Accountant *movable);
 
     static Destination createBuffPlaceDST(Clerk *movable);
+    static Destination createBuffPlaceDST(Accountant *movable);
 
     static Destination createSmokeAreaDST(Movable *movable, sf::Vector2f &smokeArea);
 

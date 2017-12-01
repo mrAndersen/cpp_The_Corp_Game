@@ -15,12 +15,6 @@ void Entity::update() {
         selectAnimation(state);
 
         if (currentAnimation) {
-//            if (selectable && mouseIn() && System::selectionAllowed) {
-//                setHovered();
-//            } else {
-//                setNormal();
-//            }
-
             currentAnimation->update();
         }
 
@@ -84,20 +78,19 @@ void Entity::setWorldCoordinates(const sf::Vector2f &worldCoordinates) {
 }
 
 bool Entity::isBelowGround() {
-    return bottom < System::groundLevel + Ground::height;
+    return bottom < 0 + Ground::height;
 }
 
 bool Entity::isAboveGround() {
-    return bottom > System::groundLevel + Ground::height;
+    return bottom > 0 + Ground::height;
 }
 
 
-bool Entity::isOnTheGround() {
-    int delta = 3;
+bool Entity::isOnTheGround(int delta) {
 
     return
-            bottom - delta < System::groundLevel + Ground::height ||
-            bottom + delta < System::groundLevel + Ground::height;
+            bottom - delta < 0 + Ground::height ||
+            bottom + delta < 0 + Ground::height;
 }
 
 bool Entity::intersectsWithObjects() {
@@ -420,8 +413,7 @@ void Entity::setManualUpdate(bool manualUpdate) {
     Entity::manualUpdate = manualUpdate;
 }
 
-Entity *Entity::create(Entities type, DrawOrder order, sf::Vector2f size, sf::Vector2f coordinates,
-                       const std::string &texturePath) {
+Entity *Entity::create(Entities type, DrawOrder order, sf::Vector2f size, sf::Vector2f coordinates, const std::string &texturePath) {
     auto e = new Entity(type);
 
     e->setDrawOrder(order);

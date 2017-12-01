@@ -53,6 +53,10 @@ bool GameTime::isWorkTime() {
     return hour >= System::startWorkHour && hour < System::endWorkHour;
 }
 
+bool GameTime::isRestTime() {
+    return (hour >= System::endWorkHour && hour <= 24) || (hour >= 0 && hour < System::startWorkHour);
+}
+
 bool GameTime::isEarningHour() {
     return hour >= System::startWorkHour + 1 && hour <= System::endWorkHour && (minute == 30 || minute == 0);
 }

@@ -1,11 +1,12 @@
 #include "../System/EntityContainer.h"
 #include "Manager.h"
 #include "Clerk.h"
+#include "Accountant.h"
 
 Manager::Manager(sf::Vector2f coordinates) : Movable(E_Manager, Manager::width, Manager::height) {
     setDefaultSpeed(165);
 
-    setCost(1000);
+    setCost(750);
     setWorldCoordinates(coordinates);
     setSelectable(true);
 
@@ -38,11 +39,11 @@ void Manager::updateLogic() {
     if (state == S_Working && currentTarget && !buffInProgress && !currentTarget->isBuffed()) {
         buffingProcedureClock.restart();
 
-        currentTarget->setWorkingModificator(currentTarget->getWorkingModificator() * buffStrength);
+        currentTarget->setWorkingModificator(currentTarget->getWorkingModificator() * buffStrengths[level]);
         currentTarget->setBuffed(true);
         currentTarget->setWillBeBuffed(false);
         currentTarget->setBuffStart(System::gameTime);
-        currentTarget->setBuffEnd(System::gameTime + 120);
+        currentTarget->setBuffEnd(System::gameTime + (buffDurationGameHours * 60));
         targetsBuffed++;
         buffInProgress = true;
 
@@ -53,7 +54,16 @@ void Manager::updateLogic() {
         buffHint->setSpeed(100);
         buffHint->setLiveTimeSeconds(2);
         buffHint->setWorldCoordinates(position);
-        buffHint->setString("Earnings + " + System::f_to_string((currentTarget->getWorkingModificator() * 100) - 100) + "%");
+
+        if(currentTarget->getEType() == E_Accountant){
+            currentTarget->recalculateAccountantsBonus();
+            buffHint->setString("Earning modificator +" + System::f_to_string((currentTarget->getWorkingModificator() * 100) - 100) + "%");
+        }
+
+        if(currentTarget->getEType() == E_Clerk){
+            buffHint->setString("Earnings + " + System::f_to_string((currentTarget->getWorkingModificator() * 100) - 100) + "%");
+        }
+
     }
 
     if (state == S_Working && buffInProgress && buffingProcedureClock.getElapsedTime().asSeconds() >= 10 / System::timeFactor) {
@@ -69,6 +79,11 @@ void Manager::createBuffTargetDestination() {
             auto clerk = dynamic_cast<Clerk *>(currentTarget);
             destinations.push_back(Destination::createBuffPlaceDST(clerk));
         }
+
+        if (currentTarget->getEType() == E_Accountant) {
+            auto accountant = dynamic_cast<Accountant *>(currentTarget);
+            destinations.push_back(Destination::createBuffPlaceDST(accountant));
+        }
     } else {
         targetElevator = searchNearestElevator();
         targetElevator->incBoarding();
@@ -81,6 +96,11 @@ void Manager::createBuffTargetDestination() {
             if (currentTarget->getEType() == E_Clerk) {
                 auto clerk = dynamic_cast<Clerk *>(currentTarget);
                 destinations.push_back(Destination::createBuffPlaceDST(clerk));
+            }
+
+            if (currentTarget->getEType() == E_Accountant) {
+                auto accountant = dynamic_cast<Accountant *>(currentTarget);
+                destinations.push_back(Destination::createBuffPlaceDST(accountant));
             }
         }
     }
@@ -100,11 +120,11 @@ Movable *Manager::searchTarget() {
     return nullptr;
 }
 
-std::string Manager::createStatsText() {
+sf::String Manager::createStatsText() {
 
     auto s = Movable::createStatsText();
 
-    s = s + "Daily salary: " + System::f_to_string(dailySalary) + "$\n";
+    s = s + "Daily salary: " + System::f_to_string(dailySalaries[level]) + "$\n";
     s = s + "Employees motivated: " + std::to_string(targetsBuffed) + "\n";
 
     return s;

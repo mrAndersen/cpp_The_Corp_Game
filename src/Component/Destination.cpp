@@ -1,6 +1,7 @@
 #include "Destination.h"
 #include "../Basic/Movable.h"
 #include "../Characters/Clerk.h"
+#include "../Characters/Accountant.h"
 
 const sf::Vector2f &Destination::getCoordinates() const {
     return coordinates;
@@ -64,7 +65,17 @@ Destination Destination::createWorkplaceDST(Clerk *movable) {
              movable->getCurrentWorkPlace()->getParentOffice()->getBottom() + movable->getHeight() / 2}, DST_Workplace};
 }
 
+Destination Destination::createWorkplaceDST(Accountant *movable) {
+    return {{movable->getCurrentWorkPlace()->getWorldCoordinates().x,
+             movable->getCurrentWorkPlace()->getParentOffice()->getBottom() + movable->getHeight() / 2}, DST_Workplace};
+}
+
 Destination Destination::createBuffPlaceDST(Clerk *movable) {
+    return {{movable->getCurrentWorkPlace()->getWorldCoordinates().x - 35,
+             movable->getCurrentWorkPlace()->getParentOffice()->getBottom() + movable->getHeight() / 2}, DST_Buff_Position};
+}
+
+Destination Destination::createBuffPlaceDST(Accountant *movable) {
     return {{movable->getCurrentWorkPlace()->getWorldCoordinates().x - 35,
              movable->getCurrentWorkPlace()->getParentOffice()->getBottom() + movable->getHeight() / 2}, DST_Buff_Position};
 }
@@ -73,12 +84,11 @@ Destination Destination::createBuffPlaceDST(Clerk *movable) {
 Destination Destination::createSmokeAreaDST(Movable *movable, sf::Vector2f &smokeArea) {
     auto scatter = 300;
 
-    return {{(float) System::getRandom((int) smokeArea.x - scatter / 2, (int) smokeArea.x + scatter / 2),
-             System::groundLevel + Ground::height + movable->getHeight() / 2}, DST_SmokeArea};
+    return {{(float) System::getRandom((int) smokeArea.x - scatter / 2, (int) smokeArea.x + scatter / 2), (float) Ground::height + movable->getHeight() / 2}, DST_SmokeArea};
 }
 
 Destination Destination::createHomeDST(Movable *movable, sf::Vector2f &home) {
-    return {{home.x, System::groundLevel + Ground::height + movable->getHeight() / 2}, DST_Home};
+    return {{home.x, (float) Ground::height + movable->getHeight() / 2}, DST_Home};
 }
 
 

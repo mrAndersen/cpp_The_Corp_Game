@@ -8,6 +8,8 @@
 #include "System.h"
 
 namespace ResourceLoader {
+    YAML::Node translations;
+
     std::map<int, std::map<int, sf::Texture *>> textureCollection;
     std::map<std::string, sf::Texture *> characterTextureCollection;
 
@@ -63,7 +65,6 @@ namespace ResourceLoader {
         return texture;
     }
 
-
     void loadTexturesFromFiles() {
         //----<<Background>>----
         ResourceLoader::loadTexture(Entities::E_StaticGround_1, "resources/background/ground1.png");
@@ -81,7 +82,8 @@ namespace ResourceLoader {
         ResourceLoader::loadTexture(Entities::E_Popup, "resources/ui/popup.png");
 
         ResourceLoader::loadTexture(Entities::E_Popup_Button, "resources/ui/popup.button.png", S_Button_Normal);
-        ResourceLoader::loadTexture(Entities::E_Popup_Button, "resources/ui/popup.button.pressed.png", S_Button_Pressed);
+        ResourceLoader::loadTexture(Entities::E_Popup_Button, "resources/ui/popup.button.pressed.png",
+                                    S_Button_Pressed);
 
         ResourceLoader::loadTexture(Entities::E_MainPanelOverlay, "resources/ui/main.panel.png");
 
@@ -98,25 +100,42 @@ namespace ResourceLoader {
         ResourceLoader::loadTexture(Entities::E_Button10x, "resources/ui/button.10x.pressed.png", S_Button_Pressed);
 
         ResourceLoader::loadTexture(Entities::E_ButtonAddClerk, "resources/ui/button.add.clerk.png", S_Button_Normal);
-        ResourceLoader::loadTexture(Entities::E_ButtonAddClerk, "resources/ui/button.add.clerk.pressed.png", S_Button_Pressed);
+        ResourceLoader::loadTexture(Entities::E_ButtonAddClerk, "resources/ui/button.add.clerk.pressed.png",
+                                    S_Button_Pressed);
 
-        ResourceLoader::loadTexture(Entities::E_ButtonAddManager, "resources/ui/button.add.manager.png", S_Button_Normal);
-        ResourceLoader::loadTexture(Entities::E_ButtonAddManager, "resources/ui/button.add.manager.pressed.png", S_Button_Pressed);
+        ResourceLoader::loadTexture(Entities::E_ButtonAddManager, "resources/ui/button.add.manager.png",
+                                    S_Button_Normal);
+        ResourceLoader::loadTexture(Entities::E_ButtonAddManager, "resources/ui/button.add.manager.pressed.png",
+                                    S_Button_Pressed);
+
+        ResourceLoader::loadTexture(Entities::E_ButtonAddAccountant, "resources/ui/button.add.accountant.png",
+                                    S_Button_Normal);
+        ResourceLoader::loadTexture(Entities::E_ButtonAddAccountant, "resources/ui/button.add.accountant.pressed.png",
+                                    S_Button_Pressed);
 
         ResourceLoader::loadTexture(Entities::E_ButtonAddOffice, "resources/ui/button.add.office.png", S_Button_Normal);
-        ResourceLoader::loadTexture(Entities::E_ButtonAddOffice, "resources/ui/button.add.office.pressed.png", S_Button_Pressed);
+        ResourceLoader::loadTexture(Entities::E_ButtonAddOffice, "resources/ui/button.add.office.pressed.png",
+                                    S_Button_Pressed);
 
-        ResourceLoader::loadTexture(Entities::E_ButtonAddElevator, "resources/ui/button.elevator.create.png", S_Button_Normal);
-        ResourceLoader::loadTexture(Entities::E_ButtonAddElevator, "resources/ui/button.elevator.create.pressed.png", S_Button_Pressed);
+        ResourceLoader::loadTexture(Entities::E_ButtonAddElevator, "resources/ui/button.elevator.create.png",
+                                    S_Button_Normal);
+        ResourceLoader::loadTexture(Entities::E_ButtonAddElevator, "resources/ui/button.elevator.create.pressed.png",
+                                    S_Button_Pressed);
 
-        ResourceLoader::loadTexture(Entities::E_ButtonAddElevatorCabin, "resources/ui/button.add.cabin.png", S_Button_Normal);
-        ResourceLoader::loadTexture(Entities::E_ButtonAddElevatorCabin, "resources/ui/button.add.cabin.pressed.png", S_Button_Pressed);
+        ResourceLoader::loadTexture(Entities::E_ButtonAddElevatorCabin, "resources/ui/button.add.cabin.png",
+                                    S_Button_Normal);
+        ResourceLoader::loadTexture(Entities::E_ButtonAddElevatorCabin, "resources/ui/button.add.cabin.pressed.png",
+                                    S_Button_Pressed);
 
-        ResourceLoader::loadTexture(Entities::E_ButtonAddElevatorShaftMiddle, "resources/ui/button.add.shaft.png", S_Button_Normal);
-        ResourceLoader::loadTexture(Entities::E_ButtonAddElevatorShaftMiddle, "resources/ui/button.add.shaft.pressed.png", S_Button_Pressed);
+        ResourceLoader::loadTexture(Entities::E_ButtonAddElevatorShaftMiddle, "resources/ui/button.add.shaft.png",
+                                    S_Button_Normal);
+        ResourceLoader::loadTexture(Entities::E_ButtonAddElevatorShaftMiddle,
+                                    "resources/ui/button.add.shaft.pressed.png", S_Button_Pressed);
 
-        ResourceLoader::loadTexture(Entities::E_ButtonAddElevatorShaftTop, "resources/ui/button.add.shaft-top.png", S_Button_Normal);
-        ResourceLoader::loadTexture(Entities::E_ButtonAddElevatorShaftTop, "resources/ui/button.add.shaft-top.pressed.png", S_Button_Pressed);
+        ResourceLoader::loadTexture(Entities::E_ButtonAddElevatorShaftTop, "resources/ui/button.add.shaft-top.png",
+                                    S_Button_Normal);
+        ResourceLoader::loadTexture(Entities::E_ButtonAddElevatorShaftTop,
+                                    "resources/ui/button.add.shaft-top.pressed.png", S_Button_Pressed);
 
         //----<<QuestionMarks>>----
         ResourceLoader::loadTexture(Entities::E_Question_Mark_ButtonAddElevator, "resources/ui/question.png",
@@ -127,6 +146,11 @@ namespace ResourceLoader {
         ResourceLoader::loadTexture(Entities::E_Question_Mark_ButtonAddManager, "resources/ui/question.png",
                                     S_Button_Normal);
         ResourceLoader::loadTexture(Entities::E_Question_Mark_ButtonAddManager, "resources/ui/question.pressed.png",
+                                    S_Button_Pressed);
+
+        ResourceLoader::loadTexture(Entities::E_Question_Mark_ButtonAddAccountant, "resources/ui/question.png",
+                                    S_Button_Normal);
+        ResourceLoader::loadTexture(Entities::E_Question_Mark_ButtonAddAccountant, "resources/ui/question.pressed.png",
                                     S_Button_Pressed);
 
         ResourceLoader::loadTexture(Entities::E_Question_Mark_ButtonAddOffice, "resources/ui/question.png",
@@ -148,9 +172,8 @@ namespace ResourceLoader {
         ResourceLoader::loadTexture(Entities::E_OfficeDefault, "resources/office/office.default.png");
         ResourceLoader::loadTexture(Entities::E_Chair, "resources/office/chair.png");
 
-
         //----<<Characters>>-----
-        std::vector<Entities> characters = {E_Clerk, E_Manager};
+        std::vector<Entities> characters = {E_Clerk, E_Manager, E_Accountant};
         Gender genders[] = {G_Male};
         Race races[] = {R_White, R_Black, R_Asian};
         int levels[] = {1, 2};
@@ -160,8 +183,7 @@ namespace ResourceLoader {
                 S_Run,
                 S_Walk,
                 S_Smoking,
-                S_Working,
-                S_Falling,
+                S_Working
         };
 
         for (auto &character:characters) {
@@ -170,8 +192,7 @@ namespace ResourceLoader {
                     for (auto &level:levels) {
                         for (auto &state:states) {
                             std::string path =
-                                    "resources/characters/" +
-                                    getCharacterTextNotation(character) + "/"
+                                    "resources/characters/" + getCharacterTextNotation(character) + "/"
                                     + getGenderTextNotation(gender) + "."
                                     + getRaceTextNotation(race) + "."
                                     + "l" + std::to_string(level) + "."
@@ -200,9 +221,9 @@ namespace ResourceLoader {
         System::gameFont = new sf::Font();
         System::gameFont2 = new sf::Font();
 
-        System::debugFont->loadFromFile("resources/fonts/OpenSans-Light.ttf");
+        System::debugFont->loadFromFile("resources/fonts/DidactGothic-Regular.ttf");
         System::gameFont->loadFromFile("resources/fonts/Teko-Regular.ttf");
-        System::gameFont2->loadFromFile("resources/fonts/Comfortaa-Regular.ttf");
+        System::gameFont2->loadFromFile("resources/fonts/Oswald-Regular.ttf");
     }
 
     void loadNames() {
@@ -295,6 +316,7 @@ namespace ResourceLoader {
     std::string getCharacterTextNotation(Entities character) {
         if (character == E_Clerk) { return "clerk"; }
         if (character == E_Manager) { return "manager"; }
+        if (character == E_Accountant) { return "accountant"; }
 
         return "clerk";
     }
@@ -304,6 +326,24 @@ namespace ResourceLoader {
         texture->loadFromFile(path);
 
         return texture;
+    }
+
+    void loadLocales() {
+        translations = YAML::LoadFile("resources/locale/" + System::locale + ".yml");
+    }
+
+    sf::String getTranslation(std::string key) {
+        auto vector = System::split(key);
+        YAML::Node part;
+
+        for (int i = 0; i < vector.size(); ++i) {
+            part = i == 0 ? translations[vector[i]] : part[vector[i]];
+
+            if(part.IsScalar()){
+                auto s = part.as<std::string>();
+                return sf::String::fromUtf8(s.begin(), s.end());
+            }
+        }
     }
 
 

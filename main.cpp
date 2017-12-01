@@ -11,11 +11,11 @@
 
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow) {
     SaveManager saveManager;
-//    System::seed = std::chrono::system_clock::now().time_since_epoch().count();
 
     //preload resources
     ResourceLoader::loadTexturesFromFiles();
     ResourceLoader::loadFonts();
+    ResourceLoader::loadLocales();
     ResourceLoader::loadNames();
 
     //load window and debug utilities
@@ -26,7 +26,6 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
     ControlPanel::initControlPanel();
 
     while (System::window && System::window->isOpen()) {
-        System::entitiesOnScreen = EntityContainer::size();
         System::refreshSystem();
         System::refreshDayTime();
 

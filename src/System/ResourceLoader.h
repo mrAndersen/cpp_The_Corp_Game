@@ -3,12 +3,14 @@
 
 #include <SFML/Graphics/Texture.hpp>
 #include <map>
+#include <yaml-cpp/yaml.h>
 #include "Enum.h"
+#include <SFML/System/String.hpp>
 
 namespace ResourceLoader {
-    extern std::map<int, std::map<int, sf::Texture *>> textureCollection;
+    extern YAML::Node translations;
 
-    extern std::map<std::string, sf::Texture *> characterTextureCollection;
+    sf::String getTranslation(std::string key);
 
     void loadTexture(Entities target, const std::string &path, States states = S_None);
 
@@ -25,6 +27,8 @@ namespace ResourceLoader {
     void loadFonts();
 
     void loadNames();
+
+    void loadLocales();
 
     std::string getCharacterTextNotation(Entities character);
 

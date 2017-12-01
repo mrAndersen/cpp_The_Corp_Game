@@ -41,7 +41,7 @@ namespace ViewHandler {
         }
 
         if (viewDirectionMovement == Direction::Down) {
-            if (bottom > System::groundLevel) {
+            if (bottom > 0) {
                 view->move(0, scrollDistance);
             }
         }
@@ -64,37 +64,37 @@ namespace ViewHandler {
         }
 
         if (viewDirectionMovement == Direction::DownLeft) {
-            if (ViewHandler::bottom <= System::groundLevel && ViewHandler::left <= -System::worldWidth / 2) {
+            if (ViewHandler::bottom <= 0 && ViewHandler::left <= -System::worldWidth / 2) {
                 return;
             }
 
-            if (ViewHandler::bottom > System::groundLevel && ViewHandler::left <= -System::worldWidth / 2) {
+            if (ViewHandler::bottom > 0 && ViewHandler::left <= -System::worldWidth / 2) {
                 view->move(0, scrollDistance);
             }
 
-            if (ViewHandler::bottom <= System::groundLevel && ViewHandler::left > -System::worldWidth / 2) {
+            if (ViewHandler::bottom <= 0 && ViewHandler::left > -System::worldWidth / 2) {
                 view->move(-scrollDistance, 0);
             }
 
-            if (ViewHandler::bottom > System::groundLevel && ViewHandler::left > -System::worldWidth / 2) {
+            if (ViewHandler::bottom > 0 && ViewHandler::left > -System::worldWidth / 2) {
                 view->move(-scrollDistance, scrollDistance);
             }
         }
 
         if (viewDirectionMovement == Direction::DownRight) {
-            if (ViewHandler::bottom <= System::groundLevel && ViewHandler::right >= System::worldWidth / 2) {
+            if (ViewHandler::bottom <= 0 && ViewHandler::right >= System::worldWidth / 2) {
                 return;
             }
 
-            if (ViewHandler::bottom > System::groundLevel && ViewHandler::right >= System::worldWidth / 2) {
+            if (ViewHandler::bottom > 0 && ViewHandler::right >= System::worldWidth / 2) {
                 view->move(0, -scrollDistance);
             }
 
-            if (ViewHandler::bottom <= System::groundLevel && ViewHandler::right < System::worldWidth / 2) {
+            if (ViewHandler::bottom <= 0 && ViewHandler::right < System::worldWidth / 2) {
                 view->move(scrollDistance, 0);
             }
 
-            if (ViewHandler::bottom > System::groundLevel && ViewHandler::right < System::worldWidth / 2) {
+            if (ViewHandler::bottom > 0 && ViewHandler::right < System::worldWidth / 2) {
                 view->move(scrollDistance, scrollDistance);
             }
         }
@@ -116,8 +116,8 @@ namespace ViewHandler {
             view->setCenter(System::cToGl({-System::worldWidth / 2 + System::screenWidth / 2, center.y}));
         }
 
-        if (bottom < System::groundLevel) {
-            view->setCenter(System::cToGl({center.x, System::groundLevel + System::screenHeight / 2}));
+        if (bottom < 0) {
+            view->setCenter(System::cToGl({center.x, (float) System::screenHeight / 2}));
         }
 
         recalculateBoundaires();

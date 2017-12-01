@@ -11,14 +11,14 @@ public:
     Movable *currentTarget = nullptr;
     sf::Clock targetSearchResolution;
 
-    float dailySalary = 100;
+    std::map<int, float> dailySalaries = {{1, 120}, {2, 200}, {3, 350}, {4, 500}};
     bool salaryProcessed = false;
 
     bool buffInProgress = false;
     sf::Clock buffingProcedureClock;
 
     int buffDurationGameHours = 2;
-    float buffStrength = 1.2f;
+    std::map<int, float> buffStrengths = {{1, 1.2}, {2, 1.5}, {3, 2}, {4, 2.5}};
 
     int targetsBuffed = 0;
 
@@ -28,7 +28,7 @@ public:
 
     void createBuffTargetDestination();
 
-    std::string createStatsText() override;
+    sf::String createStatsText() override;
 
     Movable *searchTarget();
 };

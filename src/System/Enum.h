@@ -76,7 +76,6 @@ enum States {
     S_Walk = 3,
     S_Smoking = 4,
     S_Working = 7,
-    S_Falling = 8,
 
     S_Button_Normal = 101,
     S_Button_Pressed = 102,
@@ -98,12 +97,16 @@ enum Entities {
 
     E_Clerk = 21,
     E_Manager = 22,
+    E_Accountant = 23,
 
     E_ButtonAddClerk = 31,
     E_Question_Mark_ButtonAddClerk = 311,
 
     E_ButtonAddOffice = 32,
     E_Question_Mark_ButtonAddOffice = 321,
+
+    E_ButtonAddAccountant = 33,
+    E_Question_Mark_ButtonAddAccountant = 331,
 
     E_ButtonAddElevator = 35,
     E_ButtonAddElevatorShaftMiddle = 351,

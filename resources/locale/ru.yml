@@ -1,36 +1,35 @@
-game:
-    title: Лесная корпорация
+title: Лесная корпорация
 
-    atomics:
-        yes: Да
-        no: Нет
+atomics:
+    yes: Да
+    no: Нет
 
-    units:
-        titles:
-            clerk: Клерк
-            manager: Менеджер
-            accountant: Бухгалтер
-        states:
-            wait: Ждёт
-            walk: Идёт
-            work: Работает
-            smoke: Курит
-            play: Дурачится
+units:
+    titles:
+        clerk: Клерк
+        manager: Менеджер
+        accountant: Бухгалтер
+    states:
+        wait: Ждёт
+        walk: Идёт
+        work: Работает
+        smoke: Курит
+        play: Ждёт
 
-    popups:
-        upgrade_conditions:
-            level_1: дополнительных доходов
+popups:
+    upgrade_conditions:
+        level_1: дополнительных доходов
 
-        unit_help_texts:
-            role: Роль
-            level: Уровень
-            state: Состояние
-            smkoing: Курит
-            daily_salary: Дневная зарплата
-            earned_total: Принёс за всё время
-            earned_hour: Приносит в час
-            motivation: Мотивация
-            upgrade: Повысить
+    unit_help_texts:
+        role: Роль
+        level: Уровень
+        state: Состояние
+        smkoing: Курит
+        daily_salary: Дневная зарплата
+        earned_total: Принёс за всё время
+        earned_hour: Приносит в час
+        motivation: Мотивация
+        upgrade: Повысить
 
-    descriptions:
-        clerk:
+descriptions:
+    clerk:
