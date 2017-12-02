@@ -636,8 +636,7 @@ sf::String Movable::createStatsText() {
 
     s += ResourceLoader::getTranslation("popup.text.level") + ": " + std::to_string(level) + "\n";
     s += ResourceLoader::getTranslation("popup.text.state") + ": " + ResourceLoader::getStateTextNotation(state) + "\n";
-    s += ResourceLoader::getTranslation("popup.text.smoking") + ": " +
-            (smoking == 1 ? ResourceLoader::getTranslation("a.yes") : ResourceLoader::getTranslation("a.no")) + "\n";
+    s += ResourceLoader::getTranslation("popup.text.smoking") + ": " + (smoking == 1 ? ResourceLoader::getTranslation("a.yes") : ResourceLoader::getTranslation("a.no")) + "\n";
 
     return s;
 }
