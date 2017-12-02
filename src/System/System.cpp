@@ -24,6 +24,7 @@ namespace System {
     int entitySequence = 1;
 
     //sys
+    Scenes activeScene = SC_Game;
     sf::Clock fpsClock;
     sf::Clock frameClock;
     sf::Clock timeSinceStart;
@@ -36,7 +37,6 @@ namespace System {
     sf::RenderWindow *window;
     sf::Event event;
     bool selectionAllowed = false;
-    std::deque<sf::Event> eventDeque;
     long long int frameTimeMcs;
     sf::Uint32 screenMode = sf::Style::Default;
     float timeFactor = 1;
@@ -347,6 +347,40 @@ namespace System {
         temp = "";
 
         return vector;
+    }
+
+    void handleGlobalLogic() {
+        if (System::event.type == sf::Event::Closed) {
+            System::window->close();
+        }
+
+        if (System::event.type == sf::Event::Resized) {
+            System::screenWidth = System::window->getSize().x;
+            System::screenHeight = System::window->getSize().y;
+
+            System::initWindow();
+        }
+
+        if (System::event.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::LAlt) &&
+            sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
+            auto boundaries = System::getScreenBoundaries();
+
+            switch (System::screenMode) {
+                case sf::Style::Default:
+                    System::screenMode = sf::Style::Fullscreen;
+                    System::initWindow();
+                    break;
+                case sf::Style::Fullscreen:
+                    System::screenMode = sf::Style::Default;
+
+                    System::screenWidth = (unsigned int) boundaries.right * 8 / 10;
+                    System::screenHeight = (unsigned int) boundaries.bottom * 4 / 5;
+
+                    System::initWindow();
+                default:
+                    break;
+            }
+        }
     }
 }
 

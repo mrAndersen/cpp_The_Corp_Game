@@ -68,9 +68,6 @@ add_executable(
         src/Office/OfficeClerk.h
         src/Office/OfficeClerk.cpp
 
-        src/System/SaveManager.h
-        src/System/SaveManager.cpp
-
         src/Office/Office.h
         src/Office/Office.cpp
         src/System/GameTime.cpp
@@ -164,7 +161,21 @@ add_executable(
         src/Ui/Questions/QAddManager.h
 
         src/System/DebugPattern.cpp
-        src/System/DebugPattern.h src/Ui/Popup.cpp src/Ui/Popup.h src/Ui/PopupButton.cpp src/Ui/PopupButton.h src/Ui/ControlButtonAddAccountant.cpp src/Ui/ControlButtonAddAccountant.h src/Characters/Accountant.cpp src/Characters/Accountant.h src/Ui/Questions/QAddAccountant.cpp src/Ui/Questions/QAddAccountant.h)
+        src/System/DebugPattern.h
+
+        src/Ui/Popup.cpp src/Ui/Popup.h
+        src/Ui/PopupButton.cpp
+        src/Ui/PopupButton.h
+
+        src/Ui/ControlButtonAddAccountant.cpp
+        src/Ui/ControlButtonAddAccountant.h
+
+        src/Characters/Accountant.cpp
+        src/Characters/Accountant.h
+
+        src/Ui/Questions/QAddAccountant.cpp
+        src/Ui/Questions/QAddAccountant.h
+)
 
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}" ${CMAKE_MODULE_PATH})
