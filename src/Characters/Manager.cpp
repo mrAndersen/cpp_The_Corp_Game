@@ -86,9 +86,9 @@ void Manager::createBuffTargetDestination() {
         }
     } else {
         targetElevator = searchNearestElevator();
-        targetElevator->incBoarding();
 
         if (targetElevator) {
+            targetElevator->incBoarding();
             destinations.push_back(Destination::createElevatorWaitingDST(targetElevator, this));
             destinations.push_back(Destination::createElevatorCabinDST(targetElevator, this));
             destinations.push_back(Destination::createElevatorExitingDST(targetElevator, this, currentTarget->getWorldCoordinates()));

@@ -13,6 +13,7 @@
 #include "GameTime.h"
 #include "..\Text\TextEntity.h"
 #include "ResourceLoader.h"
+#include "../../version.h"
 
 namespace System {
     unsigned int screenWidth = 1850;
@@ -52,7 +53,7 @@ namespace System {
     //utility
 
     //player
-    double cash = 2000000;
+    double cash = 10000;
     float accountantsBonus = 1.f;
     bool spawningUnit = false;
     sf::Clock selectionCooldown;
@@ -75,7 +76,8 @@ namespace System {
     int framesPassed = 0;
     int entitiesOnScreen = 0;
     int fps = 0;
-    int debug = 1;
+    int debug = 0;
+    int version = 1;
     //debug
 
     void refreshDayTime() {
@@ -107,7 +109,7 @@ namespace System {
     }
 
     void refreshSystem() {
-        window->setTitle(ResourceLoader::getTranslation("title") + " ~ " + std::to_string(System::fps) + "FPS");
+        window->setTitle("Forest Corporation ~ " + std::to_string(System::fps) + "FPS | Version = " + VERSION);
 
         frameTimeMcs = frameClock.restart().asMicroseconds();
         framesPassed++;

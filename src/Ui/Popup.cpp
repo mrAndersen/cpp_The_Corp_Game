@@ -42,9 +42,6 @@ void Popup::update() {
 
     auto tBounds = popupTitle.getLocalBounds();
 
-    popupText.setString(popupTextString);
-    popupTitle.setString(popupTitleString);
-
     popupText.setOrigin({0, 0});
     popupTitle.setOrigin(roundf((tBounds.width / 2)), roundf((tBounds.height / 2)));
 

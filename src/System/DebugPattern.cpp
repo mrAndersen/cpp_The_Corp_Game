@@ -152,4 +152,9 @@ namespace DebugPattern {
         }
 
     }
+
+    void prepareDebug() {
+        System::debug = 1;
+        System::version = 0;
+    }
 }

@@ -10,7 +10,7 @@
 namespace ResourceLoader {
     extern YAML::Node translations;
 
-    sf::String getTranslation(std::string key);
+    const sf::String getTranslation(std::string key);
 
     void loadTexture(Entities target, const std::string &path, States states = S_None);
 

@@ -74,6 +74,7 @@ namespace System {
     extern int entitiesOnScreen;
     extern int fps;
     extern int debug;
+    extern int version;
     //debug
 
     RECT getScreenBoundaries();

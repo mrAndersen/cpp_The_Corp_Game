@@ -1,10 +1,7 @@
 cmake_minimum_required(VERSION 3.8)
+set(CMAKE_BUILD_TYPE "Debug")
 
-# Enable debug symbols by default
-# must be done before project() statement
-if(NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE Debug CACHE STRING "Choose the type of build (Debug or Release)" FORCE)
-endif()
+#add_definitions(-DVERSION=${CMAKE_BUILD_TYPE})
 
 project(the_corp_game)
 set(CMAKE_CXX_STANDARD 14)
@@ -19,7 +16,6 @@ include_directories("${PROJECT_SOURCE_DIR}/src")
 include_directories("vendor/yaml/include")
 set(OTHER_DEPENDENCIES "${PROJECT_SOURCE_DIR}/vendor/yaml/libyaml-cpp.a")
 
-
 file(COPY "resources" DESTINATION "${CMAKE_BINARY_DIR}")
 
 # Define sources and executable
@@ -31,6 +27,8 @@ add_executable(
 
         main.cpp
         main.rc
+
+        version.h
 
         src/System/EntityContainer.h
         src/System/EntityContainer.cpp
@@ -186,10 +184,3 @@ endif()
 
 # Install target
 install(TARGETS ${EXECUTABLE_NAME} DESTINATION bin)
-
-# CPack packaging
-include(InstallRequiredSystemLibraries)
-set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/COPYING")
-set(CPACK_PACKAGE_VERSION_MAJOR "${the_corp_game_VERSION_MAJOR}")
-set(CPACK_PACKAGE_VERSION_MINOR "${the_corp_game_VERSION_MINOR}")
-include(CPack)

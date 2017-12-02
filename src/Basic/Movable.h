@@ -57,7 +57,7 @@ protected:
 
     Gender gender = Gender::G_Male;
     Race race = Race::R_White;
-    int level = 1;
+    int level = 4;
     sf::Clock lastUpgradeTimer;
 
     Popup *popup;

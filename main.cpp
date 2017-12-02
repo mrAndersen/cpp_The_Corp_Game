@@ -8,7 +8,6 @@
 #include "src\System\SaveManager.h"
 #include "src\System\DebugPattern.h"
 
-
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow) {
     SaveManager saveManager;
 
@@ -24,6 +23,8 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
 
     EntityContainer::initBackground();
     ControlPanel::initControlPanel();
+
+    DebugPattern::prepareDebug();
 
     while (System::window && System::window->isOpen()) {
         System::refreshSystem();
@@ -51,18 +52,21 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
                 System::initWindow();
             }
 
-            System::selectionAllowed = !System::spawningUnit && System::selectionCooldown.getElapsedTime().asMilliseconds() >= System::buttonReload;
+            System::selectionAllowed = !System::spawningUnit &&
+                                       System::selectionCooldown.getElapsedTime().asMilliseconds() >=
+                                       System::buttonReload;
 
             //entity selection
-            if (e.type == sf::Event::MouseButtonPressed && e.mouseButton.button == sf::Mouse::Left && System::selectionAllowed) {
+            if (e.type == sf::Event::MouseButtonPressed && e.mouseButton.button == sf::Mouse::Left &&
+                System::selectionAllowed) {
                 for (auto ei:EntityContainer::items) {
-                    if(!ei->mouseIn() && ei->isSelectable()){
+                    if (!ei->mouseIn() && ei->isSelectable()) {
                         ei->setSelected(false);
                         ei->setNormal();
                     }
                 }
 
-                for(auto it = EntityContainer::items.rbegin(); it != EntityContainer::items.rend(); ++it){
+                for (auto it = EntityContainer::items.rbegin(); it != EntityContainer::items.rend(); ++it) {
                     auto ex = *it;
 
                     if (
@@ -86,7 +90,9 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
 //                ViewHandler::handleViewZoomKeyPress(e);
             }
 
-            DebugPattern::process();
+            if (System::version == 0) {
+                DebugPattern::process();
+            }
 
             if (e.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::LAlt) &&
                 sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
