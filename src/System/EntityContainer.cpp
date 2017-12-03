@@ -82,7 +82,6 @@ namespace EntityContainer {
     }
 
 
-
     void initBackground() {
         int before = 0;
         int after = (int) System::worldWidth;
@@ -260,6 +259,12 @@ namespace EntityContainer {
         }
     }
 
+    void clearEntities() {
+        for (auto &e:items) {
+            remove(e);
+        }
+    }
+
     void refreshEntities() {
         System::window->clear(System::c_background);
 
@@ -376,13 +381,16 @@ namespace EntityContainer {
         auto screenCenter = System::screenWidth / 2;
 
         auto size1 = sf::Vector2f(1250, 818);
-        Entity::create(E_Entity, D_BG_Mountain_2, size1, {(float) screenCenter - 1050 + size1.x / 2, size1.y / 2}, "resources/background/bg.mountain_small1.png");
+        Entity::create(E_Entity, D_BG_Mountain_2, size1, {(float) screenCenter - 1050 + size1.x / 2, size1.y / 2},
+                       "resources/background/bg.mountain_small1.png");
 
         auto size2 = sf::Vector2f(1390, 780);
-        Entity::create(E_Entity, D_BG_Mountain_1, size2, {(float) screenCenter - 350 + size2.x / 2, size2.y / 2}, "resources/background/bg.mountain_large2.png");
+        Entity::create(E_Entity, D_BG_Mountain_1, size2, {(float) screenCenter - 350 + size2.x / 2, size2.y / 2},
+                       "resources/background/bg.mountain_large2.png");
 
         auto size3 = sf::Vector2f(852, 660);
-        Entity::create(E_Entity, D_BG_Mountain_2, size3, {(float) screenCenter + 150 + size3.x / 2, size3.y / 2}, "resources/background/bg.mountain_small3.png");
+        Entity::create(E_Entity, D_BG_Mountain_2, size3, {(float) screenCenter + 150 + size3.x / 2, size3.y / 2},
+                       "resources/background/bg.mountain_small3.png");
 
         for (int i = 0; i < 35; ++i) {
             Cloud::createRandomCloud();

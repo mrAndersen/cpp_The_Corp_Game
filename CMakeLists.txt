@@ -29,6 +29,9 @@ add_executable(
         main.rc
 
         version.h
+        src/System/mingw.mutex.h
+        src/System/mingw.condition_variable.h
+        src/System/mingw.thread.h
 
         src/System/EntityContainer.h
         src/System/EntityContainer.cpp

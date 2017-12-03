@@ -21,6 +21,7 @@
 #include "..\Ui\Questions/QAddManager.h"
 #include "..\Ui\Questions/QAddAccountant.h"
 #include "ControlPanel.h"
+#include "mingw.thread.h"
 
 namespace ControlPanel {
     std::map<Entities , Entity *> controls;
@@ -38,6 +39,20 @@ namespace ControlPanel {
         start->setLeftOffset(screenCenterX);
         start->setTopOffset(screenCenterY + 18);
         start->setString("Start");
+        start->callback = []() {
+            EntityContainer::clearEntities();
+            mainMenu.clear();
+
+            std::thread loader([](){
+                EntityContainer::initBackground();
+                ControlPanel::initControlPanel();
+
+                System::activeScene = SC_Game;
+            });
+
+            loader.detach();
+        };
+
         mainMenu["start"] = start;
 
         auto quit = new PopupButton;
@@ -48,7 +63,6 @@ namespace ControlPanel {
         quit->setLeftOffset(screenCenterX);
         quit->setTopOffset(screenCenterY + 50);
         quit->setString("Quit");
-
         quit->callback = []() {
             System::window->close();
         };

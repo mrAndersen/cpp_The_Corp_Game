@@ -54,6 +54,8 @@ namespace EntityContainer {
 
     void initBackground();
 
+    void clearEntities();
+
     void refreshEntities();
 
     void handleObjectSelection();
