@@ -153,11 +153,11 @@ void Entity::setDrawOrder(int drawOrder, bool resort) {
 }
 
 void Entity::initEntity() {
-    debugInfo.setFont(*System::debugFont);
+    debugInfo.setFont(*System::textFont);
     debugInfo.setCharacterSize(10);
     debugInfo.setFillColor(sf::Color::Black);
 
-    errorString.setFont(*System::gameFont);
+    errorString.setFont(*System::textFont);
     errorString.setCharacterSize(16);
     errorString.setFillColor(System::c_red);
 

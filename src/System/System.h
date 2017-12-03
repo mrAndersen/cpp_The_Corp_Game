@@ -30,6 +30,10 @@ namespace System {
     extern sf::Uint32 screenMode;
     extern float timeFactor;
     extern std::string locale;
+    extern sf::Font *textFont;
+    extern sf::Font *titleFont;
+    extern sf::Font *titleFontI8N;
+    extern unsigned int seed;
     //sys
 
 
@@ -63,11 +67,6 @@ namespace System {
     //debug
     extern std::map<std::string, sf::Text> debugPanelTextNodes;
     extern std::map<std::string, int> debugCounters;
-    extern sf::Font *debugFont;
-    extern sf::Font *gameFont;
-    extern sf::Font *gameFont2;
-    extern unsigned int seed;
-
     extern float g_x;
     extern float g_y;
 
@@ -75,7 +74,8 @@ namespace System {
     extern int entitiesOnScreen;
     extern int fps;
     extern int debug;
-    extern int version;
+    extern std::string versionType;
+    extern std::string version;
     //debug
 
     RECT getScreenBoundaries();

@@ -7,7 +7,7 @@
 TextEntity::TextEntity(const sf::Color &color, int size) : Entity() {
     text.setCharacterSize((unsigned int) size);
     text.setFillColor(color);
-    text.setFont(*System::gameFont);
+    text.setFont(*System::titleFont);
 
     setDrawOrder(D_Text_Entities);
     EntityContainer::add(this);

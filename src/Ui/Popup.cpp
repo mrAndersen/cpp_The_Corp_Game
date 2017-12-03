@@ -17,11 +17,11 @@ Popup::Popup(float leftOffset, float topOffset) : BasicUi(leftOffset, topOffset)
     addAnimation(S_None, Animation(this, S_None, 1, ResourceLoader::getTexture(eType)));
     initEntity();
 
-    popupText.setFont(*System::debugFont);
+    popupText.setFont(*System::textFont);
     popupText.setCharacterSize(14);
     popupText.setFillColor(sf::Color::Black);
 
-    popupTitle.setFont(*System::gameFont2);
+    popupTitle.setFont(*System::titleFontI8N);
     popupTitle.setCharacterSize(52);
     popupTitle.setFillColor(sf::Color::Black);
 

@@ -24,6 +24,37 @@
 
 namespace ControlPanel {
     std::map<Entities , Entity *> controls;
+    std::map<std::string , Entity *> mainMenu;
+
+    void initMainMenu() {
+        auto screenCenterX = System::screenWidth / 2;
+        auto screenCenterY = System::screenHeight / 2;
+
+        auto start = new PopupButton;
+        start->setTextOffset(3);
+        start->setColor(System::c_green);
+        start->getText().setFont(*System::titleFontI8N);
+        start->getText().setCharacterSize(20);
+        start->setLeftOffset(screenCenterX);
+        start->setTopOffset(screenCenterY + 18);
+        start->setString("Start");
+        mainMenu["start"] = start;
+
+        auto quit = new PopupButton;
+        quit->setTextOffset(2);
+        quit->setColor(System::c_red);
+        quit->getText().setFont(*System::titleFontI8N);
+        quit->getText().setCharacterSize(20);
+        quit->setLeftOffset(screenCenterX);
+        quit->setTopOffset(screenCenterY + 50);
+        quit->setString("Quit");
+
+        quit->callback = []() {
+            System::window->close();
+        };
+
+        mainMenu["quit"] = quit;
+    }
 
     void initControlPanel() {
         controls[E_Indicator_Money] = new MoneyIndicator(MoneyIndicator::width / 2, MoneyIndicator::height / 2);
@@ -53,13 +84,9 @@ namespace ControlPanel {
         controls[E_ButtonAddElevatorShaftTop] = new ControlButtonAddElevatorShaftTop(286, 548);
 
         controls[E_ButtonAddElevator] = new ControlButtonAddElevator(4 + ControlButtonAddElevator::width / 2 + Question::width + 2, 548);
-
-
     }
 
-    std::map<Entities, Entity *> getControls() {
-        return controls;
-    }
+
 }
 
 

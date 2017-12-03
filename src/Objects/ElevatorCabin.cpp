@@ -20,11 +20,11 @@ ElevatorCabin::ElevatorCabin(sf::Vector2f coordinates) {
     initEntity();
 
     capacityIndicator.setFillColor(sf::Color::Green);
-    capacityIndicator.setFont(*System::debugFont);
+    capacityIndicator.setFont(*System::textFont);
     capacityIndicator.setCharacterSize(10);
 
     floorIndicator.setFillColor(sf::Color::Green);
-    floorIndicator.setFont(*System::debugFont);
+    floorIndicator.setFont(*System::textFont);
     floorIndicator.setCharacterSize(10);
 
     EntityContainer::add(this);

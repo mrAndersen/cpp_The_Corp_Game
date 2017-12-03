@@ -66,7 +66,17 @@ namespace ResourceLoader {
         return texture;
     }
 
-    void loadTexturesFromFiles() {
+    void loadMainMenuTextures() {
+        ResourceLoader::loadTexture(Entities::E_Popup_Button, "resources/ui/popup.button.png", S_Button_Normal);
+        ResourceLoader::loadTexture(Entities::E_Popup_Button, "resources/ui/popup.button.pressed.png", S_Button_Pressed);
+
+        ResourceLoader::loadTexture(Entities::E_Cloud1, "resources/background/cloud1.png");
+        ResourceLoader::loadTexture(Entities::E_Cloud2, "resources/background/cloud2.png");
+        ResourceLoader::loadTexture(Entities::E_Cloud3, "resources/background/cloud3.png");
+        ResourceLoader::loadTexture(Entities::E_Cloud4, "resources/background/cloud4.png");
+    }
+
+    void loadGameTextures() {
         //----<<Background>>----
         ResourceLoader::loadTexture(Entities::E_StaticGround_1, "resources/background/ground1.png");
         ResourceLoader::loadTexture(Entities::E_StaticGround_2, "resources/background/ground2.png");
@@ -81,10 +91,6 @@ namespace ResourceLoader {
         //----<<Ui>>----
         ResourceLoader::loadTexture(Entities::E_Indicator_Money, "resources/ui/indicator.money.png");
         ResourceLoader::loadTexture(Entities::E_Popup, "resources/ui/popup.png");
-
-        ResourceLoader::loadTexture(Entities::E_Popup_Button, "resources/ui/popup.button.png", S_Button_Normal);
-        ResourceLoader::loadTexture(Entities::E_Popup_Button, "resources/ui/popup.button.pressed.png",
-                                    S_Button_Pressed);
 
         ResourceLoader::loadTexture(Entities::E_MainPanelOverlay, "resources/ui/main.panel.png");
 
@@ -218,13 +224,13 @@ namespace ResourceLoader {
     }
 
     void loadFonts() {
-        System::debugFont = new sf::Font();
-        System::gameFont = new sf::Font();
-        System::gameFont2 = new sf::Font();
+        System::textFont = new sf::Font();
+        System::titleFont = new sf::Font();
+        System::titleFontI8N = new sf::Font();
 
-        System::debugFont->loadFromFile("resources/fonts/DidactGothic-Regular.ttf");
-        System::gameFont->loadFromFile("resources/fonts/Teko-Regular.ttf");
-        System::gameFont2->loadFromFile("resources/fonts/Oswald-Regular.ttf");
+        System::textFont->loadFromFile("resources/fonts/DidactGothic-Regular.ttf");
+        System::titleFont->loadFromFile("resources/fonts/Teko-Regular.ttf");
+        System::titleFontI8N->loadFromFile("resources/fonts/Oswald-Regular.ttf");
     }
 
     void loadNames() {
@@ -340,9 +346,9 @@ namespace ResourceLoader {
 
         while (!node.IsScalar()) {
             i++;
-            if(node[vector[i]]){
+            if (node[vector[i]]) {
                 node = node[vector[i]];
-            }else{
+            } else {
                 return key;
             }
         }

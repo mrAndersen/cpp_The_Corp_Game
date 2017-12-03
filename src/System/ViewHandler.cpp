@@ -7,7 +7,7 @@
 #include <iostream>
 
 namespace ViewHandler {
-    Direction viewDirectionMovement = Direction::None;
+    Direction viewDirectionMovement = None;
     sf::View *view;
 
     float top = 0;
@@ -16,7 +16,7 @@ namespace ViewHandler {
     float left = 0;
     float zoom = 1;
 
-    void handleViewScroll() {
+    void handleView() {
         int scrollSpeed = 2200;
         auto scrollDistance = (float) System::frameTimeMcs / 1000000 * scrollSpeed;
 

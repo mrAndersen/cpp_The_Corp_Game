@@ -22,7 +22,9 @@ namespace ResourceLoader {
 
     sf::Texture *getCharacterTexture(Entities target, States state = S_None, Gender gender = G_Male, Race race = R_White, int level = 1);
 
-    void loadTexturesFromFiles();
+    void loadMainMenuTextures();
+
+    void loadGameTextures();
 
     void loadFonts();
 

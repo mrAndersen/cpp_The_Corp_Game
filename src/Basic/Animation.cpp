@@ -100,11 +100,11 @@ void Animation::update() {
     sprite.setTextureRect(frame);
 
     if (entity->getDirection() == Direction::Left) {
-        sprite.setScale(-1.f, 1.f);
+        sprite.setScale(-scale, scale);
     }
 
     if (entity->getDirection() == Direction::Right) {
-        sprite.setScale(1.f, 1.f);
+        sprite.setScale(scale, scale);
     }
 
     System::window->draw(sprite);

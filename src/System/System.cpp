@@ -24,14 +24,14 @@ namespace System {
     int entitySequence = 1;
 
     //sys
-    Scenes activeScene = SC_Game;
+    Scenes activeScene = SC_Main_Menu;
     sf::Clock fpsClock;
     sf::Clock frameClock;
     sf::Clock timeSinceStart;
+    sf::Font *textFont;
+    sf::Font *titleFont;
+    sf::Font *titleFontI8N;
 
-    sf::Font *debugFont;
-    sf::Font *gameFont;
-    sf::Font *gameFont2;
     unsigned int seed = 0;
 
     sf::RenderWindow *window;
@@ -77,7 +77,8 @@ namespace System {
     int entitiesOnScreen = 0;
     int fps = 0;
     int debug = 0;
-    int version = 1;
+    std::string versionType = VERSION_TYPE;
+    std::string version = VERSION;
     //debug
 
     void refreshDayTime() {
@@ -109,7 +110,13 @@ namespace System {
     }
 
     void refreshSystem() {
-        window->setTitle("Forest Corporation ~ " + std::to_string(System::fps) + "FPS | Version = " + VERSION);
+        std::string s;
+
+        s += "Forest Corporation ~ " + std::to_string(fps) + "FPS | ";
+        s += "VerT = " + versionType + " | ";
+        s += "Ver = " + version;
+
+        window->setTitle(s);
 
         frameTimeMcs = frameClock.restart().asMicroseconds();
         framesPassed++;
@@ -123,6 +130,21 @@ namespace System {
     }
 
     void refreshDebugPanel() {
+        auto kernelText = sf::Text();
+        std::string s;
+
+        s += versionType + " ";
+        s += version + " ";
+        s += std::to_string(screenWidth) + "x";
+        s += std::to_string(screenHeight) + " ";
+
+        kernelText.setString(s);
+        kernelText.setFillColor(sf::Color::Black);
+        kernelText.setPosition(cToGl({ViewHandler::left + 12, ViewHandler::top}));
+        kernelText.setFont(*textFont);
+        kernelText.setCharacterSize(11);
+        window->draw(kernelText);
+
         if (debug) {
             auto mousePosition = sf::Mouse::getPosition(*window);
             auto coordMap = window->mapPixelToCoords(mousePosition);
@@ -132,15 +154,13 @@ namespace System {
             SIZE_T mem = pmc.WorkingSetSize;
 
             g_x = coordMap.x;
-            g_y = System::screenHeight - coordMap.y;
+            g_y = screenHeight - coordMap.y;
 
-            debugPanelTextNodes["g_coordinates"].setString(
-                    "global: {" + std::to_string((int) g_x) + "," + std::to_string((int) g_y) + "}");
+            debugPanelTextNodes["scene"].setString("scene: " + std::to_string(activeScene));
+            debugPanelTextNodes["g_coordinates"].setString("global: {" + std::to_string((int) g_x) + "," + std::to_string((int) g_y) + "}");
             debugPanelTextNodes["fps"].setString("fps: " + std::to_string(fps));
-            debugPanelTextNodes["mouse"].setString(
-                    "mouse: {" + std::to_string(mousePosition.x) + "," + std::to_string(mousePosition.y) + "}");
-            debugPanelTextNodes["v_direction"].setString(
-                    "v_direction: " + std::to_string(ViewHandler::viewDirectionMovement));
+            debugPanelTextNodes["mouse"].setString("mouse: {" + std::to_string(mousePosition.x) + "," + std::to_string(mousePosition.y) + "}");
+            debugPanelTextNodes["v_direction"].setString("v_direction: " + std::to_string(ViewHandler::viewDirectionMovement));
             debugPanelTextNodes["mem"].setString("mem:" + std::to_string((int) mem / 1024 / 1024) + "mb");
 
 
@@ -153,15 +173,14 @@ namespace System {
             );
 
             debugPanelTextNodes["v_zoom"].setString("v_zoom: " + std::to_string(ViewHandler::zoom));
-            debugPanelTextNodes["p_cash"].setString("p_cash: " + std::to_string(System::cash));
+            debugPanelTextNodes["p_cash"].setString("p_cash: " + std::to_string(cash));
             debugPanelTextNodes["p_time"].setString("p_time:" + gameTime.get());
             debugPanelTextNodes["p_time_factor"].setString("p_time_factor:" + std::to_string(timeFactor));
-            debugPanelTextNodes["d_level"].setString("d_level:" + std::to_string(System::debug));
-            debugPanelTextNodes["spawning"].setString("spawning:" + std::to_string(System::spawningUnit));
-            debugPanelTextNodes["selection_cd"].setString(
-                    "selection_cd:" + std::to_string(System::selectionCooldown.getElapsedTime().asSeconds()));
+            debugPanelTextNodes["d_level"].setString("d_level:" + std::to_string(debug));
+            debugPanelTextNodes["spawning"].setString("spawning:" + std::to_string(spawningUnit));
+            debugPanelTextNodes["selection_cd"].setString("selection_cd:" + std::to_string(selectionCooldown.getElapsedTime().asSeconds()));
 
-            std::string dcs = "d_counters:";
+            std::string dcs;
             for (auto e:debugCounters) {
                 dcs += e.first + "->" + std::to_string(e.second) + ";";
             }
@@ -170,7 +189,7 @@ namespace System {
             int i = 1;
             for (auto n:debugPanelTextNodes) {
                 n.second.setPosition(cToGl(sf::Vector2f(ViewHandler::left + 12, ViewHandler::top - 600 - i * 12)));
-                System::window->draw(n.second);
+                window->draw(n.second);
                 i++;
             }
         }
@@ -213,14 +232,15 @@ namespace System {
     sf::Text createDebugString(const std::string &alias) {
         sf::Text label;
         label.setFillColor(sf::Color::Black);
-        label.setFont(*debugFont);
-        label.setCharacterSize(10);
+        label.setFont(*textFont);
+        label.setCharacterSize(11);
 
         debugPanelTextNodes[alias] = label;
         return label;
     }
 
     void initDebug() {
+        createDebugString("scene");
         createDebugString("fps");
         createDebugString("mem");
         createDebugString("g_coordinates");
@@ -238,25 +258,25 @@ namespace System {
     }
 
     sf::Vector2f cToGl(sf::Vector2f worldCoordinates) {
-        worldCoordinates.y = System::screenHeight - worldCoordinates.y;
+        worldCoordinates.y = screenHeight - worldCoordinates.y;
         return worldCoordinates;
     }
 
     sf::Vector2f cToGl(float x, float y) {
-        return {x, System::screenHeight - y};
+        return {x, screenHeight - y};
     }
 
     sf::Vector2f cFromGl(sf::Vector2f glCoordinates) {
-        glCoordinates.y = System::screenHeight - glCoordinates.y;
+        glCoordinates.y = screenHeight - glCoordinates.y;
         return glCoordinates;
     }
 
     sf::Vector2f cFromGl(float x, float y) {
-        return {x, y - System::screenHeight};
+        return {x, y - screenHeight};
     }
 
     sf::Vector2f getGlobalMouse() {
-        return {System::g_x, System::g_y};
+        return {g_x, g_y};
     }
 
     RECT getScreenBoundaries() {
@@ -324,10 +344,10 @@ namespace System {
     }
 
     bool mouseInsideRect(const sf::Vector2f &leftTop, const sf::Vector2f &rightBottom) {
-        return System::g_x >= leftTop.x &&
-               System::g_x <= rightBottom.x &&
-               System::g_y >= rightBottom.y &&
-               System::g_y <= leftTop.y;
+        return g_x >= leftTop.x &&
+               g_x <= rightBottom.x &&
+               g_y >= rightBottom.y &&
+               g_y <= leftTop.y;
     }
 
     std::vector<std::string> split(std::string source, char delimiter) {
@@ -350,33 +370,33 @@ namespace System {
     }
 
     void handleGlobalLogic() {
-        if (System::event.type == sf::Event::Closed) {
-            System::window->close();
+        if (event.type == sf::Event::Closed) {
+            window->close();
         }
 
-        if (System::event.type == sf::Event::Resized) {
-            System::screenWidth = System::window->getSize().x;
-            System::screenHeight = System::window->getSize().y;
+        if (event.type == sf::Event::Resized) {
+            screenWidth = window->getSize().x;
+            screenHeight = window->getSize().y;
 
-            System::initWindow();
+            initWindow();
         }
 
-        if (System::event.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::LAlt) &&
+        if (event.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::LAlt) &&
             sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
-            auto boundaries = System::getScreenBoundaries();
+            auto boundaries = getScreenBoundaries();
 
-            switch (System::screenMode) {
+            switch (screenMode) {
                 case sf::Style::Default:
-                    System::screenMode = sf::Style::Fullscreen;
-                    System::initWindow();
+                    screenMode = sf::Style::Fullscreen;
+                    initWindow();
                     break;
                 case sf::Style::Fullscreen:
-                    System::screenMode = sf::Style::Default;
+                    screenMode = sf::Style::Default;
 
-                    System::screenWidth = (unsigned int) boundaries.right * 8 / 10;
-                    System::screenHeight = (unsigned int) boundaries.bottom * 4 / 5;
+                    screenWidth = (unsigned int) boundaries.right * 8 / 10;
+                    screenHeight = (unsigned int) boundaries.bottom * 4 / 5;
 
-                    System::initWindow();
+                    initWindow();
                 default:
                     break;
             }

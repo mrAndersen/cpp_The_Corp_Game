@@ -15,9 +15,9 @@ Button5x::Button5x(float leftOffset, float topOffset) : BasicUi(leftOffset, topO
 }
 
 void Button5x::update() {
-    auto pause = dynamic_cast<BasicUi *>(ControlPanel::getControls()[E_ButtonPause]);;
-    auto b1x = dynamic_cast<BasicUi *>(ControlPanel::getControls()[E_Button1x]);
-    auto b10x = dynamic_cast<BasicUi *>(ControlPanel::getControls()[E_Button10x]);
+    auto pause = dynamic_cast<BasicUi *>(ControlPanel::controls[E_ButtonPause]);;
+    auto b1x = dynamic_cast<BasicUi *>(ControlPanel::controls[E_Button1x]);
+    auto b10x = dynamic_cast<BasicUi *>(ControlPanel::controls[E_Button10x]);
 
     if(pressed){
         state = S_Button_Pressed;
