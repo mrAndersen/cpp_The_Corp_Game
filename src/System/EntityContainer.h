@@ -53,5 +53,7 @@ namespace EntityContainer {
     void initBackground();
 
     void refreshEntities();
+
+    void handleObjectSelection();
 }
 #endif //THE_CORP_GAME_ENTITYCONTAINER_H

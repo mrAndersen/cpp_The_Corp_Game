@@ -570,12 +570,7 @@ void Movable::loadAnimations() {
     addAnimation(S_Play, gender, race, level, 24);
     addAnimation(S_Walk, gender, race, level, 24);
     addAnimation(S_Working, gender, race, level, 24);
-
-    if (eType == E_Accountant) {
-        addAnimation(S_Smoking, gender, race, level, 60, 2500000);
-    } else {
-        addAnimation(S_Smoking, gender, race, level, 66, 2750000);
-    }
+    addAnimation(S_Smoking, gender, race, level, 63, 2750000);
 }
 
 void Movable::updatePopup() {
@@ -589,6 +584,7 @@ void Movable::updatePopup() {
 
     popup->getPopupText().setString(createStatsText());
     popup->getPopupText().setCharacterSize(16);
+
     popup->getPopupTitle().setString(personName);
     popup->setWorldCoordinates({worldCoordinates.x, worldCoordinates.y + popup->getHeight() / 2 + height / 2 + 20});
 
@@ -635,15 +631,12 @@ sf::String Movable::createStatsText() {
     }
 
     if (eType == E_Clerk) {
-//        s += ResourceLoader::getTranslation("popups.unit_help_texts.role") + "\n";
-        std::string g = "Тест";
-        auto t = sf::String::fromUtf8(g.begin(), g.end());
-        s += t + "\n";
+        s += ResourceLoader::getTranslation("popup.text.role") + ": " + ResourceLoader::getTranslation("units.titles.clerk") + "\n";
     }
 
-    s += "Level: " + std::to_string(level) + "\n";
-    s += "State: " + ResourceLoader::getStateTextNotation(state) + "\n";
-//    s += "Smoking: " + (smoking == 1 ? "Yes" : "No") + "\n";
+    s += ResourceLoader::getTranslation("popup.text.level") + ": " + std::to_string(level) + "\n";
+    s += ResourceLoader::getTranslation("popup.text.state") + ": " + ResourceLoader::getStateTextNotation(state) + "\n";
+    s += ResourceLoader::getTranslation("popup.text.smoking") + ": " + (smoking == 1 ? ResourceLoader::getTranslation("a.yes") : ResourceLoader::getTranslation("a.no")) + "\n";
 
     return s;
 }

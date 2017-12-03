@@ -11,10 +11,7 @@ public:
     const static int height = 496;
 
     sf::Text popupText;
-    std::string popupTextString;
-
     sf::Text popupTitle;
-    std::string popupTitleString;
 
     std::map<std::string, PopupButton*> buttons;
 

@@ -23,7 +23,8 @@ namespace ResourceLoader {
         textureCollection[target][state] = texture;
     }
 
-    void loadCharacterTexture(Entities target, const std::string &path, States state, Gender gender, Race race, int level) {
+    void
+    loadCharacterTexture(Entities target, const std::string &path, States state, Gender gender, Race race, int level) {
         auto *texture = new sf::Texture;
 
         texture->loadFromFile(path);
@@ -176,7 +177,7 @@ namespace ResourceLoader {
         std::vector<Entities> characters = {E_Clerk, E_Manager, E_Accountant};
         Gender genders[] = {G_Male};
         Race races[] = {R_White, R_Black, R_Asian};
-        int levels[] = {1, 2};
+        int levels[] = {1, 2, 3, 4};
         States states[] = {
                 S_None,
                 S_Play,
@@ -332,18 +333,22 @@ namespace ResourceLoader {
         translations = YAML::LoadFile("resources/locale/" + System::locale + ".yml");
     }
 
-    sf::String getTranslation(std::string key) {
+    const sf::String getTranslation(std::string key) {
         auto vector = System::split(key);
-        YAML::Node part;
+        auto node = Clone(translations[vector[0]]);
+        auto i = 0;
 
-        for (int i = 0; i < vector.size(); ++i) {
-            part = i == 0 ? translations[vector[i]] : part[vector[i]];
-
-            if(part.IsScalar()){
-                auto s = part.as<std::string>();
-                return sf::String::fromUtf8(s.begin(), s.end());
+        while (!node.IsScalar()) {
+            i++;
+            if(node[vector[i]]){
+                node = node[vector[i]];
+            }else{
+                return key;
             }
         }
+
+        auto s = node.as<std::string>();
+        return sf::String::fromUtf8(s.begin(), s.end());
     }
 
 

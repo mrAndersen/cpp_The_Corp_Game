@@ -1,6 +1,6 @@
 title: Forest corporation
 
-atomics:
+a:
     yes: Yes
     no: No
 
@@ -20,15 +20,15 @@ units:
         smoke: Smoking
         play: Playing
 
-popups:
-    upgrade_conditions:
-        level_1: more total earnings
+popup:
+    upgrade:
+        clerk: more total earnings
 
-    unit_help_texts:
+    text:
         role: Role
         level: Level
         state: State
-        smkoing: Smoking
+        smoking: Smoking
         daily_salary: Daily salary
         earned_total: Earned total
         earned_hour: Earning/h

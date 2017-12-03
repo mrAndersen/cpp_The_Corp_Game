@@ -8,6 +8,7 @@
 #include <SFML/Graphics/Text.hpp>
 #include <deque>
 #include "GameTime.h"
+#include "Enum.h"
 
 namespace System {
     extern unsigned int screenWidth;
@@ -18,13 +19,13 @@ namespace System {
     extern int entitySequence;
 
     //sys
+    extern Scenes activeScene;
     extern sf::Clock fpsClock;
     extern sf::Clock frameClock;
     extern sf::Clock timeSinceStart;
     extern sf::RenderWindow *window;
     extern sf::Event event;
     extern bool selectionAllowed;
-    extern std::deque<sf::Event> eventDeque;
     extern long long int frameTimeMcs;
     extern sf::Uint32 screenMode;
     extern float timeFactor;
@@ -74,6 +75,7 @@ namespace System {
     extern int entitiesOnScreen;
     extern int fps;
     extern int debug;
+    extern int version;
     //debug
 
     RECT getScreenBoundaries();
@@ -111,6 +113,8 @@ namespace System {
     int getRandom(int min, int max);
 
     int roundToMultiple(float target, int multiple = 25);
+
+    void handleGlobalLogic();
 }
 
 #endif //THE_CORP_GAME_SYSTEM_H

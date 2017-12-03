@@ -13,6 +13,7 @@
 #include "GameTime.h"
 #include "..\Text\TextEntity.h"
 #include "ResourceLoader.h"
+#include "../../version.h"
 
 namespace System {
     unsigned int screenWidth = 1850;
@@ -23,6 +24,7 @@ namespace System {
     int entitySequence = 1;
 
     //sys
+    Scenes activeScene = SC_Game;
     sf::Clock fpsClock;
     sf::Clock frameClock;
     sf::Clock timeSinceStart;
@@ -35,7 +37,6 @@ namespace System {
     sf::RenderWindow *window;
     sf::Event event;
     bool selectionAllowed = false;
-    std::deque<sf::Event> eventDeque;
     long long int frameTimeMcs;
     sf::Uint32 screenMode = sf::Style::Default;
     float timeFactor = 1;
@@ -52,7 +53,7 @@ namespace System {
     //utility
 
     //player
-    double cash = 2000000;
+    double cash = 10000;
     float accountantsBonus = 1.f;
     bool spawningUnit = false;
     sf::Clock selectionCooldown;
@@ -75,7 +76,8 @@ namespace System {
     int framesPassed = 0;
     int entitiesOnScreen = 0;
     int fps = 0;
-    int debug = 1;
+    int debug = 0;
+    int version = 1;
     //debug
 
     void refreshDayTime() {
@@ -107,7 +109,7 @@ namespace System {
     }
 
     void refreshSystem() {
-        window->setTitle(ResourceLoader::getTranslation("title") + " ~ " + std::to_string(System::fps) + "FPS");
+        window->setTitle("Forest Corporation ~ " + std::to_string(System::fps) + "FPS | Version = " + VERSION);
 
         frameTimeMcs = frameClock.restart().asMicroseconds();
         framesPassed++;
@@ -345,6 +347,40 @@ namespace System {
         temp = "";
 
         return vector;
+    }
+
+    void handleGlobalLogic() {
+        if (System::event.type == sf::Event::Closed) {
+            System::window->close();
+        }
+
+        if (System::event.type == sf::Event::Resized) {
+            System::screenWidth = System::window->getSize().x;
+            System::screenHeight = System::window->getSize().y;
+
+            System::initWindow();
+        }
+
+        if (System::event.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::LAlt) &&
+            sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
+            auto boundaries = System::getScreenBoundaries();
+
+            switch (System::screenMode) {
+                case sf::Style::Default:
+                    System::screenMode = sf::Style::Fullscreen;
+                    System::initWindow();
+                    break;
+                case sf::Style::Fullscreen:
+                    System::screenMode = sf::Style::Default;
+
+                    System::screenWidth = (unsigned int) boundaries.right * 8 / 10;
+                    System::screenHeight = (unsigned int) boundaries.bottom * 4 / 5;
+
+                    System::initWindow();
+                default:
+                    break;
+            }
+        }
     }
 }
 

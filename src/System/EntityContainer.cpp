@@ -82,7 +82,7 @@ namespace EntityContainer {
 
     void initBackground() {
         int before = 0;
-        int after = System::worldWidth;
+        int after = (int) System::worldWidth;
 
         int nextFieldBorder = 0;
         int nextTreeBorder = 0;
@@ -308,6 +308,32 @@ namespace EntityContainer {
 
     std::vector<Entity *> getGroupItems(const std::string &groupName) {
         return itemsByGroup[groupName];
+    }
+
+    void handleObjectSelection() {
+        if (System::event.type == sf::Event::MouseButtonPressed && System::event.mouseButton.button == sf::Mouse::Left &&
+            System::selectionAllowed) {
+            for (auto ei:EntityContainer::items) {
+                if (!ei->mouseIn() && ei->isSelectable()) {
+                    ei->setSelected(false);
+                    ei->setNormal();
+                }
+            }
+
+            for (auto it = EntityContainer::items.rbegin(); it != EntityContainer::items.rend(); ++it) {
+                auto ex = *it;
+
+                if (
+                        ex->mouseIn() &&
+                        ex->isSelectable() &&
+                        ex->isSpawned() &&
+                        ex->getLiveClock().getElapsedTime().asMilliseconds() >= System::buttonReload
+                        ) {
+                    ex->setSelected(!ex->isSelected());
+                    break;
+                }
+            }
+        }
     }
 
 }

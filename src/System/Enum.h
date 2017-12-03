@@ -1,6 +1,12 @@
 #ifndef CORP_GAME_ENUM
 #define CORP_GAME_ENUM
 
+enum Scenes {
+    SC_Loading = 0,
+    SC_Main_Menu = 1,
+    SC_Game = 2
+};
+
 enum DrawOrder {
 
     D_BG_Mountain_1 = 14,
