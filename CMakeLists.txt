@@ -1,20 +1,37 @@
 cmake_minimum_required(VERSION 3.8)
 set(CMAKE_BUILD_TYPE "Debug")
 
-#add_definitions(-DVERSION=${CMAKE_BUILD_TYPE})
+set(COMPILER "MSVC")
+#set(COMPILER "GCC")
 
 project(the_corp_game)
 set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_CXX_FLAGS "-static-libgcc -static-libstdc++")
 
-set(SFML_ROOT "${PROJECT_SOURCE_DIR}/vendor/sfml-2.4.2-mingw")
-#set(SFML_ROOT "${PROJECT_SOURCE_DIR}/vendor/sfml-2.4.2-windows")
-set(SFML_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/vendor/sfml-2.4.2-mingw/include")
-#set(SFML_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/vendor/sfml-2.4.2-windows/include")
+if(COMPILER STREQUAL "GCC")
+    set(CMAKE_CXX_FLAGS "-static-libgcc -static-libstdc++")
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/gcc-${CMAKE_BUILD_TYPE}")
+    set(CMAKE_BINARY_DIR ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+    set(SFML_ROOT "${PROJECT_SOURCE_DIR}/vendor/sfml-2.4.2-mingw")
+    set(SFML_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/vendor/sfml-2.4.2-mingw/include")
+    set(OTHER_DEPENDENCIES "${PROJECT_SOURCE_DIR}/vendor/yaml/libyaml-cpp.a")
+endif()
+
+if(COMPILER STREQUAL "MSVC")
+#    set(WINDOWS_KIT_VERSION "10.0.14393.0")
+#    set(WINDOWS_LIB_DIRECTORY "C:/Program Files (x86)/Windows Kits/10/Lib/${WINDOWS_KIT_VERSION}/um/x86")
+
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/msvc-${CMAKE_BUILD_TYPE}")
+    set(CMAKE_BINARY_DIR ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+    set(SFML_ROOT "${PROJECT_SOURCE_DIR}/vendor/sfml-2.4.2-windows")
+    set(SFML_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/vendor/sfml-2.4.2-windows/include")
+
+#    set(OTHER_DEPENDENCIES "${PROJECT_SOURCE_DIR}/vendor/yaml/libyaml-cppmd.lib")
+endif()
+
 
 include_directories("${PROJECT_SOURCE_DIR}/src")
 include_directories("vendor/yaml/include")
-set(OTHER_DEPENDENCIES "${PROJECT_SOURCE_DIR}/vendor/yaml/libyaml-cpp.a")
+
 
 file(COPY "resources" DESTINATION "${CMAKE_BINARY_DIR}")
 

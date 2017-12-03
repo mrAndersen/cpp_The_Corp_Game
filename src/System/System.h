@@ -94,7 +94,7 @@ namespace System {
 
     bool mouseInsideRect(const sf::Vector2f &leftTop, const sf::Vector2f &rightBottom);
 
-    std::string f_to_string(const double value, const int n = 2);
+    std::string f_to_string(double value, int n = 2);
 
     std::string formatNewLines(const std::string &in, size_t every_n);
 

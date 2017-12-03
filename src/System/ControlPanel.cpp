@@ -44,6 +44,9 @@ namespace ControlPanel {
             mainMenu.clear();
 
             std::thread loader([](){
+                ResourceLoader::loadGameTextures();
+                ResourceLoader::loadNames();
+
                 EntityContainer::initBackground();
                 ControlPanel::initControlPanel();
 

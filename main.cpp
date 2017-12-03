@@ -13,27 +13,14 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
     //global lightweight loading
     ResourceLoader::loadFonts();
     ResourceLoader::loadLocales();
+    ResourceLoader::loadMainMenuTextures();
 
-    if (System::activeScene == SC_Main_Menu) {
-        ResourceLoader::loadMainMenuTextures();
-
-        EntityContainer::initMainMenu();
-        ControlPanel::initMainMenu();
-    }
-
-
-
-    //preload resources
-    ResourceLoader::loadGameTextures();
-    ResourceLoader::loadNames();
+    EntityContainer::initMainMenu();
+    ControlPanel::initMainMenu();
 
     //load window and debug utilities
     System::initWindow();
     System::initDebug();
-
-
-
-
 
     while (System::window && System::window->isOpen()) {
         System::refreshSystem();
@@ -59,7 +46,6 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
                 DebugPattern::process();
             }
         }
-
 
 
         if (System::activeScene == SC_Game) {
