@@ -139,8 +139,14 @@ namespace System {
         s += std::to_string(screenHeight) + " ";
 
         kernelText.setString(s);
-        kernelText.setFillColor(sf::Color::Black);
-        kernelText.setPosition(cToGl({ViewHandler::left + 12, ViewHandler::top}));
+
+        if(activeScene == SC_Game){
+            kernelText.setFillColor(sf::Color::White);
+        }else{
+            kernelText.setFillColor(sf::Color::Black);
+        }
+
+        kernelText.setPosition(cToGl({ViewHandler::left + 12, ViewHandler::bottom + 20}));
         kernelText.setFont(*textFont);
         kernelText.setCharacterSize(11);
         window->draw(kernelText);
