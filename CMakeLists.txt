@@ -195,7 +195,7 @@ add_executable(
 
         src/Ui/Questions/QAddAccountant.cpp
         src/Ui/Questions/QAddAccountant.h
-        src/Background/Cloud.cpp src/Background/Cloud.h)
+        src/Background/Cloud.cpp src/Background/Cloud.h src/Ui/MainPanel/Cog.cpp src/Ui/MainPanel/Cog.h)
 
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}" ${CMAKE_MODULE_PATH})

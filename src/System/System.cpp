@@ -14,6 +14,7 @@
 #include "..\Text\TextEntity.h"
 #include "ResourceLoader.h"
 #include "../../version.h"
+#include "EntityContainer.h"
 
 namespace System {
     unsigned int screenWidth = 1850;
@@ -24,7 +25,9 @@ namespace System {
     int entitySequence = 1;
 
     //sys
-    Scenes activeScene = SC_Main_Menu;
+    Scenes activeScene;
+    Scenes loadingScene;
+    sf::Clock sceneChangeTimer;
     sf::Clock fpsClock;
     sf::Clock frameClock;
     sf::Clock timeSinceStart;
@@ -134,9 +137,9 @@ namespace System {
 
         kernelText.setString(s);
 
-        if(activeScene == SC_Game){
+        if (activeScene == SC_Game) {
             kernelText.setFillColor(sf::Color::White);
-        }else{
+        } else {
             kernelText.setFillColor(sf::Color::Black);
         }
 
@@ -156,11 +159,22 @@ namespace System {
             g_x = coordMap.x;
             g_y = screenHeight - coordMap.y;
 
-            debugPanelTextNodes["scene"].setString("scene: " + std::to_string(activeScene));
-            debugPanelTextNodes["g_coordinates"].setString("global: {" + std::to_string((int) g_x) + "," + std::to_string((int) g_y) + "}");
+
+            debugPanelTextNodes["menu_stats"].setString(
+                    "menu_stats: v_size->" + std::to_string(EntityContainer::items[SC_Main_Menu].size()));
+            debugPanelTextNodes["game_stats"].setString(
+                    "game_stats: v_size->" + std::to_string(EntityContainer::items[SC_Game].size()));
+
+            debugPanelTextNodes["active_scene"].setString("active_scene: " + std::to_string(activeScene));
+            debugPanelTextNodes["loading_scene"].setString("loading_scene: " + std::to_string(loadingScene));
+
+            debugPanelTextNodes["g_coordinates"].setString(
+                    "global: {" + std::to_string((int) g_x) + "," + std::to_string((int) g_y) + "}");
             debugPanelTextNodes["fps"].setString("fps: " + std::to_string(fps));
-            debugPanelTextNodes["mouse"].setString("mouse: {" + std::to_string(mousePosition.x) + "," + std::to_string(mousePosition.y) + "}");
-            debugPanelTextNodes["v_direction"].setString("v_direction: " + std::to_string(ViewHandler::viewDirectionMovement));
+            debugPanelTextNodes["mouse"].setString(
+                    "mouse: {" + std::to_string(mousePosition.x) + "," + std::to_string(mousePosition.y) + "}");
+            debugPanelTextNodes["v_direction"].setString(
+                    "v_direction: " + std::to_string(ViewHandler::viewDirectionMovement));
             debugPanelTextNodes["mem"].setString("mem:" + std::to_string((int) mem / 1024 / 1024) + "mb");
 
 
@@ -178,7 +192,8 @@ namespace System {
             debugPanelTextNodes["p_time_factor"].setString("p_time_factor:" + std::to_string(timeFactor));
             debugPanelTextNodes["d_level"].setString("d_level:" + std::to_string(debug));
             debugPanelTextNodes["spawning"].setString("spawning:" + std::to_string(spawningUnit));
-            debugPanelTextNodes["selection_cd"].setString("selection_cd:" + std::to_string(selectionCooldown.getElapsedTime().asSeconds()));
+            debugPanelTextNodes["selection_cd"].setString(
+                    "selection_cd:" + std::to_string(selectionCooldown.getElapsedTime().asSeconds()));
 
             std::string dcs;
             for (auto e:debugCounters) {
@@ -200,8 +215,11 @@ namespace System {
             delete window;
             window = nullptr;
 
-            delete ViewHandler::view;
-            ViewHandler::view = nullptr;
+            delete ViewHandler::views[SC_Game];
+            delete ViewHandler::views[SC_Main_Menu];
+
+            ViewHandler::views[SC_Game] = nullptr;
+            ViewHandler::views[SC_Main_Menu] = nullptr;
         }
 
         if (screenMode == sf::Style::Fullscreen) {
@@ -222,11 +240,15 @@ namespace System {
         window->clear(c_background);
         window->setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
-        ViewHandler::view = new sf::View();
-        ViewHandler::view->reset(sf::FloatRect(0, 0, screenWidth, screenHeight));
-        ViewHandler::view->setCenter(screenWidth / 2, screenHeight / 2);
+        ViewHandler::views[SC_Game] = new sf::View();
+        ViewHandler::views[SC_Game]->reset(sf::FloatRect(0, 0, screenWidth, screenHeight));
+        ViewHandler::views[SC_Game]->setCenter(screenWidth / 2, screenHeight / 2);
 
-        window->setView(*ViewHandler::view);
+        ViewHandler::views[SC_Main_Menu] = new sf::View();
+        ViewHandler::views[SC_Main_Menu]->reset(sf::FloatRect(0, 0, screenWidth, screenHeight));
+        ViewHandler::views[SC_Main_Menu]->setCenter(screenWidth / 2, screenHeight / 2);
+
+        window->setView(*ViewHandler::views[activeScene]);
     }
 
     sf::Text createDebugString(const std::string &alias) {
@@ -240,7 +262,10 @@ namespace System {
     }
 
     void initDebug() {
-        createDebugString("scene");
+        createDebugString("menu_stats");
+        createDebugString("game_stats");
+        createDebugString("active_scene");
+        createDebugString("loading_scene");
         createDebugString("fps");
         createDebugString("mem");
         createDebugString("g_coordinates");
@@ -400,6 +425,18 @@ namespace System {
                 default:
                     break;
             }
+        }
+    }
+
+    void changeScene(Scenes scene) {
+        if (scene == SC_Main_Menu) {
+            System::activeScene = SC_Main_Menu;
+            System::sceneChangeTimer.restart();
+        }
+
+        if (scene == SC_Game) {
+            System::activeScene = SC_Game;
+            System::sceneChangeTimer.restart();
         }
     }
 }

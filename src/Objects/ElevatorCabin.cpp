@@ -94,7 +94,7 @@ void ElevatorCabin::spawn() {
     auto elevator = new Elevator();
     elevator->addCabin(this);
 
-    for (auto e:EntityContainer::items) {
+    for (auto e:EntityContainer::items[System::activeScene]) {
 
         if (auto d = dynamic_cast<ElevatorShaftMiddle *>(e)) {
             if (d->getWorldCoordinates().x == worldCoordinates.x) {

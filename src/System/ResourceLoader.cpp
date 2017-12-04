@@ -94,6 +94,9 @@ namespace ResourceLoader {
 
         ResourceLoader::loadTexture(Entities::E_MainPanelOverlay, "resources/ui/main.panel.png");
 
+        ResourceLoader::loadTexture(Entities::E_Cog, "resources/ui/cog.png", S_Button_Normal);
+        ResourceLoader::loadTexture(Entities::E_Cog, "resources/ui/cog.pressed.png", S_Button_Pressed);
+
         ResourceLoader::loadTexture(Entities::E_ButtonPause, "resources/ui/button.pause.png", S_Button_Normal);
         ResourceLoader::loadTexture(Entities::E_ButtonPause, "resources/ui/button.pause.pressed.png", S_Button_Pressed);
 

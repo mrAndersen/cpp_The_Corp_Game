@@ -9,6 +9,7 @@
 
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow) {
     System::activeScene = SC_Game;
+    System::loadingScene = SC_Game;
 
     //global lightweight loading
     ResourceLoader::loadFonts();
@@ -20,15 +21,13 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
         ControlPanel::initMainMenu();
     }
 
-    if(System::activeScene == SC_Game){
+    if (System::activeScene == SC_Game) {
         ResourceLoader::loadGameTextures();
         ResourceLoader::loadNames();
 
         EntityContainer::initBackground();
         ControlPanel::initControlPanel();
     }
-
-
 
     //load window and debug utilities
     System::initWindow();
@@ -42,12 +41,28 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
             System::event = e;
             System::handleGlobalLogic();
 
-            if (System::activeScene == SC_Main_Menu) {
+            //game loaded and menu opened
+            if (System::activeScene == SC_Main_Menu && !EntityContainer::items[SC_Game].empty()) {
 
+                if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::Escape &&
+                    System::sceneChangeTimer.getElapsedTime().asMilliseconds() >= System::buttonReload) {
+
+                    System::changeScene(SC_Game);
+                }
+
+//                ControlPanel::mainMenu["resume"]->setVisible(true);
             }
 
             if (System::activeScene == SC_Game) {
                 EntityContainer::handleObjectSelection();
+
+                if (
+                        e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::Escape &&
+                        System::sceneChangeTimer.getElapsedTime().asMilliseconds() >= System::buttonReload
+                        ) {
+
+                    System::changeScene(SC_Main_Menu);
+                }
 
                 if (e.type == sf::Event::KeyPressed || e.type == sf::Event::KeyReleased) {
                     ViewHandler::handleViewScrollKeyPress(e);

@@ -14,6 +14,10 @@ namespace DebugPattern {
             System::debug = System::debug == debugMax ? 0 : System::debug + 1;
         }
 
+        if (System::activeScene != SC_Game) {
+            return;
+        }
+
         if (System::event.type == sf::Event::KeyPressed && System::event.key.code == sf::Keyboard::G) {
             auto count = 4;
 

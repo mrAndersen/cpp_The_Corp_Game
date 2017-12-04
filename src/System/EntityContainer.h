@@ -30,7 +30,7 @@ namespace EntityContainer {
 
 
     //items
-    extern std::vector<Entity *> items;
+    extern std::map<Scenes, std::vector<Entity *>> items;
 
     extern std::vector<Entity *> itemsToRemove;
 

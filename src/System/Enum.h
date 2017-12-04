@@ -141,6 +141,7 @@ enum Entities {
     E_Button10x = 106,
     E_Popup = 107,
     E_Popup_Button = 108,
+    E_Cog = 109,
 
     E_Cloud1 = 1001,
     E_Cloud2 = 1002,

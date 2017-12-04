@@ -25,7 +25,7 @@ void MainPanelOverlay::update() {
     worldCoordinates.y = ViewHandler::top - height / 2;
 
     time.setString(System::gameTime.get());
-    time.setPosition(System::cToGl(ViewHandler::left + leftOffset + 58, ViewHandler::top - topOffset + 32));
+    time.setPosition(System::cToGl(ViewHandler::right - 132, ViewHandler::top - topOffset + 32));
 
     System::window->draw(time);
 }
