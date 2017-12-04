@@ -3,6 +3,7 @@
 
 
 #include <Basic/Entity.h>
+#include <functional>
 
 class PopupButton : public BasicUi {
 public:
@@ -13,10 +14,18 @@ protected:
     sf::Text text;
     std::string string;
     sf::Color color = sf::Color(255, 255, 255, 255);
+    int textOffset = 0;
+
 public:
+    std::function<void()> callback;
+
     PopupButton();
 
-    const sf::Text &getText() const;
+    int getTextOffset() const;
+
+    void setTextOffset(int textOffset);
+
+    sf::Text &getText();
 
     void setText(const sf::Text &text);
 

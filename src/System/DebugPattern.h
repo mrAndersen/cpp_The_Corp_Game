@@ -5,8 +5,6 @@
 namespace DebugPattern {
 
     void process();
-
-    void prepareDebug();
 }
 
 

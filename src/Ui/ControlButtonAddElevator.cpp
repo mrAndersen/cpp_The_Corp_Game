@@ -16,9 +16,9 @@ ControlButtonAddElevator::ControlButtonAddElevator(float leftOffset, float topOf
 }
 
 void ControlButtonAddElevator::update() {
-    auto bc = ControlPanel::getControls()[E_ButtonAddElevatorCabin];
-    auto bs = ControlPanel::getControls()[E_ButtonAddElevatorShaftMiddle];
-    auto bst = ControlPanel::getControls()[E_ButtonAddElevatorShaftTop];
+    auto bc = ControlPanel::controls[E_ButtonAddElevatorCabin];
+    auto bs = ControlPanel::controls[E_ButtonAddElevatorShaftMiddle];
+    auto bst = ControlPanel::controls[E_ButtonAddElevatorShaftTop];
 
     if(mouseIn()){
         System::selectionCooldown.restart();

@@ -39,7 +39,7 @@ void Elevator::drawDebug() {
         std::string ds;
 
         text.setFillColor(sf::Color::White);
-        text.setFont(*System::debugFont);
+        text.setFont(*System::textFont);
         text.setCharacterSize(20);
         text.setPosition(System::cToGl(position));
         ds = "waiting:" + std::to_string(waiting) + ";boarding:" + std::to_string(boarding);

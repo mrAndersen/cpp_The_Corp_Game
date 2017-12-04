@@ -18,7 +18,7 @@ namespace ViewHandler {
     extern float left;
     extern float zoom;
 
-    void handleViewScroll();
+    void handleView();
 
     void handleViewZoomKeyPress(sf::Event e);
 

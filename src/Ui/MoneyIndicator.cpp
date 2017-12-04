@@ -13,7 +13,7 @@ MoneyIndicator::MoneyIndicator(float leftOffset, float topOffset) : BasicUi(left
     addAnimation(S_None, Animation(this, S_None, 1, ResourceLoader::getTexture(eType)));
     initEntity();
 
-    moneyString.setFont(*System::gameFont);
+    moneyString.setFont(*System::titleFont);
     moneyString.setCharacterSize(40);
     moneyString.setFillColor(sf::Color::White);
 

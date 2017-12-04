@@ -50,7 +50,11 @@ namespace EntityContainer {
 
     std::vector<Elevator *> getElevators();
 
+    void initMainMenu();
+
     void initBackground();
+
+    void clearEntities();
 
     void refreshEntities();
 

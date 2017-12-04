@@ -3,3 +3,7 @@
 /Debug
 .vs
 /cmake-build-debug
+/gcc-Debug
+/msvc-Debug
+/gcc-Release
+/msvc-Release

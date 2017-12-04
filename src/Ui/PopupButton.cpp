@@ -11,18 +11,20 @@ PopupButton::PopupButton() : BasicUi(leftOffset, topOffset) {
     setWidth(PopupButton::width);
     setHeight(PopupButton::height);
 
-    addAnimation(S_Button_Normal, Animation(this, S_Button_Normal, 1, ResourceLoader::getTexture(eType, S_Button_Normal)));
-    addAnimation(S_Button_Pressed, Animation(this, S_Button_Pressed, 1, ResourceLoader::getTexture(eType, S_Button_Pressed)));
+    addAnimation(S_Button_Normal,
+                 Animation(this, S_Button_Normal, 1, ResourceLoader::getTexture(eType, S_Button_Normal)));
+    addAnimation(S_Button_Pressed,
+                 Animation(this, S_Button_Pressed, 1, ResourceLoader::getTexture(eType, S_Button_Pressed)));
     initEntity();
 
-    text.setFont(*System::debugFont);
+    text.setFont(*System::textFont);
     text.setCharacterSize(16);
     text.setFillColor(sf::Color::White);
 
     EntityContainer::add(this);
 }
 
-const sf::Text &PopupButton::getText() const {
+sf::Text &PopupButton::getText() {
     return text;
 }
 
@@ -55,6 +57,10 @@ void PopupButton::update() {
     if (leftClicked() && !System::spawningUnit && liveClock.getElapsedTime().asMilliseconds() >= System::buttonReload) {
         pressed = true;
         liveClock.restart();
+
+        if (callback) {
+            callback();
+        }
     }
 
     if (liveClock.getElapsedTime().asMilliseconds() >= 100) {
@@ -65,7 +71,8 @@ void PopupButton::update() {
 
     text.setString(string);
     text.setOrigin(roundf((tBounds.width / 2)), roundf((tBounds.height / 2)));
-    text.setPosition(System::cToGl(worldCoordinates));
+    text.setPosition(System::cToGl({worldCoordinates.x, worldCoordinates.y + textOffset}));
+
     currentAnimation->getSprite().setColor(color);
 
     System::window->draw(text);
@@ -77,4 +84,12 @@ const sf::Color &PopupButton::getColor() const {
 
 void PopupButton::setColor(const sf::Color &color) {
     PopupButton::color = color;
+}
+
+int PopupButton::getTextOffset() const {
+    return textOffset;
+}
+
+void PopupButton::setTextOffset(int textOffset) {
+    PopupButton::textOffset = textOffset;
 }

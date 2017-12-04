@@ -3,10 +3,11 @@
 
 namespace ControlPanel {
     extern std::map<Entities , Entity *> controls;
+    extern std::map<std::string , Entity *> mainMenu;
 
     void initControlPanel();
 
-    std::map<Entities , Entity *> getControls();
+    void initMainMenu();
 }
 
 #endif //THE_CORP_GAME_CONTROLPANEL_H

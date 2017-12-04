@@ -9,7 +9,6 @@
 namespace DebugPattern {
 
     void process() {
-
         if (System::event.type == sf::Event::KeyPressed && System::event.key.code == sf::Keyboard::V) {
             int debugMax = 2;
             System::debug = System::debug == debugMax ? 0 : System::debug + 1;
@@ -151,10 +150,5 @@ namespace DebugPattern {
             }
         }
 
-    }
-
-    void prepareDebug() {
-        System::debug = 1;
-        System::version = 0;
     }
 }

@@ -8,57 +8,70 @@
 #include "src\System\DebugPattern.h"
 
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow) {
+    System::activeScene = SC_Game;
 
-
-    //preload resources
-    ResourceLoader::loadTexturesFromFiles();
+    //global lightweight loading
     ResourceLoader::loadFonts();
     ResourceLoader::loadLocales();
-    ResourceLoader::loadNames();
+    ResourceLoader::loadMainMenuTextures();
+
+    if (System::activeScene == SC_Main_Menu) {
+        EntityContainer::initMainMenu();
+        ControlPanel::initMainMenu();
+    }
+
+    if(System::activeScene == SC_Game){
+        ResourceLoader::loadGameTextures();
+        ResourceLoader::loadNames();
+
+        EntityContainer::initBackground();
+        ControlPanel::initControlPanel();
+    }
+
+
 
     //load window and debug utilities
     System::initWindow();
     System::initDebug();
 
-    EntityContainer::initBackground();
-    ControlPanel::initControlPanel();
-
-    DebugPattern::prepareDebug();
-
     while (System::window && System::window->isOpen()) {
         System::refreshSystem();
-        System::refreshDayTime();
-
         sf::Event e{};
 
         while (System::window->pollEvent(e)) {
             System::event = e;
-
             System::handleGlobalLogic();
 
+            if (System::activeScene == SC_Main_Menu) {
 
-            if (System::activeScene == Scenes::SC_Game) {
-                System::selectionAllowed = !System::spawningUnit &&
-                                           System::selectionCooldown.getElapsedTime().asMilliseconds() >=
-                                           System::buttonReload;
+            }
 
+            if (System::activeScene == SC_Game) {
                 EntityContainer::handleObjectSelection();
 
                 if (e.type == sf::Event::KeyPressed || e.type == sf::Event::KeyReleased) {
                     ViewHandler::handleViewScrollKeyPress(e);
                 }
+            }
 
-                if (System::version == 0) {
-                    DebugPattern::process();
-                }
+            if (System::versionType == "Debug") {
+                DebugPattern::process();
             }
         }
 
 
-        ViewHandler::handleViewScroll();
-        EntityContainer::refreshEntities();
+        if (System::activeScene == SC_Game) {
+            System::refreshDayTime();
+            ViewHandler::handleView();
+        }
 
+        if (System::activeScene == SC_Main_Menu) {
+            ViewHandler::handleView();
+        }
+
+        EntityContainer::refreshEntities();
         System::refreshDebugPanel();
+
         System::window->display();
     }
 
