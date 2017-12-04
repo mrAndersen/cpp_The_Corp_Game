@@ -8,8 +8,8 @@
 #include "src\System\DebugPattern.h"
 
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow) {
-    System::activeScene = SC_Game;
-    System::loadingScene = SC_Game;
+    System::activeScene = SC_Main_Menu;
+    System::loadingScene = SC_Main_Menu;
 
     //global lightweight loading
     ResourceLoader::loadFonts();
@@ -49,8 +49,6 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
 
                     System::changeScene(SC_Game);
                 }
-
-//                ControlPanel::mainMenu["resume"]->setVisible(true);
             }
 
             if (System::activeScene == SC_Game) {

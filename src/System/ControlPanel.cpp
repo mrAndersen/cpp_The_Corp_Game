@@ -42,7 +42,7 @@ namespace ControlPanel {
         resume->setString("Resume");
         resume->setVisible(false);
         resume->callback = []() {
-            System::activeScene = SC_Game;
+            System::changeScene(SC_Game);
         };
 
         auto start = new PopupButton;

@@ -15,6 +15,7 @@
 #include "ResourceLoader.h"
 #include "../../version.h"
 #include "EntityContainer.h"
+#include "ControlPanel.h"
 
 namespace System {
     unsigned int screenWidth = 1850;
@@ -430,6 +431,8 @@ namespace System {
 
     void changeScene(Scenes scene) {
         if (scene == SC_Main_Menu) {
+//            ControlPanel::mainMenu["resume"]->setVisible(true);
+
             System::activeScene = SC_Main_Menu;
             System::sceneChangeTimer.restart();
         }
