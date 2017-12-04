@@ -6,7 +6,7 @@ import requests
 import base64
 import re
 
-UPLOAD = True
+UPLOAD = False
 
 print("Copying...", end="")
 
@@ -31,9 +31,9 @@ file.seek(0)
 file.truncate()
 file.write(newContents)
 
-binGccDirectory = "cmake-build-debug"
+binGccDirectory = "gcc-Debug"
 binGccName = "corpgame.exe"
-binMsvcDirectory = "Debug"
+binMsvcDirectory = "msvc-Debug"
 binMsvcName = "cpp_The_Corp_Game_VC.exe"
 
 if not os.path.exists(binGccDirectory + "/" + binGccName):

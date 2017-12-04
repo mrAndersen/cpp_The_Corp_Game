@@ -53,7 +53,7 @@ namespace System {
     //utility
 
     //player
-    double cash = 10000;
+    double cash = 1000000;
     float accountantsBonus = 1.f;
     bool spawningUnit = false;
     sf::Clock selectionCooldown;
@@ -110,13 +110,7 @@ namespace System {
     }
 
     void refreshSystem() {
-        std::string s;
-
-        s += "Forest Corporation ~ " + std::to_string(fps) + "FPS | ";
-        s += "VerT = " + versionType + " | ";
-        s += "Ver = " + version;
-
-        window->setTitle(s);
+        window->setTitle("Forest Corporation ~ " + std::to_string(fps) + "FPS");
 
         frameTimeMcs = frameClock.restart().asMicroseconds();
         framesPassed++;
