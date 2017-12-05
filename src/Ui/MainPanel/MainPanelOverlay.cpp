@@ -53,8 +53,6 @@ void MainPanelOverlay::update() {
             stats[s]->setWorldCoordinates({ViewHandler::right - width + 35 + (i * 60), ViewHandler::top - 26});
         }
 
-
-
         statLabels[s].setString(std::to_string(EntityContainer::counters[s]));
         statLabels[s].setPosition(System::cToGl({ViewHandler::right - width + (i * 60) + 54, ViewHandler::top - 13}));
 
