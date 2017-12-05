@@ -38,7 +38,7 @@ namespace ControlPanel {
         resume->getText().setFont(*System::titleFontI8N);
         resume->getText().setCharacterSize(20);
         resume->setLeftOffset(screenCenterX);
-        resume->setTopOffset(screenCenterY - 14);
+        resume->setTopOffset(screenCenterY + 18);
         resume->setString("Resume");
         resume->setVisible(false);
         resume->callback = [](PopupButton *self) {

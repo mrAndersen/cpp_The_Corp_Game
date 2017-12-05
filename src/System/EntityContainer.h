@@ -19,6 +19,8 @@ namespace EntityContainer {
     extern bool sortNextFrame;
 
     //groups
+    extern std::map<Entities, int> counters;
+
     extern std::map<std::string, std::vector<Entity *>> itemsByGroup;
 
     void addToGroup(const std::string &groupName, Entity *target);

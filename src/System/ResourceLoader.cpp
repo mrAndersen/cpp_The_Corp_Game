@@ -10,6 +10,7 @@
 namespace ResourceLoader {
     YAML::Node translations;
 
+    std::map<std::string, sf::Texture *> fastTextures;
     std::map<int, std::map<int, sf::Texture *>> textureCollection;
     std::map<std::string, sf::Texture *> characterTextureCollection;
 
@@ -332,8 +333,13 @@ namespace ResourceLoader {
     }
 
     sf::Texture *loadAndGetTexture(const std::string &path) {
+        if(fastTextures[path] != nullptr){
+            return fastTextures[path];
+        }
+
         auto texture = new sf::Texture;
         texture->loadFromFile(path);
+        fastTextures[path] = texture;
 
         return texture;
     }

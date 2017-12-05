@@ -8,8 +8,7 @@
 #include "src\System\DebugPattern.h"
 
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow) {
-    System::activeScene = SC_Main_Menu;
-    System::loadingScene = SC_Main_Menu;
+    System::activeScene = SC_Game;
 
     //global lightweight loading
     ResourceLoader::loadFonts();
@@ -17,16 +16,24 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
     ResourceLoader::loadMainMenuTextures();
 
     if (System::activeScene == SC_Main_Menu) {
+        System::loadingScene = SC_Main_Menu;
         EntityContainer::initMainMenu();
         ControlPanel::initMainMenu();
     }
 
     if (System::activeScene == SC_Game) {
+        System::loadingScene = SC_Game;
         ResourceLoader::loadGameTextures();
         ResourceLoader::loadNames();
 
         EntityContainer::initBackground();
         ControlPanel::initControlPanel();
+
+        System::loadingScene = SC_Main_Menu;
+        EntityContainer::initMainMenu();
+        ControlPanel::initMainMenu();
+
+        System::loadingScene = SC_Game;
     }
 
     //load window and debug utilities

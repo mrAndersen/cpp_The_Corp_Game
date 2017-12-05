@@ -430,7 +430,9 @@ Entity *Entity::create(Entities type, DrawOrder order, sf::Vector2f size, sf::Ve
 }
 
 Animation *Entity::getCurrentAnimation() {
-    return currentAnimation;
+    if(currentAnimation){
+        return currentAnimation;
+    }
 }
 
 

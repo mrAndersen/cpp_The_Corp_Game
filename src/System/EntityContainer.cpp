@@ -6,6 +6,8 @@ namespace EntityContainer {
 
     std::map<std::string, std::vector<Entity *>> itemsByGroup;
 
+    std::map<Entities, int> counters;
+
     std::vector<Entity *> itemsToRemove = {};
 
     std::vector<sf::VertexArray> verticies;
@@ -32,6 +34,8 @@ namespace EntityContainer {
     }
 
     void add(Entity *item) {
+        counters[item->getEType()]++;
+
         auto size = items[System::loadingScene].size();
 
         if (items[System::loadingScene].empty()) {
@@ -285,6 +289,8 @@ namespace EntityContainer {
 
         if (!itemsToRemove.empty()) {
             for (auto &e:itemsToRemove) {
+                counters[e->getEType()]--;
+
                 //remove if item presents in group
                 if (e->getGroupName() != "~") {
                     removeFromGroup(e->getGroupName(), e);

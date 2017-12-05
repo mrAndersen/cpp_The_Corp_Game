@@ -13,6 +13,8 @@ public:
     const static int height = 66;
 
     sf::Text time;
+    std::map<Entities, Entity*> stats;
+    std::map<Entities, sf::Text> statLabels;
 
     MainPanelOverlay(float leftOffset, float topOffset);
 
