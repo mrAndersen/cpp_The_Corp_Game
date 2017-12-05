@@ -431,7 +431,8 @@ namespace System {
 
     void changeScene(Scenes scene) {
         if (scene == SC_Main_Menu) {
-//            ControlPanel::mainMenu["resume"]->setVisible(true);
+            ControlPanel::mainMenu["resume"]->setVisible(!EntityContainer::items[SC_Game].empty());
+            ControlPanel::mainMenu["start"]->setVisible(EntityContainer::items[SC_Game].empty());
 
             System::activeScene = SC_Main_Menu;
             System::sceneChangeTimer.restart();

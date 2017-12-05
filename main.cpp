@@ -59,6 +59,9 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
                         System::sceneChangeTimer.getElapsedTime().asMilliseconds() >= System::buttonReload
                         ) {
 
+                    auto s = ControlPanel::mainMenu.size();
+
+                    ControlPanel::mainMenu["resume"]->setVisible(true);
                     System::changeScene(SC_Main_Menu);
                 }
 

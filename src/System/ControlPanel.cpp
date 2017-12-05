@@ -41,7 +41,7 @@ namespace ControlPanel {
         resume->setTopOffset(screenCenterY - 14);
         resume->setString("Resume");
         resume->setVisible(false);
-        resume->callback = []() {
+        resume->callback = [](PopupButton *self) {
             System::changeScene(SC_Game);
         };
 
@@ -53,10 +53,8 @@ namespace ControlPanel {
         start->setLeftOffset(screenCenterX);
         start->setTopOffset(screenCenterY + 18);
         start->setString("Start");
-        start->callback = []() {
+        start->callback = [](PopupButton *self) {
             if(System::loadingScene == SC_Main_Menu){
-                mainMenu.clear();
-
                 std::thread loader([](){
                     System::loadingScene = SC_Game;
 
@@ -81,7 +79,7 @@ namespace ControlPanel {
         quit->setLeftOffset(screenCenterX);
         quit->setTopOffset(screenCenterY + 50);
         quit->setString("Quit");
-        quit->callback = []() {
+        quit->callback = [](PopupButton *self) {
             System::window->close();
         };
 
@@ -120,8 +118,6 @@ namespace ControlPanel {
 
         controls[E_ButtonAddElevator] = new ControlButtonAddElevator(4 + ControlButtonAddElevator::width / 2 + Question::width + 2, 548);
     }
-
-
 }
 
 

@@ -59,7 +59,7 @@ void PopupButton::update() {
         liveClock.restart();
 
         if (callback) {
-            callback();
+            callback(this);
         }
     }
 
