@@ -339,8 +339,9 @@ namespace ResourceLoader {
 
         auto texture = new sf::Texture;
         texture->loadFromFile(path);
-        fastTextures[path] = texture;
+        texture->setSmooth(true);
 
+        fastTextures[path] = texture;
         return texture;
     }
 

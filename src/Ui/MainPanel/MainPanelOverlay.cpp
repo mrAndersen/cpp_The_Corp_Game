@@ -15,11 +15,11 @@ MainPanelOverlay::MainPanelOverlay(float leftOffset, float topOffset) : BasicUi(
     time.setFillColor(sf::Color::White);
 
 
-    stats[E_Clerk] = Entity::create(E_Entity, D_Ui_Over, {30, 30}, {0, 0}, "resources/ui/stats/clerk.png");
-    stats[E_Manager] = Entity::create(E_Entity, D_Ui_Over, {30, 30}, {0, 0}, "resources/ui/stats/manager.png");
-    stats[E_Accountant] = Entity::create(E_Entity, D_Ui_Over, {30, 30}, {0, 0}, "resources/ui/stats/accountant.png");
-    stats[E_Stats_Daily_Income] = Entity::create(E_Entity, D_Ui_Over, {30, 30}, {0, 0}, "resources/ui/stats/income.png");
-    stats[E_Stats_Daily_Loss] = Entity::create(E_Entity, D_Ui_Over, {30, 30}, {0, 0}, "resources/ui/stats/loss.png");
+    stats[E_Clerk] = Entity::create(E_Entity, D_Ui_Over, {30, 30}, {0, 0}, "resources/ui/stats/clerk.png", 0.7f);
+    stats[E_Manager] = Entity::create(E_Entity, D_Ui_Over, {30, 30}, {0, 0}, "resources/ui/stats/manager.png", 0.7f);
+    stats[E_Accountant] = Entity::create(E_Entity, D_Ui_Over, {30, 30}, {0, 0}, "resources/ui/stats/accountant.png", 0.7f);
+    stats[E_Stats_Daily_Income] = Entity::create(E_Entity, D_Ui_Over, {30, 30}, {0, 0}, "resources/ui/stats/income.png", 0.7f);
+    stats[E_Stats_Daily_Loss] = Entity::create(E_Entity, D_Ui_Over, {30, 30}, {0, 0}, "resources/ui/stats/loss.png", 0.7f);
 
     for (auto &s:{E_Clerk, E_Manager, E_Accountant, E_Stats_Daily_Income, E_Stats_Daily_Loss}) {
         sf::Text label;

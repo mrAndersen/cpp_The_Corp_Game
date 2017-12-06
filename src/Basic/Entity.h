@@ -78,7 +78,7 @@ public:
 
     Entity(Entities type = E_Entity);
 
-    static Entity *create(Entities type = E_Entity, DrawOrder order = D_Ui, sf::Vector2f size = {}, sf::Vector2f coordinates = {}, const std::string &texturePath = "");
+    static Entity *create(Entities type = E_Entity, DrawOrder order = D_Ui, sf::Vector2f size = {}, sf::Vector2f coordinates = {}, const std::string &texturePath = "", float scale = 1);
 
     Entities getEType() const;
 

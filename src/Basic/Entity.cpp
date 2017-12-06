@@ -413,7 +413,7 @@ void Entity::setManualUpdate(bool manualUpdate) {
     Entity::manualUpdate = manualUpdate;
 }
 
-Entity *Entity::create(Entities type, DrawOrder order, sf::Vector2f size, sf::Vector2f coordinates, const std::string &texturePath) {
+Entity *Entity::create(Entities type, DrawOrder order, sf::Vector2f size, sf::Vector2f coordinates, const std::string &texturePath, float scale) {
     auto e = new Entity(type);
 
     e->setDrawOrder(order);
@@ -422,6 +422,8 @@ Entity *Entity::create(Entities type, DrawOrder order, sf::Vector2f size, sf::Ve
 
     e->setWorldCoordinates(coordinates);
     e->addAnimation(S_None, Animation(e, S_None, 1, ResourceLoader::loadAndGetTexture(texturePath)));
+    e->initEntity();
+    e->getCurrentAnimation()->getSprite().setScale({scale, scale});
 
     EntityContainer::add(e);
     EntityContainer::addToGroup(e->getGroupName(), e);

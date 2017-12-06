@@ -9,7 +9,7 @@
 
 class MainPanelOverlay : public BasicUi {
 public:
-    const static int width = 737;
+    const static int width = 936;
     const static int height = 66;
 
     sf::Text time;
