@@ -1,4 +1,6 @@
 #include "../Objects/ElevatorCabin.h"
+#include "../Objects/ElevatorShaftMiddle.h"
+#include "../Objects/ElevatorShaftTop.h"
 #include "../Office/OfficeClerk.h"
 #include "../Characters/Clerk.h"
 #include "../Characters/Manager.h"

@@ -1,5 +1,10 @@
 #include <Background/Cloud.h>
+#include <Ui/MainPanel/MainPanelOverlay.h>
 #include "EntityContainer.h"
+#include "../Characters/Clerk.h"
+#include "../Characters/Accountant.h"
+#include "../Characters/Manager.h"
+#include "ControlPanel.h"
 
 namespace EntityContainer {
     std::map<Scenes, std::vector<Entity *>> items;
@@ -273,17 +278,41 @@ namespace EntityContainer {
         int startSize = items[System::activeScene].size();
         Scenes startScene = System::activeScene;
 
+        float dailyIncome = 0;
+        float dailyLoss = 0;
+
         for (int i = 0; i < startSize; ++i) {
             if (System::activeScene != startScene) {
                 return;
             }
 
             Entity *e = items[System::activeScene][i];
-
             if (!e->isManualUpdate()) {
                 e->update();
             }
+
+            //process loss and income
+
+            if (e->getEType() == E_Clerk) {
+                auto d = dynamic_cast<Clerk *>(e);
+
+                dailyIncome += d->getHalfHourEarning() * 16;
+                dailyLoss += d->getDailySalary();
+            }
+
+            if (e->getEType() == E_Manager) {
+                auto d = dynamic_cast<Manager *>(e);
+                dailyLoss += d->getDailySalary();
+            }
+
+            if (e->getEType() == E_Accountant) {
+                auto d = dynamic_cast<Accountant *>(e);
+                dailyLoss += d->getDailySalary();
+            }
         }
+
+        counters[E_Stats_Daily_Loss] = dailyLoss;
+        counters[E_Stats_Daily_Income] = dailyIncome;
 
         int endSize = items[System::activeScene].size();
 

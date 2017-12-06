@@ -45,20 +45,35 @@ void MainPanelOverlay::update() {
     time.setPosition(System::cToGl(ViewHandler::right - 133, ViewHandler::top - topOffset + 32));
 
     int i = 0;
-    for (auto &s:{E_Clerk, E_Manager, E_Accountant, E_Stats_Daily_Income, E_Stats_Daily_Loss}) {
+    for (auto &s:{E_Clerk, E_Manager, E_Accountant}) {
+        stats[s]->setWorldCoordinates({ViewHandler::right - width + 35 + (i * 60), ViewHandler::top - 26});
 
-        if(s == E_Stats_Daily_Income || s == E_Stats_Daily_Loss){
-            stats[s]->setWorldCoordinates({ViewHandler::right - width + 35 + (i * 80), ViewHandler::top - 26});
-        }else{
-            stats[s]->setWorldCoordinates({ViewHandler::right - width + 35 + (i * 60), ViewHandler::top - 26});
-        }
-
+        statLabels[s].setPosition(System::cToGl({ViewHandler::right - width + (i * 60) + 52, ViewHandler::top - 13}));
         statLabels[s].setString(std::to_string(EntityContainer::counters[s]));
-        statLabels[s].setPosition(System::cToGl({ViewHandler::right - width + (i * 60) + 54, ViewHandler::top - 13}));
-
         i++;
         System::window->draw(statLabels[s]);
     }
 
+
+    stats[E_Stats_Daily_Income]->setWorldCoordinates({ViewHandler::right - width + 215, ViewHandler::top - 26});
+    statLabels[E_Stats_Daily_Income].setPosition(System::cToGl({ViewHandler::right - width + 232, ViewHandler::top - 13}));
+    statLabels[E_Stats_Daily_Income].setString(std::to_string(EntityContainer::counters[E_Stats_Daily_Income]));
+    System::window->draw(statLabels[E_Stats_Daily_Income]);
+
+    stats[E_Stats_Daily_Loss]->setWorldCoordinates({ViewHandler::right - width + 295, ViewHandler::top - 26});
+    statLabels[E_Stats_Daily_Loss].setPosition(System::cToGl({ViewHandler::right - width + 312, ViewHandler::top - 13}));
+    statLabels[E_Stats_Daily_Loss].setString(std::to_string(EntityContainer::counters[E_Stats_Daily_Loss]));
+    System::window->draw(statLabels[E_Stats_Daily_Loss]);
+
+
+
+
+
+
+
     System::window->draw(time);
+}
+
+std::map<Entities, sf::Text> &MainPanelOverlay::getStatLabels() {
+    return statLabels;
 }

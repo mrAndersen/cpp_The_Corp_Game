@@ -30,6 +30,8 @@ public:
 
     sf::String createStatsText() override;
 
+    float getDailySalary();
+
     Movable *searchTarget();
 };
 

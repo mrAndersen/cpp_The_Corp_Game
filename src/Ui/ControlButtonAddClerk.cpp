@@ -1,5 +1,7 @@
 #include <SFML/System.hpp>
 #include "ControlButtonAddClerk.h"
+#include "../System/ResourceLoader.h"
+#include "../System/EntityContainer.h"
 #include "..\System\ViewHandler.h"
 #include "..\System\System.h"
 

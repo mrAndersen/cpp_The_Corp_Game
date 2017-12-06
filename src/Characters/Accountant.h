@@ -1,7 +1,6 @@
 #ifndef THE_CORP_GAME_ACCOUNTANT_H
 #define THE_CORP_GAME_ACCOUNTANT_H
 
-
 #include "../Basic/Movable.h"
 
 class Accountant : public Movable {
@@ -33,6 +32,8 @@ public:
     void createWorkPlaceRoute();
 
     bool isInWorkPlace();
+
+    float getDailySalary();
 
     sf::String createStatsText() override;
 protected:

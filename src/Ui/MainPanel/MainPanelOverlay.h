@@ -18,6 +18,8 @@ public:
 
     MainPanelOverlay(float leftOffset, float topOffset);
 
+    std::map<Entities, sf::Text> &getStatLabels();
+
     void update() override;
 };
 

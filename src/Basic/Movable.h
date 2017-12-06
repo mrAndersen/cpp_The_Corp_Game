@@ -21,7 +21,7 @@ class Clerk;
 
 class Manager;
 
-class Accountnat;
+class Accountant;
 
 class Movable : public Entity {
 

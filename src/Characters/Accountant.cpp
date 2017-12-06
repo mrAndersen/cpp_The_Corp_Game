@@ -131,3 +131,7 @@ sf::String Accountant::createStatsText() {
 
     return s;
 }
+
+float Accountant::getDailySalary() {
+    return dailySalaries[level];
+}

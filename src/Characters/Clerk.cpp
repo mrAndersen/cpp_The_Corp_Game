@@ -3,6 +3,9 @@
 #include "..\System\ResourceLoader.h"
 #include "..\System\EntityContainer.h"
 #include "Clerk.h"
+#include "..\Office\Office.h"
+#include "..\System\ResourceLoader.h"
+#include "..\System\EntityContainer.h"
 
 Clerk::Clerk(sf::Vector2f coordinates) : Movable(E_Clerk, Clerk::width, Clerk::height) {
     setDefaultSpeed(165);
@@ -73,7 +76,7 @@ void Clerk::updateLogic() {
     if (state == S_Working) {
         //earning every half hour
         if (System::gameTime.isEarningHour() && !earningProcessed) {
-            auto earning = dailyEarnings[level] / 8 / 2 * workingModificator * System::accountantsBonus;
+            auto earning = getHalfHourEarning();
 
             System::cash += earning;
             totalEarnings += earning;
@@ -228,4 +231,12 @@ Clerk::~Clerk() {
     if (currentWorkPlace) {
         currentWorkPlace->setWorker(nullptr);
     }
+}
+
+float Clerk::getHalfHourEarning() {
+    return dailyEarnings[level] / 8 / 2 * workingModificator * System::accountantsBonus;
+}
+
+float Clerk::getDailySalary() {
+    return dailySalaries[level];
 }

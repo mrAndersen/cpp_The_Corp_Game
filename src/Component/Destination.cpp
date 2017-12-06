@@ -2,6 +2,7 @@
 #include "../Basic/Movable.h"
 #include "../Characters/Clerk.h"
 #include "../Characters/Accountant.h"
+#include "../Component/Elevator.h"
 
 const sf::Vector2f &Destination::getCoordinates() const {
     return coordinates;
