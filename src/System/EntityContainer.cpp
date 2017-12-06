@@ -2,9 +2,11 @@
 #include "EntityContainer.h"
 
 namespace EntityContainer {
-    std::vector<Entity *> items = {};
+    std::map<Scenes, std::vector<Entity *>> items;
 
     std::map<std::string, std::vector<Entity *>> itemsByGroup;
+
+    std::map<Entities, int> counters;
 
     std::vector<Entity *> itemsToRemove = {};
 
@@ -32,18 +34,20 @@ namespace EntityContainer {
     }
 
     void add(Entity *item) {
-        auto size = items.size();
+        counters[item->getEType()]++;
 
-        if (items.empty()) {
-            items.push_back(item);
+        auto size = items[System::loadingScene].size();
+
+        if (items[System::loadingScene].empty()) {
+            items[System::loadingScene].push_back(item);
         }
 
-        for (auto it = items.begin(); it != items.end();) {
+        for (auto it = items[System::loadingScene].begin(); it != items[System::loadingScene].end();) {
             auto e = *it;
             bool position = comparator(item, e);
 
             if (position) {
-                items.insert(it, item);
+                items[System::loadingScene].insert(it, item);
                 break;
             } else {
                 it++;
@@ -51,15 +55,15 @@ namespace EntityContainer {
         }
 
 
-        if (items.size() == size) {
-            items.push_back(item);
+        if (items[System::loadingScene].size() == size) {
+            items[System::loadingScene].push_back(item);
         }
 
         addToGroup(item->getGroupName(), item);
     }
 
     void sort() {
-        std::sort(items.begin(), items.end(), EntityContainer::comparator);
+        std::sort(items[System::activeScene].begin(), items[System::activeScene].end(), EntityContainer::comparator);
     }
 
     bool comparator(const Entity *a, const Entity *b) {
@@ -89,10 +93,14 @@ namespace EntityContainer {
         int nextFieldBorder = 0;
         int nextTreeBorder = 0;
 
-        bool drawBg = true;
+        bool drawBg = false;
+
+        //clouds
+        for (int j = 0; j < 200; ++j) {
+            Cloud::createRandomCloud(SC_Game);
+        }
 
         for (int i = (int) -System::worldWidth / 2; i < (int) (System::worldWidth / 2); ++i) {
-
             //ground
             if ((i % Ground::width) == 0) {
                 auto rnd = System::getRandom(0, 100);
@@ -259,29 +267,30 @@ namespace EntityContainer {
         }
     }
 
-    void clearEntities() {
-        for (auto &e:items) {
-            remove(e);
-        }
-    }
-
     void refreshEntities() {
         System::window->clear(System::c_background);
 
-        int startSize = items.size();
+        int startSize = items[System::activeScene].size();
+        Scenes startScene = System::activeScene;
 
         for (int i = 0; i < startSize; ++i) {
-            Entity *e = items[i];
+            if (System::activeScene != startScene) {
+                return;
+            }
+
+            Entity *e = items[System::activeScene][i];
 
             if (!e->isManualUpdate()) {
                 e->update();
             }
         }
 
-        int endSize = items.size();
+        int endSize = items[System::activeScene].size();
 
         if (!itemsToRemove.empty()) {
             for (auto &e:itemsToRemove) {
+                counters[e->getEType()]--;
+
                 //remove if item presents in group
                 if (e->getGroupName() != "~") {
                     removeFromGroup(e->getGroupName(), e);
@@ -292,16 +301,22 @@ namespace EntityContainer {
                     auto d = dynamic_cast<Movable *>(e);
 
                     for (auto &b:d->getPopup()->getButtons()) {
-                        items.erase(std::remove(items.begin(), items.end(), b.second), items.end());
+                        items[System::activeScene].erase(
+                                std::remove(items[System::activeScene].begin(), items[System::activeScene].end(),
+                                            b.second), items[System::activeScene].end());
                         delete b.second;
                     }
 
-                    items.erase(std::remove(items.begin(), items.end(), d->getPopup()), items.end());
+                    items[System::activeScene].erase(
+                            std::remove(items[System::activeScene].begin(), items[System::activeScene].end(),
+                                        d->getPopup()), items[System::activeScene].end());
                     delete d->getPopup();
                 }
 
                 //remove from actual vector
-                items.erase(std::remove(items.begin(), items.end(), e), items.end());
+                items[System::activeScene].erase(
+                        std::remove(items[System::activeScene].begin(), items[System::activeScene].end(), e),
+                        items[System::activeScene].end());
 
                 //free object
                 delete e;
@@ -317,11 +332,8 @@ namespace EntityContainer {
         }
 
         if (System::debug) {
-            System::debugCounters["vec_size"] = items.size();
-            System::debugCounters["vec_capacity"] = items.capacity();
-
             System::debugCounters["empty"] = 0;
-            for (auto &e:items) {
+            for (auto &e:items[System::activeScene]) {
                 System::debugCounters["empty"] =
                         e->getEType() == E_Entity ? System::debugCounters["empty"]++ : System::debugCounters["empty"];
             }
@@ -354,14 +366,15 @@ namespace EntityContainer {
                 System::event.mouseButton.button == sf::Mouse::Left &&
                 System::selectionAllowed
                 ) {
-            for (auto ei:EntityContainer::items) {
+            for (auto ei:EntityContainer::items[System::activeScene]) {
                 if (!ei->mouseIn() && ei->isSelectable()) {
                     ei->setSelected(false);
                     ei->setNormal();
                 }
             }
 
-            for (auto it = EntityContainer::items.rbegin(); it != EntityContainer::items.rend(); ++it) {
+            for (auto it = EntityContainer::items[System::activeScene].rbegin();
+                 it != EntityContainer::items[System::activeScene].rend(); ++it) {
                 auto ex = *it;
 
                 if (
@@ -393,7 +406,7 @@ namespace EntityContainer {
                        "resources/background/bg.mountain_small3.png");
 
         for (int i = 0; i < 35; ++i) {
-            Cloud::createRandomCloud();
+            Cloud::createRandomCloud(SC_Main_Menu);
         }
     }
 

@@ -10,6 +10,7 @@
 namespace ResourceLoader {
     YAML::Node translations;
 
+    std::map<std::string, sf::Texture *> fastTextures;
     std::map<int, std::map<int, sf::Texture *>> textureCollection;
     std::map<std::string, sf::Texture *> characterTextureCollection;
 
@@ -93,6 +94,9 @@ namespace ResourceLoader {
         ResourceLoader::loadTexture(Entities::E_Popup, "resources/ui/popup.png");
 
         ResourceLoader::loadTexture(Entities::E_MainPanelOverlay, "resources/ui/main.panel.png");
+
+        ResourceLoader::loadTexture(Entities::E_Cog, "resources/ui/cog.png", S_Button_Normal);
+        ResourceLoader::loadTexture(Entities::E_Cog, "resources/ui/cog.pressed.png", S_Button_Pressed);
 
         ResourceLoader::loadTexture(Entities::E_ButtonPause, "resources/ui/button.pause.png", S_Button_Normal);
         ResourceLoader::loadTexture(Entities::E_ButtonPause, "resources/ui/button.pause.pressed.png", S_Button_Pressed);
@@ -329,8 +333,13 @@ namespace ResourceLoader {
     }
 
     sf::Texture *loadAndGetTexture(const std::string &path) {
+        if(fastTextures[path] != nullptr){
+            return fastTextures[path];
+        }
+
         auto texture = new sf::Texture;
         texture->loadFromFile(path);
+        fastTextures[path] = texture;
 
         return texture;
     }

@@ -141,11 +141,15 @@ enum Entities {
     E_Button10x = 106,
     E_Popup = 107,
     E_Popup_Button = 108,
+    E_Cog = 109,
 
     E_Cloud1 = 1001,
     E_Cloud2 = 1002,
     E_Cloud3 = 1003,
     E_Cloud4 = 1004,
+
+    E_Stats_Daily_Income = 20001,
+    E_Stats_Daily_Loss = 20002
 };
 
 #endif

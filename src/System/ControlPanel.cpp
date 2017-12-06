@@ -1,4 +1,5 @@
 #include <climits>
+#include <Ui/MainPanel/Cog.h>
 #include "..\Ui\ControlButtonAddAccountant.h"
 #include "..\Basic\Entity.h"
 #include "..\Ui\ControlButtonAddClerk.h"
@@ -31,6 +32,19 @@ namespace ControlPanel {
         auto screenCenterX = System::screenWidth / 2;
         auto screenCenterY = System::screenHeight / 2;
 
+        auto resume = new PopupButton;
+        resume->setTextOffset(3);
+        resume->setColor(System::c_blue);
+        resume->getText().setFont(*System::titleFontI8N);
+        resume->getText().setCharacterSize(20);
+        resume->setLeftOffset(screenCenterX);
+        resume->setTopOffset(screenCenterY + 18);
+        resume->setString("Resume");
+        resume->setVisible(false);
+        resume->callback = [](PopupButton *self) {
+            System::changeScene(SC_Game);
+        };
+
         auto start = new PopupButton;
         start->setTextOffset(3);
         start->setColor(System::c_green);
@@ -39,24 +53,23 @@ namespace ControlPanel {
         start->setLeftOffset(screenCenterX);
         start->setTopOffset(screenCenterY + 18);
         start->setString("Start");
-        start->callback = []() {
-            EntityContainer::clearEntities();
-            mainMenu.clear();
+        start->callback = [](PopupButton *self) {
+            if(System::loadingScene == SC_Main_Menu){
+                std::thread loader([](){
+                    System::loadingScene = SC_Game;
 
-            std::thread loader([](){
-                ResourceLoader::loadGameTextures();
-                ResourceLoader::loadNames();
+                    ResourceLoader::loadGameTextures();
+                    ResourceLoader::loadNames();
 
-                EntityContainer::initBackground();
-                ControlPanel::initControlPanel();
+                    EntityContainer::initBackground();
+                    ControlPanel::initControlPanel();
 
-                System::activeScene = SC_Game;
-            });
+                    System::changeScene(SC_Game);
+                });
 
-            loader.detach();
+                loader.detach();
+            }
         };
-
-        mainMenu["start"] = start;
 
         auto quit = new PopupButton;
         quit->setTextOffset(2);
@@ -66,10 +79,12 @@ namespace ControlPanel {
         quit->setLeftOffset(screenCenterX);
         quit->setTopOffset(screenCenterY + 50);
         quit->setString("Quit");
-        quit->callback = []() {
+        quit->callback = [](PopupButton *self) {
             System::window->close();
         };
 
+        mainMenu["resume"] = resume;
+        mainMenu["start"] = start;
         mainMenu["quit"] = quit;
     }
 
@@ -81,6 +96,7 @@ namespace ControlPanel {
         controls[E_Button1x] = new Button1x((float) System::screenWidth - 293, 26);
         controls[E_Button5x] = new Button5x((float) System::screenWidth - 241, 26);
         controls[E_Button10x] = new Button10x((float) System::screenWidth - 189, 26);
+        controls[E_Cog] = new Cog((float) System::screenWidth - 25, 26);
 
         controls[E_Question_Mark_ButtonAddClerk] = new QAddClerk(4 + Question::width / 2, 300);
         controls[E_ButtonAddClerk] = new ControlButtonAddClerk(4 + ControlButtonAddClerk::width / 2 + Question::width + 2, 300);
@@ -102,8 +118,6 @@ namespace ControlPanel {
 
         controls[E_ButtonAddElevator] = new ControlButtonAddElevator(4 + ControlButtonAddElevator::width / 2 + Question::width + 2, 548);
     }
-
-
 }
 
 

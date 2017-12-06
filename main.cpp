@@ -16,19 +16,25 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
     ResourceLoader::loadMainMenuTextures();
 
     if (System::activeScene == SC_Main_Menu) {
+        System::loadingScene = SC_Main_Menu;
         EntityContainer::initMainMenu();
         ControlPanel::initMainMenu();
     }
 
-    if(System::activeScene == SC_Game){
+    if (System::activeScene == SC_Game) {
+        System::loadingScene = SC_Game;
         ResourceLoader::loadGameTextures();
         ResourceLoader::loadNames();
 
         EntityContainer::initBackground();
         ControlPanel::initControlPanel();
+
+        System::loadingScene = SC_Main_Menu;
+        EntityContainer::initMainMenu();
+        ControlPanel::initMainMenu();
+
+        System::loadingScene = SC_Game;
     }
-
-
 
     //load window and debug utilities
     System::initWindow();
@@ -42,12 +48,29 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
             System::event = e;
             System::handleGlobalLogic();
 
-            if (System::activeScene == SC_Main_Menu) {
+            //game loaded and menu opened
+            if (System::activeScene == SC_Main_Menu && !EntityContainer::items[SC_Game].empty()) {
 
+                if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::Escape &&
+                    System::sceneChangeTimer.getElapsedTime().asMilliseconds() >= System::buttonReload) {
+
+                    System::changeScene(SC_Game);
+                }
             }
 
             if (System::activeScene == SC_Game) {
                 EntityContainer::handleObjectSelection();
+
+                if (
+                        e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::Escape &&
+                        System::sceneChangeTimer.getElapsedTime().asMilliseconds() >= System::buttonReload
+                        ) {
+
+                    auto s = ControlPanel::mainMenu.size();
+
+                    ControlPanel::mainMenu["resume"]->setVisible(true);
+                    System::changeScene(SC_Main_Menu);
+                }
 
                 if (e.type == sf::Event::KeyPressed || e.type == sf::Event::KeyReleased) {
                     ViewHandler::handleViewScrollKeyPress(e);

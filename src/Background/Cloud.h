@@ -7,9 +7,9 @@ class Cloud : public Entity {
 protected:
     int speed = 100;
     sf::Vector2f size;
-
+    Scenes lType;
 public:
-    Cloud(Entities type, sf::Vector2f coordinates, sf::Vector2f size, float scale, int speed);
+    Cloud(Entities type, sf::Vector2f coordinates, sf::Vector2f size, float scale, int speed, Scenes lType);
 
     void updateLogic() override;
 
@@ -17,7 +17,7 @@ public:
 
     void setSpeed(int speed);
 
-    static void createRandomCloud();
+    static void createRandomCloud(Scenes lType);
 };
 
 

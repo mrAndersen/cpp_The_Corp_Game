@@ -30,7 +30,7 @@ void ElevatorShaftMiddle::setCost(float cost) {
 }
 
 bool ElevatorShaftMiddle::hasMiddleShaftOnTheBottom() {
-    for (auto e:EntityContainer::items) {
+    for (auto e:EntityContainer::items[System::activeScene]) {
 
         if (dynamic_cast<ElevatorShaftMiddle *>(e) && e->getTop() == bottom) {
             return true;

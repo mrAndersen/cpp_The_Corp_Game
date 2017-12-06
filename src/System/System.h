@@ -20,6 +20,8 @@ namespace System {
 
     //sys
     extern Scenes activeScene;
+    extern Scenes loadingScene;
+    extern sf::Clock sceneChangeTimer;
     extern sf::Clock fpsClock;
     extern sf::Clock frameClock;
     extern sf::Clock timeSinceStart;
@@ -115,6 +117,8 @@ namespace System {
     int roundToMultiple(float target, int multiple = 25);
 
     void handleGlobalLogic();
+
+    void changeScene(Scenes scene);
 }
 
 #endif //THE_CORP_GAME_SYSTEM_H

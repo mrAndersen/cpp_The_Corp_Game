@@ -8,7 +8,7 @@
 
 namespace ViewHandler {
     Direction viewDirectionMovement = None;
-    sf::View *view;
+    std::map<Scenes, sf::View *> views;
 
     float top = 0;
     float right = 0;
@@ -24,7 +24,7 @@ namespace ViewHandler {
             if (ViewHandler::left <= (int) -System::worldWidth / 2) {
                 return;
             } else {
-                view->move(-scrollDistance, 0);
+                views[System::activeScene]->move(-scrollDistance, 0);
             }
         }
 
@@ -32,34 +32,34 @@ namespace ViewHandler {
             if (ViewHandler::right >= (int) System::worldWidth / 2) {
                 return;
             } else {
-                view->move(scrollDistance, 0);
+                views[System::activeScene]->move(scrollDistance, 0);
             }
         }
 
         if (viewDirectionMovement == Direction::Up) {
-            view->move(0, -scrollDistance);
+            views[System::activeScene]->move(0, -scrollDistance);
         }
 
         if (viewDirectionMovement == Direction::Down) {
             if (bottom > 0) {
-                view->move(0, scrollDistance);
+                views[System::activeScene]->move(0, scrollDistance);
             }
         }
 
         if (viewDirectionMovement == Direction::UpLeft) {
             if (ViewHandler::left <= (int) -System::worldWidth / 2) {
-                view->move(0, -scrollDistance);
+                views[System::activeScene]->move(0, -scrollDistance);
             } else {
-                view->move(-scrollDistance, -scrollDistance);
+                views[System::activeScene]->move(-scrollDistance, -scrollDistance);
             }
 
         }
 
         if (viewDirectionMovement == Direction::UpRight) {
             if (ViewHandler::right >= (int) System::worldWidth / 2) {
-                view->move(0, -scrollDistance);
+                views[System::activeScene]->move(0, -scrollDistance);
             } else {
-                view->move(scrollDistance, -scrollDistance);
+                views[System::activeScene]->move(scrollDistance, -scrollDistance);
             }
         }
 
@@ -69,15 +69,15 @@ namespace ViewHandler {
             }
 
             if (ViewHandler::bottom > 0 && ViewHandler::left <= -System::worldWidth / 2) {
-                view->move(0, scrollDistance);
+                views[System::activeScene]->move(0, scrollDistance);
             }
 
             if (ViewHandler::bottom <= 0 && ViewHandler::left > -System::worldWidth / 2) {
-                view->move(-scrollDistance, 0);
+                views[System::activeScene]->move(-scrollDistance, 0);
             }
 
             if (ViewHandler::bottom > 0 && ViewHandler::left > -System::worldWidth / 2) {
-                view->move(-scrollDistance, scrollDistance);
+                views[System::activeScene]->move(-scrollDistance, scrollDistance);
             }
         }
 
@@ -87,19 +87,19 @@ namespace ViewHandler {
             }
 
             if (ViewHandler::bottom > 0 && ViewHandler::right >= System::worldWidth / 2) {
-                view->move(0, -scrollDistance);
+                views[System::activeScene]->move(0, scrollDistance);
             }
 
             if (ViewHandler::bottom <= 0 && ViewHandler::right < System::worldWidth / 2) {
-                view->move(scrollDistance, 0);
+                views[System::activeScene]->move(scrollDistance, 0);
             }
 
             if (ViewHandler::bottom > 0 && ViewHandler::right < System::worldWidth / 2) {
-                view->move(scrollDistance, scrollDistance);
+                views[System::activeScene]->move(scrollDistance, scrollDistance);
             }
         }
 
-        auto center = recalculateBoundaires();
+        auto center = recalculateBoundaries();
 
 //        left = left * zoom;
 //        right = right * zoom;
@@ -109,18 +109,18 @@ namespace ViewHandler {
         //normalizer
 
         if (right > System::worldWidth / 2) {
-            view->setCenter(System::cToGl({System::worldWidth / 2 - System::screenWidth / 2, center.y}));
+            views[System::activeScene]->setCenter(System::cToGl({System::worldWidth / 2 - System::screenWidth / 2, center.y}));
         }
 
         if (left < -System::worldWidth / 2) {
-            view->setCenter(System::cToGl({-System::worldWidth / 2 + System::screenWidth / 2, center.y}));
+            views[System::activeScene]->setCenter(System::cToGl({-System::worldWidth / 2 + System::screenWidth / 2, center.y}));
         }
 
         if (bottom < 0) {
-            view->setCenter(System::cToGl({center.x, (float) System::screenHeight / 2}));
+            views[System::activeScene]->setCenter(System::cToGl({center.x, (float) System::screenHeight / 2}));
         }
 
-        recalculateBoundaires();
+        recalculateBoundaries();
 
         auto mousePosition = sf::Mouse::getPosition(*System::window);
         auto coordMap = System::window->mapPixelToCoords(mousePosition);
@@ -128,7 +128,7 @@ namespace ViewHandler {
         System::g_x = coordMap.x;
         System::g_y = System::screenHeight - coordMap.y;
 
-        System::window->setView(*view);
+        System::window->setView(*views[System::activeScene]);
     }
 
     void handleViewZoomKeyPress(sf::Event e) {
@@ -140,11 +140,11 @@ namespace ViewHandler {
             zoom = zoom + 0.1f;
         }
 
-        view->setSize(System::screenWidth * zoom, System::screenHeight * zoom);
+        views[System::activeScene]->setSize(System::screenWidth * zoom, System::screenHeight * zoom);
     }
 
-    sf::Vector2f recalculateBoundaires() {
-        auto center = System::cFromGl(ViewHandler::view->getCenter());
+    sf::Vector2f recalculateBoundaries() {
+        auto center = System::cFromGl(views[System::activeScene]->getCenter());
 
         left = center.x - System::screenWidth / 2;
         right = center.x + System::screenWidth / 2;

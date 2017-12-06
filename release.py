@@ -6,7 +6,7 @@ import requests
 import base64
 import re
 
-UPLOAD = False
+UPLOAD = True
 
 print("Copying...", end="")
 
@@ -50,12 +50,14 @@ if not os.path.exists(releaseDirectory):
     os.makedirs(releaseDirectory + "/msvc")
 
 # gcc
-shutil.copytree("./resources", releaseDirectory + "/gcc(main)/resources")
-shutil.copyfile("./" + binGccDirectory + "/" + binGccName, releaseDirectory + "/gcc(main)/corpgame.exe")
+if os.path.exists("./" + binGccDirectory + "/" + binGccName):
+    shutil.copytree("./resources", releaseDirectory + "/gcc(main)/resources")
+    shutil.copyfile("./" + binGccDirectory + "/" + binGccName, releaseDirectory + "/gcc(main)/corpgame.exe")
 
 # msvc
-shutil.copytree("./resources", releaseDirectory + "/msvc/resources")
-shutil.copyfile("./" + binMsvcDirectory + "/" + binMsvcName, releaseDirectory + "/msvc/corpgame.exe")
+if os.path.exists("./" + binMsvcDirectory + "/" + binMsvcName):
+    shutil.copytree("./resources", releaseDirectory + "/msvc/resources")
+    shutil.copyfile("./" + binMsvcDirectory + "/" + binMsvcName, releaseDirectory + "/msvc/corpgame.exe")
 
 # manual
 shutil.copyfile("./manual.txt", releaseDirectory + "/manual.txt")

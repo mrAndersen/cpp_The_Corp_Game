@@ -17,7 +17,7 @@ protected:
     int textOffset = 0;
 
 public:
-    std::function<void()> callback;
+    std::function<void(PopupButton *self)> callback;
 
     PopupButton();
 
