@@ -61,14 +61,13 @@ void ControlButtonAddAccountant::update() {
             attachedAccountant->setInvalid();
 
             //placement error
-            if (attachedAccountant && attachedAccountant->isBelowGround() &&
-                attachedAccountant->getErrorString().getString().isEmpty()) {
-                attachedAccountant->getErrorString().setString("Invalid placement position");
+            if (attachedAccountant && attachedAccountant->isBelowGround()) {
+//                attachedAccountant->getErrorString().setString("Invalid placement position");
             }
 
             //cash error
-            if (System::cash < attachedAccountant->getCost() && attachedAccountant->getErrorString().getString().isEmpty()) {
-                attachedAccountant->getErrorString().setString("Not enough cash");
+            if (System::cash < attachedAccountant->getCost()) {
+//                attachedAccountant->getErrorString().setString("Not enough cash");
             }
         } else {
             attachedAccountant->setTransparent();

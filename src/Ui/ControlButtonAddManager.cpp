@@ -58,14 +58,13 @@ void ControlButtonAddManager::update() {
             attachedManager->setInvalid();
 
             //placement error
-            if (attachedManager && attachedManager->isBelowGround() &&
-                attachedManager->getErrorString().getString().isEmpty()) {
-                attachedManager->getErrorString().setString("Invalid placement position");
+            if (attachedManager && attachedManager->isBelowGround()) {
+//                attachedManager->getErrorString().setString("Invalid placement position");
             }
 
             //cash error
-            if (System::cash < attachedManager->getCost() && attachedManager->getErrorString().getString().isEmpty()) {
-                attachedManager->getErrorString().setString("Not enough cash");
+            if (System::cash < attachedManager->getCost()) {
+//                attachedManager->getErrorString().setString("Not enough cash");
             }
         } else {
             attachedManager->setTransparent();

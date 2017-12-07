@@ -54,7 +54,6 @@ protected:
 
     //debug
     sf::Text debugInfo;
-    sf::Text errorString;
 public:
     Animation *getCurrentAnimation();
 
@@ -189,12 +188,6 @@ public:
     void initEntity();
 
     virtual void renderDebugInfo();
-
-    virtual void renderErrorText();
-
-    sf::Text &getErrorString();
-
-    void setErrorString(sf::Text &errorString);
 
     virtual void setSelected(bool selected);
 };

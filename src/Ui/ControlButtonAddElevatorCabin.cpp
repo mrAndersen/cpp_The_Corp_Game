@@ -77,18 +77,18 @@ void ControlButtonAddElevatorCabin::update() {
 
             //placement error
             if (attachedCabin && !attachedCabin->isInsideShaftBoundaries()) {
-                attachedCabin->getErrorString().setString("Invalid placement position");
+//                attachedCabin->getErrorString().setString("Invalid placement position");
             }
 
             //cash error
             if (System::cash < attachedCabin->getCost()) {
-                attachedCabin
-                        ->getErrorString()
-                        .setString(
-                                "Not enough cash, need " +
-                                System::f_to_string(std::abs(System::cash - attachedCabin->getCost())) +
-                                "$ more"
-                        );
+//                attachedCabin
+//                        ->getErrorString()
+//                        .setString(
+//                                "Not enough cash, need " +
+//                                System::f_to_string(std::abs(System::cash - attachedCabin->getCost())) +
+//                                "$ more"
+//                        );
             }
         } else {
             attachedCabin->setTransparent();

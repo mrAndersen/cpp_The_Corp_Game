@@ -76,21 +76,19 @@ void ControlButtonAddOffice::update() {
             attachedOffice->setInvalid();
 
             //placement error
-            if (attachedOffice &&
-                (attachedOffice->intersectsWithObjects() || attachedOffice->getNeighborOffices().empty() ||
-                 !attachedOffice->isOnTheGround())) {
-                attachedOffice->getErrorString().setString("Invalid placement position");
+            if (attachedOffice && (attachedOffice->intersectsWithObjects() || attachedOffice->getNeighborOffices().empty() || !attachedOffice->isOnTheGround())) {
+//                attachedOffice->getErrorString().setString("Invalid placement position");
             }
 
             //cash error
             if (System::cash < attachedOffice->getCost()) {
-                attachedOffice
-                        ->getErrorString()
-                        .setString(
-                                "Not enough cash, need " +
-                                System::f_to_string(std::abs(System::cash - attachedOffice->getCost())) +
-                                "$ more"
-                        );
+//                attachedOffice
+//                        ->getErrorString()
+//                        .setString(
+//                                "Not enough cash, need " +
+//                                System::f_to_string(std::abs(System::cash - attachedOffice->getCost())) +
+//                                "$ more"
+//                        );
             }
         } else {
             attachedOffice->setTransparent();

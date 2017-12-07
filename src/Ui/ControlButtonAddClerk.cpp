@@ -62,15 +62,23 @@ void ControlButtonAddClerk::update() {
         if (!spawnCondition) {
             attachedClerk->setInvalid();
 
-            //placement error
-            if (attachedClerk && attachedClerk->isBelowGround() &&
-                attachedClerk->getErrorString().getString().isEmpty()) {
-                attachedClerk->getErrorString().setString("Invalid placement position");
-            }
+            if(leftClickedOutside() && liveClock.getElapsedTime().asMilliseconds() >= System::buttonReload){
+                liveClock.restart();
+                auto error = new TextEntity(System::c_red, 20);
 
-            //cash error
-            if (System::cash < attachedClerk->getCost() && attachedClerk->getErrorString().getString().isEmpty()) {
-                attachedClerk->getErrorString().setString("Not enough cash");
+                error->setSpeed(100);
+                error->setLiveTimeSeconds(2);
+                error->setWorldCoordinates({attachedClerk->getWorldCoordinates().x, attachedClerk->getWorldCoordinates().y + attachedClerk->getHeight() / 2 + 10});
+
+                //placement error
+                if (attachedClerk->isBelowGround() || attachedClerk->isCrossingOffices() || !attachedClerk->isOnTheGround(30)) {
+                    error->setString("Invalid placement position");
+                }
+
+                //cash error
+                if (System::cash < attachedClerk->getCost()) {
+                    error->setString("Not enough cash");
+                }
             }
         } else {
             attachedClerk->setTransparent();

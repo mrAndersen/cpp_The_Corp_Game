@@ -10,7 +10,7 @@ public:
     const static int width = 70;
     const static int height = 120;
 
-    std::map<int, float> dailyEarnings = {{1, 400},{2, 600},{3, 1100},{4,2000}};
+    std::map<int, float> dailyEarnings = {{1, 200},{2, 400},{3, 750},{4, 1200}};
     bool earningProcessed = false;
 
     std::map<int, float> dailySalaries = {{1, 64}, {2, 100}, {3, 150}, {4, 200}};

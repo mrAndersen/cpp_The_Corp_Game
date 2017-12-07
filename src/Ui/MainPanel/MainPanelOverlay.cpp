@@ -54,26 +54,16 @@ void MainPanelOverlay::update() {
         System::window->draw(statLabels[s]);
     }
 
-
     stats[E_Stats_Daily_Income]->setWorldCoordinates({ViewHandler::right - width + 215, ViewHandler::top - 26});
     statLabels[E_Stats_Daily_Income].setPosition(System::cToGl({ViewHandler::right - width + 232, ViewHandler::top - 13}));
-    statLabels[E_Stats_Daily_Income].setString(std::to_string(EntityContainer::counters[E_Stats_Daily_Income]));
+    statLabels[E_Stats_Daily_Income].setString("$" + System::f_to_string(EntityContainer::counters[E_Stats_Daily_Income], 0));
     System::window->draw(statLabels[E_Stats_Daily_Income]);
 
-    stats[E_Stats_Daily_Loss]->setWorldCoordinates({ViewHandler::right - width + 295, ViewHandler::top - 26});
-    statLabels[E_Stats_Daily_Loss].setPosition(System::cToGl({ViewHandler::right - width + 312, ViewHandler::top - 13}));
-    statLabels[E_Stats_Daily_Loss].setString(std::to_string(EntityContainer::counters[E_Stats_Daily_Loss]));
+    stats[E_Stats_Daily_Loss]->setWorldCoordinates({ViewHandler::right - width + 315, ViewHandler::top - 26});
+    statLabels[E_Stats_Daily_Loss].setPosition(System::cToGl({ViewHandler::right - width + 332, ViewHandler::top - 13}));
+    statLabels[E_Stats_Daily_Loss].setString("$" + System::f_to_string(EntityContainer::counters[E_Stats_Daily_Loss], 0));
     System::window->draw(statLabels[E_Stats_Daily_Loss]);
 
 
-
-
-
-
-
     System::window->draw(time);
-}
-
-std::map<Entities, sf::Text> &MainPanelOverlay::getStatLabels() {
-    return statLabels;
 }

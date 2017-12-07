@@ -57,7 +57,7 @@ namespace System {
     //utility
 
     //player
-    double cash = 1000000;
+    double cash = 500;
     float accountantsBonus = 1.f;
     bool spawningUnit = false;
     sf::Clock selectionCooldown;

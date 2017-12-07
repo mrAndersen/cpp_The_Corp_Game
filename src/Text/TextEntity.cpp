@@ -42,7 +42,9 @@ void TextEntity::updateLogic() {
         worldCoordinates.y -= totalEntityDistance;
     }
 
+    text.setOrigin(text.getLocalBounds().width / 2, text.getLocalBounds().height / 2);
     text.setPosition(System::cToGl(worldCoordinates));
+
     System::window->draw(text);
 
     if (liveTimeSeconds != 0 && liveClock.getElapsedTime().asSeconds() >= liveTimeSeconds) {

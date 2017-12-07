@@ -74,18 +74,18 @@ void ControlButtonAddElevatorShaftMiddle::update() {
             if (attachedShaft &&
                 (attachedShaft->intersectsWithObjects() || attachedShaft->getNeighborOffices().empty() ||
                  !attachedShaft->isOnTheGround())) {
-                attachedShaft->getErrorString().setString("Invalid placement position");
+//                attachedShaft->getErrorString().setString("Invalid placement position");
             }
 
             //cash error
             if (System::cash < attachedShaft->getCost()) {
-                attachedShaft
-                        ->getErrorString()
-                        .setString(
-                                "Not enough cash, need " +
-                                System::f_to_string(std::abs(System::cash - attachedShaft->getCost())) +
-                                "$ more"
-                        );
+//                attachedShaft
+//                        ->getErrorString()
+//                        .setString(
+//                                "Not enough cash, need " +
+//                                System::f_to_string(std::abs(System::cash - attachedShaft->getCost())) +
+//                                "$ more"
+//                        );
             }
         } else {
             attachedShaft->setTransparent();

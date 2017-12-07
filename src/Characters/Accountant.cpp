@@ -6,7 +6,7 @@
 Accountant::Accountant(sf::Vector2f coordinates) : Movable(E_Accountant, width, height) {
     setDefaultSpeed(165);
 
-    setCost(500);
+    setCost(1000);
     setWorldCoordinates(coordinates);
     setSelectable(true);
 

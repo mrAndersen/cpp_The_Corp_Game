@@ -19,7 +19,6 @@ void Entity::update() {
         }
 
         renderDebugInfo();
-        renderErrorText();
     }
 
     updateLogic();
@@ -157,19 +156,7 @@ void Entity::initEntity() {
     debugInfo.setCharacterSize(10);
     debugInfo.setFillColor(sf::Color::Black);
 
-    errorString.setFont(*System::textFont);
-    errorString.setCharacterSize(16);
-    errorString.setFillColor(System::c_red);
-
     selectAnimation(S_None);
-}
-
-sf::Text &Entity::getErrorString() {
-    return errorString;
-}
-
-void Entity::setErrorString(sf::Text &errorString) {
-    Entity::errorString = errorString;
 }
 
 float Entity::getTop() const {
@@ -202,14 +189,6 @@ float Entity::getRight() const {
 
 void Entity::setRight(float right) {
     Entity::right = right;
-}
-
-
-void Entity::renderErrorText() {
-    if (!valid) {
-        errorString.setPosition(System::cToGl(worldCoordinates.x - width / 2, worldCoordinates.y + height / 2 + 20));
-        System::window->draw(errorString);
-    }
 }
 
 void Entity::renderDebugInfo() {
