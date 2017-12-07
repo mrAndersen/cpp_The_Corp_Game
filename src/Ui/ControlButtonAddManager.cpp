@@ -57,14 +57,25 @@ void ControlButtonAddManager::update() {
         if (!spawnCondition) {
             attachedManager->setInvalid();
 
-            //placement error
-            if (attachedManager && attachedManager->isBelowGround()) {
-//                attachedManager->getErrorString().setString("Invalid placement position");
-            }
+            if(leftClickedOutside() && liveClock.getElapsedTime().asMilliseconds() >= System::buttonReload){
+                liveClock.restart();
+                auto error = new TextEntity(System::c_red, 20);
 
-            //cash error
-            if (System::cash < attachedManager->getCost()) {
-//                attachedManager->getErrorString().setString("Not enough cash");
+                error->setSpeed(100);
+                error->setLiveTimeSeconds(2);
+                error->setWorldCoordinates({attachedManager->getWorldCoordinates().x, attachedManager->getWorldCoordinates().y + attachedManager->getHeight() / 2 + 10});
+
+                if (attachedManager->isBelowGround() || attachedManager->isCrossingOffices() || !attachedManager->isOnTheGround(30)) {
+                    error->setString(ResourceLoader::getTranslation("error.invalid_position"));
+                }
+
+                if (System::cash < attachedManager->getCost()) {
+                    error->setString(
+                            ResourceLoader::getTranslation("error.no_cash") + ", " +
+                            ResourceLoader::getTranslation("error.hint.cash") + " " +
+                            System::f_to_string(attachedManager->getCost() - System::cash, 0) + "$"
+                    );
+                }
             }
         } else {
             attachedManager->setTransparent();

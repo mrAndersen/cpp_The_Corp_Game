@@ -75,20 +75,27 @@ void ControlButtonAddOffice::update() {
         if (!spawnCondition) {
             attachedOffice->setInvalid();
 
-            //placement error
-            if (attachedOffice && (attachedOffice->intersectsWithObjects() || attachedOffice->getNeighborOffices().empty() || !attachedOffice->isOnTheGround())) {
-//                attachedOffice->getErrorString().setString("Invalid placement position");
-            }
+            if(leftClickedOutside() && liveClock.getElapsedTime().asMilliseconds() >= System::buttonReload) {
+                liveClock.restart();
+                auto error = new TextEntity(System::c_red, 20);
 
-            //cash error
-            if (System::cash < attachedOffice->getCost()) {
-//                attachedOffice
-//                        ->getErrorString()
-//                        .setString(
-//                                "Not enough cash, need " +
-//                                System::f_to_string(std::abs(System::cash - attachedOffice->getCost())) +
-//                                "$ more"
-//                        );
+                error->setSpeed(100);
+                error->setLiveTimeSeconds(2);
+                error->setWorldCoordinates({attachedOffice->getWorldCoordinates().x,
+                                            attachedOffice->getWorldCoordinates().y +
+                                                    attachedOffice->getHeight() / 2 + 10});
+
+                if (attachedOffice && (attachedOffice->intersectsWithObjects() || attachedOffice->getNeighborOffices().empty() || !attachedOffice->isOnTheGround())) {
+                    error->setString(ResourceLoader::getTranslation("error.invalid_position"));
+                }
+
+                if (System::cash < attachedOffice->getCost()) {
+                    error->setString(
+                            ResourceLoader::getTranslation("error.no_cash") + ", " +
+                            ResourceLoader::getTranslation("error.hint.cash") + " " +
+                            System::f_to_string(attachedOffice->getCost() - System::cash, 0) + "$"
+                    );
+                }
             }
         } else {
             attachedOffice->setTransparent();

@@ -392,6 +392,8 @@ void Movable::setCost(float cost) {
 }
 
 void Movable::spawn() {
+    EntityContainer::counters[eType]++;
+
     System::cash -= this->cost;
     worldCoordinates.y = getFloorBottom(floor) + height / 2;
 

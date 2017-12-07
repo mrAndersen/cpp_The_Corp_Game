@@ -49,8 +49,6 @@ void TextEntity::updateLogic() {
 
     if (liveTimeSeconds != 0 && liveClock.getElapsedTime().asSeconds() >= liveTimeSeconds) {
         EntityContainer::remove(this);
-    } else {
-        Entity::updateLogic();
     }
 }
 

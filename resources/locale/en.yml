@@ -4,6 +4,15 @@ a:
     yes: Yes
     no: No
 
+error:
+    hint:
+        cash: need additionally
+        cabin: must be placed inside elevator shaft with elevator motor
+        shaft: must be placed on the ground and\or near office
+        motor: must be placed on top of the shaft
+    invalid_position: Invalid placement position
+    no_cash: Not enough cash
+
 buttons:
     upgrade: Upgrade
     fire: Fire

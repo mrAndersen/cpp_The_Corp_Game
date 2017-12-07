@@ -57,7 +57,7 @@ namespace System {
     //utility
 
     //player
-    double cash = 500;
+    double cash = 500000;
     float accountantsBonus = 1.f;
     bool spawningUnit = false;
     sf::Clock selectionCooldown;
@@ -66,7 +66,7 @@ namespace System {
     int buttonReload = 150;
 
     sf::Clock dayClock = {};
-    GameTime gameTime(11, 30);
+    GameTime gameTime(17, 30);
 
     int startWorkHour = 10;
     int endWorkHour = 19;
@@ -95,13 +95,14 @@ namespace System {
         }
 
         if (gameTime.isDayEndHour() && !dayEndProcessed) {
-//            auto *salarySpent = new TextEntity(System::c_red, 40);
-//            salarySpent->setFixed(true);
-//            salarySpent->setString("Salaries: -" + System::f_to_string(salaryTotal) + "$");
-//            salarySpent->setLeft(12);
-//            salarySpent->setTop(-100);
-//            salarySpent->setDirection(Direction::Down);
-//            salarySpent->setLiveTimeSeconds(3);
+            auto *salarySpent = new TextEntity(System::c_red, 40);
+
+            salarySpent->setFixed(true);
+            salarySpent->setString("Salaries: -" + System::f_to_string(EntityContainer::counters[E_Stats_Daily_Loss]) + "$");
+            salarySpent->setLeft(12);
+            salarySpent->setTop(-100);
+            salarySpent->setDirection(Direction::Down);
+            salarySpent->setLiveTimeSeconds(3);
 
             dayEndProcessed = true;
             dayStartProcessed = false;

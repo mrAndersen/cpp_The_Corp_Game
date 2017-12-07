@@ -30,8 +30,7 @@ void ControlButtonAddElevatorCabin::update() {
     bool spawnCondition = attachedCabin &&
                           System::cash >= attachedCabin->getCost() &&
                           attachedCabin->isInsideShaftBoundaries() &&
-                          attachedCabin->hasElevatorShaftTopAbove()
-    ;
+                          attachedCabin->hasElevatorShaftTopAbove();
 
     if(mouseIn()){
         System::selectionCooldown.restart();
@@ -75,20 +74,28 @@ void ControlButtonAddElevatorCabin::update() {
         if (!spawnCondition) {
             attachedCabin->setInvalid();
 
-            //placement error
-            if (attachedCabin && !attachedCabin->isInsideShaftBoundaries()) {
-//                attachedCabin->getErrorString().setString("Invalid placement position");
-            }
+            if(leftClickedOutside() && liveClock.getElapsedTime().asMilliseconds() >= System::buttonReload){
+                liveClock.restart();
+                auto error = new TextEntity(System::c_red, 20);
 
-            //cash error
-            if (System::cash < attachedCabin->getCost()) {
-//                attachedCabin
-//                        ->getErrorString()
-//                        .setString(
-//                                "Not enough cash, need " +
-//                                System::f_to_string(std::abs(System::cash - attachedCabin->getCost())) +
-//                                "$ more"
-//                        );
+                error->setSpeed(100);
+                error->setLiveTimeSeconds(2);
+                error->setWorldCoordinates({attachedCabin->getWorldCoordinates().x, attachedCabin->getWorldCoordinates().y + attachedCabin->getHeight() / 2 + 10});
+
+                if (attachedCabin && (!attachedCabin->isInsideShaftBoundaries() || !attachedCabin->hasElevatorShaftTopAbove())) {
+                    error->setString(
+                            ResourceLoader::getTranslation("error.invalid_position") + ", " +
+                            ResourceLoader::getTranslation("error.hint.cabin")
+                    );
+                }
+
+                if (System::cash < attachedCabin->getCost()) {
+                    error->setString(
+                            ResourceLoader::getTranslation("error.no_cash") + ", " +
+                            ResourceLoader::getTranslation("error.hint.cash") + " " +
+                            System::f_to_string(attachedCabin->getCost() - System::cash, 0) + "$"
+                    );
+                }
             }
         } else {
             attachedCabin->setTransparent();

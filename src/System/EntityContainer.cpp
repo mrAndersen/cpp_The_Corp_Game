@@ -39,8 +39,6 @@ namespace EntityContainer {
     }
 
     void add(Entity *item) {
-        counters[item->getEType()]++;
-
         auto size = items[System::loadingScene].size();
 
         if (items[System::loadingScene].empty()) {
@@ -293,26 +291,26 @@ namespace EntityContainer {
 
             //process loss and income
 
-            if (e->getEType() == E_Clerk) {
+            if (e->getEType() == E_Clerk && e->isSpawned()) {
                 auto d = dynamic_cast<Clerk *>(e);
 
                 dailyIncome += d->getHalfHourEarning() * 16;
                 dailyLoss += d->getDailySalary();
             }
 
-            if (e->getEType() == E_Manager) {
+            if (e->getEType() == E_Manager && e->isSpawned()) {
                 auto d = dynamic_cast<Manager *>(e);
                 dailyLoss += d->getDailySalary();
             }
 
-            if (e->getEType() == E_Accountant) {
+            if (e->getEType() == E_Accountant && e->isSpawned()) {
                 auto d = dynamic_cast<Accountant *>(e);
                 dailyLoss += d->getDailySalary();
             }
         }
 
-        counters[E_Stats_Daily_Loss] = dailyLoss;
-        counters[E_Stats_Daily_Income] = dailyIncome;
+        counters[E_Stats_Daily_Loss] = (int) dailyLoss;
+        counters[E_Stats_Daily_Income] = (int) dailyIncome;
 
         int endSize = items[System::activeScene].size();
 
