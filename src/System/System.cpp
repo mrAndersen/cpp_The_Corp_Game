@@ -44,7 +44,7 @@ namespace System {
     long long int frameTimeMcs;
     sf::Uint32 screenMode = sf::Style::Default;
     float timeFactor = 1;
-    std::string locale = "ru";
+    std::string locale = "en";
     //sys
 
     //utility
