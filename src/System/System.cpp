@@ -44,7 +44,7 @@ namespace System {
     long long int frameTimeMcs;
     sf::Uint32 screenMode = sf::Style::Default;
     float timeFactor = 1;
-    std::string locale = "en";
+    std::string locale = "ru";
     //sys
 
     //utility
@@ -66,7 +66,7 @@ namespace System {
     int buttonReload = 150;
 
     sf::Clock dayClock = {};
-    GameTime gameTime(17, 30);
+    GameTime gameTime(12, 30);
 
     int startWorkHour = 10;
     int endWorkHour = 19;

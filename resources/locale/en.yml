@@ -31,7 +31,7 @@ units:
 
 popup:
     upgrade:
-        clerk: more total earnings
+        clerk: need additionally
 
     text:
         role: Role
@@ -40,8 +40,9 @@ popup:
         smoking: Smoking
         daily_salary: Daily salary
         earned_total: Earned total
+        manager_buff: Manager buff
+        accountant_bonus: Accountants bonus
         earned_hour: Earning/h
-        motivation: Motivation
         upgrade: Upgrade
 
 descriptions:

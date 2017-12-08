@@ -157,10 +157,7 @@ void Clerk::searchWorkPlace() {
 
                 for (int i = 0; i < 4; ++i) {
                     auto wc = office->getWorkPlaces()[i]->getWorldCoordinates();
-
-                    auto distance = std::fabs(std::sqrt(
-                            std::pow(worldCoordinates.x - wc.x, 2) +
-                            std::pow(worldCoordinates.y - wc.y, 2)));
+                    auto distance = std::fabs(std::sqrt(std::pow(worldCoordinates.x - wc.x, 2) + std::pow(worldCoordinates.y - wc.y, 2)));
 
                     buffer[distance] = office->getWorkPlaces()[i];
                 }
@@ -177,23 +174,24 @@ void Clerk::searchWorkPlace() {
 sf::String Clerk::createStatsText() {
     auto s = Movable::createStatsText();
 
-    if(currentWorkPlace){
-        s = s + "Workplace: Office #" + std::to_string(currentWorkPlace->getParentOffice()->getId()) + "\n";
-    }else{
-        s = s + "Workplace: No\n";
+    s += ResourceLoader::getTranslation("popup.text.daily_salary") + ": " + System::f_to_string(dailySalaries[level]) +
+         "$\n";
+    s += ResourceLoader::getTranslation("popup.text.earned_total") + ": " + System::f_to_string(totalEarnings) + "$\n";
+
+    if (buffed) {
+        s += ResourceLoader::getTranslation("popup.text.manager_buff") + ": " + buffStart.get() + " - " + buffEnd.get() + "\n";
+    } else {
+        s += ResourceLoader::getTranslation("popup.text.manager_buff") + ": " + ResourceLoader::getTranslation("a.no") + "\n";
     }
 
-    s = s + "Daily salary: " + System::f_to_string(dailySalaries[level]) + "$\n";
-    s = s + "Earned total: " + System::f_to_string(totalEarnings) + "$\n";
-    s = s + "Earning/h: " + System::f_to_string(dailyEarnings[level] / 8 * workingModificator * System::accountantsBonus) + "$\n";
-    s = s + "Manager buff: " + (buffed ? (buffStart.get() + " - " + buffEnd.get()) : "Not buffed") + "\n";
-    s = s + "Accountants bonus: " + System::f_to_string((System::accountantsBonus - 1) * 100) + "%\n";
+    s += ResourceLoader::getTranslation("popup.text.accountant_bonus") + ": " + System::f_to_string((System::accountantsBonus - 1) * 100) + "%\n";
 
     if (upgradeAvailable) {
-        s = s + "Upgrade: Yes!\n";
+        s += ResourceLoader::getTranslation("popup.text.upgrade") + ": " + ResourceLoader::getTranslation("a.yes") +
+             "\n";
     } else {
         if (level == 1) {
-            s = s + "Upgrade: " + System::f_to_string(1000 - totalEarnings, 0) + "$ more total earnings\n";
+            s += ResourceLoader::getTranslation("popup.text.upgrade") + ": " + System::f_to_string(1000 - totalEarnings, 0) + "$ " + ResourceLoader::getTranslation("popup.upgrade.clerk") + "\n";
         }
     }
 
@@ -218,7 +216,6 @@ void Clerk::upgrade() {
     if (level == 4) {
         return;
     }
-
 
     Movable::upgrade();
 }

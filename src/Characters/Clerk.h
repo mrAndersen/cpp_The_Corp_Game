@@ -16,7 +16,7 @@ public:
     std::map<int, float> dailySalaries = {{1, 64}, {2, 100}, {3, 150}, {4, 200}};
     bool salaryProcessed = false;
 
-    float totalEarnings = 10000;
+    float totalEarnings = 0;
 
     WorkPlace *currentWorkPlace = nullptr;
 

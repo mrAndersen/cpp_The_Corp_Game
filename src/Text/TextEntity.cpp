@@ -62,7 +62,7 @@ void TextEntity::setText(const sf::Text &text) {
 
 
 
-void TextEntity::setString(const std::string &string) {
+void TextEntity::setString(const sf::String &string) {
     text.setString(string);
 
 }

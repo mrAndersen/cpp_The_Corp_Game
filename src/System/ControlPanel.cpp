@@ -33,7 +33,6 @@ namespace ControlPanel {
         auto screenCenterY = System::screenHeight / 2;
 
         auto resume = new PopupButton;
-        resume->setTextOffset(3);
         resume->setColor(System::c_blue);
         resume->getText().setFont(*System::titleFontI8N);
         resume->getText().setCharacterSize(20);
@@ -46,7 +45,6 @@ namespace ControlPanel {
         };
 
         auto start = new PopupButton;
-        start->setTextOffset(3);
         start->setColor(System::c_green);
         start->getText().setFont(*System::titleFontI8N);
         start->getText().setCharacterSize(20);
@@ -72,7 +70,6 @@ namespace ControlPanel {
         };
 
         auto quit = new PopupButton;
-        quit->setTextOffset(2);
         quit->setColor(System::c_red);
         quit->getText().setFont(*System::titleFontI8N);
         quit->getText().setCharacterSize(20);

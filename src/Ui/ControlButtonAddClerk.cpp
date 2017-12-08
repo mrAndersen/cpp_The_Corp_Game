@@ -69,13 +69,10 @@ void ControlButtonAddClerk::update() {
 
                 error->setSpeed(100);
                 error->setLiveTimeSeconds(2);
-                error->setWorldCoordinates({attachedClerk->getWorldCoordinates().x,
-                                            attachedClerk->getWorldCoordinates().y + attachedClerk->getHeight() / 2 +
-                                            10});
+                error->setWorldCoordinates({attachedClerk->getWorldCoordinates().x, attachedClerk->getWorldCoordinates().y + attachedClerk->getHeight() / 2 + 10});
 
                 //placement error
-                if (attachedClerk->isBelowGround() || attachedClerk->isCrossingOffices() ||
-                    !attachedClerk->isOnTheGround(30)) {
+                if (attachedClerk->isBelowGround() || attachedClerk->isCrossingOffices() || !attachedClerk->isOnTheGround(30)) {
                     error->setString(ResourceLoader::getTranslation("error.invalid_position"));
                 }
 
@@ -83,7 +80,8 @@ void ControlButtonAddClerk::update() {
                     error->setString(
                             ResourceLoader::getTranslation("error.no_cash") + ", " +
                             ResourceLoader::getTranslation("error.hint.cash") + " " +
-                            System::f_to_string(attachedClerk->getCost() - System::cash, 0) + "$"
+                            System::f_to_string(attachedClerk->getCost() - System::cash, 0)
+                            + "$"
                     );
                 }
             }
