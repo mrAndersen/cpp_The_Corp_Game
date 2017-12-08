@@ -5,15 +5,18 @@
 #include "..\System\System.h"
 #include "ControlButtonAddElevatorShaftTop.h"
 
-ControlButtonAddElevatorShaftTop::ControlButtonAddElevatorShaftTop(float leftOffset, float topOffset) : BasicUi(leftOffset, topOffset) {
+ControlButtonAddElevatorShaftTop::ControlButtonAddElevatorShaftTop(float leftOffset, float topOffset) : BasicUi(
+        leftOffset, topOffset) {
     setEType(E_ButtonAddElevatorShaftTop);
     setDrawOrder(D_Ui);
 
     setWidth(ControlButtonAddElevatorShaftTop::width);
     setHeight(ControlButtonAddElevatorShaftTop::height);
 
-    addAnimation(S_Button_Normal, Animation(this, S_Button_Normal, 1, ResourceLoader::getTexture(eType, S_Button_Normal)));
-    addAnimation(S_Button_Pressed, Animation(this, S_Button_Pressed, 1, ResourceLoader::getTexture(eType, S_Button_Pressed)));
+    addAnimation(S_Button_Normal,
+                 Animation(this, S_Button_Normal, 1, ResourceLoader::getTexture(eType, S_Button_Normal)));
+    addAnimation(S_Button_Pressed,
+                 Animation(this, S_Button_Pressed, 1, ResourceLoader::getTexture(eType, S_Button_Pressed)));
 
     setVisible(false);
     initEntity();
@@ -33,7 +36,7 @@ void ControlButtonAddElevatorShaftTop::update() {
                           !attachedShaft->intersectsWithObjects() &&
                           attachedShaft->hasMiddleShaftOnTheBottom();
 
-    if(mouseIn()){
+    if (mouseIn()) {
         System::selectionCooldown.restart();
     }
 
@@ -74,24 +77,34 @@ void ControlButtonAddElevatorShaftTop::update() {
         if (!spawnCondition) {
             attachedShaft->setInvalid();
 
-            //placement error
-            if (
-                    attachedShaft &&
-                    (attachedShaft->intersectsWithObjects() || attachedShaft->getNeighborOffices().empty() ||
-                     !attachedShaft->isOnTheGround())) {
-                attachedShaft->getErrorString().setString(
-                        "Invalid placement position\nmust be placed on top of the shaft");
-            }
+            if (leftClickedOutside() && liveClock.getElapsedTime().asMilliseconds() >= System::buttonReload) {
+                liveClock.restart();
+                auto error = new TextEntity(System::c_red, 20);
 
-            //cash error
-            if (System::cash < attachedShaft->getCost()) {
-                attachedShaft
-                        ->getErrorString()
-                        .setString(
-                                "Not enough cash, need " +
-                                System::f_to_string(std::abs(System::cash - attachedShaft->getCost())) +
-                                "$ more"
-                        );
+                error->setSpeed(100);
+                error->setLiveTimeSeconds(2);
+                error->setWorldCoordinates({attachedShaft->getWorldCoordinates().x,
+                                            attachedShaft->getWorldCoordinates().y + attachedShaft->getHeight() / 2 +
+                                            10});
+
+                if (
+                        attachedShaft &&
+                        (attachedShaft->intersectsWithObjects() || attachedShaft->getNeighborOffices().empty() ||
+                         !attachedShaft->isOnTheGround() || !attachedShaft->hasMiddleShaftOnTheBottom())) {
+                    error->setString(
+                            ResourceLoader::getTranslation("error.invalid_position") + ", " +
+                            ResourceLoader::getTranslation("error.hint.motor")
+                    );
+                }
+
+                if (System::cash < attachedShaft->getCost()) {
+                    error->setString(
+                            ResourceLoader::getTranslation("error.no_cash") + ", " +
+                            ResourceLoader::getTranslation("error.hint.cash") + " " +
+                            System::f_to_string(attachedShaft->getCost() - System::cash, 0) + "$"
+                    );
+                }
+
             }
         } else {
             attachedShaft->setTransparent();

@@ -129,3 +129,7 @@ sf::String Manager::createStatsText() {
 
     return s;
 }
+
+float Manager::getDailySalary() {
+    return dailySalaries[level];
+}

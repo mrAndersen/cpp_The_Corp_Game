@@ -1,9 +1,6 @@
 #ifndef THE_CORP_GAME_CLERK_H
 #define THE_CORP_GAME_CLERK_H
 
-#include "..\Office\Office.h"
-#include "..\System\ResourceLoader.h"
-#include "..\System\EntityContainer.h"
 #include "..\Basic\Movable.h"
 
 class Movable;
@@ -13,19 +10,23 @@ public:
     const static int width = 70;
     const static int height = 120;
 
-    std::map<int, float> dailyEarnings = {{1, 80},{2, 160},{3, 240},{4,400}};
+    std::map<int, float> dailyEarnings = {{1, 200},{2, 400},{3, 750},{4, 1200}};
     bool earningProcessed = false;
 
     std::map<int, float> dailySalaries = {{1, 64}, {2, 100}, {3, 150}, {4, 200}};
     bool salaryProcessed = false;
 
-    float totalEarnings = 10000;
+    float totalEarnings = 0;
 
     WorkPlace *currentWorkPlace = nullptr;
 
     explicit Clerk(sf::Vector2f coordinates);
 
     virtual ~Clerk();
+
+    float getHalfHourEarning();
+
+    float getDailySalary();
 
     void updateLogic() override;
 

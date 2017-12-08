@@ -6,7 +6,7 @@
 Accountant::Accountant(sf::Vector2f coordinates) : Movable(E_Accountant, width, height) {
     setDefaultSpeed(165);
 
-    setCost(500);
+    setCost(1000);
     setWorldCoordinates(coordinates);
     setSelectable(true);
 
@@ -130,4 +130,8 @@ sf::String Accountant::createStatsText() {
     s = s + "Global earning modificator: " + System::f_to_string(buffPercentages[level] * workingModificator) + "%\n";
 
     return s;
+}
+
+float Accountant::getDailySalary() {
+    return dailySalaries[level];
 }

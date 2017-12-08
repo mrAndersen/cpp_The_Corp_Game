@@ -21,9 +21,7 @@ void ControlButtonAddAccountant::update() {
     bool spawnCondition = attachedAccountant &&
                           System::cash >= attachedAccountant->getCost() &&
                           !attachedAccountant->isBelowGround() &&
-                          (attachedAccountant->isCrossingOffices() || attachedAccountant->isOnTheGround(30))
-    ;
-
+                          (attachedAccountant->isCrossingOffices() || attachedAccountant->isOnTheGround(30));
 
     if(mouseIn()){
         System::selectionCooldown.restart();
@@ -60,15 +58,25 @@ void ControlButtonAddAccountant::update() {
         if (!spawnCondition) {
             attachedAccountant->setInvalid();
 
-            //placement error
-            if (attachedAccountant && attachedAccountant->isBelowGround() &&
-                attachedAccountant->getErrorString().getString().isEmpty()) {
-                attachedAccountant->getErrorString().setString("Invalid placement position");
-            }
+            if(leftClickedOutside() && liveClock.getElapsedTime().asMilliseconds() >= System::buttonReload){
+                liveClock.restart();
+                auto error = new TextEntity(System::c_red, 20);
 
-            //cash error
-            if (System::cash < attachedAccountant->getCost() && attachedAccountant->getErrorString().getString().isEmpty()) {
-                attachedAccountant->getErrorString().setString("Not enough cash");
+                error->setSpeed(100);
+                error->setLiveTimeSeconds(2);
+                error->setWorldCoordinates({attachedAccountant->getWorldCoordinates().x, attachedAccountant->getWorldCoordinates().y + attachedAccountant->getHeight() / 2 + 10});
+
+                if (attachedAccountant->isBelowGround() || attachedAccountant->isCrossingOffices() || !attachedAccountant->isOnTheGround(30)) {
+                    error->setString(ResourceLoader::getTranslation("error.invalid_position"));
+                }
+
+                if (System::cash < attachedAccountant->getCost()) {
+                    error->setString(
+                            ResourceLoader::getTranslation("error.no_cash") + ", " +
+                            ResourceLoader::getTranslation("error.hint.cash") + " " +
+                            System::f_to_string(attachedAccountant->getCost() - System::cash, 0) + "$"
+                    );
+                }
             }
         } else {
             attachedAccountant->setTransparent();

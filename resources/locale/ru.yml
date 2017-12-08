@@ -1,0 +1,49 @@
+title: Forest corporation
+
+a:
+    yes: Да
+    no: Нет
+
+error:
+    hint:
+        cash: нужно дополнительно
+        cabin: расположите внутри шахты
+        shaft: расположите на земле рядом с офисом
+        motor: расположите на самом верху шахты
+    invalid_position: Неправильное положение объекта
+    no_cash: Недостаточно денег
+
+buttons:
+    upgrade: Повысить
+    fire: Уволить
+
+units:
+    titles:
+        clerk: Клерк
+        manager: Менеджер
+        accountant: Бухгалтер
+    state:
+        wait: Ждёт
+        walk: Идёт
+        work: Работает
+        smoke: Курит
+        play: Дурачится
+
+popup:
+    upgrade:
+        clerk: еще
+
+    text:
+        role: Роль
+        level: Уровень
+        state: Состояние
+        smoking: Курящий?
+        daily_salary: Дневная зарплата
+        earned_total: Суммарныый заработок
+        manager_buff: Бафф от менеджера
+        accountant_bonus: Бонусы бухгалтеров
+        earned_hour: Доход в час
+        upgrade: Повышение
+
+descriptions:
+    clerk:

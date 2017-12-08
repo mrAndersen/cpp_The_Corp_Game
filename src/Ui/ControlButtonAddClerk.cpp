@@ -1,5 +1,7 @@
 #include <SFML/System.hpp>
 #include "ControlButtonAddClerk.h"
+#include "../System/ResourceLoader.h"
+#include "../System/EntityContainer.h"
 #include "..\System\ViewHandler.h"
 #include "..\System\System.h"
 
@@ -10,8 +12,10 @@ ControlButtonAddClerk::ControlButtonAddClerk(float leftOffset, float topOffset) 
     setWidth(ControlButtonAddClerk::width);
     setHeight(ControlButtonAddClerk::height);
 
-    addAnimation(S_Button_Normal, Animation(this, S_Button_Normal, 1, ResourceLoader::getTexture(eType, S_Button_Normal)));
-    addAnimation(S_Button_Pressed, Animation(this, S_Button_Pressed, 1, ResourceLoader::getTexture(eType, S_Button_Pressed)));
+    addAnimation(S_Button_Normal,
+                 Animation(this, S_Button_Normal, 1, ResourceLoader::getTexture(eType, S_Button_Normal)));
+    addAnimation(S_Button_Pressed,
+                 Animation(this, S_Button_Pressed, 1, ResourceLoader::getTexture(eType, S_Button_Pressed)));
 
     initEntity();
     EntityContainer::add(this);
@@ -23,10 +27,9 @@ void ControlButtonAddClerk::update() {
     bool spawnCondition = attachedClerk &&
                           System::cash >= attachedClerk->getCost() &&
                           !attachedClerk->isBelowGround() &&
-                          (attachedClerk->isCrossingOffices() || attachedClerk->isOnTheGround(30))
-    ;
+                          (attachedClerk->isCrossingOffices() || attachedClerk->isOnTheGround(30));
 
-    if(mouseIn()){
+    if (mouseIn()) {
         System::selectionCooldown.restart();
     }
 
@@ -60,15 +63,27 @@ void ControlButtonAddClerk::update() {
         if (!spawnCondition) {
             attachedClerk->setInvalid();
 
-            //placement error
-            if (attachedClerk && attachedClerk->isBelowGround() &&
-                attachedClerk->getErrorString().getString().isEmpty()) {
-                attachedClerk->getErrorString().setString("Invalid placement position");
-            }
+            if (leftClickedOutside() && liveClock.getElapsedTime().asMilliseconds() >= System::buttonReload) {
+                liveClock.restart();
+                auto error = new TextEntity(System::c_red, 20);
 
-            //cash error
-            if (System::cash < attachedClerk->getCost() && attachedClerk->getErrorString().getString().isEmpty()) {
-                attachedClerk->getErrorString().setString("Not enough cash");
+                error->setSpeed(100);
+                error->setLiveTimeSeconds(2);
+                error->setWorldCoordinates({attachedClerk->getWorldCoordinates().x, attachedClerk->getWorldCoordinates().y + attachedClerk->getHeight() / 2 + 10});
+
+                //placement error
+                if (attachedClerk->isBelowGround() || attachedClerk->isCrossingOffices() || !attachedClerk->isOnTheGround(30)) {
+                    error->setString(ResourceLoader::getTranslation("error.invalid_position"));
+                }
+
+                if (System::cash < attachedClerk->getCost()) {
+                    error->setString(
+                            ResourceLoader::getTranslation("error.no_cash") + ", " +
+                            ResourceLoader::getTranslation("error.hint.cash") + " " +
+                            System::f_to_string(attachedClerk->getCost() - System::cash, 0)
+                            + "$"
+                    );
+                }
             }
         } else {
             attachedClerk->setTransparent();

@@ -36,8 +36,8 @@ enum DrawOrder {
     D_Ui = 250,
     D_Ui_Over = 251,
 
-    D_Popup = 251,
-    D_Popup_Button = 252
+    D_Popup = 351,
+    D_Popup_Button = 352
 };
 
 enum DestinationType {

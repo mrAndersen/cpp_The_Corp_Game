@@ -9,6 +9,7 @@
 
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow) {
     System::activeScene = SC_Game;
+//    System::activeScene = SC_Main_Menu;
 
     //global lightweight loading
     ResourceLoader::loadFonts();

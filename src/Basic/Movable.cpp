@@ -239,7 +239,7 @@ void Movable::updateLogic() {
 
     //one-time-exec
     //time to go home
-    if (System::gameTime.isRestTime() && !moving && visible) {
+    if (System::gameTime.isRestTime() && visible) {
 
         moving = true;
         setDrawOrder(D_Characters, true);
@@ -328,11 +328,11 @@ Movable::Movable(Entities type, int width, int height) : Entity(type) {
     popup->setFixed(false);
 
     auto upgrade = new PopupButton;
-    upgrade->setString("Upgrade");
+    upgrade->setString(ResourceLoader::getTranslation("buttons.upgrade"));
     upgrade->setFixed(false);
 
     auto fire = new PopupButton;
-    fire->setString("Fire");
+    fire->setString(ResourceLoader::getTranslation("buttons.fire"));
     fire->setFixed(false);
     fire->setColor(System::c_yellow);
 
@@ -392,6 +392,8 @@ void Movable::setCost(float cost) {
 }
 
 void Movable::spawn() {
+    EntityContainer::counters[eType]++;
+
     System::cash -= this->cost;
     worldCoordinates.y = getFloorBottom(floor) + height / 2;
 
@@ -463,8 +465,7 @@ void Movable::addAnimation(States state, Gender gender, Race race, int level, in
         auto animation = Animation(this, state, frames, texture, duration);
         Entity::addAnimation(state, animation);
     } else {
-        auto animation = Animation(this, state, frames,
-                                   ResourceLoader::getCharacterTexture(eType, state, G_Male, R_White, 1), duration);
+        auto animation = Animation(this, state, frames, ResourceLoader::getCharacterTexture(eType, state, G_Male, R_White, 1), duration);
         Entity::addAnimation(state, animation);
     }
 }
@@ -592,9 +593,7 @@ void Movable::updatePopup() {
         e.second->setVisible(true);
 
         if (e.first == "upgrade") {
-            e.second->setWorldCoordinates(
-                    {popup->getLeft() + 10 + PopupButton::width / 2, popup->getTop() - PopupButton::height / 2 - 10});
-
+            e.second->setWorldCoordinates({popup->getLeft() + 10 + PopupButton::width / 2, popup->getTop() - PopupButton::height / 2 - 10});
             if (e.second->isPressed() && lastUpgradeTimer.getElapsedTime().asMilliseconds() >= 500) {
                 upgrade();
             }
@@ -607,8 +606,7 @@ void Movable::updatePopup() {
         }
 
         if (e.first == "fire") {
-            e.second->setWorldCoordinates({popup->getLeft() + 10 + PopupButton::width / 2,
-                                           popup->getTop() - PopupButton::height / 2 - PopupButton::height - 10});
+            e.second->setWorldCoordinates({popup->getLeft() + 10 + PopupButton::width / 2, popup->getTop() - PopupButton::height / 2 - PopupButton::height - 10});
 
             if (e.second->isPressed()) {
                 popup->setVisible(false);

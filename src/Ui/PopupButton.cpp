@@ -32,11 +32,11 @@ void PopupButton::setText(const sf::Text &text) {
     PopupButton::text = text;
 }
 
-const std::string &PopupButton::getString() const {
+const sf::String &PopupButton::getString() const {
     return string;
 }
 
-void PopupButton::setString(const std::string &string) {
+void PopupButton::setString(const sf::String &string) {
     PopupButton::string = string;
 }
 
@@ -71,7 +71,7 @@ void PopupButton::update() {
 
     text.setString(string);
     text.setOrigin(roundf((tBounds.width / 2)), roundf((tBounds.height / 2)));
-    text.setPosition(System::cToGl({worldCoordinates.x, worldCoordinates.y + textOffset}));
+    text.setPosition(System::cToGl({worldCoordinates.x, worldCoordinates.y + 3}));
 
     currentAnimation->getSprite().setColor(color);
 
@@ -84,12 +84,4 @@ const sf::Color &PopupButton::getColor() const {
 
 void PopupButton::setColor(const sf::Color &color) {
     PopupButton::color = color;
-}
-
-int PopupButton::getTextOffset() const {
-    return textOffset;
-}
-
-void PopupButton::setTextOffset(int textOffset) {
-    PopupButton::textOffset = textOffset;
 }

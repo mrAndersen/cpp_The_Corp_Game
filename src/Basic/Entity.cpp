@@ -19,7 +19,6 @@ void Entity::update() {
         }
 
         renderDebugInfo();
-        renderErrorText();
     }
 
     updateLogic();
@@ -157,19 +156,7 @@ void Entity::initEntity() {
     debugInfo.setCharacterSize(10);
     debugInfo.setFillColor(sf::Color::Black);
 
-    errorString.setFont(*System::textFont);
-    errorString.setCharacterSize(16);
-    errorString.setFillColor(System::c_red);
-
     selectAnimation(S_None);
-}
-
-sf::Text &Entity::getErrorString() {
-    return errorString;
-}
-
-void Entity::setErrorString(sf::Text &errorString) {
-    Entity::errorString = errorString;
 }
 
 float Entity::getTop() const {
@@ -202,14 +189,6 @@ float Entity::getRight() const {
 
 void Entity::setRight(float right) {
     Entity::right = right;
-}
-
-
-void Entity::renderErrorText() {
-    if (!valid) {
-        errorString.setPosition(System::cToGl(worldCoordinates.x - width / 2, worldCoordinates.y + height / 2 + 20));
-        System::window->draw(errorString);
-    }
 }
 
 void Entity::renderDebugInfo() {
@@ -413,7 +392,7 @@ void Entity::setManualUpdate(bool manualUpdate) {
     Entity::manualUpdate = manualUpdate;
 }
 
-Entity *Entity::create(Entities type, DrawOrder order, sf::Vector2f size, sf::Vector2f coordinates, const std::string &texturePath) {
+Entity *Entity::create(Entities type, DrawOrder order, sf::Vector2f size, sf::Vector2f coordinates, const std::string &texturePath, float scale) {
     auto e = new Entity(type);
 
     e->setDrawOrder(order);
@@ -422,6 +401,8 @@ Entity *Entity::create(Entities type, DrawOrder order, sf::Vector2f size, sf::Ve
 
     e->setWorldCoordinates(coordinates);
     e->addAnimation(S_None, Animation(e, S_None, 1, ResourceLoader::loadAndGetTexture(texturePath)));
+    e->initEntity();
+    e->getCurrentAnimation()->getSprite().setScale({scale, scale});
 
     EntityContainer::add(e);
     EntityContainer::addToGroup(e->getGroupName(), e);

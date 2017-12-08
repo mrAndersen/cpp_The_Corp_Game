@@ -54,7 +54,6 @@ protected:
 
     //debug
     sf::Text debugInfo;
-    sf::Text errorString;
 public:
     Animation *getCurrentAnimation();
 
@@ -78,7 +77,7 @@ public:
 
     Entity(Entities type = E_Entity);
 
-    static Entity *create(Entities type = E_Entity, DrawOrder order = D_Ui, sf::Vector2f size = {}, sf::Vector2f coordinates = {}, const std::string &texturePath = "");
+    static Entity *create(Entities type = E_Entity, DrawOrder order = D_Ui, sf::Vector2f size = {}, sf::Vector2f coordinates = {}, const std::string &texturePath = "", float scale = 1);
 
     Entities getEType() const;
 
@@ -189,12 +188,6 @@ public:
     void initEntity();
 
     virtual void renderDebugInfo();
-
-    virtual void renderErrorText();
-
-    sf::Text &getErrorString();
-
-    void setErrorString(sf::Text &errorString);
 
     virtual void setSelected(bool selected);
 };
