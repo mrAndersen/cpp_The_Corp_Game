@@ -36,7 +36,7 @@ public:
 
     void updateLogic() override;
 
-    void setString(const std::string &string);
+    void setString(const sf::String &string);
 
     float getLiveTimeSeconds() const;
 
