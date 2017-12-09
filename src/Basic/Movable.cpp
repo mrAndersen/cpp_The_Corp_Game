@@ -10,6 +10,31 @@
 #include "../Ui/MainPanel/ButtonPause.h"
 
 
+sf::String Movable::serialize() {
+    auto s = Entity::serialize();
+
+    s += std::to_string(defaultSpeed) + ";";
+    s += std::to_string(currentSpeed) + ";";
+    s += std::to_string(fallAcceleration) + ";";
+    s += std::to_string(smoking) + ";";
+    s += std::to_string(buffed) + ";";
+    s += std::to_string(willBeBuffed) + ";";
+    s += buffStart.get() + ";";
+    s += buffEnd.get() + ";";
+    s += std::to_string(workingModificator) + ";";
+    s += std::to_string(upgradeAvailable) + ";";
+    s += std::to_string(smokePeriodMinutes) + ";";
+    s += smokeStarted.get() + ";";
+    s += std::to_string(cost) + ";";
+    s += std::to_string(floor) + ";";
+    s += personName + ";";
+    s += std::to_string(gender) + ";";
+    s += std::to_string(race) + ";";
+    s += std::to_string(level) + ";";
+
+    return s;
+}
+
 void Movable::renderDebugInfo() {
     if (System::debug) {
         debugInfo.setOutlineColor(sf::Color::White);
@@ -204,6 +229,8 @@ void Movable::updateLogic() {
                     state = S_Smoking;
                     smokeStarted = System::gameTime;
 
+                    direction = System::getRandom(0, 100) <= 50 ? Right : Left;
+
                     moving = false;
                     destinations.pop_front();
                 }
@@ -239,9 +266,10 @@ void Movable::updateLogic() {
 
     //one-time-exec
     //time to go home
-    if (System::gameTime.isRestTime() && visible) {
+    if (System::gameTime.isRestTime() && visible && !goingHome) {
 
         moving = true;
+        goingHome = true;
         setDrawOrder(D_Characters, true);
         destinations.clear();
 
@@ -311,10 +339,6 @@ float Movable::getFallAcceleration() const {
 
 void Movable::setFallAcceleration(float fallAcceleration) {
     Movable::fallAcceleration = fallAcceleration;
-}
-
-std::string Movable::serialize() {
-    return Entity::serialize();
 }
 
 Movable::Movable(Entities type, int width, int height) : Entity(type) {

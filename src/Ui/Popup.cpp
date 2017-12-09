@@ -45,8 +45,8 @@ void Popup::update() {
     popupText.setOrigin({0, 0});
     popupTitle.setOrigin(roundf((tBounds.width / 2)), roundf((tBounds.height / 2)));
 
-    sf::Vector2f hPosition = {(int) (left + 10), (int) (top - 150)};
-    sf::Vector2f tPosition = {(int) roundf(worldCoordinates.x), (int) roundf((worldCoordinates.y - 200))};
+    sf::Vector2f hPosition = {(left + 10), (top - 150)};
+    sf::Vector2f tPosition = {worldCoordinates.x,  (worldCoordinates.y - 200)};
 
     popupText.setPosition(System::cToGl(hPosition));
     popupTitle.setPosition(System::cToGl(tPosition));

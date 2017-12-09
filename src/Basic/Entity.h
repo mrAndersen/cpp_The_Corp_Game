@@ -46,11 +46,7 @@ protected:
     //animation properties
     int drawOrder = 1;
     Direction direction = Direction::None;
-
     sf::Clock liveClock;
-
-    //property map
-    std::map<std::string, int> properties;
 
     //debug
     sf::Text debugInfo;
@@ -78,6 +74,8 @@ public:
     Entity(Entities type = E_Entity);
 
     static Entity *create(Entities type = E_Entity, DrawOrder order = D_Ui, sf::Vector2f size = {}, sf::Vector2f coordinates = {}, const std::string &texturePath = "", float scale = 1);
+
+    static Entity *create(Entities type = E_Entity, DrawOrder order = D_Ui, sf::Vector2f size = {}, sf::Vector2f coordinates = {}, sf::Texture *texture, float scale = 1);
 
     Entities getEType() const;
 
@@ -183,7 +181,9 @@ public:
 
     void setInvalid();
 
-    virtual std::string serialize();
+    virtual sf::String serialize();
+
+    static void deserialize(std::string &data);
 
     void initEntity();
 

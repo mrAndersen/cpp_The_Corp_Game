@@ -20,6 +20,8 @@ namespace ResourceLoader {
 
     sf::Texture *loadAndGetTexture(const std::string &path);
 
+    sf::Texture *loadAndGetTexture(const std::string &path, Entities eType);
+
     sf::Texture *getCharacterTexture(Entities target, States state = S_None, Gender gender = G_Male, Race race = R_White, int level = 1);
 
     void loadMainMenuTextures();

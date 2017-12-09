@@ -36,6 +36,8 @@ protected:
     std::deque<Destination> destinations;
     DestinationType currentDST = DST_Unknown;
     bool moving = false;
+    bool goingHome = false;
+
     Elevator *targetElevator = nullptr;
     bool smoking = false;
 
@@ -159,7 +161,7 @@ public:
 
     bool insideElevator();
 
-    std::string serialize() override;
+    sf::String serialize() override;
 
     void renderDebugInfo() override;
 

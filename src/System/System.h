@@ -21,6 +21,7 @@ namespace System {
     //sys
     extern Scenes activeScene;
     extern Scenes loadingScene;
+    extern sf::Clock saveTimer;
     extern sf::Clock sceneChangeTimer;
     extern sf::Clock fpsClock;
     extern sf::Clock frameClock;

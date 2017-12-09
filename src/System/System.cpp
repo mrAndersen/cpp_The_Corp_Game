@@ -28,6 +28,7 @@ namespace System {
     //sys
     Scenes activeScene;
     Scenes loadingScene;
+    sf::Clock saveTimer;
     sf::Clock sceneChangeTimer;
     sf::Clock fpsClock;
     sf::Clock frameClock;
@@ -66,7 +67,7 @@ namespace System {
     int buttonReload = 150;
 
     sf::Clock dayClock = {};
-    GameTime gameTime(18, 30);
+    GameTime gameTime(12, 30);
 
     int startWorkHour = 10;
     int endWorkHour = 19;

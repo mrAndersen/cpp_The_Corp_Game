@@ -6,9 +6,43 @@
 #include "..\System\EntityContainer.h"
 #include "..\Background\Ground.h"
 
-std::string Entity::serialize() {
-    return "";
+sf::String Entity::serialize() {
+    sf::String s;
+
+    s += std::to_string(eType) + ";";                   //0
+    s += groupName + ";";                               //1
+    s += std::to_string(id) + ";";                      //2
+    s += std::to_string(visible) + ";";                 //3
+    s += std::to_string(manualUpdate) + ";";            //4
+    s += std::to_string(valid) + ";";                   //5
+    s += std::to_string(worldCoordinates.x) + ";";      //6
+    s += std::to_string(worldCoordinates.y) + ";";      //7
+    s += std::to_string(width) + ";";                   //8
+    s += std::to_string(height) + ";";                  //9
+    s += std::to_string(state) + ";";                   //10
+    s += std::to_string(selectable) + ";";              //11
+    s += std::to_string(selected) + ";";                //12
+    s += std::to_string(spawned) + ";";                 //13
+    s += std::to_string(drawOrder) + ";";               //14
+    s += std::to_string(direction) + ";";               //15
+
+    return s;
 }
+
+void Entity::deserialize(std::string &data) {
+    auto array = System::split(data, ';');
+
+//    Entities eType = static_cast<Entities>(std::stoi(array[0]));
+//    DrawOrder drawOrder = static_cast<DrawOrder>(std::stoi(array[14]));
+//    sf::Vector2f size = {std::stof(array[8]), std::stof(array[9])};
+//    sf::Vector2f coordinates = {std::stof(array[6]), std::stof(array[7])};
+//    auto texture = ResourceLoader::getTexture(eType);
+//
+//    //@todo scale fix for clouds
+//    auto e = Entity::create(eType, drawOrder, size, coordinates, texture, 1);
+}
+
+
 
 void Entity::update() {
     if (visible) {
@@ -410,11 +444,33 @@ Entity *Entity::create(Entities type, DrawOrder order, sf::Vector2f size, sf::Ve
     return e;
 }
 
+Entity *Entity::create(Entities type, DrawOrder order, sf::Vector2f size, sf::Vector2f coordinates, sf::Texture *texture, float scale) {
+    auto e = new Entity(type);
+
+    e->setDrawOrder(order);
+    e->setWidth(size.x);
+    e->setHeight(size.y);
+
+    e->setWorldCoordinates(coordinates);
+    e->addAnimation(S_None, Animation(e, S_None, 1, texture));
+    e->initEntity();
+    e->getCurrentAnimation()->getSprite().setScale({scale, scale});
+
+    EntityContainer::add(e);
+    EntityContainer::addToGroup(e->getGroupName(), e);
+
+    return e;
+}
+
 Animation *Entity::getCurrentAnimation() {
     if(currentAnimation){
         return currentAnimation;
     }
 }
+
+
+
+
 
 
 

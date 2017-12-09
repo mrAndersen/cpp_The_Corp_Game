@@ -13,7 +13,6 @@ if(COMPILER STREQUAL "GCC")
     set(CMAKE_BINARY_DIR ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
     set(SFML_ROOT "${PROJECT_SOURCE_DIR}/vendor/sfml-2.4.2-mingw")
     set(SFML_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/vendor/sfml-2.4.2-mingw/include")
-    set(OTHER_DEPENDENCIES "${PROJECT_SOURCE_DIR}/vendor/yaml/libyaml-cpp.a")
 endif()
 
 if(COMPILER STREQUAL "MSVC")
@@ -46,6 +45,7 @@ add_executable(
         main.rc
 
         version.h
+
         src/System/mingw.mutex.h
         src/System/mingw.condition_variable.h
         src/System/mingw.thread.h
@@ -195,21 +195,26 @@ add_executable(
 
         src/Ui/Questions/QAddAccountant.cpp
         src/Ui/Questions/QAddAccountant.h
-        src/Background/Cloud.cpp src/Background/Cloud.h src/Ui/MainPanel/Cog.cpp src/Ui/MainPanel/Cog.h)
+        src/Background/Cloud.cpp src/Background/Cloud.h src/Ui/MainPanel/Cog.cpp src/Ui/MainPanel/Cog.h src/System/SaveManager.cpp src/System/SaveManager.h)
 
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}" ${CMAKE_MODULE_PATH})
 
 #Find any version 2.X of SFML
 #See the FindSFML.cmake file for additional details and instructions
-message(STATUS "Library (SFML_LIBRARIES): ${SFML_LIBRARIES}")
 set(SFML_STATIC_LIBRARIES TRUE)
 find_package(SFML 2 REQUIRED graphics network audio window system)
 if(SFML_FOUND)
     FIND_LIBRARY (PSAPI Psapi)
 
     include_directories(${SFML_INCLUDE_DIR})
-    target_link_libraries(${EXECUTABLE_NAME} ${PSAPI} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES} ${OTHER_DEPENDENCIES})
+    target_link_libraries(${EXECUTABLE_NAME} ${PSAPI} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
+
+    if(COMPILER STREQUAL "GCC")
+        target_link_libraries(${EXECUTABLE_NAME} ${PROJECT_SOURCE_DIR}/vendor/yaml/libyaml-cpp.a)
+        target_link_libraries(${EXECUTABLE_NAME} ${PROJECT_SOURCE_DIR}/vendor/zlib/libz.a)
+    endif()
+
 endif()
 
 
