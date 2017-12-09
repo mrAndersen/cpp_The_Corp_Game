@@ -66,7 +66,7 @@ namespace System {
     int buttonReload = 150;
 
     sf::Clock dayClock = {};
-    GameTime gameTime(17, 30);
+    GameTime gameTime(18, 30);
 
     int startWorkHour = 10;
     int endWorkHour = 19;
@@ -95,14 +95,15 @@ namespace System {
         }
 
         if (gameTime.isDayEndHour() && !dayEndProcessed) {
+            System::cash -= EntityContainer::counters[E_Stats_Daily_Loss];
             auto *salarySpent = new TextEntity(System::c_red, 40);
 
             salarySpent->setFixed(true);
             salarySpent->setString("Salaries: -" + System::f_to_string(EntityContainer::counters[E_Stats_Daily_Loss]) + "$");
-            salarySpent->setLeft(12);
-            salarySpent->setTop(-100);
+            salarySpent->setLeftOffset(250);
+            salarySpent->setTopOffset(600);
             salarySpent->setDirection(Direction::Down);
-            salarySpent->setLiveTimeSeconds(3);
+            salarySpent->setLiveTimeSeconds(5);
 
             dayEndProcessed = true;
             dayStartProcessed = false;

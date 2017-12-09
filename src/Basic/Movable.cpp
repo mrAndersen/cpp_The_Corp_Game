@@ -403,7 +403,7 @@ void Movable::spawn() {
 
     spent->setLiveTimeSeconds(4);
     spent->setWorldCoordinates(position);
-    spent->setString("-" + System::f_to_string(this->getCost()) + "$");
+    spent->setString("-" + System::f_to_string(this->getCost(), 0) + "$");
 
     recalculateBoundaries();
 

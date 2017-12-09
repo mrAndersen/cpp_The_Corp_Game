@@ -17,19 +17,18 @@ class TextEntity : public Entity {
     //fixed offset parameters
     bool fixed = false;
     float totalEntityDistance = 0;
-    float screenLeft = 0;
-    float screenTop = 0;
 
-    Direction direction = Direction::Up;
+    float leftOffset;
+    float topOffset;
 
 public:
-    float getScreenLeft() const;
+    float getLeftOffset() const;
 
-    void setScreenLeft(float screenLeft);
+    void setLeftOffset(float leftOffset);
 
-    float getScreenTop() const;
+    float getTopOffset() const;
 
-    void setScreenTop(float screenTop);
+    void setTopOffset(float topOffset);
 
     bool isFixed() const;
 
