@@ -321,22 +321,6 @@ namespace ResourceLoader {
         return texture;
     }
 
-    sf::Texture *ResourceLoader::loadAndGetTexture(const std::string &path, Entities eType) {
-        if (fastTextures[path] != nullptr) {
-
-            return fastTextures[path];
-        }
-
-        auto texture = new sf::Texture;
-        texture->loadFromFile(path);
-        texture->setSmooth(true);
-
-        fastTextures[path] = texture;
-        textureCollection[eType][S_None] = texture;
-
-        return texture;
-    }
-
     void loadLocales() {
         translations = YAML::LoadFile("resources/locale/" + System::locale + ".yml");
     }

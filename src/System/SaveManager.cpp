@@ -1,4 +1,8 @@
 #include <fstream>
+#include <Office/OfficeClerk.h>
+#include "../Characters/Clerk.h"
+#include "../Characters/Manager.h"
+#include "../Characters/Accountant.h"
 #include "SaveManager.h"
 #include "EntityContainer.h"
 #include "../../vendor/zlib/zlib.h"
@@ -15,8 +19,10 @@ namespace SaveManager {
 
             if (!EntityContainer::items[SC_Game].empty()) {
                 for (auto &e:EntityContainer::items[SC_Game]) {
-                    auto data = e->serialize();
-                    buffer += data + "\n";
+                    if (e->isSerializable() && e->isSpawned()) {
+                        auto data = e->serialize();
+                        buffer += data + "\n";
+                    }
                 }
 
                 auto zipped = compress_string(buffer.toAnsiString());
@@ -58,9 +64,41 @@ namespace SaveManager {
             auto data = System::split(decompressed, '\n');
 
             for (auto &e:data) {
-                Entity::deserialize(e);
+                if (e.size() >= 5) {
+                    deserialize(e);
+                }
             }
         });
+
+        loader.detach();
+    }
+
+    void deserialize(std::string &stringData){
+        auto array = System::split(stringData, ';');
+
+        auto eType = static_cast<Entities>(std::stoi(array[0]));
+        auto coordinates = sf::Vector2f(std::stof(array[6]), std::stof(array[7]));
+
+        Entity *e;
+
+        switch (eType){
+            case E_OfficeDefault:
+                e = new OfficeClerk(coordinates);
+                break;
+            case E_Clerk:
+                e = new Clerk(coordinates);
+                break;
+            case E_Manager:
+                e = new Manager(coordinates);
+                break;
+            case E_Accountant:
+                e = new Accountant(coordinates);
+                break;
+            default:
+                break;
+        }
+
+        e->populate(array);
     }
 
 

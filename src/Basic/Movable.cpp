@@ -13,24 +13,21 @@
 sf::String Movable::serialize() {
     auto s = Entity::serialize();
 
-    s += std::to_string(defaultSpeed) + ";";
-    s += std::to_string(currentSpeed) + ";";
-    s += std::to_string(fallAcceleration) + ";";
-    s += std::to_string(smoking) + ";";
-    s += std::to_string(buffed) + ";";
-    s += std::to_string(willBeBuffed) + ";";
-    s += buffStart.get() + ";";
-    s += buffEnd.get() + ";";
-    s += std::to_string(workingModificator) + ";";
-    s += std::to_string(upgradeAvailable) + ";";
-    s += std::to_string(smokePeriodMinutes) + ";";
-    s += smokeStarted.get() + ";";
-    s += std::to_string(cost) + ";";
-    s += std::to_string(floor) + ";";
-    s += personName + ";";
-    s += std::to_string(gender) + ";";
-    s += std::to_string(race) + ";";
-    s += std::to_string(level) + ";";
+    s += std::to_string(defaultSpeed) + ";";            //14
+    s += std::to_string(currentSpeed) + ";";            //15
+    s += std::to_string(smoking) + ";";                 //16
+    s += std::to_string(buffed) + ";";                  //17
+    s += std::to_string(willBeBuffed) + ";";            //18
+    s += buffStart.get() + ";";                         //19
+    s += buffEnd.get() + ";";                           //20
+    s += std::to_string(workingModificator) + ";";      //21
+    s += smokeStarted.get() + ";";                      //22
+    s += std::to_string(cost) + ";";                    //23
+    s += std::to_string(floor) + ";";                   //24
+    s += personName + ";";                              //25
+    s += std::to_string(gender) + ";";                  //26
+    s += std::to_string(race) + ";";                    //27
+    s += std::to_string(level) + ";";                   //28
 
     return s;
 }
@@ -333,17 +330,10 @@ void Movable::setCurrentSpeed(float currentSpeed) {
     Movable::currentSpeed = currentSpeed;
 }
 
-float Movable::getFallAcceleration() const {
-    return fallAcceleration;
-}
-
-void Movable::setFallAcceleration(float fallAcceleration) {
-    Movable::fallAcceleration = fallAcceleration;
-}
-
 Movable::Movable(Entities type, int width, int height) : Entity(type) {
-    this->width = width;
-    this->height = height;
+    setWidth(width);
+    setHeight(height);
+    setSerializable(true);
 
     personName = ResourceLoader::getRandomName(gender);
 
@@ -717,6 +707,59 @@ bool Movable::isCrossingOffices() {
 
     return false;
 }
+
+bool Movable::isSmoking() const {
+    return smoking;
+}
+
+void Movable::setSmoking(bool smoking) {
+    Movable::smoking = smoking;
+}
+
+const GameTime &Movable::getSmokeStarted() const {
+    return smokeStarted;
+}
+
+void Movable::setSmokeStarted(const GameTime &smokeStarted) {
+    Movable::smokeStarted = smokeStarted;
+}
+
+Race Movable::getRace() const {
+    return race;
+}
+
+void Movable::setRace(Race race) {
+    Movable::race = race;
+}
+
+void Movable::setLevel(int level) {
+    Movable::level = level;
+}
+
+void Movable::populate(std::vector<std::string> &array) {
+    Entity::populate(array);
+
+    //movable
+    this->setDefaultSpeed(std::stof(array[14]));
+    this->setCurrentSpeed(std::stof(array[15]));
+    this->setSmoking((bool) std::stof(array[16]));
+    this->setBuffed((bool) std::stof(array[17]));
+    this->setWillBeBuffed((bool) std::stof(array[18]));
+    this->setBuffStart(GameTime(std::stoi(System::split(array[19], ':')[0]), std::stoi(System::split(array[19], ':')[1])));
+    this->setBuffEnd(GameTime(std::stoi(System::split(array[20], ':')[0]), std::stoi(System::split(array[20], ':')[1])));
+    this->setWorkingModificator(std::stof(array[21]));
+    this->setSmokeStarted(GameTime(std::stoi(System::split(array[22], ':')[0]), std::stoi(System::split(array[22], ':')[1])));
+    this->setCost(std::stof(array[23]));
+    this->setFloor(std::stoi(array[24]));
+    this->setPersonName(array[25]);
+    this->setGender(static_cast<Gender>(std::stoi(array[26])));
+    this->setRace(static_cast<Race>(std::stoi(array[27])));
+    this->setLevel(std::stoi(array[28]));
+}
+
+
+
+
 
 
 

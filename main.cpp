@@ -9,6 +9,10 @@
 #include "src\System\DebugPattern.h"
 
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow) {
+    std::set_terminate([](){
+        exit(99);
+    });
+
     System::activeScene = SC_Game;
 //    System::activeScene = SC_Main_Menu;
 

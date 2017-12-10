@@ -26,12 +26,9 @@ class Accountant;
 class Movable : public Entity {
 
 protected:
-    float distancePassed = 0;
-
     //pixels per second
     float defaultSpeed = 130;
     float currentSpeed = 130;
-    float fallAcceleration = 980;
 
     std::deque<Destination> destinations;
     DestinationType currentDST = DST_Unknown;
@@ -70,6 +67,16 @@ protected:
 
 public:
     Movable(Entities type, int width, int height);
+
+    bool isSmoking() const;
+
+    void setSmoking(bool smoking);
+
+    void setLevel(int level);
+
+    const GameTime &getSmokeStarted() const;
+
+    void setSmokeStarted(const GameTime &smokeStarted);
 
     Popup *getPopup() const;
 
@@ -143,6 +150,10 @@ public:
 
     int getFloor() const;
 
+    Race getRace() const;
+
+    void setRace(Race race);
+
     void setFloor(int floor);
 
     bool isSpawned() const;
@@ -153,15 +164,13 @@ public:
 
     void setCost(float cost);
 
-    float getFallAcceleration() const;
-
-    void setFallAcceleration(float fallAcceleration);
-
     Elevator *searchNearestElevator();
 
     bool insideElevator();
 
     sf::String serialize() override;
+
+    void populate(std::vector<std::string> &array) override;
 
     void renderDebugInfo() override;
 

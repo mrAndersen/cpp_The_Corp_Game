@@ -437,6 +437,16 @@ namespace EntityContainer {
         }
     }
 
+    Entity *getElementById(int id) {
+        for (auto &e:items[SC_Game]) {
+            if (e->getId() == id) {
+                return e;
+            }
+        }
+
+        return nullptr;
+    }
+
 }
 
 

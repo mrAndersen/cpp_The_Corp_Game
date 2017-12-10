@@ -237,3 +237,37 @@ float Clerk::getHalfHourEarning() {
 float Clerk::getDailySalary() {
     return dailySalaries[level];
 }
+
+float Clerk::getTotalEarnings() const {
+    return totalEarnings;
+}
+
+void Clerk::setTotalEarnings(float totalEarnings) {
+    Clerk::totalEarnings = totalEarnings;
+}
+
+sf::String Clerk::serialize() {
+    auto s = Movable::serialize();
+
+    s += std::to_string(totalEarnings) + ";";           //29
+    s += std::to_string(currentWorkPlace ? currentWorkPlace->getParentOffice()->getId() : '~') + ";";       //30
+
+    return s;
+}
+
+void Clerk::populate(std::vector<std::string> &array) {
+    Movable::populate(array);
+
+    //clerk
+    this->setTotalEarnings(std::stof(array[29]));
+
+    if (array[30] != "~") {
+        auto e = EntityContainer::getElementById(std::stoi(array[30]));
+        auto office = dynamic_cast<Office *>(e);
+
+        auto wPlace = office->getNextFreeWorkPlace();
+        wPlace->setWorker(this);
+
+        this->setCurrentWorkPlace(wPlace);
+    }
+}

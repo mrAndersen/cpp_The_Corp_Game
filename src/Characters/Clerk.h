@@ -6,10 +6,7 @@
 class Movable;
 
 class Clerk : public Movable {
-public:
-    const static int width = 70;
-    const static int height = 120;
-
+protected:
     std::map<int, float> dailyEarnings = {{1, 200},{2, 400},{3, 750},{4, 1200}};
     bool earningProcessed = false;
 
@@ -20,11 +17,23 @@ public:
 
     WorkPlace *currentWorkPlace = nullptr;
 
-    explicit Clerk(sf::Vector2f coordinates);
+public:
+    const static int width = 70;
+    const static int height = 120;
+
+    Clerk(sf::Vector2f coordinates);
+
+    sf::String serialize() override;
+
+    void populate(std::vector<std::string> &array) override;
 
     virtual ~Clerk();
 
     float getHalfHourEarning();
+
+    float getTotalEarnings() const;
+
+    void setTotalEarnings(float totalEarnings);
 
     float getDailySalary();
 

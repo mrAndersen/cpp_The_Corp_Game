@@ -6,6 +6,7 @@
 
 Office::Office() {
     setGroupName("offices");
+    setSerializable(true);
 
     popup = new Popup(0, 0);
     popup->setVisible(false);
@@ -199,4 +200,20 @@ void Office::setSelected(bool selected) {
     Entity::setSelected(selected);
     popup->setVisible(selected);
 }
+
+sf::String Office::serialize() {
+    auto s = Entity::serialize();
+
+    s += std::to_string(floor) + ";";               //14
+
+    return s;
+}
+
+void Office::populate(std::vector<std::string> &array) {
+    Entity::populate(array);
+
+    this->setFloor(std::stoi(array[14]));
+}
+
+
 

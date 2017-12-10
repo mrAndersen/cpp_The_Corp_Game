@@ -5,6 +5,9 @@
 #include "..\System\Enum.h"
 #include "..\System\EntityContainer.h"
 #include "..\Background\Ground.h"
+#include "../Characters/Clerk.h"
+#include "../Characters/Manager.h"
+#include "../Characters/Accountant.h"
 
 sf::String Entity::serialize() {
     sf::String s;
@@ -21,27 +24,32 @@ sf::String Entity::serialize() {
     s += std::to_string(height) + ";";                  //9
     s += std::to_string(state) + ";";                   //10
     s += std::to_string(selectable) + ";";              //11
-    s += std::to_string(selected) + ";";                //12
-    s += std::to_string(spawned) + ";";                 //13
-    s += std::to_string(drawOrder) + ";";               //14
-    s += std::to_string(direction) + ";";               //15
+    s += std::to_string(drawOrder) + ";";               //12
+    s += std::to_string(direction) + ";";               //13
 
     return s;
 }
 
-void Entity::deserialize(std::string &data) {
-    auto array = System::split(data, ';');
+void Entity::populate(std::vector<std::string> &array) {
+    auto eType = static_cast<Entities>(std::stoi(array[0]));
+    sf::Vector2f size = {std::stof(array[8]), std::stof(array[9])};
+    spawned = true;
 
-//    Entities eType = static_cast<Entities>(std::stoi(array[0]));
-//    DrawOrder drawOrder = static_cast<DrawOrder>(std::stoi(array[14]));
-//    sf::Vector2f size = {std::stof(array[8]), std::stof(array[9])};
-//    sf::Vector2f coordinates = {std::stof(array[6]), std::stof(array[7])};
-//    auto texture = ResourceLoader::getTexture(eType);
-//
-//    //@todo scale fix for clouds
-//    auto e = Entity::create(eType, drawOrder, size, coordinates, texture, 1);
+    //entity
+    this->setEType(eType);
+    this->setGroupName(array[1]);
+    this->setId(std::stoi(array[2]));
+    this->setVisible((bool) std::stoi(array[3]));
+    this->setManualUpdate((bool) std::stoi(array[4]));
+    this->setValid((bool) std::stoi(array[5]));
+    this->setWidth((int) size.x);
+    this->setHeight((int) size.y);
+//    this->setState(static_cast<States>(std::stoi(array[10])));
+    this->setState(S_None);
+    this->setSelectable((bool) std::stoi(array[11]));
+    this->setDrawOrder(static_cast<DrawOrder>(std::stoi(array[12])));
+    this->setDirection(static_cast<Direction>(std::stoi(array[13])));
 }
-
 
 
 void Entity::update() {
@@ -463,10 +471,24 @@ Entity *Entity::create(Entities type, DrawOrder order, sf::Vector2f size, sf::Ve
 }
 
 Animation *Entity::getCurrentAnimation() {
-    if(currentAnimation){
+    if (currentAnimation) {
         return currentAnimation;
     }
 }
+
+bool Entity::isSerializable() const {
+    return serializable;
+}
+
+void Entity::setSerializable(bool serializable) {
+    Entity::serializable = serializable;
+}
+
+void Entity::setValid(bool valid) {
+    Entity::valid = valid;
+}
+
+
 
 
 
