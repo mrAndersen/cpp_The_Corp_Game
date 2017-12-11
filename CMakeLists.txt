@@ -30,6 +30,7 @@ endif()
 
 include_directories("${PROJECT_SOURCE_DIR}/src")
 include_directories("vendor/yaml/include")
+include_directories("vendor/boost-1.65")
 
 
 file(COPY "resources" DESTINATION "${CMAKE_BINARY_DIR}")
@@ -213,6 +214,7 @@ if(SFML_FOUND)
     if(COMPILER STREQUAL "GCC")
         target_link_libraries(${EXECUTABLE_NAME} ${PROJECT_SOURCE_DIR}/vendor/yaml/libyaml-cpp.a)
         target_link_libraries(${EXECUTABLE_NAME} ${PROJECT_SOURCE_DIR}/vendor/zlib/libz.a)
+        target_link_libraries(${EXECUTABLE_NAME} ${PROJECT_SOURCE_DIR}/vendor/boost-1.65/lib/libboost_serialization-mgw63-mt-1_65_1.a)
     endif()
 
 endif()
