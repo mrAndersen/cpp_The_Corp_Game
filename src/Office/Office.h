@@ -25,8 +25,6 @@ public:
 
     void updatePopup();
 
-    sf::String serialize() override;
-
     void populate(std::vector<std::string> &array) override;
 
     std::string createStatsText();

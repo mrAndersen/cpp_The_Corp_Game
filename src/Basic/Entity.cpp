@@ -9,28 +9,6 @@
 #include "../Characters/Manager.h"
 #include "../Characters/Accountant.h"
 
-
-std::map<std::string, sf::String> Entity::serialize() {
-    std::map<std::string, sf::String> s;
-
-    s["eType"] = std::to_string(eType);
-    s["groupName"] = groupName;
-    s["id"] = std::to_string(id);
-    s["visible"] = std::to_string(visible);
-    s["manualUpdate"] = std::to_string(manualUpdate);
-    s["valid"] = std::to_string(valid);
-    s["worldCoordinates.x"] = std::to_string(worldCoordinates.x);
-    s["worldCoordinates.y"] = std::to_string(worldCoordinates.y);
-    s["width"] = std::to_string(width);
-    s["height"] = std::to_string(height);
-    s["state"] = std::to_string(state);
-    s["selectable"] = std::to_string(selectable);
-    s["drawOrder"] = std::to_string(drawOrder);
-    s["direction"] = std::to_string(direction);
-
-    return s;
-}
-
 void Entity::populate(std::vector<std::string> &array) {
     auto eType = static_cast<Entities>(std::stoi(array[0]));
     sf::Vector2f size = {std::stof(array[8]), std::stof(array[9])};

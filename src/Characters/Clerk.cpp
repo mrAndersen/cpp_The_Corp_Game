@@ -229,22 +229,6 @@ void Clerk::setTotalEarnings(float totalEarnings) {
     Clerk::totalEarnings = totalEarnings;
 }
 
-sf::String Clerk::serialize() {
-    auto s = Movable::serialize();
-
-    s += std::to_string(totalEarnings) + ";";//30
-
-    if(currentWorkPlace){
-        s += std::to_string(currentWorkPlace->getParentOffice()->getId()) + ";";//31
-        s += std::to_string(currentWorkPlace->getParentOffice()->getWorkplaceIndex(this)) + ";"; //32
-    }else{
-        s += "~;";
-        s += "-1;";
-    }
-
-    return s;
-}
-
 void Clerk::populate(std::vector<std::string> &array) {
     Movable::populate(array);
 

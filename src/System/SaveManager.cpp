@@ -7,6 +7,7 @@
 #include "EntityContainer.h"
 #include "../../vendor/zlib/zlib.h"
 #include "mingw.thread.h"
+#include <boost/archive/text_oarchive.hpp>
 
 namespace SaveManager {
 
@@ -19,22 +20,22 @@ namespace SaveManager {
 
             if (!EntityContainer::items[SC_Game].empty()) {
                 for (auto &e:EntityContainer::items[SC_Game]) {
-                    if (e->isSerializable() && e->isSpawned()) {
-                        auto data = e->serialize();
-                        buffer += data + "\n";
+                    if (e->isSerializable() && e->isSpawned() && e->getEType() == E_Clerk) {
+                        boost::archive::text_oarchive oa(file);
+                        oa << e;
                     }
                 }
 
-                std::vector<std::string> systemVars = {
-                        std::to_string(System::cash),
-                        System::gameTime.get(),
-                };
-
-                auto sysString = System::join(systemVars, ';');
-                buffer += sysString;
-
-                auto zipped = compress_string(buffer.toAnsiString());
-                file << zipped;
+//                std::vector<std::string> systemVars = {
+//                        std::to_string(System::cash),
+//                        System::gameTime.get(),
+//                };
+//
+//                auto sysString = System::join(systemVars, ';');
+//                buffer += sysString;
+//
+//                auto zipped = compress_string(buffer.toAnsiString());
+//                file << zipped;
             }
 
             sf::String s;

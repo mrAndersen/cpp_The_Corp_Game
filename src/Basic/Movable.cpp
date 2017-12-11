@@ -9,35 +9,6 @@
 #include "..\System\System.h"
 #include "../Ui/MainPanel/ButtonPause.h"
 
-
-sf::String Movable::serialize() {
-    auto s = Entity::serialize();
-
-    s += std::to_string(defaultSpeed) + ";";            //14
-    s += std::to_string(currentSpeed) + ";";            //15
-    s += std::to_string(smoking) + ";";                 //16
-    s += std::to_string(buffed) + ";";                  //17
-    s += std::to_string(willBeBuffed) + ";";            //18
-    s += buffStart.get() + ";";                         //19
-    s += buffEnd.get() + ";";                           //20
-    s += std::to_string(workingModificator) + ";";      //21
-    s += smokeStarted.get() + ";";                      //22
-    s += std::to_string(cost) + ";";                    //23
-    s += std::to_string(floor) + ";";                   //24
-    s += personName + ";";                              //25
-    s += std::to_string(gender) + ";";                  //26
-    s += std::to_string(race) + ";";                    //27
-    s += std::to_string(level) + ";";                   //28
-
-    for (auto &d:destinations) {
-        s += d.serialize() + "*";
-    }
-
-    s += ";"; //29
-
-    return s;
-}
-
 void Movable::renderDebugInfo() {
     if (System::debug) {
         debugInfo.setOutlineColor(sf::Color::White);

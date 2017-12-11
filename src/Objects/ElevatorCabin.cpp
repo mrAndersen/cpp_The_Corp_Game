@@ -197,25 +197,6 @@ void ElevatorCabin::setCapacity(int capacity) {
     ElevatorCabin::capacity = capacity;
 }
 
-sf::String ElevatorCabin::serialize() {
-    auto s = Entity::serialize();
-
-    s += std::to_string(speed) + ";";           //14
-    s += std::to_string(capacity) + ";";        //15
-
-    if (!currentPeople.empty()) {
-        for (auto &p:currentPeople) {
-            s += std::to_string(p->getId()) + ",";
-        }
-    } else {
-        s = +"~"; //16
-    }
-
-    s += ";";
-
-    return s;
-}
-
 void ElevatorCabin::populate(std::vector<std::string> &array) {
     Entity::populate(array);
 

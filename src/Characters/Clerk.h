@@ -7,6 +7,15 @@ class Movable;
 
 class Clerk : public Movable {
 protected:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned int version) {
+        // serialize base class information
+//        ar & boost::serialization::base_object<Movable *>(*this);
+        ar & totalEarnings;
+    }
+
     std::map<int, float> dailyEarnings = {{1, 200},{2, 400},{3, 750},{4, 1200}};
     bool earningProcessed = false;
 
@@ -22,8 +31,6 @@ public:
     const static int height = 120;
 
     Clerk(sf::Vector2f coordinates);
-
-    sf::String serialize() override;
 
     void populate(std::vector<std::string> &array) override;
 
