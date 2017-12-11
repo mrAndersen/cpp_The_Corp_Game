@@ -29,6 +29,12 @@ sf::String Movable::serialize() {
     s += std::to_string(race) + ";";                    //27
     s += std::to_string(level) + ";";                   //28
 
+    for (auto &d:destinations) {
+        s += d.serialize() + "*";
+    }
+
+    s += ";"; //29
+
     return s;
 }
 
@@ -608,7 +614,8 @@ void Movable::updatePopup() {
 
         if (e.first == "upgrade") {
             e.second->setWorldCoordinates({popup->getLeft() + 10 + PopupButton::width / 2, popup->getTop() - PopupButton::height / 2 - 10});
-            if (e.second->isPressed() && lastUpgradeTimer.getElapsedTime().asMilliseconds() >= 500) {
+
+            if (e.second->isPressed() && lastUpgradeTimer.getElapsedTime().asMilliseconds() >= 500 && upgradeAvailable) {
                 upgrade();
             }
 

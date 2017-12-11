@@ -43,7 +43,7 @@ protected:
     GameTime buffStart;
     GameTime buffEnd;
     float workingModificator = 1.f;
-    bool upgradeAvailable = false;
+    bool upgradeAvailable = true;
 
     //relevant to game time
     int smokePeriodMinutes = 15;

@@ -188,7 +188,7 @@ public:
 
     void setInvalid();
 
-    virtual sf::String serialize();
+    virtual std::map<std::string, sf::String> serialize();
 
     virtual void populate(std::vector<std::string> &array);
 

@@ -9,6 +9,7 @@ ElevatorShaftMiddle::ElevatorShaftMiddle(sf::Vector2f coordinates) : Entity(E_El
     setHeight(ElevatorShaftMiddle::height);
     setCost(1000);
     setGroupName("shafts");
+    setSerializable(true);
 
     setWorldCoordinates(coordinates);
     setSelectable(false);

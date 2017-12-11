@@ -9,23 +9,24 @@
 #include "../Characters/Manager.h"
 #include "../Characters/Accountant.h"
 
-sf::String Entity::serialize() {
-    sf::String s;
 
-    s += std::to_string(eType) + ";";                   //0
-    s += groupName + ";";                               //1
-    s += std::to_string(id) + ";";                      //2
-    s += std::to_string(visible) + ";";                 //3
-    s += std::to_string(manualUpdate) + ";";            //4
-    s += std::to_string(valid) + ";";                   //5
-    s += std::to_string(worldCoordinates.x) + ";";      //6
-    s += std::to_string(worldCoordinates.y) + ";";      //7
-    s += std::to_string(width) + ";";                   //8
-    s += std::to_string(height) + ";";                  //9
-    s += std::to_string(state) + ";";                   //10
-    s += std::to_string(selectable) + ";";              //11
-    s += std::to_string(drawOrder) + ";";               //12
-    s += std::to_string(direction) + ";";               //13
+std::map<std::string, sf::String> Entity::serialize() {
+    std::map<std::string, sf::String> s;
+
+    s["eType"] = std::to_string(eType);
+    s["groupName"] = groupName;
+    s["id"] = std::to_string(id);
+    s["visible"] = std::to_string(visible);
+    s["manualUpdate"] = std::to_string(manualUpdate);
+    s["valid"] = std::to_string(valid);
+    s["worldCoordinates.x"] = std::to_string(worldCoordinates.x);
+    s["worldCoordinates.y"] = std::to_string(worldCoordinates.y);
+    s["width"] = std::to_string(width);
+    s["height"] = std::to_string(height);
+    s["state"] = std::to_string(state);
+    s["selectable"] = std::to_string(selectable);
+    s["drawOrder"] = std::to_string(drawOrder);
+    s["direction"] = std::to_string(direction);
 
     return s;
 }
@@ -33,7 +34,6 @@ sf::String Entity::serialize() {
 void Entity::populate(std::vector<std::string> &array) {
     auto eType = static_cast<Entities>(std::stoi(array[0]));
     sf::Vector2f size = {std::stof(array[8]), std::stof(array[9])};
-    spawned = true;
 
     //entity
     this->setEType(eType);
@@ -44,11 +44,15 @@ void Entity::populate(std::vector<std::string> &array) {
     this->setValid((bool) std::stoi(array[5]));
     this->setWidth((int) size.x);
     this->setHeight((int) size.y);
-//    this->setState(static_cast<States>(std::stoi(array[10])));
-    this->setState(S_None);
     this->setSelectable((bool) std::stoi(array[11]));
     this->setDrawOrder(static_cast<DrawOrder>(std::stoi(array[12])));
     this->setDirection(static_cast<Direction>(std::stoi(array[13])));
+
+    if (static_cast<States>(std::stoi(array[10])) == S_Working) {
+        this->setState(S_Working);
+    } else {
+        this->setState(S_None);
+    }
 }
 
 
@@ -487,6 +491,11 @@ void Entity::setSerializable(bool serializable) {
 void Entity::setValid(bool valid) {
     Entity::valid = valid;
 }
+
+
+
+
+
 
 
 

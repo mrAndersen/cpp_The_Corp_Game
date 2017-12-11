@@ -200,23 +200,6 @@ sf::String Clerk::createStatsText() {
 
 void Clerk::upgrade() {
     lastUpgradeTimer.restart();
-
-    if (level == 1 && totalEarnings < 1000) {
-        return;
-    }
-
-    if (level == 2 && totalEarnings < 2500) {
-        return;
-    }
-
-    if (level == 3 && totalEarnings < 5000) {
-        return;
-    }
-
-    if (level == 4) {
-        return;
-    }
-
     Movable::upgrade();
 }
 
@@ -249,8 +232,15 @@ void Clerk::setTotalEarnings(float totalEarnings) {
 sf::String Clerk::serialize() {
     auto s = Movable::serialize();
 
-    s += std::to_string(totalEarnings) + ";";           //29
-    s += std::to_string(currentWorkPlace ? currentWorkPlace->getParentOffice()->getId() : '~') + ";";       //30
+    s += std::to_string(totalEarnings) + ";";//30
+
+    if(currentWorkPlace){
+        s += std::to_string(currentWorkPlace->getParentOffice()->getId()) + ";";//31
+        s += std::to_string(currentWorkPlace->getParentOffice()->getWorkplaceIndex(this)) + ";"; //32
+    }else{
+        s += "~;";
+        s += "-1;";
+    }
 
     return s;
 }
@@ -261,13 +251,12 @@ void Clerk::populate(std::vector<std::string> &array) {
     //clerk
     this->setTotalEarnings(std::stof(array[29]));
 
-    if (array[30] != "~") {
-        auto e = EntityContainer::getElementById(std::stoi(array[30]));
-        auto office = dynamic_cast<Office *>(e);
+    if (array[30] != "~" && array[31] != "-1") {
+        auto office = dynamic_cast<Office *>(EntityContainer::getElementById(std::stoi(array[30])));
+        auto wIndex = std::stoi(array[31]);
+        auto wPlace = office->getWorkplaceAt(wIndex);
 
-        auto wPlace = office->getNextFreeWorkPlace();
         wPlace->setWorker(this);
-
         this->setCurrentWorkPlace(wPlace);
     }
 }

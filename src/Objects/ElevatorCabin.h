@@ -28,6 +28,8 @@ class ElevatorCabin : public Entity {
 public:
     explicit ElevatorCabin(sf::Vector2f coordinates);
 
+    sf::String serialize() override;
+
     bool hasFreeSpace();
 
     int getSpeed() const;
@@ -65,6 +67,8 @@ public:
     void updateLogic() override;
 
     void updateIndicators();
+
+    void populate(std::vector<std::string> &array) override;
 };
 
 

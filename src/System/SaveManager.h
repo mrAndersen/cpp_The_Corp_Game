@@ -1,7 +1,9 @@
 #ifndef THE_CORP_GAME_SAVEMANAGER_H
 #define THE_CORP_GAME_SAVEMANAGER_H
 
+#include "Basic/Entity.h"
 #include "../../vendor/zlib/zlib.h"
+
 
 namespace SaveManager {
 

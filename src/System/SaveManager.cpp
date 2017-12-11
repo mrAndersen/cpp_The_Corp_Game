@@ -25,6 +25,14 @@ namespace SaveManager {
                     }
                 }
 
+                std::vector<std::string> systemVars = {
+                        std::to_string(System::cash),
+                        System::gameTime.get(),
+                };
+
+                auto sysString = System::join(systemVars, ';');
+                buffer += sysString;
+
                 auto zipped = compress_string(buffer.toAnsiString());
                 file << zipped;
             }
@@ -53,6 +61,11 @@ namespace SaveManager {
     void load() {
         std::thread loader([]() {
             std::fstream file("save.dat", std::ios::out | std::ios::binary | std::ios::in);
+
+            if (!file.is_open()) {
+                return;
+            }
+
             std::string contents;
 
             while (!file.eof()) {
@@ -60,12 +73,18 @@ namespace SaveManager {
             }
 
             auto decompressed = decompress_string(contents);
-            file.close();
             auto data = System::split(decompressed, '\n');
+            file.close();
 
-            for (auto &e:data) {
-                if (e.size() >= 5) {
-                    deserialize(e);
+            for (int i = 0; i < data.size(); ++i) {
+                if (i != data.size() - 1) {
+                    deserialize(data[i]);
+                } else {
+                    //populate sys vars
+                    auto sysArray = System::split(data[i], ';');
+
+                    System::cash = std::stod(sysArray[0]);
+                    System::gameTime = GameTime(std::stoi(System::split(sysArray[1], ':')[0]), std::stoi(System::split(sysArray[1], ':')[1]));
                 }
             }
         });
@@ -73,7 +92,7 @@ namespace SaveManager {
         loader.detach();
     }
 
-    void deserialize(std::string &stringData){
+    void deserialize(std::string &stringData) {
         auto array = System::split(stringData, ';');
 
         auto eType = static_cast<Entities>(std::stoi(array[0]));
@@ -81,9 +100,18 @@ namespace SaveManager {
 
         Entity *e;
 
-        switch (eType){
+        switch (eType) {
             case E_OfficeDefault:
                 e = new OfficeClerk(coordinates);
+                break;
+            case E_ElevatorShaftMiddle:
+                e = new ElevatorShaftMiddle(coordinates);
+                break;
+            case E_ElevatorShaftTop:
+                e = new ElevatorShaftTop(coordinates);
+                break;
+            case E_ElevatorCabin:
+                e = new ElevatorCabin(coordinates);
                 break;
             case E_Clerk:
                 e = new Clerk(coordinates);
@@ -99,6 +127,7 @@ namespace SaveManager {
         }
 
         e->populate(array);
+        e->spawn();
     }
 
 
@@ -125,8 +154,7 @@ namespace SaveManager {
 
             if (outstring.size() < zs.total_out) {
                 // append the block to the output string
-                outstring.append(outbuffer,
-                                 zs.total_out - outstring.size());
+                outstring.append(outbuffer, zs.total_out - outstring.size());
             }
         } while (ret == Z_OK);
 
@@ -180,5 +208,4 @@ namespace SaveManager {
 
         return outstring;
     }
-
 }

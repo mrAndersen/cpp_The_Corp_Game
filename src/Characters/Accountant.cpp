@@ -110,8 +110,7 @@ void Accountant::createWorkPlaceRoute() {
             targetElevator->incBoarding();
             destinations.push_back(Destination::createElevatorWaitingDST(targetElevator, this));
             destinations.push_back(Destination::createElevatorCabinDST(targetElevator, this));
-            destinations.push_back(Destination::createElevatorExitingDST(targetElevator, this,
-                                                                         currentWorkPlace->getWorldCoordinates()));
+            destinations.push_back(Destination::createElevatorExitingDST(targetElevator, this, currentWorkPlace->getWorldCoordinates()));
             destinations.push_back(Destination::createWorkplaceDST(this));
         }
     }
@@ -134,4 +133,9 @@ sf::String Accountant::createStatsText() {
 
 float Accountant::getDailySalary() {
     return dailySalaries[level];
+}
+
+void Accountant::upgrade() {
+    lastUpgradeTimer.restart();
+    Movable::upgrade();
 }

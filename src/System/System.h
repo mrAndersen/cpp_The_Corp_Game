@@ -83,6 +83,7 @@ namespace System {
 
     RECT getScreenBoundaries();
 
+    sf::String join(std::vector<std::string> &array, char delimiter);
     std::vector<std::string> split(std::string source, char delimiter = '.');
 
     void refreshDayTime();

@@ -185,7 +185,7 @@ void Office::updatePopup() {
 std::string Office::createStatsText() {
     std::string s;
 
-    if(eType == E_OfficeDefault){
+    if (eType == E_OfficeDefault) {
         s = s + "Type: Default office\n";
     }
 
@@ -213,6 +213,24 @@ void Office::populate(std::vector<std::string> &array) {
     Entity::populate(array);
 
     this->setFloor(std::stoi(array[14]));
+}
+
+WorkPlace *Office::getWorkplaceAt(int &index) {
+    if (!workPlaces[index]) {
+        return nullptr;
+    }
+
+    return workPlaces[index];
+}
+
+int Office::getWorkplaceIndex(Movable *worker) {
+    for (int i = 0; i < 4; ++i) {
+        if (workPlaces[i]->getWorker() == worker) {
+            return i;
+        }
+    }
+
+    return -1;
 }
 
 

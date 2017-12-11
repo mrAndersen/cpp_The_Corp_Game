@@ -23,6 +23,8 @@ public:
 
     const std::map<int, float> &getBuffPercentages() const;
 
+    void upgrade() override;
+
     WorkPlace *getCurrentWorkPlace() const;
 
     void setCurrentWorkPlace(WorkPlace *currentWorkPlace);

@@ -24,8 +24,7 @@ namespace ResourceLoader {
         textureCollection[target][state] = texture;
     }
 
-    void
-    loadCharacterTexture(Entities target, const std::string &path, States state, Gender gender, Race race, int level) {
+    void loadCharacterTexture(Entities target, const std::string &path, States state, Gender gender, Race race, int level) {
         auto *texture = new sf::Texture;
 
         texture->loadFromFile(path);
