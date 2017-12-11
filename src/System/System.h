@@ -19,6 +19,7 @@ namespace System {
     extern int entitySequence;
 
     //sys
+    extern std::string id;
     extern Scenes activeScene;
     extern Scenes loadingScene;
     extern sf::Clock saveTimer;
@@ -121,6 +122,8 @@ namespace System {
     void handleGlobalLogic();
 
     void changeScene(Scenes scene);
+
+    std::string getHardwareId();
 }
 
 #endif //THE_CORP_GAME_SYSTEM_H

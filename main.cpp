@@ -13,6 +13,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
         exit(99);
     });
 
+    System::id = System::getHardwareId();
     System::activeScene = SC_Game;
 //    System::activeScene = SC_Main_Menu;
 

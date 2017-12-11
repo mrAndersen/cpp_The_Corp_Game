@@ -16,6 +16,8 @@
 #include "../../version.h"
 #include "EntityContainer.h"
 #include "ControlPanel.h"
+#include <winreg.h>
+
 
 namespace System {
     unsigned int screenWidth = 1850;
@@ -26,6 +28,7 @@ namespace System {
     int entitySequence = 1;
 
     //sys
+    std::string id;
     Scenes activeScene;
     Scenes loadingScene;
     sf::Clock saveTimer;
@@ -465,6 +468,39 @@ namespace System {
             System::activeScene = SC_Game;
             System::sceneChangeTimer.restart();
         }
+    }
+
+    std::string getHardwareId() {
+
+//        HKEY_LOCAL_MACHINE\Software\Microsoft\Cryptography\MachineGuid
+
+
+        std::wstring result;
+        WCHAR szBuffer[512];
+        DWORD dwBufferSize = sizeof(szBuffer);
+        HKEY hkey;
+
+        auto op1 = RegOpenKeyExW(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\Cryptography", 0, KEY_QUERY_VALUE, &hkey);
+        auto op2 = RegQueryValueExW(hkey, L"MachineGuid", nullptr, nullptr, (LPBYTE) szBuffer, &dwBufferSize);
+
+        result = szBuffer;
+        RegCloseKey(hkey);
+        return "a";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }
 
