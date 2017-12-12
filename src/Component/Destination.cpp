@@ -92,4 +92,19 @@ Destination Destination::createHomeDST(Movable *movable, sf::Vector2f &home) {
     return {{home.x, (float) Ground::height + movable->getHeight() / 2}, DST_Home};
 }
 
+sf::String Destination::serialize() {
+    sf::String s;
+
+    s += std::to_string(type) + ",";                //0
+    s += std::to_string(coordinates.x) + ",";       //1
+    s += std::to_string(coordinates.y) + ",";       //2
+
+    return s;
+}
+
+Destination Destination::populate(std::string &data) {
+    auto array = System::split(data, ',');
+    return Destination({std::stof(array[1]), std::stof(array[2])}, static_cast<DestinationType>(std::stoi(array[0])));
+}
+
 

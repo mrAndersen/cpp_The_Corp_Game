@@ -3,6 +3,7 @@ title: Forest corporation
 a:
     yes: Yes
     no: No
+    saved: Game saved
 
 error:
     hint:

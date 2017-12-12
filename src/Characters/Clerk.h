@@ -6,9 +6,15 @@
 class Movable;
 
 class Clerk : public Movable {
-public:
-    const static int width = 70;
-    const static int height = 120;
+protected:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned int version) {
+        // serialize base class information
+//        ar & boost::serialization::base_object<Movable *>(*this);
+        ar & totalEarnings;
+    }
 
     std::map<int, float> dailyEarnings = {{1, 200},{2, 400},{3, 750},{4, 1200}};
     bool earningProcessed = false;
@@ -20,11 +26,21 @@ public:
 
     WorkPlace *currentWorkPlace = nullptr;
 
-    explicit Clerk(sf::Vector2f coordinates);
+public:
+    const static int width = 70;
+    const static int height = 120;
+
+    Clerk(sf::Vector2f coordinates);
+
+    void populate(std::vector<std::string> &array) override;
 
     virtual ~Clerk();
 
     float getHalfHourEarning();
+
+    float getTotalEarnings() const;
+
+    void setTotalEarnings(float totalEarnings);
 
     float getDailySalary();
 

@@ -31,6 +31,10 @@ public:
 
     int getFloor();
 
+    sf::String serialize();
+
+    static Destination populate(std::string &data);
+
     static Destination createElevatorWaitingDST(Elevator *elevator, Movable *movable);
 
     static Destination createElevatorExitingDST(Elevator *elevator, Movable *movable, sf::Vector2f finalDestination);

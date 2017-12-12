@@ -19,8 +19,10 @@ namespace System {
     extern int entitySequence;
 
     //sys
+    extern std::string id;
     extern Scenes activeScene;
     extern Scenes loadingScene;
+    extern sf::Clock saveTimer;
     extern sf::Clock sceneChangeTimer;
     extern sf::Clock fpsClock;
     extern sf::Clock frameClock;
@@ -82,6 +84,7 @@ namespace System {
 
     RECT getScreenBoundaries();
 
+    sf::String join(std::vector<std::string> &array, char delimiter);
     std::vector<std::string> split(std::string source, char delimiter = '.');
 
     void refreshDayTime();
@@ -119,6 +122,8 @@ namespace System {
     void handleGlobalLogic();
 
     void changeScene(Scenes scene);
+
+    std::string getHardwareId();
 }
 
 #endif //THE_CORP_GAME_SYSTEM_H

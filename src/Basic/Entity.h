@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include "..\System\Enum.h"
 #include "Animation.h"
+#include <boost/serialization/access.hpp>
 
 class Animation;
 
@@ -13,6 +14,15 @@ class Movable;
 class Entity {
 
 protected:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned int version) {
+        ar & eType;
+        ar & groupName;
+        ar & id;
+    }
+
     //parameters
     Entities eType = E_Entity;
     std::string groupName = "~";
@@ -26,6 +36,7 @@ protected:
     bool visible = true;
     bool manualUpdate = false;
     bool valid = true;
+    bool serializable = false;
 
     sf::Vector2f worldCoordinates;
     int width = 0;
@@ -46,11 +57,7 @@ protected:
     //animation properties
     int drawOrder = 1;
     Direction direction = Direction::None;
-
     sf::Clock liveClock;
-
-    //property map
-    std::map<std::string, int> properties;
 
     //debug
     sf::Text debugInfo;
@@ -58,6 +65,8 @@ public:
     Animation *getCurrentAnimation();
 
     virtual void spawn();
+
+    void setValid(bool valid);
 
     bool isManualUpdate() const;
 
@@ -75,9 +84,15 @@ public:
 
     void setVisible(bool visible);
 
+    bool isSerializable() const;
+
+    void setSerializable(bool serializable);
+
     Entity(Entities type = E_Entity);
 
     static Entity *create(Entities type = E_Entity, DrawOrder order = D_Ui, sf::Vector2f size = {}, sf::Vector2f coordinates = {}, const std::string &texturePath = "", float scale = 1);
+
+    static Entity *create(Entities type = E_Entity, DrawOrder order = D_Ui, sf::Vector2f size = {}, sf::Vector2f coordinates = {}, sf::Texture *texture = nullptr, float scale = 1);
 
     Entities getEType() const;
 
@@ -183,7 +198,7 @@ public:
 
     void setInvalid();
 
-    virtual std::string serialize();
+    virtual void populate(std::vector<std::string> &array);
 
     void initEntity();
 

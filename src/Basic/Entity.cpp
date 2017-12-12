@@ -5,10 +5,34 @@
 #include "..\System\Enum.h"
 #include "..\System\EntityContainer.h"
 #include "..\Background\Ground.h"
+#include "../Characters/Clerk.h"
+#include "../Characters/Manager.h"
+#include "../Characters/Accountant.h"
 
-std::string Entity::serialize() {
-    return "";
+void Entity::populate(std::vector<std::string> &array) {
+    auto eType = static_cast<Entities>(std::stoi(array[0]));
+    sf::Vector2f size = {std::stof(array[8]), std::stof(array[9])};
+
+    //entity
+    this->setEType(eType);
+    this->setGroupName(array[1]);
+    this->setId(std::stoi(array[2]));
+    this->setVisible((bool) std::stoi(array[3]));
+    this->setManualUpdate((bool) std::stoi(array[4]));
+    this->setValid((bool) std::stoi(array[5]));
+    this->setWidth((int) size.x);
+    this->setHeight((int) size.y);
+    this->setSelectable((bool) std::stoi(array[11]));
+    this->setDrawOrder(static_cast<DrawOrder>(std::stoi(array[12])));
+    this->setDirection(static_cast<Direction>(std::stoi(array[13])));
+
+    if (static_cast<States>(std::stoi(array[10])) == S_Working) {
+        this->setState(S_Working);
+    } else {
+        this->setState(S_None);
+    }
 }
+
 
 void Entity::update() {
     if (visible) {
@@ -410,11 +434,52 @@ Entity *Entity::create(Entities type, DrawOrder order, sf::Vector2f size, sf::Ve
     return e;
 }
 
+Entity *Entity::create(Entities type, DrawOrder order, sf::Vector2f size, sf::Vector2f coordinates, sf::Texture *texture, float scale) {
+    auto e = new Entity(type);
+
+    e->setDrawOrder(order);
+    e->setWidth(size.x);
+    e->setHeight(size.y);
+
+    e->setWorldCoordinates(coordinates);
+    e->addAnimation(S_None, Animation(e, S_None, 1, texture));
+    e->initEntity();
+    e->getCurrentAnimation()->getSprite().setScale({scale, scale});
+
+    EntityContainer::add(e);
+    EntityContainer::addToGroup(e->getGroupName(), e);
+
+    return e;
+}
+
 Animation *Entity::getCurrentAnimation() {
-    if(currentAnimation){
+    if (currentAnimation) {
         return currentAnimation;
     }
 }
+
+bool Entity::isSerializable() const {
+    return serializable;
+}
+
+void Entity::setSerializable(bool serializable) {
+    Entity::serializable = serializable;
+}
+
+void Entity::setValid(bool valid) {
+    Entity::valid = valid;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 

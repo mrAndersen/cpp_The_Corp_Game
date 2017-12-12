@@ -9,7 +9,6 @@
 #include "..\System\System.h"
 #include "../Ui/MainPanel/ButtonPause.h"
 
-
 void Movable::renderDebugInfo() {
     if (System::debug) {
         debugInfo.setOutlineColor(sf::Color::White);
@@ -204,6 +203,8 @@ void Movable::updateLogic() {
                     state = S_Smoking;
                     smokeStarted = System::gameTime;
 
+                    direction = System::getRandom(0, 100) <= 50 ? Right : Left;
+
                     moving = false;
                     destinations.pop_front();
                 }
@@ -239,9 +240,10 @@ void Movable::updateLogic() {
 
     //one-time-exec
     //time to go home
-    if (System::gameTime.isRestTime() && visible) {
+    if (System::gameTime.isRestTime() && visible && !goingHome) {
 
         moving = true;
+        goingHome = true;
         setDrawOrder(D_Characters, true);
         destinations.clear();
 
@@ -305,21 +307,10 @@ void Movable::setCurrentSpeed(float currentSpeed) {
     Movable::currentSpeed = currentSpeed;
 }
 
-float Movable::getFallAcceleration() const {
-    return fallAcceleration;
-}
-
-void Movable::setFallAcceleration(float fallAcceleration) {
-    Movable::fallAcceleration = fallAcceleration;
-}
-
-std::string Movable::serialize() {
-    return Entity::serialize();
-}
-
 Movable::Movable(Entities type, int width, int height) : Entity(type) {
-    this->width = width;
-    this->height = height;
+    setWidth(width);
+    setHeight(height);
+    setSerializable(true);
 
     personName = ResourceLoader::getRandomName(gender);
 
@@ -403,7 +394,7 @@ void Movable::spawn() {
 
     spent->setLiveTimeSeconds(4);
     spent->setWorldCoordinates(position);
-    spent->setString("-" + System::f_to_string(this->getCost()) + "$");
+    spent->setString("-" + System::f_to_string(this->getCost(), 0) + "$");
 
     recalculateBoundaries();
 
@@ -594,7 +585,8 @@ void Movable::updatePopup() {
 
         if (e.first == "upgrade") {
             e.second->setWorldCoordinates({popup->getLeft() + 10 + PopupButton::width / 2, popup->getTop() - PopupButton::height / 2 - 10});
-            if (e.second->isPressed() && lastUpgradeTimer.getElapsedTime().asMilliseconds() >= 500) {
+
+            if (e.second->isPressed() && lastUpgradeTimer.getElapsedTime().asMilliseconds() >= 500 && upgradeAvailable) {
                 upgrade();
             }
 
@@ -693,6 +685,59 @@ bool Movable::isCrossingOffices() {
 
     return false;
 }
+
+bool Movable::isSmoking() const {
+    return smoking;
+}
+
+void Movable::setSmoking(bool smoking) {
+    Movable::smoking = smoking;
+}
+
+const GameTime &Movable::getSmokeStarted() const {
+    return smokeStarted;
+}
+
+void Movable::setSmokeStarted(const GameTime &smokeStarted) {
+    Movable::smokeStarted = smokeStarted;
+}
+
+Race Movable::getRace() const {
+    return race;
+}
+
+void Movable::setRace(Race race) {
+    Movable::race = race;
+}
+
+void Movable::setLevel(int level) {
+    Movable::level = level;
+}
+
+void Movable::populate(std::vector<std::string> &array) {
+    Entity::populate(array);
+
+    //movable
+    this->setDefaultSpeed(std::stof(array[14]));
+    this->setCurrentSpeed(std::stof(array[15]));
+    this->setSmoking((bool) std::stof(array[16]));
+    this->setBuffed((bool) std::stof(array[17]));
+    this->setWillBeBuffed((bool) std::stof(array[18]));
+    this->setBuffStart(GameTime(std::stoi(System::split(array[19], ':')[0]), std::stoi(System::split(array[19], ':')[1])));
+    this->setBuffEnd(GameTime(std::stoi(System::split(array[20], ':')[0]), std::stoi(System::split(array[20], ':')[1])));
+    this->setWorkingModificator(std::stof(array[21]));
+    this->setSmokeStarted(GameTime(std::stoi(System::split(array[22], ':')[0]), std::stoi(System::split(array[22], ':')[1])));
+    this->setCost(std::stof(array[23]));
+    this->setFloor(std::stoi(array[24]));
+    this->setPersonName(array[25]);
+    this->setGender(static_cast<Gender>(std::stoi(array[26])));
+    this->setRace(static_cast<Race>(std::stoi(array[27])));
+    this->setLevel(std::stoi(array[28]));
+}
+
+
+
+
 
 
 

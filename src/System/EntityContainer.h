@@ -32,6 +32,8 @@ namespace EntityContainer {
 
 
     //items
+    extern Entity *getElementById(int id);
+
     extern std::map<Scenes, std::vector<Entity *>> items;
 
     extern std::vector<Entity *> itemsToRemove;

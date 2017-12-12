@@ -25,6 +25,8 @@ public:
 
     void updatePopup();
 
+    void populate(std::vector<std::string> &array) override;
+
     std::string createStatsText();
 
     WorkPlace *const *getWorkPlaces() const;
@@ -54,6 +56,10 @@ public:
     int getBusyWorkPlaces();
 
     WorkPlace *getNextFreeWorkPlace();
+
+    WorkPlace *getWorkplaceAt(int &index);
+
+    int getWorkplaceIndex(Movable *worker);
 };
 
 #endif //THE_CORP_GAME_OFFICE_H

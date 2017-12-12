@@ -16,6 +16,8 @@
 #include "../../version.h"
 #include "EntityContainer.h"
 #include "ControlPanel.h"
+#include <winreg.h>
+
 
 namespace System {
     unsigned int screenWidth = 1850;
@@ -26,8 +28,10 @@ namespace System {
     int entitySequence = 1;
 
     //sys
+    std::string id;
     Scenes activeScene;
     Scenes loadingScene;
+    sf::Clock saveTimer;
     sf::Clock sceneChangeTimer;
     sf::Clock fpsClock;
     sf::Clock frameClock;
@@ -66,7 +70,7 @@ namespace System {
     int buttonReload = 150;
 
     sf::Clock dayClock = {};
-    GameTime gameTime(12, 30);
+    GameTime gameTime(10, 30);
 
     int startWorkHour = 10;
     int endWorkHour = 19;
@@ -95,14 +99,15 @@ namespace System {
         }
 
         if (gameTime.isDayEndHour() && !dayEndProcessed) {
+            System::cash -= EntityContainer::counters[E_Stats_Daily_Loss];
             auto *salarySpent = new TextEntity(System::c_red, 40);
 
             salarySpent->setFixed(true);
             salarySpent->setString("Salaries: -" + System::f_to_string(EntityContainer::counters[E_Stats_Daily_Loss]) + "$");
-            salarySpent->setLeft(12);
-            salarySpent->setTop(-100);
+            salarySpent->setLeftOffset(System::screenWidth / 2);
+            salarySpent->setTopOffset(System::screenHeight / 2);
             salarySpent->setDirection(Direction::Down);
-            salarySpent->setLiveTimeSeconds(3);
+            salarySpent->setLiveTimeSeconds(5);
 
             dayEndProcessed = true;
             dayStartProcessed = false;
@@ -377,6 +382,20 @@ namespace System {
                g_y <= leftTop.y;
     }
 
+    sf::String join(std::vector<std::string> &array, char delimiter) {
+        sf::String s;
+
+        for (int i = 0; i < array.size(); ++i) {
+            s += array[i];
+
+            if (i != array.size() - 1) {
+                s += delimiter;
+            }
+        }
+
+        return s;
+    }
+
     std::vector<std::string> split(std::string source, char delimiter) {
         std::vector<std::string> vector;
         std::string temp;
@@ -392,6 +411,10 @@ namespace System {
 
         vector.push_back(temp);
         temp = "";
+
+        if (vector[vector.size() - 1] == "") {
+            vector.resize(vector.size() - 1);
+        }
 
         return vector;
     }
@@ -431,6 +454,8 @@ namespace System {
     }
 
     void changeScene(Scenes scene) {
+        System::timeFactor = 1;
+
         if (scene == SC_Main_Menu) {
             ControlPanel::mainMenu["resume"]->setVisible(!EntityContainer::items[SC_Game].empty());
             ControlPanel::mainMenu["start"]->setVisible(EntityContainer::items[SC_Game].empty());
@@ -443,6 +468,39 @@ namespace System {
             System::activeScene = SC_Game;
             System::sceneChangeTimer.restart();
         }
+    }
+
+    std::string getHardwareId() {
+
+//        HKEY_LOCAL_MACHINE\Software\Microsoft\Cryptography\MachineGuid
+
+
+        std::wstring result;
+        WCHAR szBuffer[512];
+        DWORD dwBufferSize = sizeof(szBuffer);
+        HKEY hkey;
+
+        auto op1 = RegOpenKeyExW(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\Cryptography", 0, KEY_QUERY_VALUE, &hkey);
+        auto op2 = RegQueryValueExW(hkey, L"MachineGuid", nullptr, nullptr, (LPBYTE) szBuffer, &dwBufferSize);
+
+        result = szBuffer;
+        RegCloseKey(hkey);
+        return "a";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }
 

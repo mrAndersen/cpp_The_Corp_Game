@@ -65,6 +65,8 @@ public:
     void updateLogic() override;
 
     void updateIndicators();
+
+    void populate(std::vector<std::string> &array) override;
 };
 
 

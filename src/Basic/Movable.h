@@ -7,6 +7,7 @@
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Clock.hpp>
 #include <Ui/Popup.h>
+#include <boost/serialization/base_object.hpp>
 #include "..\System\Enum.h"
 #include "..\System\GameTime.h"
 #include "../Component/Destination.h"
@@ -26,16 +27,24 @@ class Accountant;
 class Movable : public Entity {
 
 protected:
-    float distancePassed = 0;
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned int version) {
+        // serialize base class information
+//        ar & boost::serialization::base_object<Entity *>(*this);
+        ar & moving;
+    }
 
     //pixels per second
     float defaultSpeed = 130;
     float currentSpeed = 130;
-    float fallAcceleration = 980;
 
     std::deque<Destination> destinations;
     DestinationType currentDST = DST_Unknown;
     bool moving = false;
+    bool goingHome = false;
+
     Elevator *targetElevator = nullptr;
     bool smoking = false;
 
@@ -44,7 +53,7 @@ protected:
     GameTime buffStart;
     GameTime buffEnd;
     float workingModificator = 1.f;
-    bool upgradeAvailable = false;
+    bool upgradeAvailable = true;
 
     //relevant to game time
     int smokePeriodMinutes = 15;
@@ -68,6 +77,16 @@ protected:
 
 public:
     Movable(Entities type, int width, int height);
+
+    bool isSmoking() const;
+
+    void setSmoking(bool smoking);
+
+    void setLevel(int level);
+
+    const GameTime &getSmokeStarted() const;
+
+    void setSmokeStarted(const GameTime &smokeStarted);
 
     Popup *getPopup() const;
 
@@ -141,6 +160,10 @@ public:
 
     int getFloor() const;
 
+    Race getRace() const;
+
+    void setRace(Race race);
+
     void setFloor(int floor);
 
     bool isSpawned() const;
@@ -151,15 +174,11 @@ public:
 
     void setCost(float cost);
 
-    float getFallAcceleration() const;
-
-    void setFallAcceleration(float fallAcceleration);
-
     Elevator *searchNearestElevator();
 
     bool insideElevator();
 
-    std::string serialize() override;
+    void populate(std::vector<std::string> &array) override;
 
     void renderDebugInfo() override;
 

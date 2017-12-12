@@ -13,6 +13,7 @@ ElevatorShaftTop::ElevatorShaftTop(sf::Vector2f coordinates) {
     setHeight(ElevatorShaftTop::height);
     setCost(1000);
     setGroupName("shafts");
+    setSerializable(true);
 
     setWorldCoordinates(coordinates);
     setSelectable(true);

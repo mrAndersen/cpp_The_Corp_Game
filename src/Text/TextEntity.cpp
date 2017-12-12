@@ -10,6 +10,7 @@ TextEntity::TextEntity(const sf::Color &color, int size) : Entity() {
     text.setFont(*System::titleFont);
 
     setDrawOrder(D_Text_Entities);
+    setDirection(Up);
     EntityContainer::add(this);
 }
 
@@ -20,25 +21,25 @@ void TextEntity::updateLogic() {
     if (fixed) {
         totalEntityDistance += frameDistance;
 
-        worldCoordinates.x = ViewHandler::left + left;
-        worldCoordinates.y = ViewHandler::top + top;
+        worldCoordinates.x = ViewHandler::left + leftOffset;
+        worldCoordinates.y = ViewHandler::top - topOffset;
     } else {
         totalEntityDistance = frameDistance;
     }
 
-    if (direction == Direction::Right) {
+    if (direction == Right) {
         worldCoordinates.x += totalEntityDistance;
     }
 
-    if (direction == Direction::Left) {
+    if (direction == Left) {
         worldCoordinates.x -= totalEntityDistance;
     }
 
-    if (direction == Direction::Up) {
+    if (direction == Up) {
         worldCoordinates.y += totalEntityDistance;
     }
 
-    if (direction == Direction::Down) {
+    if (direction == Down) {
         worldCoordinates.y -= totalEntityDistance;
     }
 
@@ -49,6 +50,8 @@ void TextEntity::updateLogic() {
 
     if (liveTimeSeconds != 0 && liveClock.getElapsedTime().asSeconds() >= liveTimeSeconds) {
         EntityContainer::remove(this);
+    }else{
+        Entity::updateLogic();
     }
 }
 
@@ -91,18 +94,18 @@ void TextEntity::setFixed(bool fixed) {
     TextEntity::fixed = fixed;
 }
 
-float TextEntity::getScreenLeft() const {
-    return screenLeft;
+float TextEntity::getLeftOffset() const {
+    return leftOffset;
 }
 
-void TextEntity::setScreenLeft(float screenLeft) {
-    TextEntity::screenLeft = screenLeft;
+void TextEntity::setLeftOffset(float leftOffset) {
+    TextEntity::leftOffset = leftOffset;
 }
 
-float TextEntity::getScreenTop() const {
-    return screenTop;
+float TextEntity::getTopOffset() const {
+    return topOffset;
 }
 
-void TextEntity::setScreenTop(float screenTop) {
-    TextEntity::screenTop = screenTop;
+void TextEntity::setTopOffset(float topOffset) {
+    TextEntity::topOffset = topOffset;
 }

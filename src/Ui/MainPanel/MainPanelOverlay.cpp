@@ -42,7 +42,7 @@ void MainPanelOverlay::update() {
     worldCoordinates.y = ViewHandler::top - height / 2;
 
     time.setString(System::gameTime.get());
-    time.setPosition(System::cToGl(ViewHandler::right - 133, ViewHandler::top - topOffset + 32));
+    time.setPosition(System::cToGl(ViewHandler::right - 138, ViewHandler::top - topOffset + 32));
 
     int i = 0;
     for (auto &s:{E_Clerk, E_Manager, E_Accountant}) {

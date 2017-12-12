@@ -11,8 +11,6 @@ public:
     explicit OfficeClerk(sf::Vector2f coordinates);
 
     void updateLogic() override;
-
-    virtual std::string serialize() override;
 };
 
 #endif
