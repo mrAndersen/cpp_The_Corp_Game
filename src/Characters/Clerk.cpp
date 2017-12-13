@@ -198,7 +198,6 @@ sf::String Clerk::createStatsText() {
 }
 
 void Clerk::upgrade() {
-    lastUpgradeTimer.restart();
     Movable::upgrade();
 }
 

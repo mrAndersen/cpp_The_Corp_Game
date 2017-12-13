@@ -20,7 +20,7 @@ Door::Door(sf::Vector2f coordinates) {
 void Door::updateLogic() {
 
     //remove after animation finished
-    if (liveClock.getElapsedTime().asMicroseconds() >= currentAnimation->getAnimationResolution() * currentAnimation->getTotalFrames()) {
+    if (liveClock.getElapsedTime().asMicroseconds() >= currentAnimation->getAnimationResolution() * currentAnimation->getTotalFrames() / System::timeFactor) {
         EntityContainer::remove(this);
     }
 }

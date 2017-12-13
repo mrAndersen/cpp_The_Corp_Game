@@ -566,6 +566,7 @@ void Movable::setBuffEnd(const GameTime &buffEnd) {
 
 
 void Movable::upgrade() {
+    lastUpgradeTimer.restart();
     level = level < 4 ? level + 1 : 4;
 
     animations.clear();
@@ -633,6 +634,8 @@ sf::String Movable::createStatsText() {
 
     if (System::debug) {
         s += "Id: " + std::to_string(id) + "\n";
+        s += "Race: " + std::to_string(race) + "\n";
+        s += "Gender: " + std::to_string(gender) + "\n";
     }
 
     if (eType == E_Clerk) {

@@ -10,6 +10,9 @@ Manager::Manager(sf::Vector2f coordinates) : Movable(E_Manager, Manager::width, 
     setWorldCoordinates(coordinates);
     setSelectable(true);
 
+    //@todo remove
+    setRace(R_White);
+
     setDrawOrder(D_Characters);
     initEntity();
 

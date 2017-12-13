@@ -84,7 +84,7 @@ if UPLOAD:
     repo = g.get_user().get_repo("cppForestCorporation")
 
     # New release
-    release = repo.create_git_release(tag="debug_" + timeString + "_" + oldVersion, message="Automated release", name=niceTime)
+    release = repo.create_git_release(tag="debug_" + timeString + "_" + oldVersion, message="Automated release", name="debug_" + timeString + "_" + oldVersion)
     binaryData = open(releaseDirectory + ".zip", 'rb').read()
 
     headers = {
