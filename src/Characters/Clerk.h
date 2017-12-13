@@ -32,8 +32,6 @@ public:
 
     Clerk(sf::Vector2f coordinates);
 
-    void populate(std::vector<std::string> &array) override;
-
     virtual ~Clerk();
 
     float getHalfHourEarning();
