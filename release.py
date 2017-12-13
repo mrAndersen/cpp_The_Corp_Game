@@ -5,8 +5,13 @@ import github
 import requests
 import base64
 import re
+import argparse
 
-UPLOAD = True
+parser = argparse.ArgumentParser(description='Release process script')
+parser.add_argument('--no-upload', action='store_true', help='Don\'t upload')
+
+args = parser.parse_args()
+UPLOAD = not args.no_upload
 
 print("Copying...", end="")
 
@@ -39,7 +44,6 @@ binMsvcName = "cpp_The_Corp_Game_VC.exe"
 if not os.path.exists(binGccDirectory + "/" + binGccName):
     print("\nGcc executable not found... exiting...")
     exit()
-
 
 timeString = time.strftime("%H-%M-%S_%d-%B", time.localtime())
 releaseDirectory = "debug_" + oldVersion
