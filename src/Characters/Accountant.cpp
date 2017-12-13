@@ -136,6 +136,5 @@ float Accountant::getDailySalary() {
 }
 
 void Accountant::upgrade() {
-    lastUpgradeTimer.restart();
     Movable::upgrade();
 }

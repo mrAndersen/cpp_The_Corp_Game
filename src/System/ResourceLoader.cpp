@@ -157,6 +157,7 @@ namespace ResourceLoader {
         //----<<Office>>----
         ResourceLoader::loadTexture(Entities::E_OfficeDefault, "resources/office/office.default.png");
         ResourceLoader::loadTexture(Entities::E_Chair, "resources/office/chair.png");
+        ResourceLoader::loadTexture(Entities::E_Door, "resources/office/door.png");
 
         //----<<Characters>>-----
         std::vector<Entities> characters = {E_Clerk, E_Manager, E_Accountant};

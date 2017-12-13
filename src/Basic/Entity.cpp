@@ -9,31 +9,6 @@
 #include "../Characters/Manager.h"
 #include "../Characters/Accountant.h"
 
-void Entity::populate(std::vector<std::string> &array) {
-    auto eType = static_cast<Entities>(std::stoi(array[0]));
-    sf::Vector2f size = {std::stof(array[8]), std::stof(array[9])};
-
-    //entity
-    this->setEType(eType);
-    this->setGroupName(array[1]);
-    this->setId(std::stoi(array[2]));
-    this->setVisible((bool) std::stoi(array[3]));
-    this->setManualUpdate((bool) std::stoi(array[4]));
-    this->setValid((bool) std::stoi(array[5]));
-    this->setWidth((int) size.x);
-    this->setHeight((int) size.y);
-    this->setSelectable((bool) std::stoi(array[11]));
-    this->setDrawOrder(static_cast<DrawOrder>(std::stoi(array[12])));
-    this->setDirection(static_cast<Direction>(std::stoi(array[13])));
-
-    if (static_cast<States>(std::stoi(array[10])) == S_Working) {
-        this->setState(S_Working);
-    } else {
-        this->setState(S_None);
-    }
-}
-
-
 void Entity::update() {
     if (visible) {
         selectAnimation(state);

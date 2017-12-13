@@ -174,8 +174,7 @@ void Clerk::searchWorkPlace() {
 sf::String Clerk::createStatsText() {
     auto s = Movable::createStatsText();
 
-    s += ResourceLoader::getTranslation("popup.text.daily_salary") + ": " + System::f_to_string(dailySalaries[level]) +
-         "$\n";
+    s += ResourceLoader::getTranslation("popup.text.daily_salary") + ": " + System::f_to_string(dailySalaries[level]) + "$\n";
     s += ResourceLoader::getTranslation("popup.text.earned_total") + ": " + System::f_to_string(totalEarnings) + "$\n";
 
     if (buffed) {
@@ -199,7 +198,6 @@ sf::String Clerk::createStatsText() {
 }
 
 void Clerk::upgrade() {
-    lastUpgradeTimer.restart();
     Movable::upgrade();
 }
 
@@ -227,20 +225,4 @@ float Clerk::getTotalEarnings() const {
 
 void Clerk::setTotalEarnings(float totalEarnings) {
     Clerk::totalEarnings = totalEarnings;
-}
-
-void Clerk::populate(std::vector<std::string> &array) {
-    Movable::populate(array);
-
-    //clerk
-    this->setTotalEarnings(std::stof(array[29]));
-
-    if (array[30] != "~" && array[31] != "-1") {
-        auto office = dynamic_cast<Office *>(EntityContainer::getElementById(std::stoi(array[30])));
-        auto wIndex = std::stoi(array[31]);
-        auto wPlace = office->getWorkplaceAt(wIndex);
-
-        wPlace->setWorker(this);
-        this->setCurrentWorkPlace(wPlace);
-    }
 }

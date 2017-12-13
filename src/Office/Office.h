@@ -25,8 +25,6 @@ public:
 
     void updatePopup();
 
-    void populate(std::vector<std::string> &array) override;
-
     std::string createStatsText();
 
     WorkPlace *const *getWorkPlaces() const;

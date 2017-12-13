@@ -5,7 +5,6 @@
 #include <SFML/Graphics.hpp>
 #include "..\System\Enum.h"
 #include "Animation.h"
-#include <boost/serialization/access.hpp>
 
 class Animation;
 
@@ -14,15 +13,6 @@ class Movable;
 class Entity {
 
 protected:
-    friend class boost::serialization::access;
-
-    template<class Archive>
-    void serialize(Archive &ar, const unsigned int version) {
-        ar & eType;
-        ar & groupName;
-        ar & id;
-    }
-
     //parameters
     Entities eType = E_Entity;
     std::string groupName = "~";
@@ -197,8 +187,6 @@ public:
     void setLiveClock(const sf::Clock &liveClock);
 
     void setInvalid();
-
-    virtual void populate(std::vector<std::string> &array);
 
     void initEntity();
 

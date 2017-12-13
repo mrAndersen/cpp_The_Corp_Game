@@ -196,7 +196,7 @@ add_executable(
 
         src/Ui/Questions/QAddAccountant.cpp
         src/Ui/Questions/QAddAccountant.h
-        src/Background/Cloud.cpp src/Background/Cloud.h src/Ui/MainPanel/Cog.cpp src/Ui/MainPanel/Cog.h src/System/SaveManager.cpp src/System/SaveManager.h)
+        src/Background/Cloud.cpp src/Background/Cloud.h src/Ui/MainPanel/Cog.cpp src/Ui/MainPanel/Cog.h src/System/SaveManager.cpp src/System/SaveManager.h src/Objects/Door.cpp src/Objects/Door.h)
 
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}" ${CMAKE_MODULE_PATH})
@@ -214,7 +214,6 @@ if(SFML_FOUND)
     if(COMPILER STREQUAL "GCC")
         target_link_libraries(${EXECUTABLE_NAME} ${PROJECT_SOURCE_DIR}/vendor/yaml/libyaml-cpp.a)
         target_link_libraries(${EXECUTABLE_NAME} ${PROJECT_SOURCE_DIR}/vendor/zlib/libz.a)
-        target_link_libraries(${EXECUTABLE_NAME} ${PROJECT_SOURCE_DIR}/vendor/boost-1.65/lib/libboost_serialization-mgw63-mt-1_65_1.a)
     endif()
 
 endif()
