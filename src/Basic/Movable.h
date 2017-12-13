@@ -7,7 +7,7 @@
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Clock.hpp>
 #include <Ui/Popup.h>
-#include <boost/serialization/base_object.hpp>
+#include <Objects/Door.h>
 #include "..\System\Enum.h"
 #include "..\System\GameTime.h"
 #include "../Component/Destination.h"
@@ -27,15 +27,6 @@ class Accountant;
 class Movable : public Entity {
 
 protected:
-    friend class boost::serialization::access;
-
-    template<class Archive>
-    void serialize(Archive &ar, const unsigned int version) {
-        // serialize base class information
-//        ar & boost::serialization::base_object<Entity *>(*this);
-        ar & moving;
-    }
-
     //pixels per second
     float defaultSpeed = 130;
     float currentSpeed = 130;
@@ -46,6 +37,7 @@ protected:
     bool goingHome = false;
 
     Elevator *targetElevator = nullptr;
+    Door *door = nullptr;
     bool smoking = false;
 
     bool buffed = false;
@@ -177,8 +169,6 @@ public:
     Elevator *searchNearestElevator();
 
     bool insideElevator();
-
-    void populate(std::vector<std::string> &array) override;
 
     void renderDebugInfo() override;
 

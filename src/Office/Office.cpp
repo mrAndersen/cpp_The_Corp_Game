@@ -201,12 +201,6 @@ void Office::setSelected(bool selected) {
     popup->setVisible(selected);
 }
 
-void Office::populate(std::vector<std::string> &array) {
-    Entity::populate(array);
-
-    this->setFloor(std::stoi(array[14]));
-}
-
 WorkPlace *Office::getWorkplaceAt(int &index) {
     if (!workPlaces[index]) {
         return nullptr;

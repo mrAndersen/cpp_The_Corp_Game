@@ -138,6 +138,21 @@ void Movable::updateLogic() {
                 if (worldCoordinates.x > local.getCoordinates().x && direction == Right) {
                     worldCoordinates.x = local.getCoordinates().x;
                 }
+
+                //going towards home - open door
+                if (local.getType() == DST_Home) {
+                    if (!door && std::fabs(local.getCoordinates().x - worldCoordinates.x) <= 200) {
+                        door = new Door(local.getCoordinates());
+
+                        if (direction == Right) {
+                            door->setDirection(Right);
+                        }
+
+                        if (direction == Left) {
+                            door->setDirection(Left);
+                        }
+                    }
+                }
             }
 
             if ((int) worldCoordinates.x == (int) local.getCoordinates().x) {
@@ -466,9 +481,9 @@ void Movable::updateFloor() {
 }
 
 sf::Vector2f Movable::searchNearestOutside() {
+    auto factor = (float) System::getRandom(0, 150);
 
-
-    return {-450, 150};
+    return {-450 + factor, 150};
 }
 
 float Movable::getFloorBottom(int floor) {
@@ -713,28 +728,6 @@ void Movable::setRace(Race race) {
 void Movable::setLevel(int level) {
     Movable::level = level;
 }
-
-void Movable::populate(std::vector<std::string> &array) {
-    Entity::populate(array);
-
-    //movable
-    this->setDefaultSpeed(std::stof(array[14]));
-    this->setCurrentSpeed(std::stof(array[15]));
-    this->setSmoking((bool) std::stof(array[16]));
-    this->setBuffed((bool) std::stof(array[17]));
-    this->setWillBeBuffed((bool) std::stof(array[18]));
-    this->setBuffStart(GameTime(std::stoi(System::split(array[19], ':')[0]), std::stoi(System::split(array[19], ':')[1])));
-    this->setBuffEnd(GameTime(std::stoi(System::split(array[20], ':')[0]), std::stoi(System::split(array[20], ':')[1])));
-    this->setWorkingModificator(std::stof(array[21]));
-    this->setSmokeStarted(GameTime(std::stoi(System::split(array[22], ':')[0]), std::stoi(System::split(array[22], ':')[1])));
-    this->setCost(std::stof(array[23]));
-    this->setFloor(std::stoi(array[24]));
-    this->setPersonName(array[25]);
-    this->setGender(static_cast<Gender>(std::stoi(array[26])));
-    this->setRace(static_cast<Race>(std::stoi(array[27])));
-    this->setLevel(std::stoi(array[28]));
-}
-
 
 
 

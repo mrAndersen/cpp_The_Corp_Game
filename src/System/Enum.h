@@ -132,6 +132,7 @@ enum Entities {
     E_ElevatorCabin = 54,
 
     E_Chair = 91,
+    E_Door = 92,
 
     E_Indicator_Money = 101,
     E_MainPanelOverlay = 102,

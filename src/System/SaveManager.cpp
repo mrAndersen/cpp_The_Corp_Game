@@ -7,7 +7,6 @@
 #include "EntityContainer.h"
 #include "../../vendor/zlib/zlib.h"
 #include "mingw.thread.h"
-#include <boost/archive/text_oarchive.hpp>
 
 namespace SaveManager {
 
@@ -21,8 +20,8 @@ namespace SaveManager {
             if (!EntityContainer::items[SC_Game].empty()) {
                 for (auto &e:EntityContainer::items[SC_Game]) {
                     if (e->isSerializable() && e->isSpawned() && e->getEType() == E_Clerk) {
-                        boost::archive::text_oarchive oa(file);
-                        oa << e;
+
+
                     }
                 }
 
@@ -127,7 +126,7 @@ namespace SaveManager {
                 break;
         }
 
-        e->populate(array);
+//        e->populate(array);
         e->spawn();
     }
 

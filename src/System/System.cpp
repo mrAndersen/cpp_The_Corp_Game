@@ -70,7 +70,7 @@ namespace System {
     int buttonReload = 150;
 
     sf::Clock dayClock = {};
-    GameTime gameTime(10, 30);
+    GameTime gameTime(18, 50);
 
     int startWorkHour = 10;
     int endWorkHour = 19;

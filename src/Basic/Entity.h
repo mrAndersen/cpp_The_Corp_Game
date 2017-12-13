@@ -5,7 +5,6 @@
 #include <SFML/Graphics.hpp>
 #include "..\System\Enum.h"
 #include "Animation.h"
-#include <boost/serialization/access.hpp>
 
 class Animation;
 

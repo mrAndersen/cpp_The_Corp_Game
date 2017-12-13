@@ -197,22 +197,4 @@ void ElevatorCabin::setCapacity(int capacity) {
     ElevatorCabin::capacity = capacity;
 }
 
-void ElevatorCabin::populate(std::vector<std::string> &array) {
-    Entity::populate(array);
-
-    this->setSpeed(std::stoi(array[14]));
-    this->setCapacity(std::stoi(array[15]));
-
-    if (array[16] != "~") {
-        auto ppl = System::split(array[16], ',');
-
-        for (int i = 0; i < ppl.size(); ++i) {
-            auto movable = dynamic_cast<Movable *>(EntityContainer::getElementById(std::stoi(ppl[i])));
-            this->addMovable(movable);
-        }
-    }
-
-
-}
-
 
