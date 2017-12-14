@@ -732,6 +732,37 @@ void Movable::setLevel(int level) {
     Movable::level = level;
 }
 
+std::map<std::string, sf::String> Movable::getSerializeParameters() {
+    auto parameters = Entity::getSerializeParameters();
+
+    parameters["defaultSpeed"] = std::to_string(defaultSpeed);
+    parameters["currentSpeed"] = std::to_string(currentSpeed);
+    parameters["moving"] = std::to_string(moving);
+    parameters["goingHome"] = std::to_string(goingHome);
+    parameters["smoking"] = std::to_string(smoking);
+    parameters["buffed"] = std::to_string(buffed);
+    parameters["willBeBuffed"] = std::to_string(willBeBuffed);
+    parameters["willBeBuffed"] = std::to_string(willBeBuffed);
+    parameters["buffStart"] = buffStart.get();
+    parameters["buffEnd"] = buffEnd.get();
+    parameters["smokeStarted"] = smokeStarted.get();
+    parameters["workingModificator"] = std::to_string(workingModificator);
+    parameters["upgradeAvailable"] = std::to_string(upgradeAvailable);
+
+    parameters["cost"] = std::to_string(cost);
+    parameters["floor"] = std::to_string(floor);
+    parameters["personName"] = personName;
+
+    parameters["gender"] = std::to_string(gender);
+    parameters["race"] = std::to_string(gender);
+    parameters["level"] = std::to_string(level);
+
+//    std::deque<Destination> destinations;
+//    Elevator *targetElevator = nullptr;
+
+    return parameters;
+}
+
 
 
 

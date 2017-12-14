@@ -10,8 +10,8 @@
 
 namespace SaveManager {
 
-    void save() {
-        std::thread saver([]() {
+    void save(bool zip) {
+        std::thread saver([zip]() {
             sf::String buffer;
             std::ofstream file;
 
@@ -19,22 +19,25 @@ namespace SaveManager {
 
             if (!EntityContainer::items[SC_Game].empty()) {
                 for (auto &e:EntityContainer::items[SC_Game]) {
-                    if (e->isSerializable() && e->isSpawned() && e->getEType() == E_Clerk) {
-
-
+                    if (e->isSerializable() && e->isSpawned()) {
+                        buffer += e->serialize() + "\n";
                     }
                 }
 
-//                std::vector<std::string> systemVars = {
-//                        std::to_string(System::cash),
-//                        System::gameTime.get(),
-//                };
-//
-//                auto sysString = System::join(systemVars, ';');
-//                buffer += sysString;
-//
-//                auto zipped = compress_string(buffer.toAnsiString());
-//                file << zipped;
+                std::vector<std::string> systemVars = {
+                        std::to_string(System::cash),
+                        System::gameTime.get(),
+                };
+
+                auto sysString = System::join(systemVars, ';');
+                buffer += sysString;
+
+                if(zip){
+                    auto zipped = compress_string(buffer.toAnsiString());
+                    file << zipped;
+                }else{
+                    file << buffer.toAnsiString();
+                }
             }
 
             sf::String s;
@@ -58,8 +61,8 @@ namespace SaveManager {
         saver.detach();
     }
 
-    void load() {
-        std::thread loader([]() {
+    void load(bool zip) {
+        std::thread loader([zip]() {
             std::fstream file("save.dat", std::ios::out | std::ios::binary | std::ios::in);
 
             if (!file.is_open()) {
@@ -67,13 +70,18 @@ namespace SaveManager {
             }
 
             std::string contents;
+            std::vector<std::string> data;
 
             while (!file.eof()) {
                 contents.append(1, file.get());
             }
 
-            auto decompressed = decompress_string(contents);
-            auto data = System::split(decompressed, '\n');
+            if(zip){
+                data = System::split(decompress_string(contents), '\n');
+            }else{
+                data = System::split(contents, '\n');
+            }
+
             file.close();
 
             for (int i = 0; i < data.size(); ++i) {
