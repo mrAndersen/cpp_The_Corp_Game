@@ -7,8 +7,8 @@
 
 namespace SaveManager {
 
-    void save();
-    void load();
+    void save(bool zip = false);
+    void load(bool zip = false);
     void deserialize(std::string &stringData);
 
     std::string compress_string(const std::string &str, int compressionlevel = Z_BEST_SPEED);

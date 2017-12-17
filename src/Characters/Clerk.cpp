@@ -226,3 +226,15 @@ float Clerk::getTotalEarnings() const {
 void Clerk::setTotalEarnings(float totalEarnings) {
     Clerk::totalEarnings = totalEarnings;
 }
+
+std::map<std::string, sf::String> Clerk::getSerializeParameters() {
+    auto parameters = Movable::getSerializeParameters();
+
+    parameters["totalEarnings"] = std::to_string(totalEarnings);
+    parameters["earningProcessed"] = std::to_string(earningProcessed);
+    parameters["salaryProcessed"] = std::to_string(salaryProcessed);
+
+//    WorkPlace *currentWorkPlace = nullptr;
+
+    return parameters;
+}

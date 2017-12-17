@@ -445,6 +445,46 @@ void Entity::setValid(bool valid) {
     Entity::valid = valid;
 }
 
+std::map<std::string, sf::String> Entity::getSerializeParameters() {
+    std::map<std::string, sf::String> parameters;
+
+    parameters["id"] = std::to_string(id);
+    parameters["groupName"] = groupName;
+    parameters["visible"] = std::to_string(visible);
+    parameters["manualUpdate"] = std::to_string(manualUpdate);
+    parameters["valid"] = std::to_string(valid);
+    parameters["serializable"] = std::to_string(serializable);
+    parameters["worldCoordinates.x"] = std::to_string(worldCoordinates.x);
+    parameters["worldCoordinates.y"] = std::to_string(worldCoordinates.y);
+    parameters["width"] = std::to_string(width);
+    parameters["height"] = std::to_string(height);
+    parameters["state"] = std::to_string(state);
+    parameters["selectable"] = std::to_string(selectable);
+    parameters["drawOrder"] = std::to_string(drawOrder);
+    parameters["direction"] = std::to_string(direction);
+
+    return parameters;
+}
+
+sf::String Entity::serialize() {
+    auto parameters = getSerializeParameters();
+    sf::String s;
+    int i = 1;
+
+    for (auto &p:parameters) {
+        s += p.first + "->" + p.second;
+        i++;
+
+        if (i != parameters.size()) {
+            s += ',';
+        }
+    }
+
+    s = "[" + s + "]";
+
+    return s;
+}
+
 
 
 

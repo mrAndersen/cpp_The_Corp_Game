@@ -23,6 +23,8 @@ public:
 
     Clerk(sf::Vector2f coordinates);
 
+    std::map<std::string, sf::String> getSerializeParameters() override;
+
     virtual ~Clerk();
 
     float getHalfHourEarning();

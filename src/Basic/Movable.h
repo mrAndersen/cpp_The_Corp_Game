@@ -118,6 +118,8 @@ public:
 
     bool isCrossingShafts();
 
+    std::map<std::string, sf::String> getSerializeParameters() override;
+
     bool isCrossingOffices();
 
     const std::deque<Destination> &getDestinations() const;

@@ -54,6 +54,10 @@ protected:
 public:
     Animation *getCurrentAnimation();
 
+    virtual std::map<std::string, sf::String> getSerializeParameters();
+
+    virtual sf::String serialize();
+
     virtual void spawn();
 
     void setValid(bool valid);
