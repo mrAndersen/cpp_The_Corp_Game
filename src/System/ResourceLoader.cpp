@@ -151,7 +151,9 @@ namespace ResourceLoader {
 
         //----<<Elevator>>----
         ResourceLoader::loadTexture(Entities::E_ElevatorCabin, "resources/elevator/cabin.l1.png");
+
         ResourceLoader::loadTexture(Entities::E_ElevatorShaftMiddle, "resources/elevator/elevator.middle.l1.png");
+
         ResourceLoader::loadTexture(Entities::E_ElevatorShaftTop, "resources/elevator/elevator.top.l1.png");
 
         //----<<Office>>----
