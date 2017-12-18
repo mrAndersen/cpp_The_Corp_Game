@@ -19,10 +19,50 @@ buttons:
     fire: Fire
 
 units:
+    descriptions:
+        clerk: "Your main unit - clerk. Warhorse of your company,\n
+                only unit who actually gains income for you,\n
+                works as all your units from 10:00 AM to 9:00 PM.\n
+                Has four levels of skill:\n\n
+
+                1) Daily salary - 64$, daily earning - 200$\n
+                2) Daily salary - 100$, daily earning - 400$\n
+                3) Daily salary - 150$, daily earning - 750$\n
+                4) Daily salary - 200$, daily earning - 1200$\n"
+
+        manager: "This one can buff all your existing units, \n
+                  that it can reach within elevators including\n
+                  accountants. Four levels:\n\n
+
+                  1) Daily salary - 120$, buff strength - +20%\n
+                  2) Daily salary - 200$, buff strength - +50%\n
+                  3) Daily salary - 350$, buff strength - +100%\n
+                  4) Daily salary - 500$, buff strength - +150%\n"
+
+        accountant: "Accountant buffs for additional income all\n
+                     clerks currently working in your company.\n
+                     Four levels:\n\n
+
+                     1) Daily salary - 150$, buff percentage - 1%\n
+                     2) Daily salary - 250$, buff percentage - 1.5%\n
+                     3) Daily salary - 500$, buff percentage - 2%\n
+                     4) Daily salary - 750$, buff percentage - 2.5%\n"
+
+        office: "This is your main workplace, which can\n
+                 accommodate four workers"
+
+        elevator: "Elevator consits of 3 parts, cabin - moving\n
+                   part, can be upgraded for better capacity,\n
+                   elevator shaft and motor, which must be placed on\n
+                   top of middle sections."
+
+
     titles:
         clerk: Clerk
         manager: Manager
         accountant: Accountant
+        office: Office
+        elevator: Elevator
     states:
         wait: Waiting
         walk: Walking
