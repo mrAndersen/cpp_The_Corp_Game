@@ -13,7 +13,9 @@ ElevatorShaftMiddle::ElevatorShaftMiddle(sf::Vector2f coordinates) : Entity(E_El
 
     setWorldCoordinates(coordinates);
     setSelectable(false);
+
     addAnimation(S_None, Animation(this, S_None, 1, ResourceLoader::getTexture(eType)));
+    addAnimation(S_Working, Animation(this, S_Working, 3, ResourceLoader::getTexture(eType), 333333));
 
     setDrawOrder(DrawOrder::D_ElevatorShafts);
     initEntity();
@@ -47,7 +49,7 @@ std::vector<Office *> ElevatorShaftMiddle::getNeighborOffices() {
 
     for (auto e:offices) {
         auto target = dynamic_cast<Office *>(e);
-        
+
         if ((int) target->getRight() == (int) this->left &&
             target->getWorldCoordinates().y == this->worldCoordinates.y && target->getFloor() == 1) {
             result.push_back(target);
@@ -68,7 +70,6 @@ std::vector<Office *> ElevatorShaftMiddle::getNeighborOffices() {
 
     return result;
 }
-
 
 
 void ElevatorShaftMiddle::spawn() {

@@ -85,6 +85,20 @@ void Elevator::update() {
         direction = None;
     }
 
+    if (!waiting) {
+        topShaft->setState(S_Working);
+
+        for (auto &e:middleShafts) {
+            e->setState(S_Working);
+        }
+    } else {
+        topShaft->setState(S_None);
+
+        for (auto &e:middleShafts) {
+            e->setState(S_None);
+        }
+    }
+
     if (!waiting && !queue.empty()) {
         auto nextFloor = queue.front();
         auto nextTarget = getFloorBottom(nextFloor) + cabin->getHeight() / 2;
@@ -140,7 +154,7 @@ void Elevator::update() {
 void Elevator::addToQueue(int floor) {
 
     //max floor
-    if(floor >= getMaxFloor()){
+    if (floor >= getMaxFloor()) {
         return;
     }
 
