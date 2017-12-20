@@ -334,6 +334,10 @@ Movable::Movable(Entities type, int width, int height) : Entity(type) {
             gender = G_Male;
     }
 
+    if (type != E_Clerk) {
+        gender = G_Male;
+    }
+
     setWidth(width);
     setHeight(height);
     setSerializable(true);
@@ -374,7 +378,6 @@ Movable::Movable(Entities type, int width, int height) : Entity(type) {
         default:
             race = R_White;
     }
-
 
 
     loadAnimations();
