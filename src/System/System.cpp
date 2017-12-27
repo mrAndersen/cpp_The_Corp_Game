@@ -105,9 +105,11 @@ namespace System {
             salarySpent->setFixed(true);
             salarySpent->setString("Salaries: -" + System::f_to_string(EntityContainer::counters[E_Stats_Daily_Loss]) + "$");
             salarySpent->setLeftOffset(System::screenWidth / 2);
-            salarySpent->setTopOffset(System::screenHeight / 2);
+            salarySpent->setTopOffset(200);
             salarySpent->setDirection(Direction::Down);
-            salarySpent->setLiveTimeSeconds(5);
+            salarySpent->setLiveTimeSeconds(8);
+            salarySpent->setSpeed(50);
+            salarySpent->setDrawOrder(D_Ui_Over - 1);
 
             dayEndProcessed = true;
             dayStartProcessed = false;

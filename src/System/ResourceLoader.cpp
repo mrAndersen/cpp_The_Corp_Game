@@ -163,7 +163,7 @@ namespace ResourceLoader {
 
         //----<<Characters>>-----
         std::vector<Entities> characters = {E_Clerk, E_Manager, E_Accountant};
-        Gender genders[] = {G_Male};
+        Gender genders[] = {G_Male, G_Female};
         Race races[] = {R_White, R_Black, R_Asian};
         int levels[] = {1, 2, 3, 4};
         States states[] = {

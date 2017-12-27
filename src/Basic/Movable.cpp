@@ -323,6 +323,21 @@ void Movable::setCurrentSpeed(float currentSpeed) {
 }
 
 Movable::Movable(Entities type, int width, int height) : Entity(type) {
+    switch (System::getRandom(1, 2)) {
+        case 1:
+            gender = G_Male;
+            break;
+        case 2:
+            gender = G_Female;
+            break;
+        default:
+            gender = G_Male;
+    }
+
+    if (type != E_Clerk) {
+        gender = G_Male;
+    }
+
     setWidth(width);
     setHeight(height);
     setSerializable(true);
@@ -364,18 +379,6 @@ Movable::Movable(Entities type, int width, int height) : Entity(type) {
             race = R_White;
     }
 
-    switch (System::getRandom(1, 2)) {
-        case 1:
-            gender = G_Male;
-            break;
-        case 2:
-            gender = G_Female;
-            break;
-        default:
-            gender = G_Male;
-    }
-
-    gender = G_Male;
 
     loadAnimations();
     setGroupName("movable");
@@ -471,7 +474,7 @@ void Movable::addAnimation(States state, Gender gender, Race race, int level, in
         auto animation = Animation(this, state, frames, texture, duration);
         Entity::addAnimation(state, animation);
     } else {
-        auto animation = Animation(this, state, frames, ResourceLoader::getCharacterTexture(eType, state, G_Male, R_White, 1), duration);
+        auto animation = Animation(this, state, frames, ResourceLoader::getCharacterTexture(eType, state, gender, R_White, 1), duration);
         Entity::addAnimation(state, animation);
     }
 }
