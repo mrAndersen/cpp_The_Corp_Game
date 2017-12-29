@@ -230,6 +230,7 @@ void Movable::updateLogic() {
                     visible = false;
 
                     moving = false;
+                    goingHome = false;
                     setDrawOrder(D_Characters, true);
 
                     destinations.pop_front();
