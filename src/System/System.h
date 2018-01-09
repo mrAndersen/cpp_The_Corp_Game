@@ -65,6 +65,7 @@ namespace System {
     extern GameTime gameTime;
     extern int startWorkHour;
     extern int endWorkHour;
+    extern int daysPassed;
     //player
 
 

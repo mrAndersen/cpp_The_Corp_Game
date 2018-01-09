@@ -8,6 +8,7 @@ enum Scenes {
 };
 
 enum DrawOrder {
+    D_Logo = 12,
 
     D_BG_Mountain_1 = 14,
     D_BG_Mountain_2 = 15,

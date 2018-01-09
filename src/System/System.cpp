@@ -74,6 +74,7 @@ namespace System {
 
     int startWorkHour = 10;
     int endWorkHour = 19;
+    int daysPassed = 0;
     //player
 
     //debug
@@ -117,6 +118,8 @@ namespace System {
 
         if (gameTime.isDayStartHour() && !dayStartProcessed) {
             dayStartProcessed = true;
+            daysPassed++;
+
             dayEndProcessed = false;
         }
     }
@@ -203,6 +206,7 @@ namespace System {
             debugPanelTextNodes["spawning"].setString("spawning:" + std::to_string(spawningUnit));
             debugPanelTextNodes["selection_cd"].setString(
                     "selection_cd:" + std::to_string(selectionCooldown.getElapsedTime().asSeconds()));
+            debugPanelTextNodes["days"].setString("days: " + std::to_string(daysPassed));
 
             std::string dcs;
             for (auto e:debugCounters) {
@@ -271,6 +275,7 @@ namespace System {
     }
 
     void initDebug() {
+        createDebugString("days");
         createDebugString("menu_stats");
         createDebugString("game_stats");
         createDebugString("active_scene");
@@ -488,19 +493,6 @@ namespace System {
         result = szBuffer;
         RegCloseKey(hkey);
         return "a";
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     }
