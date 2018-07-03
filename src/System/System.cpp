@@ -1,6 +1,6 @@
 #include <SFML/Window/Mouse.hpp>
 #include <windows.h>
-#include <psapi.h>
+//#include <psapi.h>
 #include <sstream>
 #include <iomanip>
 #include <random>
@@ -164,9 +164,9 @@ namespace System {
             auto mousePosition = sf::Mouse::getPosition(*window);
             auto coordMap = window->mapPixelToCoords(mousePosition);
 
-            PROCESS_MEMORY_COUNTERS pmc = {};
-            GetProcessMemoryInfo(GetCurrentProcess(), &pmc, sizeof(pmc));
-            SIZE_T mem = pmc.WorkingSetSize;
+//            PROCESS_MEMORY_COUNTERS pmc = {};
+//            GetProcessMemoryInfo(GetCurrentProcess(), &pmc, sizeof(pmc));
+            SIZE_T mem = 20;
 
             g_x = coordMap.x;
             g_y = screenHeight - coordMap.y;
