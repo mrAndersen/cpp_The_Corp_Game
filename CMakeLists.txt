@@ -206,7 +206,7 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}" ${CMAKE_MODULE_PATH})
 set(SFML_STATIC_LIBRARIES TRUE)
 find_package(SFML 2 REQUIRED graphics network audio window system)
 if(SFML_FOUND)
-    FIND_LIBRARY (PSAPI Psapi)
+#    FIND_LIBRARY (PSAPI Psapi)
 
     include_directories(${SFML_INCLUDE_DIR})
     target_link_libraries(${EXECUTABLE_NAME} ${PSAPI} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
