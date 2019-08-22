@@ -2,8 +2,8 @@
 #define THE_CORP_GAME_BASICUI_H
 
 
-#include "..\Basic\Entity.h"
-#include "..\System\ViewHandler.h"
+#include "../Basic/Entity.h"
+#include "../System/ViewHandler.h"
 
 class BasicUi : public Entity {
 public:

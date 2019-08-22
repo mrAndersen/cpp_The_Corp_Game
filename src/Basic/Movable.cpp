@@ -1,12 +1,12 @@
 #include <cmath>
 #include <iostream>
 #include <fstream>
-#include "..\Text\TextEntity.h"
-#include "..\Background\Ground.h"
-#include "..\System\EntityContainer.h"
+#include "../Text/TextEntity.h"
+#include "../Background/Ground.h"
+#include "../System/EntityContainer.h"
 #include "../Characters/Accountant.h"
 #include "../Characters/Clerk.h"
-#include "..\System\System.h"
+#include "../System/System.h"
 #include "../Ui/MainPanel/ButtonPause.h"
 
 void Movable::renderDebugInfo() {

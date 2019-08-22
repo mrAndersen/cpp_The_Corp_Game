@@ -1,6 +1,6 @@
 #include "OfficeClerk.h"
-#include "..\System\ResourceLoader.h"
-#include "..\System\EntityContainer.h"
+#include "../System/ResourceLoader.h"
+#include "../System/EntityContainer.h"
 
 OfficeClerk::OfficeClerk(sf::Vector2f coordinates) : Office() {
     setEType(E_OfficeDefault);

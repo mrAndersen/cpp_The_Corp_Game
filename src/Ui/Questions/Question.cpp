@@ -1,6 +1,6 @@
-#include "..\Popup.h"
+#include "../Popup.h"
 #include <cmath>
-#include "..\..\System\System.h"
+#include "../../System/System.h"
 #include "Question.h"
 
 Question::Question(float leftOffset, float topOffset, Entities type) : BasicUi(leftOffset, topOffset) {

@@ -1,10 +1,10 @@
 #include <sstream>
 #include <iostream>
 #include "Entity.h"
-#include "..\System\System.h"
-#include "..\System\Enum.h"
-#include "..\System\EntityContainer.h"
-#include "..\Background\Ground.h"
+#include "../System/System.h"
+#include "../System/Enum.h"
+#include "../System/EntityContainer.h"
+#include "../Background/Ground.h"
 #include "../Characters/Clerk.h"
 #include "../Characters/Manager.h"
 #include "../Characters/Accountant.h"
@@ -431,6 +431,8 @@ Animation *Entity::getCurrentAnimation() {
     if (currentAnimation) {
         return currentAnimation;
     }
+
+    return nullptr;
 }
 
 bool Entity::isSerializable() const {

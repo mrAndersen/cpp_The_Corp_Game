@@ -1,4 +1,4 @@
-#include "..\..\System\System.h"
+#include "../../System/System.h"
 #include "MainPanelOverlay.h"
 
 MainPanelOverlay::MainPanelOverlay(float leftOffset, float topOffset) : BasicUi(leftOffset, topOffset) {

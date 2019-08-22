@@ -1,7 +1,7 @@
 #ifndef THE_CORP_GAME_CLOUD_H
 #define THE_CORP_GAME_CLOUD_H
 
-#include "..\Basic\Entity.h"
+#include "../Basic/Entity.h"
 
 class Cloud : public Entity {
 protected:

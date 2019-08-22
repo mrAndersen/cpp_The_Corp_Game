@@ -1,5 +1,5 @@
-#include "..\System\System.h"
-#include "..\Office\Chair.h"
+#include "../System/System.h"
+#include "../Office/Chair.h"
 #include "../System/EntityContainer.h"
 #include "WorkPlace.h"
 

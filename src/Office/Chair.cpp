@@ -1,5 +1,5 @@
-#include "..\System\ResourceLoader.h"
-#include "..\System\EntityContainer.h"
+#include "../System/ResourceLoader.h"
+#include "../System/EntityContainer.h"
 #include "Chair.h"
 
 Chair::Chair(sf::Vector2f coordinates) {

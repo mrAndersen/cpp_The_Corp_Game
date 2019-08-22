@@ -1,7 +1,7 @@
 #ifndef THE_CORP_GAME_SYSTEM_H
 #define THE_CORP_GAME_SYSTEM_H
 
-#include <windows.h>
+//#include <windows.h>
 //#include <psapi.h>
 #include <SFML/System/Clock.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -83,7 +83,7 @@ namespace System {
     extern std::string version;
     //debug
 
-    RECT getScreenBoundaries();
+//    RECT getScreenBoundaries();
 
     sf::String join(std::vector<std::string> &array, char delimiter);
     std::vector<std::string> split(std::string source, char delimiter = '.');
@@ -123,8 +123,6 @@ namespace System {
     void handleGlobalLogic();
 
     void changeScene(Scenes scene);
-
-    std::string getHardwareId();
 }
 
 #endif //THE_CORP_GAME_SYSTEM_H

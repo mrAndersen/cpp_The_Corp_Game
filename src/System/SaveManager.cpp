@@ -1,12 +1,13 @@
 #include <fstream>
 #include <Office/OfficeClerk.h>
+#include <cstring>
 #include "../Characters/Clerk.h"
 #include "../Characters/Manager.h"
 #include "../Characters/Accountant.h"
 #include "SaveManager.h"
 #include "EntityContainer.h"
 #include "../../vendor/zlib/zlib.h"
-#include "mingw.thread.h"
+#include "thread"
 
 namespace SaveManager {
 

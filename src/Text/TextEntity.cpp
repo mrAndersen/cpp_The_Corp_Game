@@ -1,8 +1,8 @@
 #include <climits>
 #include "TextEntity.h"
-#include "..\System\System.h"
-#include "..\System\EntityContainer.h"
-#include "..\System\ViewHandler.h"
+#include "../System/System.h"
+#include "../System/EntityContainer.h"
+#include "../System/ViewHandler.h"
 
 TextEntity::TextEntity(const sf::Color &color, int size) : Entity() {
     text.setCharacterSize((unsigned int) size);

@@ -1,10 +1,10 @@
 #ifndef THE_CORP_GAME_ELEVATORCABIN_H
 #define THE_CORP_GAME_ELEVATORCABIN_H
 
-#include "..\Basic\Entity.h"
-#include "..\Basic\Movable.h"
-#include "..\Text\TextEntity.h"
-#include "..\Basic\Movable.h"
+#include "../Basic/Entity.h"
+#include "../Basic/Movable.h"
+#include "../Text/TextEntity.h"
+#include "../Basic/Movable.h"
 #include "../Component/Destination.h"
 
 class Elevator;

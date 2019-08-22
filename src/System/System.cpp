@@ -1,5 +1,5 @@
 #include <SFML/Window/Mouse.hpp>
-#include <windows.h>
+//#include <windows.h>
 //#include <psapi.h>
 #include <sstream>
 #include <iomanip>
@@ -11,12 +11,12 @@
 #include "System.h"
 #include "ViewHandler.h"
 #include "GameTime.h"
-#include "..\Text\TextEntity.h"
+#include "../Text/TextEntity.h"
 #include "ResourceLoader.h"
 #include "../../version.h"
 #include "EntityContainer.h"
 #include "ControlPanel.h"
-#include <winreg.h>
+//#include <winreg.h>
 
 
 namespace System {
@@ -104,7 +104,8 @@ namespace System {
             auto *salarySpent = new TextEntity(System::c_red, 40);
 
             salarySpent->setFixed(true);
-            salarySpent->setString("Salaries: -" + System::f_to_string(EntityContainer::counters[E_Stats_Daily_Loss]) + "$");
+            salarySpent->setString(
+                    "Salaries: -" + System::f_to_string(EntityContainer::counters[E_Stats_Daily_Loss]) + "$");
             salarySpent->setLeftOffset(System::screenWidth / 2);
             salarySpent->setTopOffset(200);
             salarySpent->setDirection(Direction::Down);
@@ -166,7 +167,7 @@ namespace System {
 
 //            PROCESS_MEMORY_COUNTERS pmc = {};
 //            GetProcessMemoryInfo(GetCurrentProcess(), &pmc, sizeof(pmc));
-            SIZE_T mem = 20;
+//            SIZE_T mem = 20;
 
             g_x = coordMap.x;
             g_y = screenHeight - coordMap.y;
@@ -187,15 +188,17 @@ namespace System {
                     "mouse: {" + std::to_string(mousePosition.x) + "," + std::to_string(mousePosition.y) + "}");
             debugPanelTextNodes["v_direction"].setString(
                     "v_direction: " + std::to_string(ViewHandler::viewDirectionMovement));
-            debugPanelTextNodes["mem"].setString("mem:" + std::to_string((int) mem / 1024 / 1024) + "mb");
+            debugPanelTextNodes["mem"].setString("mem:" + std::to_string((int) 20 / 1024 / 1024) + "mb");
 
 
             debugPanelTextNodes["v_boundaries"].setString(
                     "v_boundaries: "
-                            "{t=" + std::to_string((int) ViewHandler::top) + ","
-                            "b=" + std::to_string((int) ViewHandler::bottom) + ","
-                            "l=" + std::to_string((int) ViewHandler::left) + ","
-                            "r=" + std::to_string((int) ViewHandler::right) + "}"
+                    "{t=" + std::to_string((int) ViewHandler::top) + ","
+                                                                     "b=" + std::to_string((int) ViewHandler::bottom) +
+                    ","
+                    "l=" + std::to_string((int) ViewHandler::left) + ","
+                                                                     "r=" + std::to_string((int) ViewHandler::right) +
+                    "}"
             );
 
             debugPanelTextNodes["v_zoom"].setString("v_zoom: " + std::to_string(ViewHandler::zoom));
@@ -236,10 +239,8 @@ namespace System {
         }
 
         if (screenMode == sf::Style::Fullscreen) {
-            auto boundaries = getScreenBoundaries();
-
-            screenWidth = (unsigned int) boundaries.right;
-            screenHeight = (unsigned int) boundaries.bottom;
+            screenWidth = (unsigned int) 1920;
+            screenHeight = (unsigned int) 1080;
         }
 
         sf::Image icon;
@@ -318,12 +319,12 @@ namespace System {
         return {g_x, g_y};
     }
 
-    RECT getScreenBoundaries() {
-        RECT w_Desktop{};
-        GetWindowRect(GetDesktopWindow(), &w_Desktop);
-
-        return w_Desktop;
-    }
+//    RECT getScreenBoundaries() {
+//        RECT w_Desktop{};
+//        GetWindowRect(GetDesktopWindow(), &w_Desktop);
+//
+//        return w_Desktop;
+//    }
 
     struct f_punctuation : std::numpunct<char> {
     protected :
@@ -431,16 +432,16 @@ namespace System {
             window->close();
         }
 
-        if (event.type == sf::Event::Resized) {
-            screenWidth = window->getSize().x;
-            screenHeight = window->getSize().y;
-
-            initWindow();
-        }
+//        if (event.type == sf::Event::Resized) {
+//            screenWidth = window->getSize().x;
+//            screenHeight = window->getSize().y;
+//
+//            initWindow();
+//        }
 
         if (event.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::LAlt) &&
             sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
-            auto boundaries = getScreenBoundaries();
+//            auto boundaries = getScreenBoundaries();
 
             switch (screenMode) {
                 case sf::Style::Default:
@@ -450,8 +451,8 @@ namespace System {
                 case sf::Style::Fullscreen:
                     screenMode = sf::Style::Default;
 
-                    screenWidth = (unsigned int) boundaries.right * 8 / 10;
-                    screenHeight = (unsigned int) boundaries.bottom * 4 / 5;
+                    screenWidth = (unsigned int) 1920 * 8 / 10;
+                    screenHeight = (unsigned int) 1080 * 4 / 5;
 
                     initWindow();
                 default:
@@ -475,26 +476,6 @@ namespace System {
             System::activeScene = SC_Game;
             System::sceneChangeTimer.restart();
         }
-    }
-
-    std::string getHardwareId() {
-
-//        HKEY_LOCAL_MACHINE\Software\Microsoft\Cryptography\MachineGuid
-
-
-        std::wstring result;
-        WCHAR szBuffer[512];
-        DWORD dwBufferSize = sizeof(szBuffer);
-        HKEY hkey;
-
-        auto op1 = RegOpenKeyExW(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\Cryptography", 0, KEY_QUERY_VALUE, &hkey);
-        auto op2 = RegQueryValueExW(hkey, L"MachineGuid", nullptr, nullptr, (LPBYTE) szBuffer, &dwBufferSize);
-
-        result = szBuffer;
-        RegCloseKey(hkey);
-        return "a";
-
-
     }
 }
 

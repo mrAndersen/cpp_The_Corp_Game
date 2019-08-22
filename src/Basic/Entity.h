@@ -3,7 +3,7 @@
 
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics.hpp>
-#include "..\System\Enum.h"
+#include "../System/Enum.h"
 #include "Animation.h"
 
 class Animation;

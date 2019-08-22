@@ -1,11 +1,11 @@
 #ifndef THE_CORP_GAME_ENTITYCONTAINER_H
 #define THE_CORP_GAME_ENTITYCONTAINER_H
 
-#include "..\Background\Tree.h"
-#include "..\Background\GroundArtifact.h"
-#include "..\Background\Ground.h"
-#include "..\Component\Elevator.h"
-#include "..\Office\Office.h"
+#include "../Background/Tree.h"
+#include "../Background/GroundArtifact.h"
+#include "../Background/Ground.h"
+#include "../Component/Elevator.h"
+#include "../Office/Office.h"
 #include "../Component/Destination.h"
 
 #include "System.h"

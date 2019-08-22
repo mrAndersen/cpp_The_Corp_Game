@@ -1,11 +1,11 @@
 #include <iostream>
 #include <cmath>
-#include "..\System\ResourceLoader.h"
-#include "..\System\EntityContainer.h"
+#include "../System/ResourceLoader.h"
+#include "../System/EntityContainer.h"
 #include "Clerk.h"
-#include "..\Office\Office.h"
-#include "..\System\ResourceLoader.h"
-#include "..\System\EntityContainer.h"
+#include "../Office/Office.h"
+#include "../System/ResourceLoader.h"
+#include "../System/EntityContainer.h"
 
 Clerk::Clerk(sf::Vector2f coordinates) : Movable(E_Clerk, Clerk::width, Clerk::height) {
     setDefaultSpeed(165);

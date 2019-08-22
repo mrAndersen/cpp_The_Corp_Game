@@ -1,7 +1,7 @@
 #ifndef THE_CORP_GAME_MONEYINDICATOR_H
 #define THE_CORP_GAME_MONEYINDICATOR_H
 
-#include "..\Basic\Entity.h"
+#include "../Basic/Entity.h"
 #include "BasicUi.h"
 
 class MoneyIndicator : public BasicUi {

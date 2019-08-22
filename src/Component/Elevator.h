@@ -3,10 +3,10 @@
 
 #include <stack>
 #include "functional"
-#include "..\Objects\ElevatorCabin.h"
-#include "..\Objects\ElevatorShaftTop.h"
-#include "..\Basic\Movable.h"
-#include "..\Objects\ElevatorShaftMiddle.h"
+#include "../Objects/ElevatorCabin.h"
+#include "../Objects/ElevatorShaftTop.h"
+#include "../Basic/Movable.h"
+#include "../Objects/ElevatorShaftMiddle.h"
 #include "../Component/Destination.h"
 
 class ElevatorShaftTop;

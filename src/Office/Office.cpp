@@ -1,8 +1,8 @@
 #include <cmath>
-#include "..\Text\TextEntity.h"
+#include "../Text/TextEntity.h"
 #include "OfficeClerk.h"
-#include "..\System\EntityContainer.h"
-#include "..\System\System.h"
+#include "../System/EntityContainer.h"
+#include "../System/System.h"
 
 Office::Office() {
     setGroupName("offices");

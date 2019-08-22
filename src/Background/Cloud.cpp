@@ -1,7 +1,7 @@
 #include <SFML/System.hpp>
 #include "Ground.h"
-#include "..\System\ResourceLoader.h"
-#include "..\System/EntityContainer.h"
+#include "../System/ResourceLoader.h"
+#include "../System/EntityContainer.h"
 #include "Cloud.h"
 
 Cloud::Cloud(Entities type, sf::Vector2f coordinates, sf::Vector2f size, float scale, int speed, Scenes lType) {

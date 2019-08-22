@@ -2,8 +2,8 @@
 #define THE_CORP_GAME_WORKPLACE_H
 
 #include <SFML/System/Vector2.hpp>
-#include "..\Office\Office.h"
-#include "..\Basic\Movable.h"
+#include "../Office/Office.h"
+#include "../Basic/Movable.h"
 
 class Office;
 

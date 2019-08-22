@@ -1,7 +1,7 @@
-#include "..\System\ResourceLoader.h"
-#include "..\System\EntityContainer.h"
-#include "..\Text\TextEntity.h"
-#include "..\System\System.h"
+#include "../System/ResourceLoader.h"
+#include "../System/EntityContainer.h"
+#include "../Text/TextEntity.h"
+#include "../System/System.h"
 #include "ElevatorCabin.h"
 
 

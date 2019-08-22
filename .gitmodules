@@ -1,0 +1,6 @@
+[submodule "vendor/yaml-cpp"]
+	path = vendor/yaml-cpp
+	url = git@github.com:jbeder/yaml-cpp.git
+[submodule "vendor/sfml"]
+	path = vendor/sfml
+	url = git@github.com:SFML/SFML.git

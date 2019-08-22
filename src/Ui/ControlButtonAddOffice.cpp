@@ -2,10 +2,10 @@
 #include <cmath>
 #include <iostream>
 #include "ControlButtonAddOffice.h"
-#include "..\System\EntityContainer.h"
-#include "..\System\ViewHandler.h"
-#include "..\System\System.h"
-#include "..\Office\OfficeClerk.h"
+#include "../System/EntityContainer.h"
+#include "../System/ViewHandler.h"
+#include "../System/System.h"
+#include "../Office/OfficeClerk.h"
 #include "../System/ResourceLoader.h"
 
 ControlButtonAddOffice::ControlButtonAddOffice(float leftOffset, float topOffset) : BasicUi(leftOffset, topOffset) {

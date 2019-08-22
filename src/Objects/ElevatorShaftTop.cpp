@@ -1,8 +1,8 @@
 #include <cmath>
-#include "..\System\System.h"
-#include "..\Text\TextEntity.h"
+#include "../System/System.h"
+#include "../Text/TextEntity.h"
 #include "ElevatorShaftTop.h"
-#include "..\System\EntityContainer.h"
+#include "../System/EntityContainer.h"
 #include "ElevatorShaftMiddle.h"
 #include "../System/ResourceLoader.h"
 

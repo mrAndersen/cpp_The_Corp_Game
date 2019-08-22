@@ -8,11 +8,15 @@ project(the_corp_game)
 set(CMAKE_CXX_STANDARD 14)
 
 if(COMPILER STREQUAL "GCC")
+    # Detect and add SFML on Linux
+#    set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/vendor/sfml-2.5.1-linux/lib/cmake/SFML")
+    set(SFML_DIR "${PROJECT_SOURCE_DIR}/vendor/sfml-2.5.1-linux/lib/cmake/SFML")
+
     set(CMAKE_CXX_FLAGS "-static-libgcc -static-libstdc++")
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/gcc-${CMAKE_BUILD_TYPE}")
     set(CMAKE_BINARY_DIR ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
-    set(SFML_ROOT "${PROJECT_SOURCE_DIR}/vendor/sfml-2.4.2-mingw")
-    set(SFML_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/vendor/sfml-2.4.2-mingw/include")
+
+    set(SFML_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/vendor/sfml-2.5.1-linux/include")
 endif()
 
 if(COMPILER STREQUAL "MSVC")
@@ -27,11 +31,11 @@ if(COMPILER STREQUAL "MSVC")
 #    set(OTHER_DEPENDENCIES "${PROJECT_SOURCE_DIR}/vendor/yaml/libyaml-cppmd.lib")
 endif()
 
+add_subdirectory(vendor/yaml-cpp)
+add_subdirectory(vendor/sfml)
 
 include_directories("${PROJECT_SOURCE_DIR}/src")
-include_directories("vendor/yaml/include")
-include_directories("vendor/boost-1.65")
-
+include_directories("vendor/yaml-cpp/include")
 
 file(COPY "resources" DESTINATION "${CMAKE_BINARY_DIR}")
 
@@ -39,8 +43,6 @@ file(COPY "resources" DESTINATION "${CMAKE_BINARY_DIR}")
 set(EXECUTABLE_NAME "corpgame")
 add_executable(
         ${EXECUTABLE_NAME}
-
-        WIN32
 
         main.cpp
         main.rc
@@ -198,26 +200,14 @@ add_executable(
         src/Ui/Questions/QAddAccountant.h
         src/Background/Cloud.cpp src/Background/Cloud.h src/Ui/MainPanel/Cog.cpp src/Ui/MainPanel/Cog.h src/System/SaveManager.cpp src/System/SaveManager.h src/Objects/Door.cpp src/Objects/Door.h)
 
-# Detect and add SFML
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}" ${CMAKE_MODULE_PATH})
+set(SFML_LIBRARIES sfml-graphics sfml-audio sfml-network sfml-system sfml-window)
 
-#Find any version 2.X of SFML
-#See the FindSFML.cmake file for additional details and instructions
-set(SFML_STATIC_LIBRARIES TRUE)
-find_package(SFML 2 REQUIRED graphics network audio window system)
-if(SFML_FOUND)
-#    FIND_LIBRARY (PSAPI Psapi)
+include_directories(${SFML_INCLUDE_DIR})
+target_link_libraries(${EXECUTABLE_NAME} yaml-cpp ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
 
-    include_directories(${SFML_INCLUDE_DIR})
-    target_link_libraries(${EXECUTABLE_NAME} ${PSAPI} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
+if(COMPILER STREQUAL "GCC")
+    set(CMAKE_CXX_FLAGS "-pthread")
+    set(CMAKE_C_FLAGS "-pthread")
 
-    if(COMPILER STREQUAL "GCC")
-        target_link_libraries(${EXECUTABLE_NAME} ${PROJECT_SOURCE_DIR}/vendor/yaml/libyaml-cpp.a)
-        target_link_libraries(${EXECUTABLE_NAME} ${PROJECT_SOURCE_DIR}/vendor/zlib/libz.a)
-    endif()
-
+    target_link_libraries(${EXECUTABLE_NAME} /usr/lib/x86_64-linux-gnu/libz.so)
 endif()
-
-
-# Install target
-install(TARGETS ${EXECUTABLE_NAME} DESTINATION bin)

@@ -8,8 +8,8 @@
 #include <SFML/System/Clock.hpp>
 #include <Ui/Popup.h>
 #include <Objects/Door.h>
-#include "..\System\Enum.h"
-#include "..\System\GameTime.h"
+#include "../System/Enum.h"
+#include "../System/GameTime.h"
 #include "../Component/Destination.h"
 
 class Office;

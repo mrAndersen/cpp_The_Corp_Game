@@ -1,19 +1,15 @@
 #include <sstream>
 #include <SFML/Window/Event.hpp>
 #include <System/SaveManager.h>
-#include "src\Objects\ElevatorShaftMiddle.h"
-#include "src\System\ResourceLoader.h"
-#include "src\System\ViewHandler.h"
-#include "src\System\EntityContainer.h"
-#include "src\System\ControlPanel.h"
-#include "src\System\DebugPattern.h"
+#include "src/Objects/ElevatorShaftMiddle.h"
+#include "src/System/ResourceLoader.h"
+#include "src/System/ViewHandler.h"
+#include "src/System/EntityContainer.h"
+#include "src/System/ControlPanel.h"
+#include "src/System/DebugPattern.h"
 
-int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow) {
-    std::set_terminate([](){
-        exit(99);
-    });
-
-    System::id = System::getHardwareId();
+int main() {
+    System::id = "test_build_forest";
     System::activeScene = SC_Game;
 //    System::activeScene = SC_Main_Menu;
 
@@ -106,7 +102,6 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLin
                 DebugPattern::process();
             }
         }
-
 
         if (System::activeScene == SC_Game) {
             System::refreshDayTime();

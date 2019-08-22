@@ -1,8 +1,8 @@
 #include <math.h>
-#include "..\System\ViewHandler.h"
-#include "..\System\System.h"
-#include "..\System\ResourceLoader.h"
-#include "..\System\EntityContainer.h"
+#include "../System/ViewHandler.h"
+#include "../System/System.h"
+#include "../System/ResourceLoader.h"
+#include "../System/EntityContainer.h"
 #include "Popup.h"
 
 Popup::Popup(float leftOffset, float topOffset) : BasicUi(leftOffset, topOffset) {
